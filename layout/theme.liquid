@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="{{ settings.color_background }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    <title>
+      {%- assign brand_name = 'CytoLight' -%}
+      {%- assign branded_page_title = page_title | replace: 'ParetoPhysio', brand_name | replace: 'Pareto Physio', brand_name -%}
+      {%- if request.page_type == 'index' -%}
+        {%- if request.locale.iso_code contains 'fr' -%}
+          CytoLight | Luminoth&eacute;rapie rouge intelligente
+        {%- else -%}
+          CytoLight | Intelligent Red Light Therapy
+        {%- endif -%}
+      {%- else -%}
+        {{ branded_page_title }}{% if current_tags %}{%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless branded_page_title contains brand_name %} &ndash; {{ brand_name }}{% endunless %}
+      {%- endif -%}
+    </title>
+
+    {%- if request.page_type == 'index' -%}
+      <meta name="description" content="{% if request.locale.iso_code contains 'fr' %}D&eacute;couvrez CytoLight, des syst&egrave;mes intelligents de luminoth&eacute;rapie rouge et proche infrarouge pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l'&eacute;nergie.{% else %}Discover CytoLight intelligent red and near-infrared light therapy systems for recovery, skin, sleep, and everyday energy.{% endif %}">
+    {%- elsif page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+    {{ content_for_header }}
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+    <style>
+      :root {
+        --color-background: {{ settings.color_background }};
+        --color-background-soft: {{ settings.color_background_soft }};
+        --color-foreground: {{ settings.color_foreground }};
+        --color-muted: {{ settings.color_muted }};
+        --color-accent: {{ settings.color_accent }};
+        --color-accent-soft: {{ settings.color_accent_soft }};
+        --color-accent-deep: {{ settings.color_accent_deep }};
+        --color-promo: {{ settings.color_promo }};
+        --color-rating: #FFC247;
+        --font-body: '{{ settings.font_body }}', system-ui, -apple-system, sans-serif;
+        --font-display: '{{ settings.font_display }}', Georgia, serif;
+        --radius-sm: 6px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+        --container: 1280px;
+      }
+    </style>
+  </head>
+
+  <body class="template-{{ template.name }}">
+    <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
+
+    <div class="global-language">
+      {%- if localization.available_languages.size > 1 -%}
+        {% form 'localization', class: 'global-language__form' %}
+          <label class="visually-hidden" for="GlobalLanguageSelector">Language</label>
+          <select id="GlobalLanguageSelector" class="global-language__select" name="locale_code" onchange="this.form.submit()">
+            {%- for language in localization.available_languages -%}
+              <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                {{ language.iso_code | upcase }}
+              </option>
+            {%- endfor -%}
+          </select>
+        {% endform %}
+      {%- else -%}
+        <span class="global-language__static" aria-label="Current language">
+          {{ localization.language.iso_code | default: request.locale.iso_code | upcase }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    {% section 'header' %}
+
+    <main id="MainContent" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    <div id="cart-drawer-mount"></div>
+  </body>
+</html>

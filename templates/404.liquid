@@ -1,0 +1,6 @@
+<section class="container" style="padding: 100px 0; text-align:center;">
+  <span class="eyebrow">404</span>
+  <h1>{% if request.locale.iso_code contains 'fr' %}Page introuvable{% else %}Page not found{% endif %}</h1>
+  <p style="color: var(--color-muted); max-width: 480px; margin: 0 auto 24px;">{% if request.locale.iso_code contains 'fr' %}La page que vous cherchez n'existe pas. Revenons &agrave; l'accueil.{% else %}The page you're looking for was not found. Let's get you back on track.{% endif %}</p>
+  <a href="{{ routes.root_url }}" class="btn btn--primary">{% if request.locale.iso_code contains 'fr' %}Retour &agrave; l'accueil{% else %}Back to home{% endif %} &rarr;</a>
+</section>

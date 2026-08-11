@@ -1,0 +1,29 @@
+{%- comment -%}
+  Render a product card.
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+<a class="product-card" href="{{ product.url | within: collection }}">
+  <div class="product-card__media">
+    {%- if product.compare_at_price > product.price -%}
+      <span class="product-card__badge">{% if request.locale.iso_code contains 'fr' %}&Eacute;conomisez{% else %}Save{% endif %} {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%</span>
+    {%- endif -%}
+    {%- if product.featured_image != blank -%}
+      <img src="{{ product.featured_image | image_url: width: 600 }}"
+           alt="{{ product.featured_image.alt | escape }}"
+           loading="lazy" width="600" height="600">
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </div>
+  <div class="product-card__body">
+    <div class="product-card__rating"><span>&#9733;&#9733;&#9733;&#9733;&#9733;</span> {{ product.metafields.reviews.rating | default: '4.9' }}</div>
+    <div class="product-card__title">{{ product.title }}</div>
+    <div class="product-card__price">
+      {%- if product.compare_at_price > product.price -%}
+        <del>{{ product.compare_at_price | money }}</del>
+      {%- endif -%}
+      {{ product.price | money }}
+    </div>
+    <span class="btn btn--ghost btn--sm product-card__cta">{% if request.locale.iso_code contains 'fr' %}Acheter{% else %}Shop now{% endif %} &rarr;</span>
+  </div>
+</a>

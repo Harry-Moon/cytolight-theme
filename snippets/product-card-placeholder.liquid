@@ -1,0 +1,14 @@
+{%- comment -%}
+  Placeholder card when no real products exist.
+{%- endcomment -%}
+<div class="product-card">
+  <div class="product-card__media">
+    {{ 'product-1' | placeholder_svg_tag }}
+  </div>
+  <div class="product-card__body">
+    <div class="product-card__rating"><span>★★★★★</span> 4.9</div>
+    <div class="product-card__title">{% if request.locale.iso_code contains 'fr' %}Produit exemple{% else %}Sample product{% endif %} {{ index }}</div>
+    <div class="product-card__price">$199.00</div>
+    <span class="btn btn--ghost btn--sm product-card__cta">{% if request.locale.iso_code contains 'fr' %}Acheter{% else %}Shop now{% endif %} &rarr;</span>
+  </div>
+</div>

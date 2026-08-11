@@ -1,0 +1,71 @@
+{%- liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign can_quick_add = false
+  if product.available and product.variants.size == 1
+    assign can_quick_add = true
+  endif
+  assign wavelength_summary = product.metafields.custom.wavelengths | default: product.metafields.custom.wavelength_summary
+  assign treatment_area = product.metafields.custom.treatment_area
+  assign device_category = product.metafields.custom.device_category
+-%}
+
+<article class="cy-device-card">
+  <a class="cy-device-card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 720 }}"
+        srcset="{{ product.featured_image | image_url: width: 420 }} 420w, {{ product.featured_image | image_url: width: 720 }} 720w, {{ product.featured_image | image_url: width: 960 }} 960w"
+        sizes="(max-width: 640px) 82vw, 360px"
+        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+        width="720"
+        height="720"
+        loading="lazy">
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'cy-device-card__placeholder' }}
+    {%- endif -%}
+    {%- if product.available == false -%}
+      <span class="cy-device-card__badge">{% if is_fr %}&Eacute;puis&eacute;{% else %}Sold out{% endif %}</span>
+    {%- elsif product.compare_at_price > product.price -%}
+      <span class="cy-device-card__badge">{% if is_fr %}Offre{% else %}Offer{% endif %}</span>
+    {%- endif -%}
+  </a>
+
+  <div class="cy-device-card__body">
+    {%- if device_category != blank -%}
+      <p class="cy-device-card__type">{{ device_category }}</p>
+    {%- else -%}
+      <p class="cy-device-card__type">{% if is_fr %}Luminoth&eacute;rapie rouge{% else %}Red light therapy{% endif %}</p>
+    {%- endif -%}
+    <h3><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <div class="cy-device-card__price">
+      {%- if product.compare_at_price > product.price -%}
+        <del>{{ product.compare_at_price | money }}</del>
+      {%- endif -%}
+      <span>{{ product.price | money }}</span>
+    </div>
+
+    {%- if wavelength_summary != blank or treatment_area != blank -%}
+      <dl class="cy-device-card__specs">
+        {%- if wavelength_summary != blank -%}
+          <div><dt>{% if is_fr %}Spectre{% else %}Spectrum{% endif %}</dt><dd>{{ wavelength_summary }}</dd></div>
+        {%- endif -%}
+        {%- if treatment_area != blank -%}
+          <div><dt>{% if is_fr %}Zone{% else %}Area{% endif %}</dt><dd>{{ treatment_area }}</dd></div>
+        {%- endif -%}
+      </dl>
+    {%- endif -%}
+
+    <div class="cy-device-card__actions">
+      <a class="cy-device-card__link" href="{{ product.url }}">{% if is_fr %}Voir le produit{% else %}View product{% endif %}</a>
+      {%- if can_quick_add -%}
+        {%- form 'product', product, class: 'cy-device-card__form' -%}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button class="cy-device-card__quick" type="submit">{% if is_fr %}Ajouter{% else %}Add{% endif %}</button>
+        {%- endform -%}
+      {%- elsif product.available -%}
+        <a class="cy-device-card__quick" href="{{ product.url }}">{% if is_fr %}Options{% else %}Options{% endif %}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

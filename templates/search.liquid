@@ -1,0 +1,16 @@
+<section class="container" style="padding: 60px 0;">
+  <h1>{% if request.locale.iso_code contains 'fr' %}Recherche{% else %}Search{% endif %}</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" style="margin: 16px 0 32px;">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{% if request.locale.iso_code contains 'fr' %}Rechercher dans la boutique{% else %}Search the shop{% endif %}" style="width:100%; max-width:520px; padding:14px 18px; border-radius:999px; border:1px solid rgba(0,0,0,.16);">
+  </form>
+  {% if search.performed %}
+    <p style="color: var(--color-muted);">{{ search.results_count }} {% if request.locale.iso_code contains 'fr' %}r&eacute;sultats pour{% else %}results for{% endif %} "{{ search.terms | escape }}"</p>
+    <div class="collection-grid-products">
+      {% for item in search.results %}
+        {% if item.object_type == 'product' %}
+          {% render 'product-card', product: item %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>

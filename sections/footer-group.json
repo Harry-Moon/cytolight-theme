@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": { "type": "menu_column", "settings": { "heading": "Shop", "menu": "footer" } },
+        "learn": { "type": "menu_column", "settings": { "heading": "Learn", "menu": "footer" } },
+        "support": { "type": "menu_column", "settings": { "heading": "Support", "menu": "footer" } }
+      },
+      "block_order": ["shop", "learn", "support"],
+      "settings": {
+        "tagline": "Science-backed wellness technologies to enhance sleep, recovery, and beauty.",
+        "instagram": "https://instagram.com/",
+        "facebook": "https://facebook.com/",
+        "tiktok": "https://tiktok.com/",
+        "youtube": "https://youtube.com/"
+      }
+    }
+  },
+  "order": ["footer"]
+}
