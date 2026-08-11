@@ -1,0 +1,11 @@
+<article class="container" style="padding: 60px 0; max-width: 760px;">
+  <span class="eyebrow">{{ article.tags | join: ' · ' | default: 'Article' }}</span>
+  <h1>{{ article.title }}</h1>
+  <p style="color: var(--color-muted); font-size: .9rem;">{{ article.published_at | date: "%B %-d, %Y" }} · {{ article.author }}</p>
+  {% if article.image != blank %}
+    <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.title | escape }}" style="border-radius: var(--radius-md); margin: 24px 0;">
+  {% endif %}
+  <div class="article-content" style="font-size: 1.05rem; line-height: 1.7;">
+    {{ article.content }}
+  </div>
+</article>

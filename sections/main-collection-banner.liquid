@@ -1,0 +1,38 @@
+{%- assign is_fr = false -%}
+{%- if request.locale.iso_code contains 'fr' -%}
+  {%- assign is_fr = true -%}
+{%- endif -%}
+<section class="collection-banner collection-banner--cyto">
+  <div class="container collection-banner__inner">
+    <div class="collection-banner__copy">
+      <span class="eyebrow">{% if is_fr %}Catalogue CytoLight{% else %}CytoLight catalogue{% endif %}</span>
+      <h1>{% if is_fr %}La luminoth&eacute;rapie, pens&eacute;e comme un rituel premium.{% else %}Red light therapy, designed as a premium ritual.{% endif %}</h1>
+      <p>
+        {% if collection.description != blank %}
+          {{ collection.description }}
+        {% elsif is_fr %}
+          D&eacute;couvrez les formats CytoLight pour le bureau, la routine cheveux, la r&eacute;cup&eacute;ration et les espaces wellness. Certains produits arrivent bient&ocirc;t.
+        {% else %}
+          Explore CytoLight formats for desk rituals, hair routines, recovery, and wellness spaces. Some products are arriving soon.
+        {% endif %}
+      </p>
+      <div class="collection-banner__actions">
+        <a class="btn btn--primary" href="#collection-products">{% if is_fr %}Voir les produits{% else %}View products{% endif %}</a>
+        <a class="btn btn--ghost collection-banner__ghost" href="/products/cytolight-desk">{% if is_fr %}Commencer par DESK{% else %}Start with DESK{% endif %}</a>
+      </div>
+    </div>
+    <div class="collection-banner__tease" aria-label="{% if is_fr %}Points forts{% else %}Highlights{% endif %}">
+      <div><strong>{% if is_fr %}Rituel{% else %}Ritual{% endif %}</strong><span>{% if is_fr %}Des formats simples &agrave; int&eacute;grer dans votre journ&eacute;e.{% else %}Formats designed to fit naturally into your day.{% endif %}</span></div>
+      <div><strong>{% if is_fr %}Cibl&eacute;{% else %}Targeted{% endif %}</strong><span>{% if is_fr %}Bureau, cheveux, r&eacute;cup&eacute;ration ou corps entier.{% else %}Desk, hair, recovery, or full-body wellness.{% endif %}</span></div>
+      <div><strong>{% if is_fr %}Premium{% else %}Premium{% endif %}</strong><span>{% if is_fr %}Une pr&eacute;sence design pour la maison ou le studio.{% else %}A design presence for home or studio spaces.{% endif %}</span></div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection banner",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

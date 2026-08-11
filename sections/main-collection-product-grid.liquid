@@ -1,0 +1,57 @@
+{%- assign is_fr = false -%}
+{%- if request.locale.iso_code contains 'fr' -%}
+  {%- assign is_fr = true -%}
+{%- endif -%}
+<section class="container collection-products" id="collection-products">
+  <div class="collection-teaser">
+    <p class="eyebrow">{% if is_fr %}Choisir son format{% else %}Choose your format{% endif %}</p>
+    <div class="collection-teaser__grid">
+      <div class="collection-teaser__item collection-teaser__item--desk" style="--teaser-image: url('{{ 'cytolight-desk-luxury.png' | asset_url }}');"><strong>{% if is_fr %}Bureau{% else %}Desk{% endif %}</strong><span>{% if is_fr %}Un rituel visible, facile &agrave; garder au quotidien.{% else %}A visible ritual that is easy to keep every day.{% endif %}</span></div>
+      <div class="collection-teaser__item collection-teaser__item--hair" style="--teaser-image: url('{{ 'cytolight-cap-cinema-face.png' | asset_url }}');"><strong>{% if is_fr %}Cheveux{% else %}Hair{% endif %}</strong><span>{% if is_fr %}Une routine mains libres pens&eacute;e pour le cuir chevelu.{% else %}A hands-free routine designed for the scalp.{% endif %}</span></div>
+      <div class="collection-teaser__item collection-teaser__item--body" style="--teaser-image: url('{{ 'cytolight-pano-ultra-luxury.png' | asset_url }}');"><strong>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</strong><span>{% if is_fr %}Des panneaux grand format pour les espaces wellness.{% else %}Larger panels for dedicated wellness spaces.{% endif %}</span></div>
+    </div>
+  </div>
+
+  <div class="collection-toolbar">
+    <span>{{ collection.products_count }} {% if is_fr %}produits disponibles{% else %}products available{% endif %}</span>
+    <form>
+      <select name="sort_by" onchange="this.form.submit()" aria-label="{% if is_fr %}Trier par{% else %}Sort by{% endif %}">
+        {%- assign sort_options = 'manual,best-selling,title-ascending,title-descending,price-ascending,price-descending,created-ascending,created-descending' | split: ',' -%}
+        {%- if is_fr -%}
+          {%- assign sort_labels = 'S&eacute;lection,Meilleures ventes,A-Z,Z-A,Prix croissant,Prix d&eacute;croissant,Plus anciens,Plus r&eacute;cents' | split: ',' -%}
+        {%- else -%}
+          {%- assign sort_labels = 'Featured,Best selling,A-Z,Z-A,Price: low to high,Price: high to low,Oldest first,Newest first' | split: ',' -%}
+        {%- endif -%}
+        {% for option in sort_options %}
+          <option value="{{ option }}" {% if collection.sort_by == option %}selected{% endif %}>{{ sort_labels[forloop.index0] }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+
+  <div class="collection-grid-products">
+    {% paginate collection.products by section.settings.products_per_page %}
+      {% for product in collection.products %}
+        {% render 'product-card', product: product %}
+      {% else %}
+        <p>{% if request.locale.iso_code contains 'fr' %}Aucun produit pour le moment. Revenez bient&ocirc;t.{% else %}No products yet. Check back soon.{% endif %}</p>
+      {% endfor %}
+      {% if paginate.pages > 1 %}
+        <div style="grid-column: 1 / -1; text-align:center; padding: 24px 0;">
+          {{ paginate | default_pagination }}
+        </div>
+      {% endif %}
+    {% endpaginate %}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection product grid",
+  "tag": "section",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

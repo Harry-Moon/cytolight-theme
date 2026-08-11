@@ -1,0 +1,100 @@
+{%- liquid
+  assign is_fr = false
+  assign is_pt = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+  if request.locale.iso_code contains 'pt'
+    assign is_pt = true
+  endif
+-%}
+
+<header class="site-header">
+  <div class="site-header__proof" aria-label="Store benefits">
+    <span>{% if is_fr %}Livraison rapide{% elsif is_pt %}Envio rapido{% else %}Fast shipping{% endif %}</span>
+    <span>{% if is_fr %}Essai 30 jours{% elsif is_pt %}Teste de 30 dias{% else %}30-day trial{% endif %}</span>
+    <span>{% if is_fr %}Garantie 2 ans{% elsif is_pt %}Garantia de 2 anos{% else %}2-year warranty{% endif %}</span>
+  </div>
+  <div class="container site-header__inner">
+    <nav class="site-header__nav" aria-label="{% if is_fr %}Navigation principale{% elsif is_pt %}Navegacao principal{% else %}Primary navigation{% endif %}">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% elsif is_pt %}Inicio{% else %}Home{% endif %}</a>
+      <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Produits{% elsif is_pt %}Produtos{% else %}Products{% endif %}</a>
+      <a href="/products/cytolight-desk">DESK</a>
+      <a href="/products/cytolight-cap">{% if is_fr %}Cheveux{% elsif is_pt %}Cabelo{% else %}Hair{% endif %}</a>
+      <a href="/products/cytolight-pano-ultra">{% if is_fr %}Corps entier{% elsif is_pt %}Corpo inteiro{% else %}Full body{% endif %}</a>
+    </nav>
+
+    <a class="site-header__logo" href="{{ routes.root_url }}">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 240 }}"
+             width="120" height="auto"
+             alt="CytoLight">
+      {%- else -%}
+        CYTOLIGHT
+      {%- endif -%}
+    </a>
+
+    <div class="site-header__utils">
+      <a class="site-header__compare" href="{{ routes.all_products_collection_url }}">{% if is_fr %}Comparer{% elsif is_pt %}Comparar{% else %}Compare{% endif %}</a>
+      {%- if localization.available_languages.size > 1 -%}
+        {% form 'localization', class: 'site-header__language-form' %}
+          <label class="visually-hidden" for="HeaderLanguageSelector">Language</label>
+          <select id="HeaderLanguageSelector" class="site-header__language-select" name="locale_code" onchange="this.form.submit()">
+            {%- for language in localization.available_languages -%}
+              <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                {{ language.iso_code | upcase }}
+              </option>
+            {%- endfor -%}
+          </select>
+        {% endform %}
+      {%- else -%}
+        <span class="site-header__language-static" aria-label="Current language">
+          {{ localization.language.iso_code | default: request.locale.iso_code | upcase }}
+        </span>
+      {%- endif -%}
+      <a href="{{ routes.search_url }}" aria-label="Search">
+        {% render 'icon', name: 'search' %}
+        <span class="visually-hidden">Search</span>
+      </a>
+      <a href="{{ routes.account_url }}" aria-label="Account">
+        {% render 'icon', name: 'user' %}
+      </a>
+      <a href="{{ routes.cart_url }}" aria-label="Cart">
+        {% render 'icon', name: 'cart' %}
+        <span class="site-header__cart-count">{{ cart.item_count }}</span>
+      </a>
+      <a class="site-header__cta" href="{{ routes.all_products_collection_url }}">{% if is_fr %}Acheter{% elsif is_pt %}Comprar{% else %}Buy now{% endif %}</a>
+    </div>
+
+    <details class="site-header__mobile-menu">
+      <summary>{% if is_fr %}Menu{% elsif is_pt %}Menu{% else %}Menu{% endif %}</summary>
+      <div class="site-header__mobile-panel">
+        <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% elsif is_pt %}Inicio{% else %}Home{% endif %}</a>
+        <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Voir tous les produits{% elsif is_pt %}Ver todos os produtos{% else %}View all products{% endif %}</a>
+        <a href="/products/cytolight-desk">CytoLight DESK</a>
+        <a href="/products/cytolight-cap">CytoLight REDLIGHT CAP</a>
+        <a href="/products/cytolight-pano-plus">CytoLight PANO PLUS</a>
+        <a href="/products/cytolight-pano-ultra">CytoLight PANO ULTRA</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo (leave blank to use shop name)"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

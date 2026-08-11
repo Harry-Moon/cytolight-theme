@@ -1,0 +1,1483 @@
+<style>
+.cl-page{width:100%;background:#fff;}
+.cl-launch-nav{position:sticky;top:94px;z-index:44;background:rgba(255,255,255,.92);border-bottom:1px solid #eee;backdrop-filter:blur(14px);}
+.cl-launch-nav__inner{max-width:1400px;margin:0 auto;padding:12px 40px;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+.cl-launch-nav__name{font-size:13px;font-weight:900;color:#0d0d0d;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cl-launch-nav__links{display:flex;align-items:center;gap:18px;font-size:12px;font-weight:800;color:#777;text-transform:uppercase;letter-spacing:.08em;}
+.cl-launch-nav__links a:hover{color:#c8102e;}
+.cl-launch-nav__store-link{color:#0d0d0d;font-weight:950;}
+.cl-launch-nav__buy{background:#c8102e;color:#fff;border-radius:999px;padding:9px 16px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;}
+.cl-launch-nav{display:none!important;}
+.cl-launch-hero{position:relative;min-height:680px;background:#080808;color:#fff;overflow:hidden;display:flex;align-items:stretch;}
+.cl-launch-hero__media{position:absolute;inset:0;opacity:.66;}
+.cl-launch-hero__media::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.88) 0%,rgba(0,0,0,.48) 42%,rgba(0,0,0,.15) 100%);}
+.cl-launch-hero__media img,.cl-launch-hero__media svg{width:100%;height:100%;object-fit:cover;}
+.cl-launch-hero__inner{position:relative;z-index:1;max-width:1400px;width:100%;margin:0 auto;padding:96px 40px 58px;display:flex;flex-direction:column;justify-content:space-between;gap:52px;}
+.cl-launch-hero__copy{max-width:720px;}
+.cl-launch-hero__eyebrow{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#ff6060;margin:0 0 16px;}
+.cl-launch-hero__title{font-size:clamp(48px,7vw,92px);font-weight:950;line-height:.96;letter-spacing:0;margin:0 0 18px;color:#fff;}
+.cl-launch-hero__subtitle{font-size:clamp(18px,2vw,25px);line-height:1.45;color:rgba(255,255,255,.86);max-width:620px;margin:0 0 30px;}
+.cl-launch-hero__ctas{display:flex;gap:12px;flex-wrap:wrap;}
+.cl-launch-hero__primary,.cl-launch-hero__secondary{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:14px 24px;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;}
+.cl-launch-hero__primary{background:#fff;color:#0d0d0d;}
+.cl-launch-hero__secondary{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);}
+.cl-launch-hero__stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:920px;}
+.cl-launch-stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:18px;backdrop-filter:blur(12px);}
+.cl-launch-stat strong{display:block;font-size:30px;font-weight:950;letter-spacing:0;color:#fff;line-height:1;}
+.cl-launch-stat span{display:block;margin-top:8px;font-size:12px;font-weight:700;line-height:1.35;color:rgba(255,255,255,.72);}
+.cl-feature-showcase{background:#f6f6f6;padding:28px 40px 72px;}
+.cl-feature-showcase__inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px;}
+.cl-feature-tile{position:relative;min-height:260px;border-radius:18px;overflow:hidden;background:#111;color:#fff;padding:26px;display:flex;flex-direction:column;justify-content:flex-end;}
+.cl-feature-tile--large{grid-row:span 2;min-height:540px;}
+.cl-feature-tile__bg{position:absolute;inset:0;opacity:.5;background:radial-gradient(circle at 70% 20%,rgba(200,16,46,.65),transparent 34%),linear-gradient(135deg,#171717,#050505);}
+.cl-feature-tile--light{background:#fff;color:#0d0d0d;border:1px solid #e8e8e8;}
+.cl-feature-tile--light .cl-feature-tile__bg{opacity:1;background:linear-gradient(135deg,#fff,#f3f3f3);}
+.cl-feature-tile--cap-head-bg .cl-feature-tile__bg{background-size:cover;background-position:center 38%;}
+.cl-feature-tile--cap-head-bg .cl-feature-tile__bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.04) 0%,rgba(255,255,255,.14) 42%,rgba(255,255,255,.94) 100%);}
+.cl-feature-tile--cap-head-bg .cl-feature-tile__content{max-width:92%;}
+.cl-feature-tile--image-bg .cl-feature-tile__bg{opacity:1;background-size:cover;background-position:center;}
+.cl-feature-tile--image-bg .cl-feature-tile__bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.22) 38%,rgba(0,0,0,.88) 100%),linear-gradient(90deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.28) 52%,rgba(0,0,0,.04) 100%);}
+.cl-feature-tile--scalp-bg .cl-feature-tile__bg{background-position:center;}
+.cl-feature-tile--scalp-bg .cl-feature-tile__bg::after{background:linear-gradient(180deg,rgba(0,0,0,.06) 0%,rgba(0,0,0,.28) 42%,rgba(0,0,0,.9) 100%),radial-gradient(circle at 18% 8%,rgba(210,16,46,.32),transparent 40%);}
+.cl-feature-tile--infographic{background:#020202;}
+.cl-feature-tile--infographic .cl-feature-tile__bg{opacity:1;background-size:contain;background-position:center 34%;background-repeat:no-repeat;background-color:#020202;}
+.cl-feature-tile--infographic .cl-feature-tile__bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.04) 44%,rgba(0,0,0,.86) 100%);}
+.cl-feature-tile__content{position:relative;z-index:1;}
+.cl-feature-tile__kicker{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.12em;color:#c8102e;margin:0 0 10px;}
+.cl-feature-tile:not(.cl-feature-tile--light) .cl-feature-tile__kicker{color:#ff7777;}
+.cl-feature-tile__title{font-size:clamp(24px,3vw,42px);font-weight:950;line-height:1.02;letter-spacing:0;margin:0 0 10px;}
+.cl-feature-tile__body{font-size:14px;line-height:1.65;color:rgba(255,255,255,.72);max-width:520px;margin:0;}
+.cl-feature-tile--light .cl-feature-tile__body{color:#666;}
+.cl-product-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:1400px;margin:0 auto;padding:48px 40px;align-items:start;}
+.cl-col-left{position:sticky;top:20px;padding-right:40px;}
+.cl-gallery{width:100%;border-radius:16px;overflow:hidden;background:#f4f4f4;aspect-ratio:1/1;position:relative;}
+.cl-media-slot{position:absolute;inset:0;display:none;}
+.cl-media-slot.is-active{display:flex;align-items:center;justify-content:center;}
+.cl-media-slot img{width:100%;height:100%;object-fit:cover;display:block;}
+.cl-media-slot video{width:100%;height:100%;object-fit:contain;background:#000;}
+.cl-media-slot iframe{width:100%;height:100%;border:none;}
+.cl-media-slot model-viewer{width:100%;height:100%;}
+.cl-media-slot .placeholder-svg{width:100%;height:100%;}
+.cl-thumbstrip{display:flex;gap:10px;margin-top:14px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;}
+.cl-thumbstrip::-webkit-scrollbar{height:4px;}
+.cl-thumbstrip::-webkit-scrollbar-track{background:#f0f0f0;border-radius:2px;}
+.cl-thumbstrip::-webkit-scrollbar-thumb{background:#ccc;border-radius:2px;}
+.cl-thumbitem{flex:0 0 90px;height:90px;border-radius:10px;overflow:hidden;border:2px solid #e8e8e8;cursor:pointer;background:#f0f0f0;scroll-snap-align:start;transition:border-color .2s,transform .15s,box-shadow .2s;position:relative;}
+.cl-thumbitem:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1);border-color:#ccc;}
+.cl-thumbitem.is-active{border-color:#c8102e;box-shadow:0 0 0 1px #c8102e;}
+.cl-thumbitem img{width:100%;height:100%;object-fit:cover;display:block;}
+.cl-thumbitem__play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);color:#fff;font-size:22px;}
+.cl-wave-bar{background:#0d0d0d;border-radius:14px;padding:18px 20px;margin-top:20px;}
+.cl-wave-bar__title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#aaa;margin-bottom:14px;}
+.cl-wave-dots{display:flex;align-items:flex-end;gap:8px;}
+.cl-wave-dot{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;}
+.cl-wave-dot__circle{width:30px;height:30px;border-radius:50%;flex-shrink:0;}
+.cl-wave-dot__nm{font-size:10px;font-weight:700;color:#fff;}
+.cl-wave-dot__label{font-size:9px;color:#888;text-align:center;line-height:1.2;}
+.cl-inbox{background:#fafafa;border:1px solid #efefef;border-radius:14px;padding:18px 20px;margin-top:16px;}
+.cl-inbox__title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#999;margin-bottom:12px;}
+.cl-inbox__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.cl-inbox__item{display:flex;align-items:center;gap:10px;font-size:13px;color:#333;}
+.cl-inbox__item svg{width:16px;height:16px;color:#c8102e;flex-shrink:0;}
+.cl-clinical{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#fff5f5,#fff0f0);border:1px solid #fdd;border-radius:14px;padding:16px 18px;margin-top:16px;}
+.cl-clinical__icon{width:40px;height:40px;background:#c8102e;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.cl-clinical__icon svg{width:20px;height:20px;color:#fff;}
+.cl-clinical__heading{font-size:12px;font-weight:800;color:#0d0d0d;margin:0 0 2px;}
+.cl-clinical__sub{font-size:11px;color:#888;margin:0;line-height:1.4;}
+.cl-certs{display:flex;gap:8px;margin-top:16px;}
+.cl-cert{display:flex;flex-direction:column;align-items:center;gap:5px;background:#f8f8f8;border-radius:10px;padding:12px 8px;flex:1;text-align:center;}
+.cl-cert svg{width:26px;height:26px;}
+.cl-cert span{font-size:9px;font-weight:700;color:#555;line-height:1.3;text-transform:uppercase;letter-spacing:.04em;}
+.cl-col-right{padding-left:8px;}
+.cl-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c8102e;margin:0 0 8px;}
+.cl-title{font-size:36px;font-weight:900;line-height:1.1;color:#0d0d0d;margin:0 0 12px;letter-spacing:-.02em;}
+.cl-rating-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.cl-stars{color:#f5a623;font-size:17px;letter-spacing:1px;}
+.cl-rating-num{font-size:14px;font-weight:800;color:#0d0d0d;}
+.cl-rating-count{font-size:13px;color:#888;}
+.cl-rating-sep{color:#ddd;}
+.cl-rating-verify{font-size:12px;color:#2d8c2d;font-weight:600;}
+.cl-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;}
+.cl-price{font-size:34px;font-weight:900;color:#0d0d0d;letter-spacing:-.02em;}
+.cl-compare{font-size:20px;color:#bbb;text-decoration:line-through;}
+.cl-save-badge{background:#c8102e;color:#fff;font-size:11px;font-weight:800;border-radius:5px;padding:3px 9px;}
+.cl-price-note{font-size:12px;color:#aaa;margin-bottom:20px;}
+.cl-trust-row{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;}
+.cl-pill{display:flex;align-items:center;gap:6px;background:#f0f9f0;border:1px solid #c0e0c0;border-radius:20px;padding:7px 13px;font-size:12px;font-weight:700;color:#1e6e1e;white-space:nowrap;}
+.cl-pill svg{width:13px;height:13px;flex-shrink:0;}
+.cl-proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 22px;}
+.cl-proof-card{background:#fafafa;border:1px solid #eee;border-radius:12px;padding:14px 12px;}
+.cl-proof-card__kicker{display:block;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#c8102e;margin-bottom:4px;}
+.cl-proof-card__text{display:block;font-size:12px;font-weight:700;line-height:1.35;color:#1a1a1a;}
+.cl-tabs{margin-bottom:24px;background:#fff;border:1px solid #eee;border-radius:18px;padding:18px;box-shadow:0 16px 44px rgba(0,0,0,.05);}
+.cl-tabs__nav{display:flex;border-bottom:2px solid #eee;}
+.cl-tab-btn{background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;padding:10px 22px;font-size:14px;font-weight:700;color:#aaa;cursor:pointer;transition:color .2s,border-color .2s;}
+.cl-tab-btn.is-active{color:#c8102e;border-bottom-color:#c8102e;}
+.cl-tab-panel{display:none;padding:22px 0 4px;font-size:15px;line-height:1.85;color:#4f4f4f;}
+.cl-tab-panel.is-active{display:block;}
+.cl-tab-panel p{margin:0 0 18px;max-width:68ch;}
+.cl-tab-panel h2,.cl-tab-panel h3,.cl-tab-panel h4{font-family:inherit;font-weight:900;letter-spacing:0;color:#0d0d0d;margin:30px 0 12px;line-height:1.15;}
+.cl-tab-panel h2{font-size:26px;}
+.cl-tab-panel h3{font-size:20px;}
+.cl-tab-panel h4{font-size:16px;}
+.cl-tab-panel ul,.cl-tab-panel ol{margin:16px 0 22px;padding:0;display:grid;gap:10px;max-width:72ch;list-style:none;}
+.cl-tab-panel li{position:relative;margin:0;padding-left:24px;}
+.cl-tab-panel li::before{content:'';position:absolute;left:0;top:.78em;width:7px;height:7px;border-radius:50%;background:#c8102e;}
+.cl-tab-panel strong{color:#0d0d0d;}
+.cl-tab-panel table{width:100%;border-collapse:separate;border-spacing:0;margin:22px 0 28px;border:1px solid #e8e8e8;border-radius:16px;overflow:hidden;font-size:13px;line-height:1.55;}
+.cl-tab-panel th{background:#0d0d0d;color:#fff;text-align:left;padding:14px 16px;font-weight:800;}
+.cl-tab-panel td{padding:14px 16px;border-top:1px solid #eee;color:#444;vertical-align:top;}
+.cl-tab-panel tr:nth-child(even) td{background:#fafafa;}
+.cl-description-luxury{background:linear-gradient(180deg,#fff,#fbfbfb);border-radius:14px;}
+.cl-description-luxury>p:first-child{font-size:16px;line-height:1.9;color:#333;background:#fafafa;border:1px solid #eee;border-radius:14px;padding:20px;max-width:none;}
+.cl-description-luxury h2,.cl-description-luxury h3{padding-top:4px;}
+.cl-divider{height:1px;background:#f0f0f0;margin:0 0 22px;}
+.cl-section-label{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#999;margin-bottom:10px;}
+.cl-buy-panel{border:1.5px solid #eee;border-radius:18px;padding:18px;background:#fff;box-shadow:0 18px 48px rgba(0,0,0,.07);margin-bottom:12px;}
+.cl-urgency{display:flex;align-items:center;gap:10px;background:#fff7f3;border:1px solid #ffd9c7;border-radius:12px;padding:11px 12px;margin-bottom:16px;color:#7a2f11;font-size:12px;font-weight:700;line-height:1.35;}
+.cl-urgency svg{width:18px;height:18px;flex-shrink:0;color:#c8102e;}
+.cl-bundles{display:flex;gap:10px;margin-bottom:22px;}
+.cl-bundle{flex:1;border:2px solid #e8e8e8;border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;background:#fff;position:relative;}
+.cl-bundle:hover{transform:translateY(-1px);}
+.cl-bundle.is-selected{border-color:#c8102e;background:#fff8f8;}
+.cl-bundle__badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#c8102e;color:#fff;font-size:9px;font-weight:800;border-radius:20px;padding:2px 8px;white-space:nowrap;}
+.cl-bundle__row{display:flex;align-items:baseline;gap:5px;justify-content:center;}
+.cl-bundle__num{font-size:22px;font-weight:900;color:#0d0d0d;}
+.cl-bundle__unit{font-size:11px;color:#777;font-weight:600;line-height:1.4;}
+.cl-bundle__save{font-size:11px;font-weight:800;color:#c8102e;display:block;margin-top:5px;min-height:16px;}
+.cl-atc{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:19px;background:#c8102e;color:#fff;font-size:16px;font-weight:900;border:none;border-radius:14px;cursor:pointer;letter-spacing:.02em;transition:background .2s,transform .15s;margin-bottom:10px;box-shadow:0 4px 20px rgba(200,16,46,.3);}
+.cl-atc:hover{background:#a50d25;transform:translateY(-1px);box-shadow:0 6px 24px rgba(200,16,46,.4);}
+.cl-atc:disabled{background:#ccc;cursor:not-allowed;box-shadow:none;transform:none;}
+.cl-atc svg{width:20px;height:20px;flex-shrink:0;}
+.cl-payment-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px;}
+.cl-payment-note{background:#fafafa;border:1px solid #eee;border-radius:10px;padding:10px 8px;text-align:center;font-size:11px;font-weight:700;color:#444;line-height:1.3;}
+.cl-guarantee{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:#888;margin-bottom:24px;padding:10px;background:#fafafa;border-radius:10px;}
+.cl-guarantee svg{width:16px;height:16px;color:#2d8c2d;flex-shrink:0;}
+.cl-benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:20px;background:#fafafa;border-radius:14px;margin-bottom:24px;}
+.cl-benefit{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;}
+.cl-benefit__icon{width:52px;height:52px;background:linear-gradient(135deg,#fff5f5,#ffe8e8);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.cl-benefit__icon svg{width:24px;height:24px;color:#c8102e;}
+.cl-benefit__label{font-size:12px;font-weight:800;color:#0d0d0d;line-height:1.3;}
+.cl-benefit__sub{font-size:11px;color:#aaa;margin-top:1px;}
+.cl-reviews{border:1px solid #eee;border-radius:14px;padding:18px 20px;}
+.cl-reviews__header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.cl-reviews__title{font-size:13px;font-weight:800;color:#0d0d0d;}
+.cl-reviews__avg{display:flex;align-items:center;gap:6px;}
+.cl-reviews__big{font-size:28px;font-weight:900;color:#0d0d0d;}
+.cl-review-cards{display:flex;flex-direction:column;gap:10px;}
+.cl-review-card{background:#fafafa;border-radius:10px;padding:14px;}
+.cl-review-card__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.cl-review-card__author{font-size:12px;font-weight:800;color:#0d0d0d;}
+.cl-review-card__date{font-size:11px;color:#bbb;}
+.cl-review-card__stars{color:#f5a623;font-size:12px;margin-bottom:4px;}
+.cl-review-card__text{font-size:13px;color:#555;line-height:1.5;margin:0;}
+.cl-sticky-atc{position:fixed;left:50%;bottom:16px;transform:translate(-50%,18px);z-index:60;width:min(760px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(13,13,13,.96);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 14px 12px 18px;box-shadow:0 18px 50px rgba(0,0,0,.28);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;}
+.cl-sticky-atc.is-visible{opacity:1;pointer-events:auto;transform:translate(-50%,0);}
+.cl-sticky-atc__info{min-width:0;}
+.cl-sticky-atc__title{display:block;font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:420px;}
+.cl-sticky-atc__meta{display:flex;gap:8px;align-items:center;font-size:12px;color:rgba(255,255,255,.72);margin-top:2px;}
+.cl-sticky-atc__button{flex:0 0 auto;background:#c8102e;color:#fff;border:none;border-radius:12px;padding:13px 18px;font-size:13px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 24px rgba(200,16,46,.35);}
+.cl-sticky-atc__button:hover{background:#a50d25;}
+.cl-sticky-atc__button:disabled{background:#555;cursor:not-allowed;box-shadow:none;}
+.cl-sticky-atc{display:none!important;}
+/* ===== STATS STRIP ===== */
+.cl-stats-strip{background:#0d0d0d;padding:48px 40px;}
+.cl-stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1400px;margin:0 auto;}
+.cl-stat{text-align:center;padding:16px;}
+.cl-stat__num{font-size:48px;font-weight:900;color:#c8102e;display:block;letter-spacing:-.03em;line-height:1;}
+.cl-stat__label{font-size:12px;color:#888;font-weight:600;display:block;margin-top:8px;text-transform:uppercase;letter-spacing:.08em;}
+/* ===== EDITORIAL ===== */
+.cl-editorial{padding:80px 40px;}
+.cl-editorial--dark{background:#0d0d0d;position:relative;overflow:hidden;}
+.cl-shader-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block;}
+.cl-editorial--dark .cl-editorial__inner{position:relative;z-index:1;}
+.cl-editorial--dark .cl-editorial__body{color:rgba(255,255,255,.86);font-size:17px;line-height:1.75;max-width:620px;}
+.cl-editorial--dark .cl-editorial__body strong{color:#fff;}
+/* wavelength overlay cards */
+.cl-wl-cards{display:flex;flex-direction:column;gap:5px;}
+.cl-wl-card{display:flex;align-items:center;gap:18px;padding:14px 20px;border-radius:10px;overflow:hidden;position:relative;}
+.cl-wl-card__bg{position:absolute;inset:0;z-index:0;}
+.cl-wl-card__nm{font-size:26px;font-weight:900;color:#fff;position:relative;z-index:1;min-width:82px;line-height:1;letter-spacing:-.03em;flex-shrink:0;}
+.cl-wl-card__info{position:relative;z-index:1;display:flex;flex-direction:column;gap:3px;}
+.cl-wl-card__name{font-size:13px;font-weight:800;color:#fff;line-height:1.1;}
+.cl-wl-card__desc{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.3;}
+.cl-editorial__inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;max-width:1400px;margin:0 auto;align-items:center;}
+.cl-editorial--img-right .cl-editorial__inner{direction:rtl;}
+.cl-editorial--img-right .cl-editorial__inner>*{direction:ltr;}
+.cl-editorial__img-wrap{aspect-ratio:4/3;overflow:hidden;border-radius:20px;background:#f4f4f4;}
+.cl-editorial__img{width:100%;height:100%;object-fit:cover;display:block;}
+.cl-editorial__eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c8102e;margin:0 0 14px;}
+.cl-editorial__title{font-size:34px;font-weight:900;line-height:1.1;color:#0d0d0d;margin:0 0 20px;letter-spacing:-.02em;}
+.cl-editorial__body{font-size:15px;line-height:1.8;color:#555;margin:0 0 14px;}
+.cl-editorial__bullets{list-style:none;padding:0;margin:20px 0 0;display:flex;flex-direction:column;gap:10px;}
+.cl-editorial__bullets li{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;color:#333;}
+.cl-editorial__bullets li::before{content:'';width:8px;height:8px;background:#c8102e;border-radius:50%;flex-shrink:0;}
+/* wavelength list */
+.cl-wl-list{display:flex;flex-direction:column;gap:11px;margin-top:24px;}
+.cl-wl-row{display:flex;align-items:center;gap:12px;}
+.cl-wl-swatch{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+.cl-wl-nm{font-size:13px;font-weight:800;color:#fff;min-width:110px;}
+.cl-wl-desc{font-size:12px;color:#777;}
+.cl-wl-visual{display:flex;flex-direction:column;align-items:center;padding:32px 28px 20px;background:#111;border-radius:20px;}
+.cl-wl-bars{display:flex;align-items:flex-end;gap:12px;height:220px;width:100%;}
+.cl-wl-bar{flex:1;border-radius:6px 6px 0 0;min-height:20px;opacity:.9;}
+.cl-wl-visual__label{font-size:10px;color:#444;margin-top:20px;text-align:center;letter-spacing:.08em;text-transform:uppercase;}
+/* ===== WHY CHOOSE ===== */
+.cl-why-section{padding:96px 40px;background:#f5f5f5;overflow:hidden;}
+.cl-why-inner{max-width:1400px;margin:0 auto;}
+.cl-why-header{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:56px;align-items:end;margin-bottom:38px;}
+.cl-why-header--desk{grid-template-columns:minmax(380px,.95fr) minmax(360px,1.05fr);gap:72px;align-items:center;margin-bottom:56px;}
+.cl-why-header--cap{grid-template-columns:minmax(0,.92fr) minmax(380px,1.08fr);gap:64px;align-items:end;}
+.cl-why-header__visual{grid-column:1;grid-row:1;align-self:start;position:relative;aspect-ratio:16/10;border-radius:26px;overflow:hidden;background:#111;box-shadow:0 22px 54px rgba(0,0,0,.12);}
+.cl-why-header__visual::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.16));pointer-events:none;}
+.cl-why-header__image{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.cl-why-header--desk .cl-why-header__visual{grid-column:1;grid-row:1 / span 3;align-self:center;aspect-ratio:16/10;border-radius:24px;box-shadow:0 28px 80px rgba(0,0,0,.14);}
+.cl-why-header--desk .cl-why-header__visual::after{background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,0,0,.1));}
+.cl-why-header--desk .cl-why-eyebrow{grid-column:2;grid-row:1;margin:0 0 14px;}
+.cl-why-header--desk .cl-why-title{grid-column:2;grid-row:2;font-size:clamp(38px,5vw,66px);line-height:1.01;font-weight:920;max-width:720px;}
+.cl-why-header--desk .cl-why-sub{grid-column:2;grid-row:3;margin-top:18px;max-width:620px;}
+.cl-why-header--cap .cl-why-eyebrow{grid-column:1;grid-row:2;margin-top:18px;}
+.cl-why-header--cap .cl-why-sub{grid-column:1;grid-row:3;}
+.cl-why-header--cap .cl-why-title{grid-column:2;grid-row:1 / span 3;align-self:start;}
+.cl-why-eyebrow{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#c8102e;margin:0 0 16px;}
+.cl-why-title{font-size:clamp(44px,6vw,82px);font-weight:950;color:#0d0d0d;margin:0;letter-spacing:0;line-height:.96;}
+.cl-why-sub{font-size:18px;line-height:1.65;color:#555;margin:0;max-width:520px;}
+.cl-why-grid{display:flex;flex-direction:column;gap:26px;padding:10px 0 0;}
+.cl-why-card{position:relative;min-height:560px;border-radius:30px;padding:0;background:#111;color:#fff;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(420px,1fr);border:1px solid rgba(255,255,255,.08);box-shadow:0 22px 60px rgba(0,0,0,.12);}
+.cl-why-card:nth-child(even){background:#fff;color:#0d0d0d;border-color:#e5e5e5;}
+.cl-why-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 12%,rgba(200,16,46,.42),transparent 35%),linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0));opacity:.9;pointer-events:none;}
+.cl-why-card:nth-child(even)::before{background:radial-gradient(circle at 85% 10%,rgba(200,16,46,.12),transparent 36%),linear-gradient(180deg,#fff,#f8f8f8);}
+.cl-why-card__text{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;padding:64px 56px;}
+.cl-why-card:nth-child(even) .cl-why-card__text{grid-column:2;grid-row:1;}
+.cl-why-card__icon{width:48px;height:48px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:22px;}
+.cl-why-card:nth-child(even) .cl-why-card__icon{background:#fff;border-color:#eee;box-shadow:0 12px 28px rgba(0,0,0,.07);}
+.cl-why-card__icon svg{width:22px;height:22px;color:#ff5a70;}
+.cl-why-card:nth-child(even) .cl-why-card__icon svg{color:#c8102e;}
+.cl-why-card__content{min-width:0;}
+.cl-why-card__label{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:#ff6d7f;margin-bottom:16px;}
+.cl-why-card:nth-child(even) .cl-why-card__label{color:#c8102e;}
+.cl-why-card__title{font-size:clamp(42px,5vw,76px);font-weight:950;color:inherit;margin:0 0 24px;letter-spacing:0;line-height:.96;max-width:650px;}
+.cl-why-card__body{font-size:18px;color:rgba(255,255,255,.72);line-height:1.75;margin:0 0 28px;max-width:560px;}
+.cl-why-card:nth-child(even) .cl-why-card__body{color:#5d5d5d;}
+.cl-why-lesson{border-top:1px solid rgba(255,255,255,.16);padding-top:18px;margin-top:20px;}
+.cl-why-card:nth-child(even) .cl-why-lesson{border-top-color:#e8e8e8;}
+.cl-why-lesson strong{display:block;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.48);margin-bottom:8px;}
+.cl-why-card:nth-child(even) .cl-why-lesson strong{color:#999;}
+.cl-why-lesson span{display:block;font-size:13px;line-height:1.65;color:rgba(255,255,255,.72);}
+.cl-why-card:nth-child(even) .cl-why-lesson span{color:#333;}
+.cl-why-proof{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px;}
+.cl-why-proof span{display:inline-flex;align-items:center;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.1);border-radius:999px;padding:8px 10px;font-size:11px;font-weight:900;color:rgba(255,255,255,.76);}
+.cl-why-card:nth-child(even) .cl-why-proof span{border-color:#e8e8e8;background:#fafafa;color:#555;}
+.cl-why-card__media{position:relative;z-index:1;min-height:420px;margin:18px;border-radius:24px;background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.cl-why-card:nth-child(even) .cl-why-card__media{grid-column:1;grid-row:1;background:linear-gradient(135deg,#f7f7f7,#ededed);border-color:#e5e5e5;}
+.cl-why-card__media::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 38%,rgba(200,16,46,.32),transparent 34%);}
+.cl-why-card:nth-child(even) .cl-why-card__media::before{background:radial-gradient(circle at 50% 36%,rgba(200,16,46,.16),transparent 34%);}
+.cl-why-card__image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;z-index:0;}
+.cl-why-card__media--photo::before{z-index:1;background:linear-gradient(180deg,rgba(8,8,8,.06),rgba(8,8,8,.28));}
+.cl-why-placeholder{position:relative;z-index:1;width:min(72%,420px);aspect-ratio:4/5;border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.22),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.2);box-shadow:0 28px 80px rgba(0,0,0,.22);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.72);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;text-align:center;}
+.cl-why-card:nth-child(even) .cl-why-placeholder{background:linear-gradient(145deg,#fff,#e9e9e9);border-color:#ddd;color:#999;box-shadow:0 28px 70px rgba(0,0,0,.12);}
+.cl-why-card__media--science{background:linear-gradient(145deg,#050607,#15171a)!important;border-color:rgba(255,255,255,.1)!important;}
+.cl-why-card__media--science::before{background:radial-gradient(circle at 50% 18%,rgba(200,16,46,.34),transparent 38%),linear-gradient(180deg,rgba(255,255,255,.04),transparent)!important;}
+.cl-spectrum-science{position:relative;z-index:2;width:min(88%,540px);padding:24px;border-radius:28px;background:linear-gradient(180deg,#070809,#11151a);border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 80px rgba(0,0,0,.34);overflow:hidden;}
+.cl-spectrum-science::before{content:'';position:absolute;inset:-20% -15% auto;height:44%;background:radial-gradient(circle,rgba(200,16,46,.42),transparent 62%);filter:blur(10px);opacity:.82;}
+.cl-spectrum-science__head{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:18px;}
+.cl-spectrum-science__eyebrow{display:block;font-size:10px;font-weight:950;letter-spacing:.14em;text-transform:uppercase;color:#ff6d7f;margin-bottom:7px;}
+.cl-spectrum-science__title{margin:0;color:#fff;font-size:clamp(20px,2.4vw,28px);line-height:1.02;font-weight:950;max-width:310px;}
+.cl-spectrum-science__badge{flex:0 0 auto;width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.16),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.16);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:0 0 34px rgba(200,16,46,.32);}
+.cl-spectrum-science__badge strong{font-size:28px;line-height:1;font-weight:950;}
+.cl-spectrum-science__badge span{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.62);}
+.cl-spectrum-science__legend{position:relative;z-index:1;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-bottom:14px;}
+.cl-spectrum-science__chip{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.055);border-radius:14px;padding:8px 4px;text-align:center;}
+.cl-spectrum-science__dot{display:block;width:14px;height:14px;margin:0 auto 6px;border-radius:50%;background:var(--wave);box-shadow:0 0 22px color-mix(in srgb,var(--wave) 76%,transparent);}
+.cl-spectrum-science__nm{display:block;color:#fff;font-size:11px;font-weight:950;line-height:1;}
+.cl-spectrum-science__tag{display:block;color:rgba(255,255,255,.6);font-size:8px;font-weight:850;line-height:1.2;margin-top:4px;}
+.cl-spectrum-science__diagram{position:relative;z-index:1;height:210px;border:1px solid rgba(255,255,255,.12);border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#15181d 0%,#23191a 34%,#3a1715 62%,#4b1214 100%);margin-bottom:16px;}
+.cl-spectrum-science__layer{position:absolute;left:0;right:0;border-top:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.62);font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;}
+.cl-spectrum-science__layer--skin{top:18%;}
+.cl-spectrum-science__layer--tissue{top:48%;}
+.cl-spectrum-science__layer--muscle{top:76%;}
+.cl-spectrum-science__rays{position:absolute;inset:0 16px;display:grid;grid-template-columns:repeat(7,1fr);align-items:start;gap:8px;}
+.cl-spectrum-science__ray{height:var(--depth);border-radius:0 0 999px 999px;background:linear-gradient(180deg,var(--wave),transparent);box-shadow:0 0 24px color-mix(in srgb,var(--wave) 70%,transparent);opacity:.84;}
+.cl-spectrum-science__body{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0;padding:0;list-style:none;}
+.cl-spectrum-science__body li{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);border-radius:999px;padding:8px 10px;color:rgba(255,255,255,.78);font-size:11px;font-weight:850;text-align:center;}
+/* ===== SPEC TABLE ===== */
+.cl-spec-section{padding:80px 40px;border-top:1px solid #f0f0f0;}
+.cl-spec-inner{max-width:1000px;margin:0 auto;}
+.cl-spec-header{text-align:center;margin-bottom:44px;}
+.cl-spec-eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c8102e;margin:0 0 14px;}
+.cl-spec-title{font-size:34px;font-weight:900;color:#0d0d0d;margin:0;letter-spacing:-.02em;}
+.cl-spec-table-wrap{border:1.5px solid #eee;border-radius:18px;overflow:hidden;}
+.cl-spec-table{width:100%;border-collapse:collapse;}
+.cl-spec-table tr{border-bottom:1px solid #f0f0f0;}
+.cl-spec-table tr:last-child{border-bottom:none;}
+.cl-spec-table tr:nth-child(even){background:#fafafa;}
+.cl-spec-table th{width:200px;padding:17px 24px;font-size:13px;font-weight:800;color:#0d0d0d;text-align:left;vertical-align:top;white-space:nowrap;}
+.cl-spec-table td{padding:17px 24px;font-size:13px;color:#555;line-height:1.65;}
+/* ===== FAQ ===== */
+.cl-faq-section{max-width:1400px;margin:0 auto;padding:56px 40px;border-top:1px solid #f0f0f0;}
+.cl-faq-header{text-align:center;margin-bottom:40px;}
+.cl-faq-header__eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c8102e;margin:0 0 10px;}
+.cl-faq-header__title{font-size:32px;font-weight:900;color:#0d0d0d;margin:0 0 10px;letter-spacing:-.02em;}
+.cl-faq-header__sub{font-size:15px;color:#888;margin:0;}
+.cl-faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.cl-faq-item{border:1.5px solid #eee;border-radius:14px;overflow:hidden;transition:border-color .2s;}
+.cl-faq-item[open]{border-color:#c8102e;}
+.cl-faq-item summary{list-style:none;cursor:pointer;padding:20px 22px;font-size:15px;font-weight:700;color:#0d0d0d;display:flex;justify-content:space-between;align-items:center;gap:16px;user-select:none;-webkit-user-select:none;}
+.cl-faq-item summary::-webkit-details-marker{display:none;}
+.cl-faq-item summary:focus{outline:none;}
+.cl-faq-toggle{width:28px;height:28px;border-radius:50%;background:#f5f5f5;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;font-weight:400;color:#c8102e;transition:background .2s,transform .2s;line-height:1;}
+.cl-faq-item[open] .cl-faq-toggle{background:#fff0f0;transform:rotate(45deg);}
+.cl-faq-body{padding:0 22px 20px;font-size:14px;line-height:1.75;color:#555;border-top:1px solid #f5f5f5;}
+.cl-faq-body p{margin:12px 0 0;}
+.cl-faq-body ul{margin:10px 0 0;padding-left:18px;}
+.cl-faq-body li{margin-bottom:6px;}
+.cl-faq-body strong{color:#0d0d0d;}
+.cl-faq-cta{text-align:center;margin-top:36px;padding:28px;background:#fafafa;border-radius:16px;}
+.cl-faq-cta p{font-size:15px;color:#555;margin:0 0 16px;}
+.cl-faq-cta a{display:inline-flex;align-items:center;gap:8px;background:#0d0d0d;color:#fff;font-size:14px;font-weight:700;border-radius:10px;padding:12px 24px;text-decoration:none;transition:background .2s;}
+.cl-faq-cta a:hover{background:#333;}
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .cl-launch-nav{top:88px;}
+  .cl-launch-nav__inner{padding:10px 16px;}
+  .cl-launch-nav__links{gap:10px;font-size:10px;}
+  .cl-launch-nav__links a:not(.cl-launch-nav__buy):not(.cl-launch-nav__store-link){display:none;}
+  .cl-launch-hero{min-height:620px;}
+  .cl-launch-hero__media{opacity:.52;}
+  .cl-launch-hero__inner{padding:72px 16px 28px;gap:34px;}
+  .cl-launch-hero__title{font-size:44px;}
+  .cl-launch-hero__subtitle{font-size:17px;}
+  .cl-launch-hero__stats{grid-template-columns:repeat(2,1fr);}
+  .cl-launch-stat{padding:14px;}
+  .cl-launch-stat strong{font-size:24px;}
+  .cl-feature-showcase{padding:18px 16px 40px;}
+  .cl-feature-showcase__inner{grid-template-columns:1fr;}
+  .cl-feature-tile,.cl-feature-tile--large{min-height:230px;grid-row:auto;border-radius:14px;}
+  .cl-product-wrap{grid-template-columns:1fr;padding:20px 16px;}
+  .cl-col-left{position:static;padding-right:0;}
+  .cl-col-right{padding-left:0;margin-top:28px;}
+  .cl-title{font-size:26px;}
+  .cl-price{font-size:26px;}
+  .cl-proof-grid{grid-template-columns:1fr;gap:8px;}
+  .cl-buy-panel{padding:14px;border-radius:14px;}
+  .cl-benefits{grid-template-columns:repeat(2,1fr);}
+  .cl-bundles{flex-direction:column;gap:8px;}
+  .cl-payment-row{grid-template-columns:1fr;}
+  .cl-sticky-atc{bottom:10px;width:calc(100% - 20px);border-radius:14px;padding:10px;}
+  .cl-sticky-atc__title{max-width:180px;font-size:12px;}
+  .cl-sticky-atc__meta{font-size:11px;}
+  .cl-sticky-atc__button{padding:12px 13px;font-size:12px;}
+  .cl-thumbitem{flex:0 0 74px;height:74px;}
+  .cl-stats-strip{padding:36px 16px;}
+  .cl-stats-inner{grid-template-columns:repeat(2,1fr);gap:12px;}
+  .cl-stat__num{font-size:36px;}
+  .cl-editorial{padding:48px 16px;}
+  .cl-editorial__inner{grid-template-columns:1fr;gap:36px;}
+  .cl-editorial--img-right .cl-editorial__inner{direction:ltr;}
+  .cl-editorial__title{font-size:26px;}
+  .cl-why-section{padding:48px 16px;}
+  .cl-why-header{grid-template-columns:1fr;gap:18px;margin-bottom:22px;}
+  .cl-why-header--desk .cl-why-header__visual,.cl-why-header--desk .cl-why-eyebrow,.cl-why-header--desk .cl-why-title,.cl-why-header--desk .cl-why-sub,.cl-why-header--cap .cl-why-header__visual,.cl-why-header--cap .cl-why-eyebrow,.cl-why-header--cap .cl-why-title,.cl-why-header--cap .cl-why-sub{grid-column:1;grid-row:auto;}
+  .cl-why-header__visual{aspect-ratio:16/11;border-radius:20px;margin-bottom:2px;}
+  .cl-why-sub{font-size:15px;}
+  .cl-why-grid{display:flex;flex-direction:column;gap:16px;padding-bottom:0;overflow:visible;}
+  .cl-why-card,.cl-why-card:nth-child(even){display:grid;grid-template-columns:1fr;min-height:0;padding:0;border-radius:24px;}
+  .cl-why-card:nth-child(even) .cl-why-card__text,.cl-why-card:nth-child(even) .cl-why-card__media{grid-column:1;grid-row:auto;}
+  .cl-why-card__text{padding:26px 22px 10px;}
+  .cl-why-card__icon{width:42px;height:42px;margin-bottom:16px;}
+  .cl-why-card__title{font-size:34px;line-height:1;margin-bottom:16px;}
+  .cl-why-card__body{font-size:15px;line-height:1.65;margin-bottom:18px;}
+  .cl-why-lesson{margin-top:14px;padding-top:14px;}
+  .cl-why-proof{margin-top:16px;}
+  .cl-why-proof span{padding:7px 9px;font-size:10px;}
+  .cl-why-card__media{min-height:220px;margin:10px;border-radius:18px;}
+  .cl-why-placeholder{width:min(64%,220px);border-radius:22px;}
+  .cl-spectrum-science{width:calc(100% - 22px);padding:18px;border-radius:20px;}
+  .cl-spectrum-science__head{margin-bottom:14px;}
+  .cl-spectrum-science__badge{width:58px;height:58px;}
+  .cl-spectrum-science__badge strong{font-size:22px;}
+  .cl-spectrum-science__legend{gap:4px;margin-bottom:10px;}
+  .cl-spectrum-science__chip{border-radius:10px;padding:6px 2px;}
+  .cl-spectrum-science__dot{width:10px;height:10px;margin-bottom:5px;}
+  .cl-spectrum-science__nm{font-size:10px;}
+  .cl-spectrum-science__tag{font-size:8px;}
+  .cl-spectrum-science__diagram{height:170px;border-radius:16px;margin-bottom:12px;}
+  .cl-spectrum-science__layer{font-size:8px;padding:6px 8px;}
+  .cl-spectrum-science__body{grid-template-columns:1fr 1fr;gap:6px;}
+  .cl-spectrum-science__body li{font-size:10px;padding:7px 8px;}
+  .cl-why-title{font-size:38px;}
+  .cl-spec-section{padding:48px 16px;}
+  .cl-spec-title{font-size:26px;}
+  .cl-spec-table th{width:120px;padding:13px 14px;white-space:normal;}
+  .cl-spec-table td{padding:13px 14px;}
+  .cl-faq-section{padding:40px 16px;}
+  .cl-faq-grid{grid-template-columns:1fr;}
+  .cl-faq-header__title{font-size:24px;}
+}
+@media (max-width:420px){
+  .cl-launch-nav{top:82px;}
+  .cl-launch-nav__name{max-width:42vw;}
+  .cl-launch-nav__links{gap:8px;}
+  .cl-launch-nav__buy{padding:8px 11px;}
+}
+@media(max-width:650px){
+  .cl-why-section{padding:40px 12px;}
+  .cl-why-header{margin-bottom:18px;}
+  .cl-why-title{font-size:32px;line-height:1.02;}
+  .cl-why-sub{font-size:14px;line-height:1.6;}
+  .cl-why-grid{gap:14px;}
+  .cl-why-card,.cl-why-card:nth-child(even){border-radius:20px;}
+  .cl-why-card__text{padding:22px 18px 8px;}
+  .cl-why-card__icon{width:38px;height:38px;margin-bottom:14px;}
+  .cl-why-card__title{font-size:30px;line-height:1.02;margin-bottom:14px;}
+  .cl-why-card__body{font-size:14px;line-height:1.55;margin-bottom:14px;}
+  .cl-why-lesson{margin-top:12px;padding-top:12px;}
+  .cl-why-lesson strong{font-size:10px;margin-bottom:6px;}
+  .cl-why-lesson span{font-size:12px;line-height:1.5;}
+  .cl-why-proof{gap:6px;margin-top:14px;}
+  .cl-why-proof span{padding:6px 8px;font-size:10px;}
+  .cl-why-card__media{min-height:180px;margin:8px;border-radius:16px;}
+  .cl-why-placeholder{width:min(58%,170px);border-radius:18px;font-size:10px;}
+  .cl-spectrum-science{padding:14px;border-radius:18px;}
+  .cl-spectrum-science__title{font-size:17px;}
+  .cl-spectrum-science__legend{grid-template-columns:repeat(7,minmax(26px,1fr));gap:3px;}
+  .cl-spectrum-science__chip{padding:5px 1px;border-radius:8px;}
+  .cl-spectrum-science__tag{display:none;}
+  .cl-spectrum-science__diagram{height:150px;}
+  .cl-spectrum-science__rays{inset:0 10px;gap:4px;}
+  .cl-spectrum-science__body li{font-size:9px;padding:6px;}
+}
+</style>
+
+<div class='cl-page'>
+  {%- assign is_fr = false -%}
+  {%- if request.locale.iso_code contains 'fr' -%}
+    {%- assign is_fr = true -%}
+  {%- endif -%}
+  {%- assign is_cap = false -%}
+  {%- if product.handle == 'cytolight-cap' -%}
+    {%- assign is_cap = true -%}
+  {%- endif -%}
+  {%- assign is_pano_ultra = false -%}
+  {%- if product.handle == 'cytolight-pano-ultra' -%}
+    {%- assign is_pano_ultra = true -%}
+  {%- endif -%}
+  <div class='cl-launch-nav'>
+    <div class='cl-launch-nav__inner'>
+      <div class='cl-launch-nav__name'>{{ product.title }}</div>
+      <nav class='cl-launch-nav__links' aria-label='{% if request.locale.iso_code contains 'fr' %}Sections produit{% else %}Product sections{% endif %}'>
+        <a class='cl-launch-nav__store-link' href='{{ routes.root_url }}'>{% if request.locale.iso_code contains 'fr' %}Accueil{% else %}Home{% endif %}</a>
+        <a class='cl-launch-nav__store-link' href='{{ routes.all_products_collection_url }}'>{% if request.locale.iso_code contains 'fr' %}Produits{% else %}Products{% endif %}</a>
+        <a href='#cl-highlights'>{% if request.locale.iso_code contains 'fr' %}Points forts{% else %}Highlights{% endif %}</a>
+        <a href='#cl-specs'>{% if request.locale.iso_code contains 'fr' %}Caractéristiques{% else %}Specs{% endif %}</a>
+        <a href='#cl-faq'>FAQ</a>
+        <a class='cl-launch-nav__buy' href='#cl-buy-area'>{% if request.locale.iso_code contains 'fr' %}Acheter{% else %}Buy Now{% endif %}</a>
+      </nav>
+    </div>
+  </div>
+
+  <section class='cl-launch-hero' aria-label='{% if is_cap %}CYTOLIGHT cap overview{% elsif is_pano_ultra %}CytoLight PANO ULTRA overview{% else %}CytoLight overview{% endif %}'>
+    <div class='cl-launch-hero__media'>
+      {%- if product.featured_image -%}
+        <img src='{{ product.featured_image | image_url: width: 2000 }}' alt='{{ product.featured_image.alt | escape }}' loading='eager'>
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+    <div class='cl-launch-hero__inner'>
+      <div class='cl-launch-hero__copy'>
+        <p class='cl-launch-hero__eyebrow'>{% if is_cap %}CYTOLIGHT cap{% elsif is_pano_ultra %}CytoLight PANO ULTRA{% else %}CytoLight{% endif %}</p>
+        <h1 class='cl-launch-hero__title'>{% if is_cap %}{% if is_fr %}Un rituel lumineux pour vos cheveux.{% else %}Light therapy, made for your hair ritual.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Une expérience lumineuse grand format.{% else %}A larger light experience for serious routines.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}La luminothérapie quotidienne, pensée pour la vraie vie.{% else %}Daily light therapy, tuned for real life.{% endif %}{% endif %}</h1>
+        <p class='cl-launch-hero__subtitle'>{% if is_cap %}{% if is_fr %}Une casquette de luminothérapie rouge et proche infrarouge avec 150 LED 3-en-1, conçue pour accompagner une routine cuir chevelu simple, régulière et mains libres à la maison.{% else %}A wearable red and near-infrared light therapy cap with 150 3-in-1 LEDs, built for a simple, consistent, hands-free scalp routine at home.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Un panneau de luminothérapie rouge et proche infrarouge grand format pour les espaces wellness, les studios, la récupération sportive et les routines corps entier.{% else %}A large-format red and near-infrared light therapy panel for wellness spaces, studios, athletic recovery, and full-body routines.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Un panneau compact à 7 spectres rouge et proche infrarouge pour la récupération, la concentration, le sommeil, la peau et l'énergie au quotidien, prêt à s'intégrer sur votre bureau en quelques minutes.{% else %}A compact 7-spectrum red and near-infrared panel for recovery, focus, sleep, skin health, and everyday energy, ready for your desk in minutes.{% endif %}{% endif %}</p>
+        <div class='cl-launch-hero__ctas'>
+          <a class='cl-launch-hero__primary' href='#cl-buy-area'>{% if request.locale.iso_code contains 'fr' %}Acheter{% else %}Buy Now{% endif %}</a>
+          <a class='cl-launch-hero__secondary' href='#cl-highlights'>{% if request.locale.iso_code contains 'fr' %}Découvrir les fonctions{% else %}Explore Features{% endif %}</a>
+        </div>
+      </div>
+      <div class='cl-launch-hero__stats'>
+        <div class='cl-launch-stat'><strong>{% if is_cap %}150{% elsif is_pano_ultra %}Full{% else %}7{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}LED 3-en-1 placées pour une couverture du cuir chevelu{% else %}3-in-1 LEDs arranged for scalp coverage{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Format grand panneau pour routines corps entier{% else %}Large panel format for full-body routines{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Longueurs d'onde thérapeutiques ciblées{% else %}Targeted therapeutic wavelengths{% endif %}{% endif %}</span></div>
+        <div class='cl-launch-stat'><strong>{% if is_cap %}660+850{% else %}590-940{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}nm rouge et proche infrarouge pour routine cheveux{% else %}nm red and near-infrared for hair routines{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}nm, de l'ambre au proche infrarouge profond{% else %}nm range from amber to deep NIR{% endif %}{% endif %}</span></div>
+        <div class='cl-launch-stat'><strong>{% if is_cap %}4{% else %}40 Hz{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}Contrôles : intensité, minuteur, pulsation, longueur d'onde{% else %}Controls: dimming, timer, pulsing, wavelength selection{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Contrôle intelligent des pulsations pour les sessions avancées{% else %}Smart pulse control for advanced sessions{% endif %}{% endif %}</span></div>
+        <div class='cl-launch-stat'><strong>30</strong><span>{% if request.locale.iso_code contains 'fr' %}Jours d'essai à domicile sans risque{% else %}Day risk-free home trial{% endif %}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class='cl-feature-showcase' id='cl-highlights' aria-label='Product highlights'>
+    <div class='cl-feature-showcase__inner'>
+      <div class='cl-feature-tile cl-feature-tile--large {% if is_cap %}cl-feature-tile--image-bg{% else %}cl-feature-tile--infographic{% endif %}'>
+        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-targeted-ritual.png" | asset_url }});'{% else %}style='background-image:url({{ "cytolight-7-wavelengths-infographic.jpg" | asset_url }});'{% endif %}></div>
+        <div class='cl-feature-tile__content'>
+          <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Rituel capillaire ciblé{% else %}Targeted hair ritual{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Thérapie spectrale complète{% else %}Full-spectrum therapy{% endif %}{% endif %}</p>
+          <h2 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Rouge et proche infrarouge. Un geste quotidien.{% else %}Red and near-infrared. One daily habit.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Sept longueurs d'onde. Un rituel quotidien.{% else %}Seven wavelengths. One daily ritual.{% endif %}{% endif %}</h2>
+          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}CYTOLIGHT cap concentre la lumière 660nm et 850nm dans un format portable, pour accompagner une routine cuir chevelu régulière sans bloquer votre journée.{% else %}CYTOLIGHT cap brings 660nm red and 850nm near-infrared light into a wearable format, supporting a consistent scalp routine without interrupting your day.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}La lumière rouge et proche infrarouge couvre une zone plus large pour accompagner les routines corps entier, la récupération sportive et les espaces wellness dédiés.{% else %}Red and near-infrared light cover a larger area for full-body routines, athletic recovery, and dedicated wellness spaces.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}La lumière ambre, rouge et proche infrarouge accompagne la peau, les muscles, les articulations, le rythme du sommeil et l'énergie mentale, depuis un panneau conçu pour le bureau.{% else %}Amber, red, and near-infrared light work across skin, muscles, joints, sleep rhythm, and mental energy, all from a desk-ready panel.{% endif %}{% endif %}</p>
+        </div>
+      </div>
+      <div class='cl-feature-tile cl-feature-tile--light {% if is_cap %}cl-feature-tile--cap-head-bg{% endif %}'>
+        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-head-scalp.png" | asset_url }});'{% endif %}></div>
+        <div class='cl-feature-tile__content'>
+          <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Grand format{% else %}Large format{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Prêt pour le bureau{% else %}Desk-ready{% endif %}{% endif %}</p>
+          <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Pensé pour rester dans votre routine.{% else %}Built to stay in your routine.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Conçu pour les espaces dédiés.{% else %}Built for dedicated spaces.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Conçu pour rester visible.{% else %}Built to stay visible.{% endif %}{% endif %}</h3>
+          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}Le format casquette garde la lumière proche du cuir chevelu pendant que vous lisez, travaillez ou vous détendez.{% else %}The cap format keeps light positioned close to the scalp while you read, work, or unwind.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Son format vertical apporte une présence lumineuse immersive pour les studios, salles de sport privées et routines à domicile plus complètes.{% else %}Its vertical format creates an immersive light presence for studios, private training rooms, and more complete at-home routines.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Format compact, support ajustable et fonctionnement silencieux pour une utilisation simple matin ou soir.{% else %}Compact footprint, adjustable stand, and quiet operation make it easy to use every morning or evening.{% endif %}{% endif %}</p>
+        </div>
+      </div>
+      <div class='cl-feature-tile'>
+        <div class='cl-feature-tile__bg'></div>
+        <div class='cl-feature-tile__content'>
+          <p class='cl-feature-tile__kicker'>{% if request.locale.iso_code contains 'fr' %}Contrôle intelligent{% else %}Smart control{% endif %}</p>
+          <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Intensité, minuteur, pulsation.{% else %}Dimming, timer, pulsing.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Écran tactile et application.{% else %}Touchscreen and app control.{% endif %}{% endif %}</h3>
+          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}Ajustez la luminosité, la durée, les pulsations et la sélection des longueurs d'onde pour répéter facilement votre routine.{% else %}Adjust brightness, session time, pulsing, and wavelength selection so your routine feels easy to repeat.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Réglez la luminosité, la durée, les scènes et les pulsations depuis l'appareil ou votre téléphone.{% else %}Fine-tune brightness, timing, scenes, and pulse settings from the device or your phone.{% endif %}{% endif %}</p>
+        </div>
+      </div>
+      <div class='cl-feature-tile {% if is_cap %}cl-feature-tile--image-bg cl-feature-tile--scalp-bg{% endif %}'>
+        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-scalp-density.png" | asset_url }});'{% endif %}></div>
+        <div class='cl-feature-tile__content'>
+          <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Cheveux et cuir chevelu{% else %}Hair and scalp{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Récupération et bien-être{% else %}Recovery and wellness{% endif %}{% endif %}</p>
+          <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Pour une apparence de cheveux plus dense.{% else %}For fuller-looking hair routines.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Visage, corps, articulations et concentration.{% else %}Face, body, joints, and focus.{% endif %}{% endif %}</h3>
+          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}Utilisez-le comme rituel régulier centré sur le confort du cuir chevelu, la constance et l'apparence de cheveux plus sains.{% else %}Use it as a regular ritual focused on scalp comfort, consistency, and the appearance of healthier-looking hair.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Utilisez-le pour la récupération musculaire, le soutien de la peau, l'énergie, la détente et une routine de sommeil plus régulière.{% else %}Use it for muscle recovery, skin support, energy, relaxation, and a more consistent sleep routine.{% endif %}{% endif %}</p>
+        </div>
+      </div>
+      <div class='cl-feature-tile cl-feature-tile--light'>
+        <div class='cl-feature-tile__bg'></div>
+        <div class='cl-feature-tile__content'>
+          <p class='cl-feature-tile__kicker'>{% if request.locale.iso_code contains 'fr' %}Confiance{% else %}Confidence{% endif %}</p>
+          <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Un format premium, simple à porter.{% else %}Premium build, simple to wear.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Conception de qualité clinique.{% else %}Clinical-grade build.{% endif %}{% endif %}</h3>
+          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}Conçu pour une utilisation à domicile avec commandes claires, port confortable, garantie incluse et essai de 30 jours.{% else %}Designed for home use with clear controls, comfortable wear, warranty coverage, and a 30-day home trial.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Inclut lunettes de protection, système de support, garantie et essai à domicile de 30 jours.{% else %}Includes safety goggles, support system, warranty coverage, and a 30-day home trial.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Inclut lunettes de protection, support de bureau, garantie et essai à domicile de 30 jours.{% else %}Includes safety goggles, desk stand, warranty coverage, and a 30-day home trial.{% endif %}{% endif %}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class='cl-product-wrap' id='cl-buy-area'>
+
+    <div class='cl-col-left'>
+      <div class='cl-gallery' id='cl-gallery'>
+        {%- if product.media.size > 0 -%}
+          {%- for media in product.media limit: 10 -%}
+            <div class='cl-media-slot {% if forloop.first %}is-active{% endif %}' data-slot='{{ forloop.index0 }}'>
+              {%- case media.media_type -%}
+                {%- when 'image' -%}
+                  <img src='{{ media | image_url: width: 1400 }}' alt='{{ media.alt | escape }}' loading='{% if forloop.first %}eager{% else %}lazy{% endif %}'>
+                {%- when 'video' -%}
+                  {{ media | video_tag: autoplay: false, loop: false, controls: true, muted: false }}
+                {%- when 'external_video' -%}
+                  {{ media | external_video_tag }}
+                {%- when 'model' -%}
+                  {{ media | model_viewer_tag: reveal: 'interaction', toggleable: true }}
+                {%- else -%}
+                  <img src='{{ media.preview_image | image_url: width: 1400 }}' alt='{{ media.alt | escape }}' loading='lazy'>
+              {%- endcase -%}
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class='cl-media-slot is-active'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+        {%- endif -%}
+      </div>
+      {%- if product.media.size > 0 -%}
+        <div class='cl-thumbstrip' id='cl-thumbstrip'>
+          {%- for media in product.media limit: 10 -%}
+            <div class='cl-thumbitem {% if forloop.first %}is-active{% endif %}' data-slot='{{ forloop.index0 }}'>
+              <img src='{{ media.preview_image | image_url: width: 200 }}' alt='{{ media.alt | escape }}'>
+              {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+                <span class='cl-thumbitem__play'>&#9654;</span>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      <div class='cl-wave-bar'>
+        <p class='cl-wave-bar__title'>{% if is_cap %}{% if is_fr %}Longueurs d'onde pour les cheveux{% else %}Hair-focused wavelengths{% endif %}{% else %}7 Therapeutic Wavelengths{% endif %}</p>
+        <div class='cl-wave-dots'>
+          {%- if is_cap -%}
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#c8102e;'></div><span class='cl-wave-dot__nm'>660</span><span class='cl-wave-dot__label'>{% if is_fr %}Rouge{% else %}Red{% endif %}</span></div>
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#5b2d8e;'></div><span class='cl-wave-dot__nm'>850</span><span class='cl-wave-dot__label'>{% if is_fr %}NIR{% else %}NIR{% endif %}</span></div>
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#5b2d8e;'></div><span class='cl-wave-dot__nm'>850</span><span class='cl-wave-dot__label'>{% if is_fr %}NIR{% else %}NIR{% endif %}</span></div>
+          {%- else -%}
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#ffb347;'></div><span class='cl-wave-dot__nm'>590</span><span class='cl-wave-dot__label'>Amber</span></div>
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#e8303a;'></div><span class='cl-wave-dot__nm'>630</span><span class='cl-wave-dot__label'>Red</span></div>
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#c8102e;'></div><span class='cl-wave-dot__nm'>660</span><span class='cl-wave-dot__label'>Deep Red</span></div>
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#7b4fa6;'></div><span class='cl-wave-dot__nm'>810</span><span class='cl-wave-dot__label'>NIR</span></div>
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#6a3d9a;'></div><span class='cl-wave-dot__nm'>830</span><span class='cl-wave-dot__label'>NIR</span></div>
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#5b2d8e;'></div><span class='cl-wave-dot__nm'>850</span><span class='cl-wave-dot__label'>NIR</span></div>
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#3d1f6e;'></div><span class='cl-wave-dot__nm'>940</span><span class='cl-wave-dot__label'>Deep NIR</span></div>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class='cl-inbox'>
+        <p class='cl-inbox__title'>{% if request.locale.iso_code contains 'fr' %}Dans la boîte{% else %}What's in the box{% endif %}</p>
+        <ul class='cl-inbox__list'>
+          <li class='cl-inbox__item'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>{% if is_cap %}{% if is_fr %}Casquette CYTOLIGHT cap avec 150 LED 3-en-1{% else %}CYTOLIGHT cap with 150 3-in-1 LEDs{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Panneau CytoLight PANO ULTRA grand format{% else %}CytoLight PANO ULTRA large-format panel{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Panneau CytoLight (7 spectres){% else %}CytoLight Panel (7-spectrum){% endif %}{% endif %}</li>
+          <li class='cl-inbox__item'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>{% if is_cap %}{% if is_fr %}Contrôleur de session et câble d'alimentation{% else %}Session controller and power cable{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Système de support vertical + matériel de fixation{% else %}Vertical support system + mounting hardware{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Support de bureau réglable + matériel de fixation{% else %}Adjustable desk stand + mounting hardware{% endif %}{% endif %}</li>
+          <li class='cl-inbox__item'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>{% if is_cap %}{% if is_fr %}Commande intensité, minuteur, pulsation et longueurs d'onde{% else %}Controls for dimming, timer, pulsing, and wavelength selection{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Câble d'alimentation professionnel (adaptateur universel){% else %}Professional power cable (universal adapter){% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Câble d'alimentation (adaptateur universel){% else %}Power cable (universal adapter){% endif %}{% endif %}</li>
+          <li class='cl-inbox__item'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>{% if is_cap %}{% if is_fr %}Emballage premium de protection{% else %}Premium protective packaging{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Commande CytoLight et modes de session{% else %}CytoLight controls and session modes{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Application CytoLight (iOS &amp; Android){% else %}CytoLight App (iOS &amp; Android){% endif %}{% endif %}</li>
+          <li class='cl-inbox__item'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>{% if is_cap %}{% if is_fr %}Guide de démarrage rapide + garantie{% else %}Quick-start guide + warranty information{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Lunettes de protection + guide de démarrage rapide{% else %}Safety goggles + quick-start guide{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Lunettes de protection + guide de démarrage rapide{% else %}Safety goggles + quick-start guide{% endif %}{% endif %}</li>
+        </ul>
+      </div>
+      <div class='cl-clinical'>
+        <div class='cl-clinical__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'/></svg></div>
+        <div><p class='cl-clinical__heading'>{% if is_fr %}Soutenu par 4 000+ &eacute;tudes revues par des pairs{% else %}Backed by 4,000+ peer-reviewed studies{% endif %}</p><p class='cl-clinical__sub'>{% if is_fr %}La photobiomodulation est document&eacute;e dans des revues de dermatologie, de m&eacute;decine du sport et de neurosciences.{% else %}Photobiomodulation therapy is documented across dermatology, sports medicine, and neuroscience journals worldwide.{% endif %}</p></div>
+      </div>
+      <div class='cl-certs'>
+        <div class='cl-cert'><svg viewBox='0 0 24 24' fill='none' stroke='#c8102e' stroke-width='2'><path d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'/></svg><span>CE<br>{% if is_fr %}Certifi&eacute;{% else %}Certified{% endif %}</span></div>
+        <div class='cl-cert'><svg viewBox='0 0 24 24' fill='none' stroke='#c8102e' stroke-width='2'><path d='M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z'/></svg><span>{% if is_fr %}Qualit&eacute;<br>clinique{% else %}Clinical<br>Grade{% endif %}</span></div>
+        <div class='cl-cert'><svg viewBox='0 0 24 24' fill='none' stroke='#c8102e' stroke-width='2'><rect x='2' y='3' width='20' height='14' rx='2'/><line x1='8' y1='21' x2='16' y2='21'/><line x1='12' y1='17' x2='12' y2='21'/></svg><span>FDA<br>{% if is_fr %}List&eacute;{% else %}Listed{% endif %}</span></div>
+        <div class='cl-cert'><svg viewBox='0 0 24 24' fill='none' stroke='#c8102e' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg><span>{% if is_fr %}Garantie<br>2 ans{% else %}2-Year<br>Warranty{% endif %}</span></div>
+      </div>
+    </div>
+
+    <div class='cl-col-right'>
+      {% if product.vendor != blank %}<p class='cl-eyebrow'>{{ product.vendor }}</p>{% else %}<p class='cl-eyebrow'>CytoLight</p>{% endif %}
+      <h1 class='cl-title'>{{ product.title }}</h1>
+      <div class='cl-rating-row'>
+        <span class='cl-stars'>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span class='cl-rating-num'>4.9</span>
+        <span class='cl-rating-sep'>|</span>
+        <span class='cl-rating-count'>{{ product.metafields.reviews.rating_count | default: '128' }} {% if is_fr %}avis{% else %}reviews{% endif %}</span>
+        <span class='cl-rating-sep'>|</span>
+        <span class='cl-rating-verify'>&#10003; {% if is_fr %}V&eacute;rifi&eacute;{% else %}Verified{% endif %}</span>
+      </div>
+      <div class='cl-price-row'>
+        <span class='cl-price'>{{ product.price | money }}</span>
+        {%- if product.compare_at_price > product.price -%}
+          <span class='cl-compare'>{{ product.compare_at_price | money }}</span>
+          {%- assign savings_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price -%}
+          <span class='cl-save-badge'>{% if is_fr %}&Eacute;CONOMISEZ{% else %}SAVE{% endif %} {{ savings_pct }}%</span>
+        {%- endif -%}
+      </div>
+      <p class='cl-price-note'>{% if request.locale.iso_code contains 'fr' %}Taxes incluses &#183; Livraison offerte dès 125 &#8364;{% else %}Tax included &#183; Free shipping on orders over &#8364;125{% endif %}</p>
+      <div class='cl-trust-row'>
+        <div class='cl-pill'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='1' y='3' width='15' height='13' rx='2'/><polygon points='16 8 20 8 23 11 23 16 16 16 16 8'/><circle cx='5.5' cy='18.5' r='2.5'/><circle cx='18.5' cy='18.5' r='2.5'/></svg>{% if request.locale.iso_code contains 'fr' %}Livraison offerte{% else %}Free Shipping{% endif %}</div>
+        <div class='cl-pill'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='10'/><polyline points='12 6 12 12 16 14'/></svg>{% if request.locale.iso_code contains 'fr' %}Expédié en 24h{% else %}Ships in 24h{% endif %}</div>
+        <div class='cl-pill'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg>{% if request.locale.iso_code contains 'fr' %}Essai 30 jours{% else %}30-Day Trial{% endif %}</div>
+        <div class='cl-pill'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><polyline points='20 6 9 17 4 12'/></svg>{% if request.locale.iso_code contains 'fr' %}Garantie 2 ans{% else %}2-Year Warranty{% endif %}</div>
+      </div>
+      <div class='cl-proof-grid' aria-label='Purchase highlights'>
+        <div class='cl-proof-card'><span class='cl-proof-card__kicker'>{% if request.locale.iso_code contains 'fr' %}Sans risque{% else %}Risk-free{% endif %}</span><span class='cl-proof-card__text'>{% if request.locale.iso_code contains 'fr' %}Essayez-le chez vous pendant 30 jours{% else %}Try it at home for 30 days{% endif %}</span></div>
+        <div class='cl-proof-card'><span class='cl-proof-card__kicker'>Support</span><span class='cl-proof-card__text'>{% if request.locale.iso_code contains 'fr' %}Aide spécialiste avant et après l'achat{% else %}Specialist help before and after buying{% endif %}</span></div>
+        <div class='cl-proof-card'><span class='cl-proof-card__kicker'>{% if request.locale.iso_code contains 'fr' %}Qualité{% else %}Quality{% endif %}</span><span class='cl-proof-card__text'>{% if request.locale.iso_code contains 'fr' %}Appareil de qualité clinique avec garantie{% else %}Clinical-grade device with warranty{% endif %}</span></div>
+      </div>
+      <div class='cl-tabs'>
+        <div class='cl-tabs__nav'>
+          <button type='button' class='cl-tab-btn is-active' data-tab='description'>Description</button>
+          <button type='button' class='cl-tab-btn' data-tab='benefits'>{% if is_fr %}B&eacute;n&eacute;fices{% else %}Benefits{% endif %}</button>
+          <button type='button' class='cl-tab-btn' data-tab='specs'>{% if is_fr %}Fiche technique{% else %}Tech Specs{% endif %}</button>
+        </div>
+        <div class='cl-tab-panel is-active' id='cl-tab-description'>
+          <div class='cl-description-luxury'>{{ product.description }}</div>
+        </div>
+        <div class='cl-tab-panel' id='cl-tab-benefits'><ul>{% if is_cap %}{% if is_fr %}<li><strong>Routine cuir chevelu</strong> &#8212; Un format portable qui rend les s&eacute;ances plus faciles &agrave; r&eacute;p&eacute;ter.</li><li><strong>660nm rouge</strong> &#8212; Utilis&eacute; dans les routines de photobiomodulation en surface.</li><li><strong>850nm proche infrarouge</strong> &#8212; Compl&egrave;te la lumi&egrave;re rouge avec une longueur d'onde plus profonde.</li><li><strong>Confort d'usage</strong> &#8212; La casquette laisse les mains libres pendant une session calme &agrave; la maison.</li><li><strong>Cheveux d'apparence plus saine</strong> &#8212; Pens&eacute; pour soutenir la constance, le soin du cuir chevelu et une routine cheveux plus premium.</li>{% else %}<li><strong>Scalp routine</strong> &#8212; A wearable format that makes sessions easier to repeat consistently.</li><li><strong>660nm red light</strong> &#8212; Used in surface-level photobiomodulation routines.</li><li><strong>850nm near-infrared</strong> &#8212; Complements red light with a deeper near-infrared wavelength.</li><li><strong>Comfortable use</strong> &#8212; The cap keeps your hands free during a quiet at-home session.</li><li><strong>Healthier-looking hair</strong> &#8212; Built to support consistency, scalp care, and a more premium hair wellness ritual.</li>{% endif %}{% else %}{% if is_fr %}<li><strong>R&eacute;cup&eacute;ration cellulaire</strong> &#8212; Le rouge et le proche infrarouge accompagnent les muscles et tissus apr&egrave;s l'effort.</li><li><strong>Concentration</strong> &#8212; La lumi&egrave;re ambre aide &agrave; cr&eacute;er un rituel de bureau plus &eacute;nergisant.</li><li><strong>Sommeil</strong> &#8212; Les s&eacute;ances du soir peuvent soutenir une routine plus calme et r&eacute;guli&egrave;re.</li><li><strong>Peau</strong> &#8212; Les longueurs d'onde rouges sont utilis&eacute;es pour l'&eacute;clat, la texture et le soutien du collag&egrave;ne.</li><li><strong>Confort articulaire</strong> &#8212; Les longueurs d'onde NIR ciblent les zones plus profondes.</li>{% else %}<li><strong>Cellular Recovery</strong> &#8212; Red (630/660nm) and NIR (810&#8211;940nm) penetrate deep into muscle tissue, reducing inflammation and accelerating repair.</li><li><strong>Focus and Mental Clarity</strong> &#8212; 590nm amber light optimises mitochondrial function, sharpening cognitive performance and reducing mental fatigue.</li><li><strong>Sleep Quality</strong> &#8212; Evening red-light sessions regulate melatonin and calibrate circadian rhythm for deeper, more restorative sleep.</li><li><strong>Skin Rejuvenation</strong> &#8212; 630nm and 660nm stimulate fibroblast activity and collagen synthesis, reducing fine lines and improving skin tone.</li><li><strong>Pain and Inflammation</strong> &#8212; NIR at 850nm and 940nm targets joint capsules and connective tissue for lasting relief.</li>{% endif %}{% endif %}</ul></div>
+        <div class='cl-tab-panel' id='cl-tab-specs'><ul>{% if is_cap %}<li><strong>{% if is_fr %}LED{% else %}LED Count{% endif %}:</strong> 150 pcs 3-in-1</li><li><strong>{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}:</strong> 660nm &#183; 850nm &#183; 850nm</li><li><strong>{% if is_fr %}Contr&ocirc;les{% else %}Controls{% endif %}:</strong> {% if is_fr %}intensit&eacute; variable, minuteur, pulsation, s&eacute;lection des longueurs d'onde{% else %}Dimmable intensity, timer, pulsing, wavelength selection{% endif %}</li><li><strong>{% if is_fr %}Usage{% else %}Use{% endif %}:</strong> {% if is_fr %}routine cheveux et cuir chevelu{% else %}Hair wellness and scalp routine{% endif %}</li><li><strong>{% if is_fr %}Format{% else %}Form Factor{% endif %}:</strong> {% if is_fr %}casquette portable mains libres{% else %}Hands-free wearable cap{% endif %}</li><li><strong>{% if is_fr %}Garantie{% else %}Warranty{% endif %}:</strong> {% if is_fr %}2 ans{% else %}2 years{% endif %}</li>{% else %}<li><strong>{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}:</strong> 590 &#183; 630 &#183; 660 &#183; 810 &#183; 830 &#183; 850 &#183; 940nm</li><li><strong>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}:</strong> {% if is_fr %}&eacute;cran tactile capacitif couleur{% else %}Full-colour capacitive touch screen{% endif %}</li><li><strong>{% if is_fr %}Connectivit&eacute;{% else %}Connectivity{% endif %}:</strong> Bluetooth 5.0 + Wi-Fi (CytoLight App)</li><li><strong>{% if is_fr %}Modes intelligents{% else %}Smart Modes{% endif %}:</strong> {% if is_fr %}minuteur, alarme, biblioth&egrave;que de sc&egrave;nes, pulsations (1&#8211;40 Hz){% else %}Timer, alarm clock, scene library, pulsing (1&#8211;40 Hz){% endif %}</li><li><strong>{% if is_fr %}Contr&ocirc;le par spectre{% else %}Per-Spectrum Control{% endif %}:</strong> {% if is_fr %}luminosit&eacute; et fr&eacute;quence de pulsation ind&eacute;pendantes par longueur d'onde{% else %}Independent brightness and pulse rate per wavelength{% endif %}</li><li><strong>{% if is_fr %}Format{% else %}Form Factor{% endif %}:</strong> {% if is_pano_ultra %}{% if is_fr %}panneau vertical grand format pour routines corps entier{% else %}Large vertical panel for full-body routines{% endif %}{% else %}{% if is_fr %}panneau de bureau avec support ajustable &agrave; 360&#176;{% else %}Desk-ready panel with 360&#176; adjustable stand{% endif %}{% endif %}</li><li><strong>{% if is_fr %}Certifications{% else %}Certifications{% endif %}:</strong> CE &#183; FDA Listed &#183; Clinical Grade</li><li><strong>{% if is_fr %}Garantie{% else %}Warranty{% endif %}:</strong> {% if is_fr %}2 ans{% else %}2 years{% endif %}</li>{% endif %}</ul></div>
+      </div>
+      <div class='cl-buy-panel'>
+        {% form 'product', product, id: 'cl-product-form' %}
+          <input type='hidden' name='id' value='{{ product.selected_or_first_available_variant.id }}'>
+          <input type='hidden' name='quantity' value='1' id='cl-qty-input'>
+          <div class='cl-urgency'>
+            <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='10'/><path d='M12 6v6l4 2'/></svg>
+            {% if request.locale.iso_code contains 'fr' %}Commandez aujourd'hui pour une expédition rapide, la livraison offerte dès 125 &#8364; et un essai à domicile de 30 jours.{% else %}Order today for fast dispatch, free delivery over &#8364;125, and a 30-day home trial.{% endif %}
+          </div>
+          <p class='cl-section-label'>{% if request.locale.iso_code contains 'fr' %}Choisissez votre pack{% else %}Choose your package{% endif %}</p>
+          <div class='cl-bundles'>
+            <div class='cl-bundle is-selected' data-qty='1'><div class='cl-bundle__row'><span class='cl-bundle__num'>1</span><span class='cl-bundle__unit'>{% if is_cap %}{% if is_fr %}Cap{% else %}Cap{% endif %}{% else %}Panel{% endif %}</span></div><span class='cl-bundle__save'>&nbsp;</span></div>
+            <div class='cl-bundle' data-qty='2'><span class='cl-bundle__badge'>{% if is_fr %}POPULAIRE{% else %}POPULAR{% endif %}</span><div class='cl-bundle__row'><span class='cl-bundle__num'>2</span><span class='cl-bundle__unit'>{% if is_cap %}{% if is_fr %}Caps &#8212; Offre duo{% else %}Caps &#8212; Duo Offer{% endif %}{% else %}{% if is_fr %}Panneaux &#8212; Offre duo{% else %}Panels &#8212; Duo Offer{% endif %}{% endif %}</span></div><span class='cl-bundle__save'>{% if is_fr %}&Eacute;conomisez 10%{% else %}Save 10%{% endif %}</span></div>
+            <div class='cl-bundle' data-qty='3'><span class='cl-bundle__badge'>{% if is_fr %}MEILLEURE OFFRE{% else %}BEST VALUE{% endif %}</span><div class='cl-bundle__row'><span class='cl-bundle__num'>3</span><span class='cl-bundle__unit'>{% if is_cap %}{% if is_fr %}Caps &#8212; Famille{% else %}Caps &#8212; Family{% endif %}{% else %}{% if is_fr %}Panneaux &#8212; Famille et amis{% else %}Panels &#8212; Family &amp; Friends{% endif %}{% endif %}</span></div><span class='cl-bundle__save'>{% if is_fr %}&Eacute;conomisez 15%{% else %}Save 15%{% endif %}</span></div>
+          </div>
+          <button type='submit' class='cl-atc' {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+            <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><circle cx='9' cy='21' r='1'/><circle cx='20' cy='21' r='1'/><path d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/></svg>
+            {% if product.selected_or_first_available_variant.available %}{% if request.locale.iso_code contains 'fr' %}Ajouter au panier{% else %}Add to Cart{% endif %} &#8212; {{ product.price | money }}{% else %}{% if request.locale.iso_code contains 'fr' %}Épuisé{% else %}Sold Out{% endif %}{% endif %}
+          </button>
+          <div class='cl-payment-row' aria-label='Checkout reassurance'>
+            <div class='cl-payment-note'>{% if request.locale.iso_code contains 'fr' %}Paiement sécurisé{% else %}Secure checkout{% endif %}</div>
+            <div class='cl-payment-note'>{% if request.locale.iso_code contains 'fr' %}Retours faciles{% else %}Easy returns{% endif %}</div>
+            <div class='cl-payment-note'>{% if request.locale.iso_code contains 'fr' %}Garantie incluse{% else %}Warranty included{% endif %}</div>
+          </div>
+        {% endform %}
+      </div>
+      <div class='cl-guarantee'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/></svg><span><strong>{% if request.locale.iso_code contains 'fr' %}Garantie satisfait ou remboursé 30 jours.{% else %}30-day money-back guarantee.{% endif %}</strong> {% if request.locale.iso_code contains 'fr' %}Adoptez-le ou retournez-le, sans question.{% else %}Love it or return it &#8212; no questions asked.{% endif %}</span></div>
+      <div class='cl-benefits'>
+        <div class='cl-benefit'><div class='cl-benefit__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg></div><span class='cl-benefit__label'>{% if is_cap %}{% if is_fr %}150 LED{% else %}150 LEDs{% endif %}{% else %}{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Faster Recovery{% endif %}{% endif %}</span><span class='cl-benefit__sub'>{% if is_cap %}{% if is_fr %}3-en-1{% else %}3-in-1{% endif %}{% else %}{% if is_fr %}Muscles et tissus{% else %}Muscle &amp; tissue{% endif %}{% endif %}</span></div>
+        <div class='cl-benefit'><div class='cl-benefit__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='10'/><line x1='12' y1='8' x2='12' y2='12'/><line x1='12' y1='16' x2='12.01' y2='16'/></svg></div><span class='cl-benefit__label'>{% if is_cap %}{% if is_fr %}660 + 850nm{% else %}660 + 850nm{% endif %}{% else %}{% if is_fr %}Concentration{% else %}Sharper Focus{% endif %}{% endif %}</span><span class='cl-benefit__sub'>{% if is_cap %}{% if is_fr %}Rouge + NIR{% else %}Red + NIR{% endif %}{% else %}{% if is_fr %}Esprit et &eacute;nergie{% else %}Brain &amp; energy{% endif %}{% endif %}</span></div>
+        <div class='cl-benefit'><div class='cl-benefit__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/></svg></div><span class='cl-benefit__label'>{% if is_cap %}{% if is_fr %}Cuir chevelu{% else %}Scalp Care{% endif %}{% else %}{% if is_fr %}Sommeil{% else %}Better Sleep{% endif %}{% endif %}</span><span class='cl-benefit__sub'>{% if is_cap %}{% if is_fr %}Routine cheveux{% else %}Hair routine{% endif %}{% else %}{% if is_fr %}Rythme circadien{% else %}Circadian rhythm{% endif %}{% endif %}</span></div>
+        <div class='cl-benefit'><div class='cl-benefit__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/></svg></div><span class='cl-benefit__label'>{% if is_cap %}{% if is_fr %}Mains libres{% else %}Hands-Free{% endif %}{% else %}{% if is_fr %}Peau{% else %}Skin Health{% endif %}{% endif %}</span><span class='cl-benefit__sub'>{% if is_cap %}{% if is_fr %}Simple &agrave; porter{% else %}Easy to wear{% endif %}{% else %}{% if is_fr %}Collag&egrave;ne et &eacute;clat{% else %}Collagen &amp; glow{% endif %}{% endif %}</span></div>
+      </div>
+      <div class='cl-reviews'>
+        <div class='cl-reviews__header'><span class='cl-reviews__title'>{% if is_fr %}Avis clients{% else %}Customer Reviews{% endif %}</span><div class='cl-reviews__avg'><span class='cl-reviews__big'>4.9</span><span class='cl-stars' style='font-size:14px;'>&#9733;&#9733;&#9733;&#9733;&#9733;</span></div></div>
+        <div class='cl-review-cards'>
+          <div class='cl-review-card'><div class='cl-review-card__top'><span class='cl-review-card__author'>Marcus T. &#10003;</span><span class='cl-review-card__date'>{% if is_fr %}Il y a 2 semaines{% else %}2 weeks ago{% endif %}</span></div><div class='cl-review-card__stars'>&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class='cl-review-card__text'>{% if is_fr %}Tr&egrave;s utile apr&egrave;s le sport. Je r&eacute;cup&egrave;re mieux et le contr&ocirc;le via l'application est vraiment pratique.{% else %}Game-changer for post-workout recovery. My DOMS has dropped noticeably and my afternoon focus is way sharper. The app control is genuinely impressive.{% endif %}</p></div>
+          <div class='cl-review-card'><div class='cl-review-card__top'><span class='cl-review-card__author'>Sophie R. &#10003;</span><span class='cl-review-card__date'>{% if is_fr %}Il y a 1 mois{% else %}1 month ago{% endif %}</span></div><div class='cl-review-card__stars'>&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class='cl-review-card__text'>{% if is_fr %}J'&eacute;tais sceptique, mais apr&egrave;s quelques semaines ma peau est plus uniforme. L'appareil fait tr&egrave;s premium.{% else %}I was sceptical but the skin results after 6 weeks are undeniable &#8212; texture, tone, everything improved. Build quality is premium and setup was seamless.{% endif %}</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class='cl-sticky-atc' id='cl-sticky-atc' aria-label='Quick add to cart'>
+    <div class='cl-sticky-atc__info'>
+      <span class='cl-sticky-atc__title'>{{ product.title }}</span>
+      <span class='cl-sticky-atc__meta'><span>{{ product.price | money }}</span><span>&#183;</span><span>{% if request.locale.iso_code contains 'fr' %}Essai 30 jours{% else %}30-day trial{% endif %}</span></span>
+    </div>
+    <button type='button' class='cl-sticky-atc__button' id='cl-sticky-atc-button' {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+      {% if product.selected_or_first_available_variant.available %}{% if request.locale.iso_code contains 'fr' %}Ajouter{% else %}Add to Cart{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Épuisé{% else %}Sold Out{% endif %}{% endif %}
+    </button>
+  </div>
+
+  <!-- ===== STATS STRIP ===== -->
+  <div class='cl-stats-strip'>
+    <div class='cl-stats-inner'>
+      <div class='cl-stat'>
+        <span class='cl-stat__num'>{% if is_cap %}150{% else %}7{% endif %}</span>
+        <span class='cl-stat__label'>{% if is_cap %}{% if is_fr %}LED 3-en-1{% else %}3-in-1 LEDs{% endif %}{% else %}{% if is_fr %}Longueurs d'onde th&eacute;rapeutiques{% else %}Therapeutic Wavelengths{% endif %}{% endif %}</span>
+      </div>
+      <div class='cl-stat'>
+        <span class='cl-stat__num'>{% if is_cap %}660{% else %}4,000+{% endif %}</span>
+        <span class='cl-stat__label'>{% if is_cap %}{% if is_fr %}nm rouge{% else %}nm red light{% endif %}{% else %}{% if is_fr %}&Eacute;tudes revues par des pairs{% else %}Peer-Reviewed Studies{% endif %}{% endif %}</span>
+      </div>
+      <div class='cl-stat'>
+        <span class='cl-stat__num'>{% if is_cap %}850{% else %}40 Hz{% endif %}</span>
+        <span class='cl-stat__label'>{% if is_cap %}{% if is_fr %}nm proche infrarouge{% else %}nm near-infrared{% endif %}{% else %}{% if is_fr %}Fr&eacute;quence de pulsation max{% else %}Max Pulse Frequency{% endif %}{% endif %}</span>
+      </div>
+      <div class='cl-stat'>
+        <span class='cl-stat__num'>30</span>
+        <span class='cl-stat__label'>{% if is_fr %}Jours d'essai sans risque{% else %}Day Risk-Free Trial{% endif %}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== EDITORIAL 1 ===== -->
+  <div class='cl-editorial'>
+    <div class='cl-editorial__inner'>
+      <div class='cl-editorial__img-wrap'>
+        {%- if is_cap -%}
+          <img src='{{ "cytolight-cap-editorial-consistency.png" | asset_url }}' alt='{% if is_fr %}CYTOLIGHT cap avec LED int&eacute;gr&eacute;es pour une routine cheveux r&eacute;guli&egrave;re{% else %}CYTOLIGHT cap with integrated LEDs for a consistent hair routine{% endif %}' loading='lazy' class='cl-editorial__img' width='1456' height='1042'>
+        {%- elsif product.featured_image -%}
+          <img src='{{ product.featured_image | image_url: width: 900 }}' alt='{{ product.featured_image.alt | escape }}' loading='lazy' class='cl-editorial__img'>
+        {%- else -%}
+          {{ 'product-2' | placeholder_svg_tag: 'cl-editorial__img' }}
+        {%- endif -%}
+      </div>
+      <div class='cl-editorial__copy'>
+        <p class='cl-editorial__eyebrow'>{% if is_cap %}{% if is_fr %}Pens&eacute; pour la r&eacute;gularit&eacute;{% else %}Designed for consistency{% endif %}{% else %}{% if is_fr %}Pens&eacute; pour la vie moderne{% else %}Designed for modern life{% endif %}{% endif %}</p>
+        <h2 class='cl-editorial__title'>{% if is_cap %}{% if is_fr %}La routine cheveux que vous pouvez vraiment tenir.{% else %}The hair routine you can actually keep.{% endif %}{% else %}{% if is_fr %}Rechargez-vous &agrave; votre bureau. Chaque jour.{% else %}Recharge at your desk. Every single day.{% endif %}{% endif %}</h2>
+        <p class='cl-editorial__body'>{% if is_cap %}{% if is_fr %}Les soins capillaires fonctionnent mieux quand ils deviennent simples. CYTOLIGHT cap se porte comme une casquette, lance une session guid&eacute;e, puis vous laisse continuer votre moment sans tenir un appareil &agrave; la main.{% else %}Hair care works best when it becomes simple. CYTOLIGHT cap wears like a cap, starts a guided light session, and lets you continue your moment without holding a device in your hand.{% endif %}{% else %}{% if is_fr %}Beaucoup d'appareils de luminoth&eacute;rapie finissent dans un placard. CytoLight est con&ccedil;u pour rester visible : silencieux, &eacute;l&eacute;gant et assez simple pour devenir un rituel aussi naturel que le caf&eacute; du matin.{% else %}Most red light therapy devices sit in a closet after the first week. The CytoLight is built to live on your desk &#8212; silent, sleek, and intuitive enough that your daily session becomes as automatic as morning coffee.{% endif %}{% endif %}</p>
+        <p class='cl-editorial__body'>{% if is_cap %}{% if is_fr %}La lumi&egrave;re rouge 660nm et le proche infrarouge 850nm sont r&eacute;partis dans la casquette pour une couverture homog&egrave;ne du cuir chevelu, avec des r&eacute;glages simples pour adapter votre session.{% else %}660nm red light and 850nm near-infrared light are distributed through the cap for even scalp coverage, with simple controls to adapt each session.{% endif %}{% else %}{% if is_fr %}Son format compact s'int&egrave;gre &agrave; tout espace de travail. Le support ajustable &agrave; 360&#176; vous aide &agrave; cibler le visage, le cou, les mains ou le torse sans changer de position.{% else %}Its compact footprint fits any workspace, while the 360&#176; adjustable stand lets you target exactly what needs attention &#8212; face, neck, hands, or chest &#8212; without changing position.{% endif %}{% endif %}</p>
+        <ul class='cl-editorial__bullets'>
+          <li>{% if is_cap %}{% if is_fr %}Format portable mains libres{% else %}Hands-free wearable format{% endif %}{% else %}{% if is_fr %}Format compact pr&ecirc;t pour le bureau{% else %}Compact desk-ready form factor{% endif %}{% endif %}</li>
+          <li>{% if is_cap %}{% if is_fr %}150 LED 3-en-1 pour le cuir chevelu{% else %}150 3-in-1 LEDs for the scalp{% endif %}{% else %}{% if is_fr %}Support ajustable &agrave; 360&#176; inclus{% else %}360&#176; adjustable stand included{% endif %}{% endif %}</li>
+          <li>{% if is_cap %}{% if is_fr %}Intensit&eacute; et dur&eacute;e ajustables{% else %}Adjustable intensity and timing{% endif %}{% else %}{% if is_fr %}Fonctionnement tr&egrave;s silencieux{% else %}Whisper-quiet operation{% endif %}{% endif %}</li>
+          <li>{% if is_cap %}{% if is_fr %}S&eacute;lection des longueurs d'onde{% else %}Wavelength selection{% endif %}{% else %}{% if is_fr %}Contr&ocirc;le depuis votre t&eacute;l&eacute;phone{% else %}App-controlled from your phone{% endif %}{% endif %}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== EDITORIAL 2: 7 wavelengths (dark, shader bg) ===== -->
+  <div class='cl-editorial cl-editorial--dark'>
+    <canvas id='cl-shader-bg' class='cl-shader-canvas'></canvas>
+    <div class='cl-editorial__inner'>
+      <div class='cl-editorial__copy'>
+        <p class='cl-editorial__eyebrow' style='color:#ff6060;'>{% if is_fr %}De la science, pas du hasard{% else %}Science, not guesswork{% endif %}</p>
+        <h2 class='cl-editorial__title' style='color:#fff;'>{% if is_cap %}{% if is_fr %}Deux longueurs d'onde, choisies pour le cuir chevelu.{% else %}Two wavelengths, chosen for the scalp.{% endif %}{% else %}{% if is_fr %}7 longueurs d'onde, ma&icirc;tris&eacute;es une par une.{% else %}7 wavelengths, individually mastered.{% endif %}{% endif %}</h2>
+        <p class='cl-editorial__body'>{% if is_cap %}{% if is_fr %}CYTOLIGHT cap se concentre sur l'essentiel pour les routines cheveux : <strong style='color:#fff;'>660nm rouge</strong> et <strong style='color:#fff;'>850nm proche infrarouge</strong>, avec intensit&eacute;, minuteur, pulsation et s&eacute;lection des longueurs d'onde.{% else %}CYTOLIGHT cap focuses on the essentials for hair routines: <strong style='color:#fff;'>660nm red</strong> and <strong style='color:#fff;'>850nm near-infrared</strong>, with dimming, timer, pulsing, and wavelength selection.{% endif %}{% else %}{% if is_fr %}Les panneaux g&eacute;n&eacute;riques utilisent souvent une approche unique. CytoLight propose <strong style='color:#fff;'>sept longueurs d'onde calibr&eacute;es</strong>, chacune avec un r&ocirc;le diff&eacute;rent et un contr&ocirc;le ind&eacute;pendant via l'&eacute;cran tactile ou l'application.{% else %}Generic panels flood you with a single wavelength at full power. CytoLight gives you <strong style='color:#fff;'>seven precisely calibrated wavelengths</strong> &#8212; each targeting a different biological mechanism, each independently controllable via touch screen or app.{% endif %}{% endif %}</p>
+      </div>
+      <div class='cl-wl-cards'>
+        {%- if is_cap -%}
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#b81020 0%,#1a0004 100%);'></div>
+          <div class='cl-wl-card__nm'>660nm</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>{% if is_fr %}Rouge{% else %}Red{% endif %}</span><span class='cl-wl-card__desc'>{% if is_fr %}Routine cuir chevelu, soin de surface{% else %}Scalp routine, surface-level care{% endif %}</span></div>
+        </div>
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#3e1e64 0%,#090010 100%);'></div>
+          <div class='cl-wl-card__nm'>850nm</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class='cl-wl-card__desc'>{% if is_fr %}Compl&eacute;ment profond pour routine cheveux{% else %}Deeper complement for hair routines{% endif %}</span></div>
+        </div>
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#1a1a1a 0%,#050505 100%);'></div>
+          <div class='cl-wl-card__nm'>150</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>{% if is_fr %}LED 3-en-1{% else %}3-in-1 LEDs{% endif %}</span><span class='cl-wl-card__desc'>{% if is_fr %}Couverture homog&egrave;ne dans un format portable{% else %}Even coverage in a wearable format{% endif %}</span></div>
+        </div>
+        {%- else -%}
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#c07800 0%,#1a0d00 100%);'></div>
+          <div class='cl-wl-card__nm'>590nm</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>Amber</span><span class='cl-wl-card__desc'>Mitochondrial activation, cognitive function</span></div>
+        </div>
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#b81020 0%,#1a0004 100%);'></div>
+          <div class='cl-wl-card__nm'>630nm</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>Red</span><span class='cl-wl-card__desc'>Surface skin, collagen, wound healing</span></div>
+        </div>
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#960c22 0%,#160006 100%);'></div>
+          <div class='cl-wl-card__nm'>660nm</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>{% if is_fr %}Rouge profond{% else %}Deep Red{% endif %}</span><span class='cl-wl-card__desc'>{% if is_fr %}Couches profondes de la peau, stimulation des fibroblastes{% else %}Deep skin layers, fibroblast stimulation{% endif %}</span></div>
+        </div>
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#5b3080 0%,#0e0018 100%);'></div>
+          <div class='cl-wl-card__nm'>810nm</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class='cl-wl-card__desc'>{% if is_fr %}R&eacute;cup&eacute;ration musculaire, confort articulaire{% else %}Muscle recovery, joint inflammation{% endif %}</span></div>
+        </div>
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#4e2872 0%,#0c0014 100%);'></div>
+          <div class='cl-wl-card__nm'>830nm</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class='cl-wl-card__desc'>{% if is_fr %}Soutien nerveux, circulation{% else %}Nerve regeneration, circulation{% endif %}</span></div>
+        </div>
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#3e1e64 0%,#090010 100%);'></div>
+          <div class='cl-wl-card__nm'>850nm</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class='cl-wl-card__desc'>{% if is_fr %}Tissus profonds, r&eacute;cup&eacute;ration, rythme du sommeil{% else %}Deep tissue, bone health, sleep regulation{% endif %}</span></div>
+        </div>
+        <div class='cl-wl-card'>
+          <div class='cl-wl-card__bg' style='background:linear-gradient(100deg,#2a1250 0%,#05000c 100%);'></div>
+          <div class='cl-wl-card__nm'>940nm</div>
+          <div class='cl-wl-card__info'><span class='cl-wl-card__name'>{% if is_fr %}Infrarouge profond{% else %}Deep Infrared{% endif %}</span><span class='cl-wl-card__desc'>{% if is_fr %}P&eacute;n&eacute;tration la plus profonde, soutien global{% else %}Deepest penetration, systemic benefits{% endif %}</span></div>
+        </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WHY CHOOSE CYTOLIGHT ===== -->
+  <div class='cl-why-section'>
+    <div class='cl-why-inner'>
+      <div class='cl-why-header {% if is_cap or is_pano_ultra %}cl-why-header--cap{% else %}cl-why-header--desk{% endif %}'>
+        {%- if is_cap -%}
+          <div class='cl-why-header__visual'>
+            <img class='cl-why-header__image' src='{{ "cytolight-cap-why-routine.png" | asset_url }}' alt='{% if is_fr %}Rituel cheveux avec CYTOLIGHT cap{% else %}Hair routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1536' height='1024'>
+          </div>
+        {%- elsif is_pano_ultra -%}
+          <div class='cl-why-header__visual'>
+            <img class='cl-why-header__image' src='{{ "cytolight-pano-ultra-goal-session.png" | asset_url }}' alt='{% if is_fr %}Session CytoLight PANO ULTRA guid&eacute;e par objectif{% else %}Goal-guided CytoLight PANO ULTRA session{% endif %}' loading='lazy' width='2048' height='1024'>
+          </div>
+        {%- else -%}
+          <div class='cl-why-header__visual'>
+            <img class='cl-why-header__image' src='{{ "cytolight-desk-professional.png" | asset_url }}' alt='{% if is_fr %}Panneau CytoLight DESK sur un bureau professionnel{% else %}CytoLight DESK panel on a professional desk{% endif %}' loading='lazy' width='1536' height='1024'>
+          </div>
+        {%- endif -%}
+        <p class='cl-why-eyebrow'>{% if is_cap %}{% if is_fr %}Pourquoi CYTOLIGHT cap{% else %}Why CYTOLIGHT cap{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Pourquoi PANO ULTRA{% else %}Why PANO ULTRA{% endif %}{% else %}{% if is_fr %}Pourquoi CytoLight{% else %}Why CytoLight{% endif %}{% endif %}</p>
+        <h2 class='cl-why-title'>{% if is_cap %}{% if is_fr %}Une routine cheveux simple &agrave; comprendre, facile &agrave; garder.{% else %}A hair routine that is simple to understand and easy to keep.{% endif %}{% else %}{% if is_fr %}Une fa&ccedil;on simple de comprendre ce que la lumi&egrave;re peut apporter &agrave; votre journ&eacute;e.{% else %}A simple way to understand what light therapy can do for your day.{% endif %}{% endif %}</h2>
+        <p class='cl-why-sub'>{% if is_cap %}{% if is_fr %}Commencez par un geste r&eacute;gulier. La casquette place la lumi&egrave;re au bon endroit, puis les r&eacute;glages vous aident &agrave; garder une session confortable, r&eacute;p&eacute;table et adapt&eacute;e &agrave; votre rythme.{% else %}Start with one repeatable habit. The cap places light where it needs to be, then the controls help you keep each session comfortable, repeatable, and tailored to your routine.{% endif %}{% else %}{% if is_fr %}Commencez par votre objectif, pas par des r&eacute;glages compliqu&eacute;s. Choisissez le r&eacute;sultat souhait&eacute;, puis laissez les longueurs d'onde, le minuteur, l'application et les pr&eacute;r&eacute;glages construire une routine facile &agrave; r&eacute;p&eacute;ter.{% else %}Instead of thinking in technical settings, start with your goal. Choose the outcome you want, then let the wavelengths, timer, app, and presets help you build a repeatable daily session.{% endif %}{% endif %}</p>
+      </div>
+      {%- if is_pano_ultra -%}
+      <div class='cl-why-grid'>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_fr %}Pour la r&eacute;cup&eacute;ration{% else %}For recovery{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_fr %}Une pr&eacute;sence lumineuse pour tout le corps.{% else %}Full-body light, without compromise.{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_fr %}PANO ULTRA apporte une surface lumineuse plus grande pour les routines sportives, les jambes, le dos, les &eacute;paules et les sessions de r&eacute;cup&eacute;ration plus compl&egrave;tes.{% else %}PANO ULTRA gives you a larger light surface for athletic routines, legs, back, shoulders, and more complete recovery sessions.{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Comment l'utiliser{% else %}How to use it{% endif %}</strong><span>{% if is_fr %}Placez-vous face au panneau, choisissez votre objectif, puis gardez une distance et une dur&eacute;e faciles &agrave; r&eacute;p&eacute;ter.{% else %}Stand or sit facing the panel, choose your goal, then keep a distance and duration that are easy to repeat.{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</span><span>810nm</span><span>850nm</span><span>940nm</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-recovery.png" | asset_url }}' alt='{% if is_fr %}Athl&egrave;te face au panneau CytoLight PANO ULTRA{% else %}Athlete facing the CytoLight PANO ULTRA panel{% endif %}' loading='lazy' width='1135' height='1408'>
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_fr %}Pour les espaces wellness{% else %}For wellness spaces{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_fr %}Un panneau qui transforme la pi&egrave;ce.{% else %}A panel that changes the room.{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_fr %}Le format vertical cr&eacute;e une exp&eacute;rience immersive pour une salle de r&eacute;cup&eacute;ration, un studio, un espace sportif priv&eacute; ou une routine &agrave; domicile plus ambitieuse.{% else %}The vertical format creates an immersive experience for recovery rooms, studios, private training spaces, or a more serious home routine.{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Pourquoi c'est utile{% else %}Why it matters{% endif %}</strong><span>{% if is_fr %}Plus la surface est grande, plus il est facile de couvrir une zone large sans devoir repositionner l'appareil constamment.{% else %}A larger light surface makes it easier to cover a broader area without constantly repositioning the device.{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_fr %}Grand format{% else %}Large format{% endif %}</span><span>{% if is_fr %}Studio{% else %}Studio{% endif %}</span><span>{% if is_fr %}Maison{% else %}Home{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-goal-session.png" | asset_url }}' alt='{% if is_fr %}PANO ULTRA dans un salon wellness{% else %}PANO ULTRA in a wellness living room{% endif %}' loading='lazy' width='2048' height='1024'>
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='10'/><polyline points='12 6 12 12 16 14'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_fr %}Pour le contr&ocirc;le{% else %}For control{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_fr %}Votre session, ajust&eacute;e &agrave; votre objectif.{% else %}Your session, tuned to your goal.{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_fr %}Ajustez le minuteur, la luminosit&eacute;, les pulsations et les modes depuis l'appareil ou l'application, puis gardez vos r&eacute;glages pr&eacute;f&eacute;r&eacute;s pour les sessions suivantes.{% else %}Adjust timer, brightness, pulsing, and modes from the device or app, then keep your preferred settings for future sessions.{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Comment CytoLight aide{% else %}How CytoLight helps{% endif %}</strong><span>{% if is_fr %}Commencez simple avec un pr&eacute;r&eacute;glage, puis personnalisez quand votre routine devient plus claire.{% else %}Start simple with a preset, then personalize once your routine becomes clearer.{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_fr %}Minuteur{% else %}Timer{% endif %}</span><span>{% if is_fr %}Pulsation{% else %}Pulsing{% endif %}</span><span>{% if is_fr %}Pr&eacute;r&eacute;glages{% else %}Presets{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-control.png" | asset_url }}' alt='{% if is_fr %}Contr&ocirc;le de session PANO ULTRA depuis l&apos;application{% else %}PANO ULTRA session control from the app{% endif %}' loading='lazy' width='1135' height='1408'>
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='5' y='2' width='14' height='20' rx='2'/><line x1='12' y1='18' x2='12.01' y2='18'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_fr %}Pour comprendre{% else %}For confidence{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_fr %}Commencez par l'objectif, pas par la technique.{% else %}Start with the goal, not the technical settings.{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_fr %}PANO ULTRA conserve l'approche CytoLight : des longueurs d'onde cibl&eacute;es, des modes simples et la possibilit&eacute; d'aller plus loin quand vous le souhaitez.{% else %}PANO ULTRA keeps the CytoLight approach: targeted wavelengths, simple modes, and the option to go deeper when you want more control.{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Apprenez au fil de l'usage{% else %}Learn as you go{% endif %}</strong><span>{% if is_fr %}Choisissez r&eacute;cup&eacute;ration, peau, sommeil ou routine corps entier, puis r&eacute;p&eacute;tez ce qui fonctionne pour vous.{% else %}Choose recovery, skin, sleep, or full-body routine, then repeat what works for you.{% endif %}</span></div>
+              <div class='cl-why-proof'><span>7 spectra</span><span>CE</span><span>{% if is_fr %}FDA list&eacute;{% else %}FDA Listed{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-luxury.png" | asset_url }}' alt='{% if is_fr %}D&eacute;tail premium du panneau CytoLight PANO ULTRA{% else %}Premium detail of the CytoLight PANO ULTRA panel{% endif %}' loading='lazy' width='1600' height='900'>
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='1' y='3' width='15' height='13' rx='2'/><polygon points='16 8 20 8 23 11 23 16 16 16 16 8'/><circle cx='5.5' cy='18.5' r='2.5'/><circle cx='18.5' cy='18.5' r='2.5'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_fr %}Pour la tranquillit&eacute;{% else %}For peace of mind{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_fr %}Livr&eacute; comme un &eacute;quipement premium.{% else %}Delivered like premium equipment.{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_fr %}Un grand panneau m&eacute;rite une arriv&eacute;e soign&eacute;e : emballage protecteur, lunettes, guide de d&eacute;marrage et essai de 30 jours pour le tester chez vous.{% else %}A large panel deserves a careful arrival: protective packaging, goggles, quick-start guidance, and a 30-day trial to test it at home.{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Sans pression{% else %}No pressure{% endif %}</strong><span>{% if is_fr %}Installez-le dans votre espace, essayez votre routine, puis jugez-le dans votre vraie vie.{% else %}Set it up in your space, try your routine, then judge it in real life.{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_fr %}Livraison rapide{% else %}Fast shipping{% endif %}</span><span>{% if is_fr %}Essai 30 jours{% else %}30-day trial{% endif %}</span><span>{% if is_fr %}Garantie 2 ans{% else %}2-year warranty{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-unboxing.png" | asset_url }}' alt='{% if is_fr %}Emballage premium de CytoLight PANO ULTRA{% else %}Premium packaging for CytoLight PANO ULTRA{% endif %}' loading='lazy' width='1135' height='1408'>
+          </div>
+        </div>
+      </div>
+      {%- else -%}
+      <div class='cl-why-grid'>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_cap %}{% if is_fr %}Pour les cheveux{% else %}For hair{% endif %}{% else %}{% if is_fr %}Pour r&eacute;cup&eacute;rer{% else %}For recovery{% endif %}{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_cap %}{% if is_fr %}Aidez votre routine &agrave; devenir automatique.{% else %}Help your routine become automatic.{% endif %}{% else %}{% if is_fr %}Aidez votre corps &agrave; se sentir pr&ecirc;t &agrave; nouveau.{% else %}Help your body feel ready again.{% endif %}{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_cap %}{% if is_fr %}La constance compte. En portant simplement la casquette pendant une session calme, vous donnez &agrave; votre routine cuir chevelu une forme facile &agrave; r&eacute;p&eacute;ter.{% else %}Consistency matters. By simply wearing the cap during a calm session, your scalp routine becomes easier to repeat day after day.{% endif %}{% else %}{% if is_fr %}Apr&egrave;s le sport, de longues heures assis ou des raideurs, la lumi&egrave;re rouge et proche infrarouge peut soutenir la circulation, le confort des tissus et une routine de r&eacute;cup&eacute;ration plus calme.{% else %}After training, long desk hours, or general stiffness, red and near-infrared light can support circulation, tissue comfort, and a calmer recovery routine.{% endif %}{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Comment l'utiliser{% else %}How to use it{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}Placez la casquette, choisissez votre dur&eacute;e, puis gardez le m&ecirc;me rituel plusieurs fois par semaine.{% else %}Wear the cap, choose your session time, then keep the same ritual several times per week.{% endif %}{% else %}{% if is_fr %}Utilisez les longueurs d'onde NIR plus profondes pour les muscles et les articulations, puis enregistrez votre s&eacute;ance pr&eacute;f&eacute;r&eacute;e.{% else %}Use deeper NIR wavelengths for muscles and joints, then save your preferred session as a preset.{% endif %}{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_cap %}150 LEDs{% else %}810nm{% endif %}</span><span>{% if is_cap %}660nm{% else %}830nm{% endif %}</span><span>850nm</span>{% unless is_cap %}<span>940nm</span>{% endunless %}</div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            {%- if is_cap -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-morning-routine.png" | asset_url }}' alt='{% if is_fr %}Routine matinale avec CYTOLIGHT cap{% else %}Morning routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1792' height='1024'>
+            {%- else -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-recovery-ready.png" | asset_url }}' alt='{% if is_fr %}Athl&egrave;te utilisant un panneau CytoLight pour une routine de r&eacute;cup&eacute;ration{% else %}Athlete using a CytoLight red light panel for a recovery routine{% endif %}' loading='lazy' width='1136' height='1408'>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_cap %}{% if is_fr %}Pour le cuir chevelu{% else %}For scalp care{% endif %}{% else %}{% if is_fr %}Pour la peau{% else %}For skin{% endif %}{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_cap %}{% if is_fr %}Une lumi&egrave;re proche, r&eacute;partie l&agrave; o&ugrave; il faut.{% else %}Close, even light where it matters.{% endif %}{% else %}{% if is_fr %}Soutenez un &eacute;clat plus lisse et plus sain.{% else %}Support a smoother, healthier glow.{% endif %}{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_cap %}{% if is_fr %}Les LED sont int&eacute;gr&eacute;es dans la casquette pour rester proches du cuir chevelu, sans devoir viser manuellement une zone pendant toute la s&eacute;ance.{% else %}The LEDs are built into the cap so light stays close to the scalp, without manually aiming a handheld device through the whole session.{% endif %}{% else %}{% if is_fr %}La lumi&egrave;re rouge de surface est souvent utilis&eacute;e dans les routines ax&eacute;es sur le teint, la texture, le soutien du collag&egrave;ne et la vitalit&eacute; visible.{% else %}Surface red light is commonly used in routines focused on skin tone, texture, collagen support, and visible vitality.{% endif %}{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Pourquoi c'est utile{% else %}Why it matters{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}Moins de friction signifie plus de constance. Et la constance est le cœur d'une bonne routine capillaire.{% else %}Less friction means more consistency. And consistency is the heart of a good hair routine.{% endif %}{% else %}{% if is_fr %}Une routine peau n'a pas besoin d'&ecirc;tre compliqu&eacute;e. Utilisez une s&eacute;ance rouge plus courte, mais r&eacute;guli&egrave;re.{% else %}Skin-focused sessions do not need to feel complicated. Use a shorter red-light routine consistently.{% endif %}{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_cap %}150 LEDs{% else %}590nm{% endif %}</span><span>{% if is_cap %}Hands-free{% else %}630nm{% endif %}</span><span>660nm</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            {%- if is_cap -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-scalp-care.png" | asset_url }}' alt='{% if is_fr %}CYTOLIGHT cap proche du cuir chevelu{% else %}CYTOLIGHT cap close to the scalp{% endif %}' loading='lazy' width='1135' height='1408'>
+            {%- else -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-skin-glow.png" | asset_url }}' alt='{% if is_fr %}Routine peau avec lumi&egrave;re rouge subtile pour un &eacute;clat plus sain{% else %}Skin routine with subtle red light for a healthier-looking glow{% endif %}' loading='lazy' width='1154' height='1536'>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><circle cx='12' cy='12' r='10'/><polyline points='12 6 12 12 16 14'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_cap %}{% if is_fr %}Pour le contr&ocirc;le{% else %}For control{% endif %}{% else %}{% if is_fr %}Pour le rythme du sommeil{% else %}For sleep rhythm{% endif %}{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_cap %}{% if is_fr %}Une session qui s'adapte &agrave; vous.{% else %}A session that adapts to you.{% endif %}{% else %}{% if is_fr %}Cr&eacute;ez un signal du soir plus calme.{% else %}Create a calmer evening signal.{% endif %}{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_cap %}{% if is_fr %}Ajustez l'intensit&eacute;, le minuteur, les pulsations et la s&eacute;lection des longueurs d'onde selon votre confort et votre habitude.{% else %}Adjust intensity, timer, pulsing, and wavelength selection around your comfort and habit.{% endif %}{% else %}{% if is_fr %}Une routine du soir r&eacute;guli&egrave;re peut aider votre corps &agrave; comprendre que la journ&eacute;e ralentit, surtout quand la s&eacute;ance est minut&eacute;e et r&eacute;p&eacute;table.{% else %}A consistent evening routine can help your body understand when the day is slowing down, especially when the session is timed and repeatable.{% endif %}{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Comment CytoLight aide{% else %}How CytoLight helps{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}Commencez doucement, puis gardez les r&eacute;glages qui rendent votre routine facile &agrave; r&eacute;p&eacute;ter.{% else %}Start gently, then keep the settings that make your routine easy to repeat.{% endif %}{% else %}{% if is_fr %}Programmez un minuteur, cr&eacute;ez un pr&eacute;r&eacute;glage de d&eacute;tente et r&eacute;p&eacute;tez le m&ecirc;me protocole sans y penser chaque soir.{% else %}Set a timer, create a wind-down preset, and repeat the same protocol without thinking about settings each night.{% endif %}{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_fr %}Minuteur{% else %}Timer{% endif %}</span><span>{% if is_cap %}{% if is_fr %}Intensit&eacute;{% else %}Dimming{% endif %}{% else %}{% if is_fr %}Alarme{% else %}Alarm{% endif %}{% endif %}</span><span>{% if is_cap %}{% if is_fr %}Pulsation{% else %}Pulsing{% endif %}{% else %}{% if is_fr %}Pr&eacute;r&eacute;glages{% else %}Presets{% endif %}{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            {%- if is_cap -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-control.png" | asset_url }}' alt='{% if is_fr %}Contr&ocirc;leur CYTOLIGHT cap avec r&eacute;glage de session{% else %}CYTOLIGHT cap controller with session adjustment{% endif %}' loading='lazy' width='1135' height='1408'>
+            {%- else -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-evening-signal.png" | asset_url }}' alt='{% if is_fr %}Routine du soir calme avec panneau CytoLight et lumi&egrave;re rouge douce{% else %}Calm evening routine with CytoLight panel and soft red light{% endif %}' loading='lazy' width='1154' height='1536'>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z'/><circle cx='12' cy='12' r='3'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_cap %}{% if is_fr %}Pour le confort{% else %}For comfort{% endif %}{% else %}{% if is_fr %}Pour la concentration{% else %}For focus{% endif %}{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_cap %}{% if is_fr %}Portez-la pendant un moment calme.{% else %}Wear it during a calm moment.{% endif %}{% else %}{% if is_fr %}Cr&eacute;ez un rituel de bureau plus lumineux.{% else %}Build a brighter desk ritual.{% endif %}{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_cap %}{% if is_fr %}Une session capillaire peut se glisser dans une pause, une lecture, une routine du soir ou un moment de soin personnel sans monopoliser vos mains.{% else %}A hair session can fit into a break, reading time, an evening routine, or a self-care moment without taking over your hands.{% endif %}{% else %}{% if is_fr %}Comme le panneau reste sur votre bureau, il devient plus facile d'associer la lumi&egrave;re &agrave; la planification du matin, au travail concentr&eacute; ou &agrave; une pause de milieu de journ&eacute;e.{% else %}Because the panel lives on your desk, light therapy becomes easier to pair with morning planning, focused work, or a mid-day reset.{% endif %}{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Habitude simple{% else %}Simple habit{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}Choisissez un moment d&eacute;j&agrave; pr&eacute;sent dans votre journ&eacute;e, puis associez-y votre session CYTOLIGHT cap.{% else %}Choose a moment that already exists in your day, then attach your CYTOLIGHT cap session to it.{% endif %}{% else %}{% if is_fr %}Placez-le l&agrave; o&ugrave; vous travaillez d&eacute;j&agrave;. Lancez un pr&eacute;r&eacute;glage court avant les emails, une session profonde ou votre premier caf&eacute;.{% else %}Place it where you already work. Start a short preset before email, deep work, or your first coffee.{% endif %}{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_cap %}{% if is_fr %}Portable{% else %}Wearable{% endif %}{% else %}{% if is_fr %}Support bureau{% else %}Desk stand{% endif %}{% endif %}</span><span>{% if is_cap %}{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}{% else %}{% if is_fr %}Contr&ocirc;le app{% else %}App control{% endif %}{% endif %}</span><span>{% if is_fr %}Simple{% else %}Simple{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            {%- if is_cap -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-comfort.png" | asset_url }}' alt='{% if is_fr %}CYTOLIGHT cap port&eacute;e pendant un moment calme{% else %}CYTOLIGHT cap worn during a calm moment{% endif %}' loading='lazy' width='1135' height='1408'>
+            {%- else -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-kitchen-focus.png" | asset_url }}' alt='{% if is_fr %}Panneau CytoLight DESK sur un comptoir de cuisine avec une tasse de caf&eacute;{% else %}CytoLight DESK panel on a kitchen counter beside a coffee mug{% endif %}' loading='lazy' width='1154' height='1536'>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='5' y='2' width='14' height='20' rx='2'/><line x1='12' y1='18' x2='12.01' y2='18'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_fr %}Pour le contr&ocirc;le{% else %}For control{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_fr %}Personnalisez, au lieu de subir un mode unique.{% else %}Make it personal, not generic.{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_cap %}{% if is_fr %}Chaque routine cheveux est personnelle. CYTOLIGHT cap vous permet de choisir une session douce, progressive et facile &agrave; garder dans le temps.{% else %}Every hair routine is personal. CYTOLIGHT cap lets you choose a gentle, progressive session that is easy to keep over time.{% endif %}{% else %}{% if is_fr %}Chaque corps et chaque routine sont diff&eacute;rents. Le contr&ocirc;le ind&eacute;pendant du spectre permet d'ajuster la luminosit&eacute;, les pulsations et le style de s&eacute;ance.{% else %}Every body and routine is different. Independent spectrum control lets you fine-tune brightness, pulsing, and session style.{% endif %}{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Ce que cela signifie{% else %}What this means{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}Vous pouvez utiliser rouge, proche infrarouge ou combinaison selon votre confort et votre objectif de routine.{% else %}You can use red, near-infrared, or a combined session depending on your comfort and routine goal.{% endif %}{% else %}{% if is_fr %}Vous pouvez rester simple avec les pr&eacute;r&eacute;glages ou aller plus loin en ajustant chaque longueur d'onde vous-m&ecirc;me.{% else %}You can keep it simple with presets or go deeper by adjusting each wavelength yourself.{% endif %}{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_cap %}660nm{% else %}7 channels{% endif %}</span><span>{% if is_cap %}850nm{% else %}1-40 Hz{% endif %}</span><span>{% if is_cap %}{% if is_fr %}Pulsation{% else %}Pulsing{% endif %}{% else %}Bluetooth{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            {%- if is_cap -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-personal.png" | asset_url }}' alt='{% if is_fr %}R&eacute;glage personnalis&eacute; de CYTOLIGHT cap{% else %}Personalized CYTOLIGHT cap session setting{% endif %}' loading='lazy' width='1135' height='1408'>
+            {%- else -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-control-screen.jpg" | asset_url }}' alt='{% if is_fr %}&Eacute;cran de contr&ocirc;le CytoLight avec r&eacute;glage rouge et proche infrarouge{% else %}CytoLight control screen with red and near-infrared adjustment{% endif %}' loading='lazy' width='1154' height='1536'>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><line x1='3' y1='6' x2='3.01' y2='6'/><line x1='3' y1='12' x2='3.01' y2='12'/><line x1='3' y1='18' x2='3.01' y2='18'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_fr %}Pour comprendre{% else %}For confidence{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_cap %}{% if is_fr %}Comprenez votre routine sans complexité.{% else %}Understand your routine without the complexity.{% endif %}{% else %}{% if is_fr %}Comprenez la science sans avoir besoin d'un dipl&ocirc;me scientifique.{% else %}Understand the science without needing a science degree.{% endif %}{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_cap %}{% if is_fr %}L'id&eacute;e est simple : des longueurs d'onde choisies, un format portable, et une r&eacute;p&eacute;tition calme qui s'int&egrave;gre &agrave; votre soin cheveux.{% else %}The idea is simple: chosen wavelengths, a wearable format, and a calm repeatable session that fits into your hair care ritual.{% endif %}{% else %}{% if is_fr %}La photobiomodulation est largement &eacute;tudi&eacute;e, mais l'id&eacute;e quotidienne est simple : des longueurs d'onde pr&eacute;cises interagissent avec le corps de mani&egrave;res diff&eacute;rentes.{% else %}Photobiomodulation has been widely researched, but the daily value is simple: specific light wavelengths interact with the body in different ways.{% endif %}{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Apprenez au fil de l'usage{% else %}Learn as you go{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}Commencez avec une session courte, observez votre confort, puis gardez la routine qui vous semble naturelle.{% else %}Start with a short session, notice your comfort, then keep the routine that feels natural.{% endif %}{% else %}{% if is_fr %}Le produit explique les s&eacute;ances par objectif, avec les d&eacute;tails des longueurs d'onde si vous voulez aller plus loin.{% else %}The product explains sessions by goal, while the wavelength details are there when you want to go deeper.{% endif %}{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_fr %}4 000+ &eacute;tudes{% else %}4,000+ studies{% endif %}</span><span>CE</span><span>{% if is_fr %}FDA list&eacute;{% else %}FDA Listed{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media {% if is_cap %}cl-why-card__media--photo{% else %}cl-why-card__media--science{% endif %}'>
+            {%- if is_cap -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-confidence.png" | asset_url }}' alt='{% if is_fr %}Routine CYTOLIGHT cap simple et facile &agrave; comprendre{% else %}Simple and easy-to-understand CYTOLIGHT cap routine{% endif %}' loading='lazy' width='1135' height='1408'>
+            {%- else -%}
+              <div class='cl-spectrum-science' aria-label='{% if is_fr %}Aper&ccedil;u des sept longueurs d&apos;onde CytoLight{% else %}CytoLight seven wavelength overview{% endif %}'>
+                <div class='cl-spectrum-science__head'>
+                  <div>
+                    <span class='cl-spectrum-science__eyebrow'>{% if is_fr %}Infographie spectrale{% else %}Spectrum infographic{% endif %}</span>
+                    <h4 class='cl-spectrum-science__title'>{% if is_fr %}7 longueurs d&apos;onde. Plusieurs profondeurs.{% else %}7 wavelengths. Multiple depths.{% endif %}</h4>
+                  </div>
+                  <div class='cl-spectrum-science__badge'><strong>7</strong><span>{% if is_fr %}spectres{% else %}spectra{% endif %}</span></div>
+                </div>
+                <div class='cl-spectrum-science__legend'>
+                  <div class='cl-spectrum-science__chip' style='--wave:#ffb238;'><span class='cl-spectrum-science__dot'></span><span class='cl-spectrum-science__nm'>590</span><span class='cl-spectrum-science__tag'>{% if is_fr %}Teint{% else %}Glow{% endif %}</span></div>
+                  <div class='cl-spectrum-science__chip' style='--wave:#ff4a4d;'><span class='cl-spectrum-science__dot'></span><span class='cl-spectrum-science__nm'>630</span><span class='cl-spectrum-science__tag'>{% if is_fr %}Peau{% else %}Skin{% endif %}</span></div>
+                  <div class='cl-spectrum-science__chip' style='--wave:#e9002d;'><span class='cl-spectrum-science__dot'></span><span class='cl-spectrum-science__nm'>660</span><span class='cl-spectrum-science__tag'>{% if is_fr %}&Eacute;nergie{% else %}Energy{% endif %}</span></div>
+                  <div class='cl-spectrum-science__chip' style='--wave:#8a54c6;'><span class='cl-spectrum-science__dot'></span><span class='cl-spectrum-science__nm'>810</span><span class='cl-spectrum-science__tag'>{% if is_fr %}Focus{% else %}Focus{% endif %}</span></div>
+                  <div class='cl-spectrum-science__chip' style='--wave:#7b4ab8;'><span class='cl-spectrum-science__dot'></span><span class='cl-spectrum-science__nm'>830</span><span class='cl-spectrum-science__tag'>{% if is_fr %}Confort{% else %}Comfort{% endif %}</span></div>
+                  <div class='cl-spectrum-science__chip' style='--wave:#6734a8;'><span class='cl-spectrum-science__dot'></span><span class='cl-spectrum-science__nm'>850</span><span class='cl-spectrum-science__tag'>{% if is_fr %}Muscles{% else %}Muscles{% endif %}</span></div>
+                  <div class='cl-spectrum-science__chip' style='--wave:#4f2b88;'><span class='cl-spectrum-science__dot'></span><span class='cl-spectrum-science__nm'>940</span><span class='cl-spectrum-science__tag'>{% if is_fr %}Profond{% else %}Deep{% endif %}</span></div>
+                </div>
+                <div class='cl-spectrum-science__diagram'>
+                  <div class='cl-spectrum-science__rays'>
+                    <span class='cl-spectrum-science__ray' style='--wave:#ffb238;--depth:76px;'></span>
+                    <span class='cl-spectrum-science__ray' style='--wave:#ff4a4d;--depth:92px;'></span>
+                    <span class='cl-spectrum-science__ray' style='--wave:#e9002d;--depth:112px;'></span>
+                    <span class='cl-spectrum-science__ray' style='--wave:#8a54c6;--depth:136px;'></span>
+                    <span class='cl-spectrum-science__ray' style='--wave:#7b4ab8;--depth:154px;'></span>
+                    <span class='cl-spectrum-science__ray' style='--wave:#6734a8;--depth:174px;'></span>
+                    <span class='cl-spectrum-science__ray' style='--wave:#4f2b88;--depth:194px;'></span>
+                  </div>
+                  <span class='cl-spectrum-science__layer cl-spectrum-science__layer--skin'>{% if is_fr %}&Eacute;piderme / peau{% else %}Epidermis / skin{% endif %}</span>
+                  <span class='cl-spectrum-science__layer cl-spectrum-science__layer--tissue'>{% if is_fr %}Tissus{% else %}Tissue{% endif %}</span>
+                  <span class='cl-spectrum-science__layer cl-spectrum-science__layer--muscle'>{% if is_fr %}Muscle / profond{% else %}Muscle / deep{% endif %}</span>
+                </div>
+                <ul class='cl-spectrum-science__body'>
+                  <li>{% if is_fr %}Peau &amp; &eacute;clat{% else %}Skin &amp; glow{% endif %}</li>
+                  <li>{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</li>
+                  <li>{% if is_fr %}Confort articulaire{% else %}Joint comfort{% endif %}</li>
+                  <li>{% if is_fr %}Routine sommeil{% else %}Sleep routine{% endif %}</li>
+                </ul>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><rect x='1' y='3' width='15' height='13' rx='2'/><polygon points='16 8 20 8 23 11 23 16 16 16 16 8'/><circle cx='5.5' cy='18.5' r='2.5'/><circle cx='18.5' cy='18.5' r='2.5'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_fr %}Pour la tranquillit&eacute;{% else %}For peace of mind{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_fr %}Essayez-le vraiment chez vous.{% else %}Try it properly at home.{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_cap %}{% if is_fr %}Un rituel cheveux se juge dans la vraie vie : votre timing, votre confort, votre constance et votre ressenti au fil des semaines.{% else %}A hair ritual is easiest to judge in real life: your timing, your comfort, your consistency, and how it feels over the weeks.{% endif %}{% else %}{% if is_fr %}La luminoth&eacute;rapie se juge mieux quand elle s'int&egrave;gre &agrave; votre vraie routine, votre bureau, votre timing et vos objectifs.{% else %}Light therapy is easiest to judge when it fits your real routine, your desk, your timing, and your goals.{% endif %}{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}Sans pression{% else %}No pressure{% endif %}</strong><span>{% if is_fr %}Livraison rapide, emballage premium et p&eacute;riode satisfait ou rembours&eacute; de 30 jours vous laissent le temps de l'exp&eacute;rience.{% else %}Fast delivery, premium packaging, and a 30-day money-back period give you time to experience it.{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_fr %}Livraison rapide{% else %}Fast shipping{% endif %}</span><span>{% if is_fr %}Essai 30 jours{% else %}30-day trial{% endif %}</span><span>{% if is_fr %}Garantie 2 ans{% else %}2-year warranty{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            {%- if is_cap -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-peace-mind.png" | asset_url }}' alt='{% if is_fr %}CYTOLIGHT cap dans son emballage premium pour essai &agrave; domicile{% else %}CYTOLIGHT cap in premium packaging for home trial{% endif %}' loading='lazy' width='1135' height='1408'>
+            {%- else -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-home-trial-living-room.png" | asset_url }}' alt='{% if is_fr %}Panneau CytoLight DESK dans un salon avec t&eacute;l&eacute;vision flout&eacute;e en arri&egrave;re-plan{% else %}CytoLight DESK panel in a living room with a blurred TV in the background{% endif %}' loading='lazy' width='1154' height='1536'>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class='cl-why-card'>
+          <div class='cl-why-card__text'>
+            <div class='cl-why-card__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><polyline points='20 6 9 17 4 12'/></svg></div>
+            <div class='cl-why-card__content'>
+              <span class='cl-why-card__label'>{% if is_fr %}Pour la r&eacute;gularit&eacute;{% else %}For consistency{% endif %}</span>
+              <h3 class='cl-why-card__title'>{% if is_fr %}La meilleure th&eacute;rapie est celle que vous utilisez vraiment.{% else %}The best therapy is the one you actually use.{% endif %}</h3>
+              <p class='cl-why-card__body'>{% if is_cap %}{% if is_fr %}CYTOLIGHT cap enl&egrave;ve les obstacles : portable, rapide &agrave; lancer, facile &agrave; r&eacute;gler et assez simple pour devenir une habitude.{% else %}CYTOLIGHT cap removes friction: wearable, quick to start, easy to adjust, and simple enough to become a habit.{% endif %}{% else %}{% if is_fr %}CytoLight enl&egrave;ve les obstacles : visible sur votre bureau, rapide &agrave; lancer, silencieux pendant l'usage et facile &agrave; r&eacute;p&eacute;ter.{% else %}CytoLight is designed to remove friction: visible on your desk, quick to start, quiet during use, and easy to repeat.{% endif %}{% endif %}</p>
+              <div class='cl-why-lesson'><strong>{% if is_fr %}L'essentiel{% else %}The point{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}Pas une routine compliqu&eacute;e. Un geste simple, r&eacute;p&eacute;table, centr&eacute; sur vos cheveux.{% else %}Not a complicated routine. A simple, repeatable ritual focused on your hair.{% endif %}{% else %}{% if is_fr %}Pas un appareil de plus dans un tiroir. Un rituel quotidien assez simple pour devenir automatique.{% else %}Not another device in a drawer. A daily ritual that is simple enough to become automatic.{% endif %}{% endif %}</span></div>
+              <div class='cl-why-proof'><span>{% if is_fr %}Compact{% else %}Compact{% endif %}</span><span>{% if is_cap %}{% if is_fr %}Portable{% else %}Wearable{% endif %}{% else %}{% if is_fr %}Silencieux{% else %}Quiet{% endif %}{% endif %}</span><span>{% if is_cap %}{% if is_fr %}R&eacute;glable{% else %}Adjustable{% endif %}{% else %}{% if is_fr %}Pr&eacute;r&eacute;glages 1 tap{% else %}One-tap presets{% endif %}{% endif %}</span></div>
+            </div>
+          </div>
+          <div class='cl-why-card__media cl-why-card__media--photo'>
+            {%- if is_cap -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-consistency.png" | asset_url }}' alt='{% if is_fr %}Routine quotidienne simple avec CYTOLIGHT cap{% else %}Simple daily routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1135' height='1408'>
+            {%- else -%}
+              <img class='cl-why-card__image' src='{{ "cytolight-consistency-desk.png" | asset_url }}' alt='{% if is_fr %}Panneau CytoLight DESK dans un salon pour une routine facile &agrave; r&eacute;p&eacute;ter{% else %}CytoLight DESK panel in a living room for an easy repeatable routine{% endif %}' loading='lazy' width='1154' height='1536'>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- ===== SPEC TABLE ===== -->
+  <div class='cl-spec-section' id='cl-specs'>
+    <div class='cl-spec-inner'>
+      <div class='cl-spec-header'>
+        <p class='cl-spec-eyebrow'>{% if is_fr %}Sous le capot{% else %}Under the hood{% endif %}</p>
+        <h2 class='cl-spec-title'>{% if is_fr %}Caract&eacute;ristiques techniques compl&egrave;tes{% else %}Full Technical Specifications{% endif %}</h2>
+      </div>
+      <div class='cl-spec-table-wrap'>
+        <table class='cl-spec-table'>
+          <tbody>
+            {%- if is_cap -%}
+            <tr><th>{% if is_fr %}LED{% else %}LED Count{% endif %}</th><td>150 pcs 3-in-1</td></tr>
+            <tr><th>{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}</th><td>660nm &middot; 850nm &middot; 850nm</td></tr>
+            <tr><th>{% if is_fr %}Contr&ocirc;les{% else %}Controls{% endif %}</th><td>{% if is_fr %}Intensit&eacute; variable, minuteur, pulsation et s&eacute;lection des longueurs d'onde{% else %}Dimmable intensity, timer, pulsing, and wavelength selection{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Usage{% else %}Use Case{% endif %}</th><td>{% if is_fr %}Routine cheveux, cuir chevelu et apparence de cheveux plus sains{% else %}Hair wellness, scalp routine, and healthier-looking hair support{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Format{% else %}Form Factor{% endif %}</th><td>{% if is_fr %}Casquette portable mains libres{% else %}Hands-free wearable cap{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Sortie UV{% else %}UV Output{% endif %}</th><td>{% if is_fr %}Z&eacute;ro : rouge et proche infrarouge, sans UV{% else %}Zero &#8212; red and near-infrared light, UV-free{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Alimentation{% else %}Power{% endif %}</th><td>{% if is_fr %}Contr&ocirc;leur et c&acirc;ble d'alimentation inclus{% else %}Session controller and power cable included{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Garantie{% else %}Warranty{% endif %}</th><td>{% if is_fr %}2 ans : couvre les d&eacute;fauts de fabrication et pannes mat&eacute;rielles{% else %}2 years &#8212; covers manufacturing defects and hardware failures{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}P&eacute;riode d'essai{% else %}Trial Period{% endif %}</th><td>{% if is_fr %}Garantie satisfait ou rembours&eacute; 30 jours, sans condition{% else %}30-day money-back guarantee, unconditional{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Dans la bo&icirc;te{% else %}In the Box{% endif %}</th><td>{% if is_fr %}CYTOLIGHT cap &middot; Contr&ocirc;leur de session &middot; C&acirc;ble d'alimentation &middot; Guide de d&eacute;marrage rapide &middot; Garantie{% else %}CYTOLIGHT cap &middot; Session controller &middot; Power cable &middot; Quick-start guide &middot; Warranty information{% endif %}</td></tr>
+            {%- else -%}
+            <tr><th>{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}</th><td>590nm &middot; 630nm &middot; 660nm &middot; 810nm &middot; 830nm &middot; 850nm &middot; 940nm ({% if is_fr %}7 canaux ind&eacute;pendants{% else %}7 independent channels{% endif %})</td></tr>
+            <tr><th>{% if is_fr %}Interface de contr&ocirc;le{% else %}Control Interface{% endif %}</th><td>{% if is_fr %}&Eacute;cran tactile capacitif couleur sur l'appareil + application CytoLight (iOS &amp; Android){% else %}Full-colour capacitive touch screen (on-device) + CytoLight App (iOS &amp; Android){% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Connectivit&eacute;{% else %}Connectivity{% endif %}</th><td>Bluetooth 5.0 + Wi-Fi dual-band</td></tr>
+            <tr><th>{% if is_fr %}Pulsations{% else %}Pulsing{% endif %}</th><td>{% if is_fr %}1&#8211;40 Hz par longueur d'onde, configurable individuellement ; mode continu disponible{% else %}1&#8211;40 Hz per wavelength, individually configurable; continuous mode also available{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Fonctions intelligentes{% else %}Smart Features{% endif %}</th><td>{% if is_fr %}Minuteur, alarme de r&eacute;veil, sc&egrave;nes pr&eacute;r&eacute;gl&eacute;es, synchronisation multi-appareils{% else %}Session timer, wake-up alarm, scene presets, multi-device sync{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Format{% else %}Form Factor{% endif %}</th><td>{% if is_pano_ultra %}{% if is_fr %}Panneau vertical grand format pour routines corps entier et espaces wellness{% else %}Large vertical panel for full-body routines and wellness spaces{% endif %}{% else %}{% if is_fr %}Panneau de bureau compact avec support ajustable &agrave; 360&#176;{% else %}Compact desk panel with 360&#176; adjustable stand{% endif %}{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Sortie UV{% else %}UV Output{% endif %}</th><td>{% if is_fr %}Z&eacute;ro : sans UV, adapt&eacute; &agrave; une utilisation quotidienne sur peau nue{% else %}Zero &#8212; completely UV-free and safe for daily bare-skin use{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Niveau sonore{% else %}Noise Level{% endif %}</th><td>{% if is_fr %}Syst&egrave;me thermique quasi silencieux{% else %}Near-silent thermal management system{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Alimentation{% else %}Power Supply{% endif %}</th><td>{% if is_fr %}Adaptateur universel inclus (100&#8211;240V, utilisable dans le monde entier){% else %}Universal adapter included (100&#8211;240V, works worldwide){% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Certifications{% else %}Certifications{% endif %}</th><td>{% if is_fr %}Certifi&eacute; CE &middot; FDA Listed &middot; Qualit&eacute; clinique{% else %}CE Certified &middot; FDA Listed &middot; Clinical Grade{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Garantie{% else %}Warranty{% endif %}</th><td>{% if is_fr %}2 ans : couvre les d&eacute;fauts de fabrication et pannes mat&eacute;rielles{% else %}2 years &#8212; covers all manufacturing defects and hardware failures{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}P&eacute;riode d'essai{% else %}Trial Period{% endif %}</th><td>{% if is_fr %}Garantie satisfait ou rembours&eacute; 30 jours, sans condition{% else %}30-day money-back guarantee, unconditional{% endif %}</td></tr>
+            <tr><th>{% if is_fr %}Dans la bo&icirc;te{% else %}In the Box{% endif %}</th><td>{% if is_pano_ultra %}{% if is_fr %}Panneau CytoLight PANO ULTRA &middot; Syst&egrave;me de support &middot; C&acirc;ble d'alimentation &middot; Lunettes de protection &middot; Guide de d&eacute;marrage rapide{% else %}CytoLight PANO ULTRA panel &middot; Support system &middot; Power cable &middot; Safety goggles &middot; Quick-start guide{% endif %}{% else %}{% if is_fr %}Panneau CytoLight &middot; Support de bureau ajustable &middot; C&acirc;ble d'alimentation &middot; Lunettes de protection &middot; Guide de d&eacute;marrage rapide{% else %}CytoLight Panel &middot; Adjustable desk stand &middot; Power cable &middot; Safety goggles &middot; Quick-start guide{% endif %}{% endif %}</td></tr>
+            {%- endif -%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FAQ SECTION ===== -->
+  <div class='cl-faq-section' id='cl-faq'>
+    <div class='cl-faq-header'>
+      <p class='cl-faq-header__eyebrow'>{% if is_fr %}Des questions ?{% else %}Got questions?{% endif %}</p>
+      <h2 class='cl-faq-header__title'>{% if is_fr %}Questions fr&eacute;quentes{% else %}Frequently Asked Questions{% endif %}</h2>
+      <p class='cl-faq-header__sub'>{% if is_cap %}{% if is_fr %}Tout ce qu'il faut savoir sur CYTOLIGHT cap et les routines cheveux par lumi&egrave;re rouge.{% else %}Everything you need to know about CYTOLIGHT cap and red light hair routines.{% endif %}{% else %}{% if is_fr %}Tout ce qu'il faut savoir sur CytoLight et la luminoth&eacute;rapie rouge.{% else %}Everything you need to know about the CytoLight and red light therapy.{% endif %}{% endif %}</p>
+    </div>
+    <div class='cl-faq-grid'>
+      {%- if is_cap -%}
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Combien de temps dure une s&eacute;ance ?{% else %}How long should each session be?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Commencez doucement, par exemple avec une session courte, puis gardez une dur&eacute;e confortable et r&eacute;guli&egrave;re. La constance est plus importante qu'une session tr&egrave;s longue.{% else %}Start gently with a short session, then keep a comfortable and consistent duration. Consistency matters more than making one session very long.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Quelles longueurs d'onde utilise CYTOLIGHT cap ?{% else %}Which wavelengths does CYTOLIGHT cap use?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}La casquette utilise 660nm rouge et 850nm proche infrarouge, avec 150 LED 3-en-1 r&eacute;parties pour accompagner une routine cuir chevelu.{% else %}The cap uses 660nm red and 850nm near-infrared light, with 150 3-in-1 LEDs arranged to support a scalp-focused routine.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Puis-je choisir les modes ?{% else %}Can I choose the modes?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Oui. Les fonctions incluent intensit&eacute; variable, minuteur, pulsation et s&eacute;lection des longueurs d'onde, pour adapter la session &agrave; votre confort.{% else %}Yes. Controls include dimming, timer, pulsing, and wavelength selection, so you can adapt the session to your comfort.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Est-ce adapt&eacute; &agrave; un usage r&eacute;gulier ?{% else %}Is it suitable for regular use?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Oui, le produit est pens&eacute; comme un rituel r&eacute;p&eacute;table &agrave; domicile. Comme pour toute routine bien-&ecirc;tre, commencez progressivement et adaptez selon votre ressenti.{% else %}Yes, it is designed as a repeatable at-home ritual. As with any wellness routine, start gradually and adjust based on comfort.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Produit-il des UV ?{% else %}Does it produce UV?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Non. CYTOLIGHT cap utilise la lumi&egrave;re rouge et proche infrarouge, sans sortie UV.{% else %}No. CYTOLIGHT cap uses red and near-infrared light, with no UV output.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Que couvre l'essai de 30 jours ?{% else %}What does the 30-day trial cover?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Vous pouvez tester la casquette chez vous pendant 30 jours. Si elle ne vous convient pas, contactez le support pour organiser le retour selon les conditions de la boutique.{% else %}You can try the cap at home for 30 days. If it is not right for you, contact support to arrange the return under the store policy.{% endif %}</p></div>
+      </details>
+
+      {%- else -%}
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Combien de temps dure une s&eacute;ance ?{% else %}How long should each session be?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Pour la plupart des personnes, <strong>10&#8211;20 minutes par s&eacute;ance</strong> est une bonne base. Les d&eacute;butants peuvent commencer par 5&#8211;10 minutes puis augmenter progressivement. Le minuteur int&eacute;gr&eacute; vous aide &agrave; garder une dur&eacute;e pr&eacute;cise et r&eacute;guli&egrave;re.{% else %}For most people, <strong>10&#8211;20 minutes per session</strong> is optimal. Beginners should start with 5&#8211;10 minutes and gradually increase. The CytoLight&#8217;s built-in smart timer lets you set precise session lengths and will alert you when your session is complete. Consistency matters more than duration &#8212; daily sessions of 10 minutes outperform occasional 30-minute sessions.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}&Agrave; quelle distance dois-je m'asseoir ?{% else %}How far should I sit from the panel?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}La distance recommand&eacute;e est de <strong>15&#8211;30 cm</strong> pour une bonne irradiance. Si vous ressentez trop de chaleur ou de sensibilit&eacute;, reculez simplement le panneau ; les b&eacute;n&eacute;fices restent int&eacute;ressants jusqu'&agrave; environ 50 cm.{% else %}The recommended distance is <strong>15&#8211;30 cm (6&#8211;12 inches)</strong> for maximum irradiance and therapeutic effect. At this range the CytoLight delivers its peak output across all 7 wavelengths. If you experience any warmth or sensitivity, simply move the panel slightly further away &#8212; the benefits remain significant up to 50 cm.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Puis-je utiliser les 7 longueurs d'onde ensemble ?{% else %}Can I use all 7 wavelengths at the same time?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Oui. Vous pouvez lancer les 7 longueurs d'onde pour une s&eacute;ance spectre complet, ou <strong>s&eacute;lectionner et ajuster chaque longueur d'onde ind&eacute;pendamment</strong> via l'&eacute;cran tactile ou l'application CytoLight.{% else %}Yes &#8212; and this is one of CytoLight&#8217;s most powerful features. You can run all 7 wavelengths simultaneously for a full-spectrum session, or <strong>select and adjust each wavelength independently</strong> via the touch screen or the CytoLight App. For example: run only 660nm + 850nm for deep muscle recovery, or only 590nm + 630nm for a skin-focused session.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Est-ce adapt&eacute; &agrave; un usage quotidien ?{% else %}Is it safe to use every day?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Oui. La luminoth&eacute;rapie rouge est <strong>sans UV, non ionisante et non invasive</strong>. Beaucoup d'utilisateurs l'int&egrave;grent &agrave; leur routine du matin ou du soir. Comme pour toute routine bien-&ecirc;tre, commencez doucement et adaptez selon votre ressenti.{% else %}Yes &#8212; daily use is not only safe but recommended. Red light therapy is <strong>non-thermal, non-ionising, and UV-free</strong>. Over 4,000 peer-reviewed clinical studies confirm its safety profile. The CytoLight is CE certified and FDA listed. Many users integrate it into their morning or evening routine 365 days a year with no adverse effects.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Quelle diff&eacute;rence entre rouge et proche infrarouge ?{% else %}What is the difference between red and near-infrared light?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}<strong>La lumi&egrave;re rouge (590&#8211;660nm)</strong> agit surtout en surface, notamment pour les routines peau. <strong>Le proche infrarouge (810&#8211;940nm)</strong> p&eacute;n&egrave;tre plus profond&eacute;ment et convient mieux aux muscles, articulations et zones de r&eacute;cup&eacute;ration.{% else %}<strong>Red light (590&#8211;660nm)</strong> works primarily on the surface layers of the skin &#8212; ideal for collagen stimulation, skin texture, wound healing, and surface inflammation. <strong>Near-infrared light (810&#8211;940nm)</strong> penetrates deeper, reaching muscles, joints, tendons, and even bone tissue &#8212; making it the wavelength of choice for recovery, pain relief, and systemic benefits like improved mitochondrial function and circulation.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Comment fonctionne l'application Bluetooth ?{% else %}How does the Bluetooth app work?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}T&eacute;l&eacute;chargez l'application <strong>CytoLight</strong> sur iOS ou Android, puis associez le panneau via Bluetooth 5.0. Vous pouvez ajuster l'intensit&eacute;, les minuteurs, les alarmes, les modes pr&eacute;r&eacute;gl&eacute;s et les pulsations depuis votre t&eacute;l&eacute;phone.{% else %}Download the free <strong>CytoLight App</strong> on iOS or Android and pair it with your CytoLight panel via Bluetooth 5.0. From the app you can: adjust each wavelength&#8217;s intensity individually, set custom timers and alarms, activate preset therapy modes (Recovery, Focus, Sleep, Skin), configure pulsing frequency (1&#8211;40 Hz), and sync multiple CytoLight devices. Wi-Fi connectivity also allows control when your phone is out of Bluetooth range.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Produit-il de la chaleur ou des UV ?{% else %}Does it produce heat or UV radiation?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}CytoLight ne produit <strong>aucun rayonnement UV</strong>. Vous pouvez ressentir une chaleur douce &agrave; courte distance, surtout avec le proche infrarouge, mais ce n'est pas une chaleur UV. La gestion thermique garde l'appareil stable et silencieux.{% else %}The CytoLight produces <strong>no UV radiation</strong> whatsoever &#8212; it is completely safe for skin exposure without sunscreen. You may notice a mild, pleasant warmth at close distances (under 15 cm), particularly from the near-infrared wavelengths, but this is infrared warmth, not UV heat. The panel&#8217;s advanced thermal management keeps operating temperatures low and fan noise minimal.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Puis-je l'utiliser &agrave; travers les v&ecirc;tements ?{% else %}Can I use it through clothing?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Pour un effet optimal, utilisez CytoLight <strong>directement sur peau nue</strong>. Les tissus absorbent ou dispersent une partie de la lumi&egrave;re, ce qui r&eacute;duit la dose re&ccedil;ue. Pour le visage, asseyez-vous simplement face au panneau, sans couvrir la zone cibl&eacute;e.{% else %}We recommend using the CytoLight <strong>directly on bare skin</strong> for maximum therapeutic effect. Most fabrics absorb or scatter light significantly, reducing the irradiance reaching your tissue. Thin, light-coloured clothing may allow some near-infrared light to pass through, but the results will be substantially reduced. For face treatments, simply sit in front of the panel without covering the target area.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Que couvre l'essai de 30 jours ?{% else %}What does the 30-day trial cover?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Notre <strong>garantie satisfait ou rembours&eacute; de 30 jours</strong> vous laisse tester l'appareil chez vous. Si vous n'&ecirc;tes pas convaincu, contactez le support pour organiser le retour. La garantie de 2 ans couvre ensuite les d&eacute;fauts de fabrication et pannes mat&eacute;rielles.{% else %}Our <strong>30-day money-back guarantee</strong> is unconditional. If you are not satisfied for any reason within 30 days of delivery, contact our support team and we will arrange a full refund &#8212; no questions asked, no restocking fees. Simply return the panel in its original packaging. The 2-year warranty covers all manufacturing defects and hardware failures beyond the trial period.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Qu'est-ce que la pulsation ?{% else %}What is pulsing and do I need it?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}<strong>La pulsation</strong> signifie que les LED s'allument et s'&eacute;teignent rapidement &agrave; une fr&eacute;quence donn&eacute;e, mesur&eacute;e en Hz. CytoLight permet de r&eacute;gler les pulsations de <strong>1 &agrave; 40 Hz par longueur d'onde</strong>. Le mode continu reste aussi disponible.{% else %}<strong>Pulsing</strong> means the LEDs rapidly switch on and off at a set frequency (measured in Hz). Emerging research suggests certain pulse frequencies may target specific biological processes &#8212; for example, 10 Hz pulsing for cognitive function and 40 Hz for neuroprotective effects. The CytoLight supports pulsing from <strong>1&#8211;40 Hz per wavelength</strong>, individually configurable. Continuous (non-pulsed) mode is also available and is the most widely studied in clinical literature.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}Au bout de combien de temps voit-on des r&eacute;sultats ?{% else %}How long before I see results?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}Les r&eacute;sultats d&eacute;pendent de l'objectif et de la r&eacute;gularit&eacute;. Certaines personnes ressentent plus d'&eacute;nergie ou un meilleur sommeil en 1&#8211;2 semaines ; la peau et la r&eacute;cup&eacute;ration demandent souvent plusieurs semaines. La cl&eacute; reste la constance.{% else %}Results vary by goal and consistency. Many users report noticing <strong>improved energy and sleep quality within 1&#8211;2 weeks</strong> of daily sessions. Skin improvements (texture, tone, fine lines) typically become visible after 4&#8211;8 weeks. For chronic pain or injury recovery, clinical studies show significant results at 4&#8211;12 weeks of regular use. The key is consistency &#8212; short daily sessions are more effective than infrequent long ones.{% endif %}</p></div>
+      </details>
+
+      <details class='cl-faq-item'>
+        <summary>{% if is_fr %}CytoLight est-il adapt&eacute; aux animaux ?{% else %}Is the CytoLight safe for pets?{% endif %}<span class='cl-faq-toggle'>+</span></summary>
+        <div class='cl-faq-body'><p>{% if is_fr %}La lumi&egrave;re rouge et proche infrarouge est aussi utilis&eacute;e en contexte v&eacute;t&eacute;rinaire. Gardez les m&ecirc;mes r&egrave;gles de prudence : <strong>ne dirigez pas la lumi&egrave;re vers les yeux</strong> et commencez par des s&eacute;ances courtes. En cas de doute, demandez conseil &agrave; votre v&eacute;t&eacute;rinaire.{% else %}Yes &#8212; red and near-infrared light therapy is used by veterinarians for joint pain, wound healing, and post-surgical recovery in animals. Many CytoLight users treat their dogs and cats alongside their own sessions. The same safety guidelines apply: <strong>avoid directing light into eyes</strong> (use the included goggles for yourself; keep pets&#8217; eyes away from the beam), and start with shorter sessions of 5 minutes before building up.{% endif %}</p></div>
+      </details>
+      {%- endif -%}
+
+    </div>
+
+    <div class='cl-faq-cta'>
+      <p>{% if is_fr %}Encore une question ? Notre &eacute;quipe de sp&eacute;cialistes de la luminoth&eacute;rapie rouge est l&agrave; pour vous aider.{% else %}Still have questions? Our team of red light therapy specialists is here to help.{% endif %}</p>
+      <a href='mailto:support@cytolight.com'>
+        <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'/><polyline points='22,6 12,13 2,6'/></svg>
+        {% if is_fr %}Contacter nos experts{% else %}Contact our experts{% endif %}
+      </a>
+    </div>
+  </div>
+  <!-- /FAQ -->
+
+</div>
+
+<script>
+(function(){
+  var slots=document.querySelectorAll('.cl-media-slot');
+  var thumbs=document.querySelectorAll('.cl-thumbitem');
+  function showSlot(idx){
+    slots.forEach(function(s){
+      var wasActive=s.classList.contains('is-active');
+      s.classList.remove('is-active');
+      if(wasActive){
+        var v=s.querySelector('video');if(v)v.pause();
+        var iframes=s.querySelectorAll('iframe');iframes.forEach(function(f){var src=f.src;f.src='';f.src=src;});
+      }
+    });
+    thumbs.forEach(function(t){t.classList.remove('is-active');});
+    if(slots[idx])slots[idx].classList.add('is-active');
+    if(thumbs[idx]){thumbs[idx].classList.add('is-active');thumbs[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+  }
+  thumbs.forEach(function(t){t.addEventListener('click',function(){showSlot(parseInt(this.dataset.slot));});});
+  var tabBtns=document.querySelectorAll('.cl-tab-btn');
+  var tabPanels=document.querySelectorAll('.cl-tab-panel');
+  tabBtns.forEach(function(btn){btn.addEventListener('click',function(){var t=this.dataset.tab;tabBtns.forEach(function(b){b.classList.remove('is-active');});tabPanels.forEach(function(p){p.classList.remove('is-active');});this.classList.add('is-active');var panel=document.getElementById('cl-tab-'+t);if(panel)panel.classList.add('is-active');});});
+  var bundles=document.querySelectorAll('.cl-bundle');
+  var qtyInput=document.getElementById('cl-qty-input');
+  bundles.forEach(function(b){b.addEventListener('click',function(){bundles.forEach(function(x){x.classList.remove('is-selected');});this.classList.add('is-selected');if(qtyInput)qtyInput.value=this.dataset.qty;});});
+  var stickyBtn=document.getElementById('cl-sticky-atc-button');
+  var productForm=document.getElementById('cl-product-form');
+  if(stickyBtn&&productForm){
+    stickyBtn.addEventListener('click',function(){
+      var atc=productForm.querySelector('.cl-atc');
+      if(atc){atc.click();return;}
+      productForm.submit();
+    });
+  }
+  var stickyBar=document.getElementById('cl-sticky-atc');
+  var buyArea=document.getElementById('cl-buy-area');
+  function updateSticky(){
+    if(!stickyBar||!buyArea)return;
+    var buyTop=buyArea.getBoundingClientRect().top + window.pageYOffset;
+    var showAt=Math.max(420,buyTop-180);
+    stickyBar.classList.toggle('is-visible',window.pageYOffset>showAt);
+  }
+  window.addEventListener('scroll',updateSticky,{passive:true});
+  window.addEventListener('resize',updateSticky);
+  updateSticky();
+})();
+
+/* ===== SHADER BACKGROUND: "7 wavelengths" section ===== */
+(function(){
+  var canvas = document.getElementById('cl-shader-bg');
+  if(!canvas) return;
+  var gl = canvas.getContext('webgl');
+  if(!gl){ canvas.style.display='none'; return; }
+
+  var vsSource = [
+    'attribute vec4 aVertexPosition;',
+    'void main(){gl_Position=aVertexPosition;}'
+  ].join('\n');
+
+  var fsSource = [
+    'precision highp float;',
+    'uniform vec2 iResolution;',
+    'uniform float iTime;',
+    'const float overallSpeed=0.2;',
+    'const float gridSmoothWidth=0.015;',
+    'const float axisWidth=0.05;',
+    'const float majorLineWidth=0.025;',
+    'const float minorLineWidth=0.0125;',
+    'const float majorLineFrequency=5.0;',
+    'const float minorLineFrequency=1.0;',
+    'const float scale=5.0;',
+    'const vec4 lineColor=vec4(0.4,0.2,0.8,1.0);',
+    'const float minLineWidth=0.01;',
+    'const float maxLineWidth=0.2;',
+    'const float lineSpeed=1.0*overallSpeed;',
+    'const float lineAmplitude=1.0;',
+    'const float lineFrequency=0.2;',
+    'const float warpSpeed=0.2*overallSpeed;',
+    'const float warpFrequency=0.5;',
+    'const float warpAmplitude=1.0;',
+    'const float offsetFrequency=0.5;',
+    'const float offsetSpeed=1.33*overallSpeed;',
+    'const float minOffsetSpread=0.6;',
+    'const float maxOffsetSpread=2.0;',
+    'const int linesPerGroup=16;',
+    '#define drawCircle(pos,radius,coord) smoothstep(radius+gridSmoothWidth,radius,length(coord-(pos)))',
+    '#define drawSmoothLine(pos,halfWidth,t) smoothstep(halfWidth,0.0,abs(pos-(t)))',
+    '#define drawCrispLine(pos,halfWidth,t) smoothstep(halfWidth+gridSmoothWidth,halfWidth,abs(pos-(t)))',
+    '#define drawPeriodicLine(freq,width,t) drawCrispLine(freq/2.0,width,abs(mod(t,freq)-(freq)/2.0))',
+    'float random(float t){return(cos(t)+cos(t*1.3+1.3)+cos(t*1.4+1.4))/3.0;}',
+    'float getPlasmaY(float x,float hf,float off){return random(x*lineFrequency+iTime*lineSpeed)*hf*lineAmplitude+off;}',
+    'void main(){',
+    '  vec2 uv=gl_FragCoord.xy/iResolution.xy;',
+    '  vec2 space=(gl_FragCoord.xy-iResolution.xy/2.0)/iResolution.x*2.0*scale;',
+    '  float hf=1.0-(cos(uv.x*6.28)*0.5+0.5);',
+    '  float vf=1.0-(cos(uv.y*6.28)*0.5+0.5);',
+    '  space.y+=random(space.x*warpFrequency+iTime*warpSpeed)*warpAmplitude*(0.5+hf);',
+    '  space.x+=random(space.y*warpFrequency+iTime*warpSpeed+2.0)*warpAmplitude*hf;',
+    '  vec4 lines=vec4(0.0);',
+    '  for(int l=0;l<16;l++){',
+    '    float nli=float(l)/float(linesPerGroup);',
+    '    float ot=iTime*offsetSpeed;',
+    '    float op=float(l)+space.x*offsetFrequency;',
+    '    float rand=random(op+ot)*0.5+0.5;',
+    '    float hw=mix(minLineWidth,maxLineWidth,rand*hf)/2.0;',
+    '    float off=random(op+ot*(1.0+nli))*mix(minOffsetSpread,maxOffsetSpread,hf);',
+    '    float lp=getPlasmaY(space.x,hf,off);',
+    '    float line=drawSmoothLine(lp,hw,space.y)/2.0+drawCrispLine(lp,hw*0.15,space.y);',
+    '    float cx=mod(float(l)+iTime*lineSpeed,25.0)-12.0;',
+    '    vec2 cp=vec2(cx,getPlasmaY(cx,hf,off));',
+    '    line+=drawCircle(cp,0.01,space)*4.0;',
+    '    lines+=line*lineColor*rand;',
+    '  }',
+    '  vec4 col=mix(vec4(0.08,0.05,0.22,1.0),vec4(0.18,0.05,0.35,1.0),uv.x);',
+    '  col*=vf;',
+    '  col.a=1.0;',
+    '  col+=lines;',
+    '  gl_FragColor=col;',
+    '}'
+  ].join('\n');
+
+  function compileShader(type, src){
+    var s=gl.createShader(type);
+    gl.shaderSource(s,src);
+    gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){gl.deleteShader(s);return null;}
+    return s;
+  }
+  var vs=compileShader(gl.VERTEX_SHADER,vsSource);
+  var fs=compileShader(gl.FRAGMENT_SHADER,fsSource);
+  if(!vs||!fs){canvas.style.display='none';return;}
+  var prog=gl.createProgram();
+  gl.attachShader(prog,vs);
+  gl.attachShader(prog,fs);
+  gl.linkProgram(prog);
+  if(!gl.getProgramParameter(prog,gl.LINK_STATUS)){canvas.style.display='none';return;}
+
+  var buf=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+
+  var aPos=gl.getAttribLocation(prog,'aVertexPosition');
+  var uRes=gl.getUniformLocation(prog,'iResolution');
+  var uTime=gl.getUniformLocation(prog,'iTime');
+
+  function resize(){
+    var rect=canvas.parentElement.getBoundingClientRect();
+    canvas.width=rect.width;
+    canvas.height=rect.height;
+    gl.viewport(0,0,canvas.width,canvas.height);
+  }
+  window.addEventListener('resize',resize);
+  resize();
+
+  var t0=Date.now();
+  var rafId;
+  function draw(){
+    var t=(Date.now()-t0)/1000;
+    gl.useProgram(prog);
+    gl.uniform2f(uRes,canvas.width,canvas.height);
+    gl.uniform1f(uTime,t);
+    gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+    gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
+    gl.enableVertexAttribArray(aPos);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    rafId=requestAnimationFrame(draw);
+  }
+  draw();
+
+  /* Pause when section scrolls out of view to save GPU */
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){if(!rafId)draw();}
+        else{cancelAnimationFrame(rafId);rafId=null;}
+      });
+    },{threshold:0}).observe(canvas.parentElement);
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    { "type": "custom", "name": "Custom block", "settings": [] }
+  ]
+}
+{% endschema %}

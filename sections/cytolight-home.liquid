@@ -1,0 +1,472 @@
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign desk_product = section.settings.featured_product
+  if desk_product == blank
+    assign desk_product = all_products['cytolight-desk']
+  endif
+
+  assign desk_url = '/products/cytolight-desk'
+  if desk_product != blank
+    assign desk_url = desk_product.url
+  endif
+
+  assign product_collection = section.settings.product_collection
+
+  assign cap_product = all_products['cytolight-cap']
+  assign cap_url = '/products/cytolight-cap'
+  if cap_product != blank
+    assign cap_url = cap_product.url
+  endif
+
+  assign pano_ultra_product = all_products['cytolight-pano-ultra']
+  assign pano_ultra_url = '/products/cytolight-pano-ultra'
+  if pano_ultra_product != blank
+    assign pano_ultra_url = pano_ultra_product.url
+  endif
+-%}
+
+{{ 'cytolight-cinematic.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'cytolight-cinematic.js' | asset_url }}" defer></script>
+
+<main class="cy-home" data-cytolight-home>
+  <section class="cy-hero" aria-labelledby="cy-home-title">
+    <div class="cy-hero__media" aria-hidden="true">
+      <video src="{{ section.settings.hero_video_url | default: 'https://media.paretophysio.com/videos/ouided/Luxury.mp4' }}" autoplay loop muted playsinline preload="metadata"></video>
+    </div>
+    <div class="cy-hero__content">
+      <div class="cy-shell">
+        <p class="cy-hero__brand">CytoLight</p>
+        <h1 id="cy-home-title">
+          {%- if is_fr -%}
+            {{ section.settings.hero_heading_fr | default: 'La lumi&egrave;re qui transforme votre quotidien.' }}
+          {%- else -%}
+            {{ section.settings.hero_heading_en | default: 'Light that transforms your everyday.' }}
+          {%- endif -%}
+        </h1>
+        <p class="cy-hero__sub">
+          {%- if is_fr -%}
+            {{ section.settings.hero_text_fr | default: 'Des syst&egrave;mes de luminoth&eacute;rapie rouge intelligents, con&ccedil;us pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l&apos;&eacute;nergie.' }}
+          {%- else -%}
+            {{ section.settings.hero_text_en | default: 'Intelligent red light therapy systems designed for recovery, skin, sleep, and energy.' }}
+          {%- endif -%}
+        </p>
+        <div class="cy-actions">
+          <a class="cy-button cy-button--light" href="{{ section.settings.primary_cta_url | default: desk_url }}">
+            {%- if is_fr -%}{{ section.settings.primary_cta_fr | default: 'D&eacute;couvrir CytoLight DESK' }}{%- else -%}{{ section.settings.primary_cta_en | default: 'Discover CytoLight DESK' }}{%- endif -%}
+          </a>
+          <a class="cy-button cy-button--line" href="{{ section.settings.secondary_cta_url | default: '#cy-range' }}">
+            {%- if is_fr -%}{{ section.settings.secondary_cta_fr | default: 'Voir la gamme' }}{%- else -%}{{ section.settings.secondary_cta_en | default: 'Explore the range' }}{%- endif -%}
+          </a>
+        </div>
+
+        <div class="cy-hero__facts" aria-label="{% if is_fr %}Points cl&eacute;s{% else %}Key facts{% endif %}">
+          {%- assign fact_blocks = section.blocks | where: 'type', 'technical_fact' -%}
+          {%- if fact_blocks.size > 0 -%}
+            {%- for block in fact_blocks limit: 4 -%}
+              <div class="cy-hero__fact" {{ block.shopify_attributes }}>
+                <strong>{{ block.settings.value }}</strong>
+                <span>{% if is_fr %}{{ block.settings.label_fr }}{% else %}{{ block.settings.label_en }}{% endif %}</span>
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <div class="cy-hero__fact"><strong>7</strong><span>{% if is_fr %}longueurs d'onde cibl&eacute;es{% else %}targeted wavelengths{% endif %}</span></div>
+            <div class="cy-hero__fact"><strong>590-940</strong><span>{% if is_fr %}nm, de l'ambre au NIR profond{% else %}nm, amber to deep NIR{% endif %}</span></div>
+            <div class="cy-hero__fact"><strong>1-40 Hz</strong><span>{% if is_fr %}pulsations configurables{% else %}configurable pulsing{% endif %}</span></div>
+            <div class="cy-hero__fact"><strong>30 {% if is_fr %}jours{% else %}days{% endif %}</strong><span>{% if is_fr %}pour l'essayer chez vous{% else %}to try it at home{% endif %}</span></div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-cinema" data-cy-cinema id="cy-science">
+    <div class="cy-cinema__stage">
+      <div class="cy-cinema__world">
+        <img src="{{ 'cytolight-desk-luxury.png' | asset_url }}" alt="{% if is_fr %}CytoLight DESK en luminoth&eacute;rapie rouge{% else %}CytoLight DESK red light therapy panel{% endif %}" width="1600" height="900" loading="lazy">
+        <span class="cy-cinema__glow" aria-hidden="true"></span>
+      </div>
+      <div class="cy-cinema__panel">
+        <p class="cy-kicker">{% if is_fr %}Sept spectres, un seul syst&egrave;me{% else %}Seven spectra, one system{% endif %}</p>
+        <h2>{% if is_fr %}La bonne lumi&egrave;re. Au bon moment.{% else %}The right light. At the right time.{% endif %}</h2>
+        <p>{% if is_fr %}De l'ambre au proche infrarouge profond, chaque longueur d'onde r&eacute;pond &agrave; un besoin diff&eacute;rent. CytoLight DESK vous permet de les utiliser ensemble ou de les ajuster individuellement depuis l'&eacute;cran tactile et l'application.{% else %}From amber to deep near-infrared, each wavelength serves a different purpose. CytoLight DESK lets you use them together or tune them individually from its touchscreen and app.{% endif %}</p>
+        <div class="cy-spectrum" aria-label="{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}">
+          <span><strong>590</strong>Amber</span><span><strong>630</strong>Red</span><span><strong>660</strong>Deep red</span>
+          <span><strong>810</strong>NIR</span><span><strong>830</strong>NIR</span><span><strong>850</strong>NIR</span><span><strong>940</strong>Deep NIR</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-cinema cy-cinema--cap" data-cy-cinema id="cy-cap-ritual">
+    <div class="cy-cinema__stage">
+      <div class="cy-cinema__world">
+        <img src="{{ 'cytolight-cap-cinema-face.png' | asset_url }}" alt="{% if is_fr %}CytoLight Redlight Cap visible sur le visage pendant une routine cheveux mains libres{% else %}CytoLight Redlight Cap visible on the face during a hands-free hair routine{% endif %}" width="1792" height="1024" loading="lazy">
+        <span class="cy-cinema__glow" aria-hidden="true"></span>
+      </div>
+      <div class="cy-cinema__panel">
+        <p class="cy-kicker">{% if is_fr %}CytoLight Redlight Cap{% else %}CytoLight Redlight Cap{% endif %}</p>
+        <h2>{% if is_fr %}La routine cheveux que vous pouvez vraiment garder.{% else %}The hair ritual you can actually keep.{% endif %}</h2>
+        <p>{% if is_fr %}Une casquette de luminoth&eacute;rapie rouge et proche infrarouge, pens&eacute;e pour rester proche du cuir chevelu pendant que vous lisez, travaillez ou vous d&eacute;tendez. Moins d'effort. Plus de r&eacute;gularit&eacute;.{% else %}A red and near-infrared light therapy cap designed to stay close to the scalp while you read, work, or unwind. Less friction. More consistency.{% endif %}</p>
+        <div class="cy-cap-points" aria-label="{% if is_fr %}B&eacute;n&eacute;fices CytoLight Cap{% else %}CytoLight Cap benefits{% endif %}">
+          <span>{% if is_fr %}Format mains libres{% else %}Hands-free format{% endif %}</span>
+          <span>660nm + 850nm</span>
+          <span>{% if is_fr %}150 LED 3-en-1{% else %}150 3-in-1 LEDs{% endif %}</span>
+        </div>
+        <div class="cy-actions">
+          <a class="cy-button cy-button--light" href="/products/cytolight-cap">{% if is_fr %}D&eacute;couvrir la casquette{% else %}Discover the cap{% endif %}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-cinema cy-cinema--pano" data-cy-cinema id="cy-pano-ultra">
+    <div class="cy-cinema__stage">
+      <div class="cy-cinema__world">
+        <img src="{{ 'cytolight-pano-ultra-athlete.png' | asset_url }}" alt="CytoLight PANO ULTRA with athlete recovery routine" width="1600" height="900" loading="lazy">
+        <span class="cy-cinema__glow" aria-hidden="true"></span>
+      </div>
+      <div class="cy-cinema__panel">
+        <p class="cy-kicker">CytoLight PANO ULTRA</p>
+        <h2>{% if is_fr %}Une exp&eacute;rience lumineuse grand format.{% else %}A larger light experience for serious routines.{% endif %}</h2>
+        <p>{% if is_fr %}Pens&eacute; pour les espaces wellness, les studios et les routines corps entier, PANO ULTRA apporte une pr&eacute;sence plus immersive tout en gardant l'ADN CytoLight : design premium, usage simple et lumi&egrave;re cibl&eacute;e.{% else %}Designed for wellness spaces, studios, and full-body routines, PANO ULTRA brings a more immersive presence while keeping the CytoLight DNA: premium design, simple use, and targeted light.{% endif %}</p>
+        <div class="cy-cap-points" aria-label="{% if is_fr %}Points forts PANO ULTRA{% else %}PANO ULTRA highlights{% endif %}">
+          <span>{% if is_fr %}Format grand panneau{% else %}Large panel format{% endif %}</span>
+          <span>{% if is_fr %}Couverture corps entier{% else %}Full-body coverage{% endif %}</span>
+          <span>{% if is_fr %}Disponible en ligne{% else %}Online ready{% endif %}</span>
+        </div>
+        <div class="cy-actions">
+          <a class="cy-button cy-button--light" href="{{ pano_ultra_url }}">{% if is_fr %}Acheter PANO ULTRA{% else %}Buy PANO ULTRA{% endif %}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-intro cy-reveal">
+    <div class="cy-shell cy-intro__top">
+      <div>
+        <p class="cy-kicker">{% if is_fr %}Le bien-&ecirc;tre, redessin&eacute;{% else %}Wellness, redesigned{% endif %}</p>
+        <h2 class="cy-heading">{% if is_fr %}Une technologie avanc&eacute;e. Une exp&eacute;rience remarquablement simple.{% else %}Advanced technology. A remarkably simple experience.{% endif %}</h2>
+      </div>
+      <div class="cy-intro__aside">
+        <p>{% if is_fr %}CytoLight r&eacute;unit puissance, contr&ocirc;le spectral et design pour faire de la luminoth&eacute;rapie un rituel que vous avez vraiment envie de garder.{% else %}CytoLight brings together power, spectral control, and considered design to make light therapy a ritual you will actually keep.{% endif %}</p>
+        <a class="cy-link" href="#cy-science">{% if is_fr %}Comprendre la technologie{% else %}Understand the technology{% endif %} <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-range" id="cy-range">
+    <div class="cy-shell">
+      <div class="cy-range__head cy-reveal">
+        <div>
+          <p class="cy-kicker">{% if is_fr %}Catalogue CytoLight{% else %}CytoLight catalogue{% endif %}</p>
+          <h2 class="cy-heading">{% if is_fr %}Choisissez la lumi&egrave;re faite pour votre espace.{% else %}Choose the light built for your space.{% endif %}</h2>
+        </div>
+        <div class="cy-range__aside">
+          <p>{% if is_fr %}Du bureau personnel au studio wellness, comparez la gamme CytoLight en un coup d'oeil et trouvez le format qui correspond &agrave; votre rituel.{% else %}From a personal desk ritual to a full wellness studio, compare the CytoLight range at a glance and find the format that fits your routine.{% endif %}</p>
+          <a class="cy-link" href="{{ routes.all_products_collection_url }}">{% if is_fr %}Voir tous les produits{% else %}View all products{% endif %} <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+      <div class="cy-products">
+        <article class="cy-product cy-reveal">
+          <a href="{{ desk_url }}">
+            <div class="cy-product__visual">
+              <img src="{{ 'cytolight-desk-luxury.png' | asset_url }}" alt="CytoLight DESK" width="1600" height="900" loading="lazy">
+              <span class="cy-product__badge">{% if is_fr %}Disponible maintenant{% else %}Available now{% endif %}</span>
+            </div>
+            <div class="cy-product__body">
+              <p class="cy-product__type">{% if is_fr %}Personnel &middot; Bureau{% else %}Personal &middot; Desktop{% endif %}</p>
+              <h3>CytoLight DESK</h3>
+              <p class="cy-product__desc">{% if is_fr %}Le panneau compact &agrave; 7 spectres pour int&eacute;grer r&eacute;cup&eacute;ration, concentration, peau et sommeil &agrave; votre routine quotidienne.{% else %}The compact 7-spectrum panel for bringing recovery, focus, skin, and sleep support into your daily routine.{% endif %}</p>
+              <div class="cy-product__meta">
+                <span class="cy-product__price">{% if desk_product != blank %}{{ desk_product.price | money }}{% else %}299 EUR{% endif %}</span>
+                <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <article class="cy-product cy-reveal">
+          <a href="{{ cap_url }}">
+            <div class="cy-product__visual">
+              <img src="{{ 'cytolight-cap-cinema-face.png' | asset_url }}" alt="CytoLight Redlight Cap" width="1600" height="900" loading="lazy">
+              <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
+            </div>
+            <div class="cy-product__body">
+              <p class="cy-product__type">{% if is_fr %}Cheveux &middot; Mains libres{% else %}Hair &middot; Hands-free{% endif %}</p>
+              <h3>CytoLight Redlight Cap</h3>
+              <p class="cy-product__desc">{% if is_fr %}Une casquette de luminoth&eacute;rapie rouge et proche infrarouge pour une routine cuir chevelu simple, r&eacute;guli&egrave;re et facile &agrave; garder.{% else %}A red and near-infrared therapy cap for a simple scalp routine that is easy to repeat and keep consistent.{% endif %}</p>
+              <div class="cy-product__meta">
+                <span class="cy-product__price">{% if cap_product != blank %}{{ cap_product.price | money }}{% else %}330 EUR{% endif %}</span>
+                <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <article class="cy-product cy-reveal">
+          <a href="{{ pano_ultra_url }}">
+            <div class="cy-product__visual">
+              <img src="{{ 'cytolight-pano-ultra-luxury.png' | asset_url }}" alt="CytoLight PANO ULTRA" width="1600" height="900" loading="lazy">
+              <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
+            </div>
+            <div class="cy-product__body">
+              <p class="cy-product__type">{% if is_fr %}Performance &middot; Professionnel{% else %}Performance &middot; Professional{% endif %}</p>
+              <h3>CytoLight PANO ULTRA</h3>
+              <p class="cy-product__desc">{% if is_fr %}Un panneau grand format imagin&eacute; pour les espaces wellness, les studios et les routines corps entier.{% else %}A larger-format panel conceived for wellness spaces, studios, and full-body routines.{% endif %}</p>
+              <div class="cy-product__meta">
+                <span class="cy-product__price">{% if pano_ultra_product != blank %}{{ pano_ultra_product.price | money }}{% else %}1500 EUR{% endif %}</span>
+                <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              </div>
+            </div>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-use">
+    <div class="cy-shell">
+      <div class="cy-use__head cy-reveal">
+        <p class="cy-kicker">{% if is_fr %}Acheter selon votre objectif{% else %}Shop by goal{% endif %}</p>
+        <h2 class="cy-heading">{% if is_fr %}Commencez par le r&eacute;sultat que vous voulez ressentir.{% else %}Start with the result you want to feel.{% endif %}</h2>
+      </div>
+      <div class="cy-use__grid">
+        {%- assign goal_blocks = section.blocks | where: 'type', 'goal' -%}
+        {%- if goal_blocks.size > 0 -%}
+          {%- for block in goal_blocks -%}
+            {%- liquid
+              assign goal_image = 'cytolight-desk-luxury.png'
+              assign goal_alt = 'CytoLight desk ritual'
+              case forloop.index
+                when 1
+                  assign goal_image = 'cytolight-pano-ultra-athlete.png'
+                  assign goal_alt = 'CytoLight recovery routine'
+                when 2
+                  assign goal_image = 'cytolight-cap-cinema-face.png'
+                  assign goal_alt = 'CytoLight skin and glow routine'
+                when 3
+                  assign goal_image = 'cytolight-desk-luxury.png'
+                  assign goal_alt = 'CytoLight focus ritual'
+                when 4
+                  assign goal_image = 'cytolight-pano-ultra-goal-session.png'
+                  assign goal_alt = 'CytoLight evening routine'
+              endcase
+            -%}
+            <a class="cy-use__item cy-reveal" href="{{ block.settings.url | default: desk_url }}" {{ block.shopify_attributes }}>
+              <span class="cy-use__media"><img src="{{ goal_image | asset_url }}" alt="{{ goal_alt }}" width="900" height="720" loading="lazy"></span>
+              <span class="cy-use__content">
+                <span class="cy-use__num">0{{ forloop.index }}</span>
+                <h3>{% if is_fr %}{{ block.settings.title_fr }}{% else %}{{ block.settings.title_en }}{% endif %}</h3>
+                <p>{% if is_fr %}{{ block.settings.text_fr }}{% else %}{{ block.settings.text_en }}{% endif %}</p>
+              </span>
+            </a>
+          {%- endfor -%}
+        {%- else -%}
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-pano-ultra-athlete.png' | asset_url }}" alt="{% if is_fr %}Routine de r&eacute;cup&eacute;ration CytoLight{% else %}CytoLight recovery routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">01</span><h3>{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</h3><p>{% if is_fr %}Pour les muscles, articulations et routines apr&egrave;s effort.{% else %}For muscles, joints, and post-effort routines.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-cap-cinema-face.png' | asset_url }}" alt="{% if is_fr %}Routine peau CytoLight{% else %}CytoLight skin routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">02</span><h3>{% if is_fr %}Peau{% else %}Skin{% endif %}</h3><p>{% if is_fr %}Pour une routine r&eacute;guli&egrave;re orient&eacute;e teint, texture et &eacute;clat.{% else %}For a consistent routine focused on tone, texture, and radiance.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-desk-luxury.png' | asset_url }}" alt="{% if is_fr %}Rituel de concentration CytoLight{% else %}CytoLight focus ritual{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">03</span><h3>{% if is_fr %}Focus{% else %}Focus{% endif %}</h3><p>{% if is_fr %}Pour installer un rituel lumineux autour du travail profond.{% else %}For building a short light ritual around deep work.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-pano-ultra-goal-session.png' | asset_url }}" alt="{% if is_fr %}Routine du soir CytoLight{% else %}CytoLight evening routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">04</span><h3>{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</h3><p>{% if is_fr %}Pour cr&eacute;er un signal calme et r&eacute;p&eacute;table en fin de journ&eacute;e.{% else %}For creating a repeatable calm signal at the end of the day.{% endif %}</p></span></a>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-proof">
+    <div class="cy-shell cy-proof__grid">
+      <div class="cy-reveal">
+        <p class="cy-kicker">{% if is_fr %}La confiance est une fonctionnalit&eacute;{% else %}Confidence is a feature{% endif %}</p>
+        <h2 class="cy-heading">{% if is_fr %}Con&ccedil;u pour &ecirc;tre utilis&eacute;. Con&ccedil;u pour durer.{% else %}Built to be used. Built to last.{% endif %}</h2>
+        <p class="cy-copy">{% if is_fr %}Un design de qualit&eacute; clinique, des commandes simples et une politique d'essai claire pour vous permettre de juger CytoLight dans votre propre routine.{% else %}Clinical-grade design, clear controls, and a straightforward home trial so you can judge CytoLight in your own routine.{% endif %}</p>
+      </div>
+      <div class="cy-proof__stats cy-reveal">
+        {%- assign trust_blocks = section.blocks | where: 'type', 'trust_point' -%}
+        {%- if trust_blocks.size > 0 -%}
+          {%- for block in trust_blocks limit: 4 -%}
+            <div class="cy-proof__stat" {{ block.shopify_attributes }}>
+              <strong>{{ block.settings.value }}</strong>
+              <span>{% if is_fr %}{{ block.settings.label_fr }}{% else %}{{ block.settings.label_en }}{% endif %}</span>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="cy-proof__stat"><strong>4,000+</strong><span>{% if is_fr %}&eacute;tudes publi&eacute;es sur la photobiomodulation{% else %}published photobiomodulation studies{% endif %}</span></div>
+          <div class="cy-proof__stat"><strong>CE</strong><span>{% if is_fr %}conformit&eacute; et exigences de s&eacute;curit&eacute;{% else %}conformity and safety requirements{% endif %}</span></div>
+          <div class="cy-proof__stat"><strong>2 {% if is_fr %}ans{% else %}years{% endif %}</strong><span>{% if is_fr %}de garantie mat&eacute;rielle incluse{% else %}included hardware warranty{% endif %}</span></div>
+          <div class="cy-proof__stat"><strong>30 {% if is_fr %}jours{% else %}days{% endif %}</strong><span>{% if is_fr %}d'essai satisfait ou rembours&eacute;{% else %}money-back home trial{% endif %}</span></div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-compare">
+    <div class="cy-shell">
+      <div class="cy-compare__top cy-reveal">
+        <div>
+          <p class="cy-kicker">{% if is_fr %}Choisir son CytoLight{% else %}Choose your CytoLight{% endif %}</p>
+          <h2 class="cy-heading">{% if is_fr %}Commencez par votre espace.{% else %}Start with your space.{% endif %}</h2>
+        </div>
+        <a class="cy-button" href="{{ routes.all_products_collection_url }}">{% if is_fr %}Voir les produits{% else %}Shop the products{% endif %}</a>
+      </div>
+      <div class="cy-table-wrap cy-reveal">
+        <table class="cy-table">
+          <thead><tr><th>{% if is_fr %}Mod&egrave;le{% else %}Model{% endif %}</th><th class="cy-table__desk">DESK</th><th>REDLIGHT CAP</th><th>PANO ULTRA</th></tr></thead>
+          <tbody>
+            <tr><td>{% if is_fr %}Espace id&eacute;al{% else %}Best space{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Bureau, chambre{% else %}Desk, bedroom{% endif %}</td><td>{% if is_fr %}Salon, lecture, routine cheveux{% else %}Living room, reading, hair routine{% endif %}</td><td>{% if is_fr %}Studio, salle wellness{% else %}Studio, wellness room{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Couverture{% else %}Coverage{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Cibl&eacute;e{% else %}Targeted{% endif %}</td><td>{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}</td><td class="cy-table__desk">{% if is_fr %}7 spectres ind&eacute;pendants{% else %}7 independent spectra{% endif %}</td><td>{% if is_fr %}Minuteur, intensit&eacute;, pulsation{% else %}Timer, intensity, pulsing{% endif %}</td><td>{% if is_fr %}Format avanc&eacute; grand panneau{% else %}Advanced large-panel format{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Lien achat{% else %}Buy link{% endif %}</td><td class="cy-table__desk"><a href="{{ desk_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ cap_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ pano_ultra_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-faq">
+    <div class="cy-shell cy-faq__grid">
+      <div class="cy-reveal">
+        <p class="cy-kicker">FAQ</p>
+        <h2 class="cy-heading">{% if is_fr %}Les questions avant de commencer.{% else %}Questions before you begin.{% endif %}</h2>
+      </div>
+      <div class="cy-faq__items cy-reveal">
+        {%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
+        {%- if faq_blocks.size > 0 -%}
+          {%- for block in faq_blocks -%}
+            <details class="cy-faq__item" {{ block.shopify_attributes }}>
+              <summary>{% if is_fr %}{{ block.settings.question_fr }}{% else %}{{ block.settings.question_en }}{% endif %}</summary>
+              <p>{% if is_fr %}{{ block.settings.answer_fr }}{% else %}{{ block.settings.answer_en }}{% endif %}</p>
+            </details>
+          {%- endfor -%}
+        {%- else -%}
+          <details class="cy-faq__item"><summary>{% if is_fr %}Combien de temps dure une s&eacute;ance ?{% else %}How long is a session?{% endif %}</summary><p>{% if is_fr %}La plupart des routines commencent autour de 10 minutes. Ajustez toujours selon votre confort et les recommandations du guide.{% else %}Most routines start around 10 minutes. Always adjust based on comfort and the quick-start guide.{% endif %}</p></details>
+          <details class="cy-faq__item"><summary>{% if is_fr %}Dois-je utiliser l'application ?{% else %}Do I need the app?{% endif %}</summary><p>{% if is_fr %}Non. L'&eacute;cran tactile permet de piloter l'appareil directement; l'application ajoute des pr&eacute;r&eacute;glages et de la programmation.{% else %}No. The touchscreen controls the device directly; the app adds presets and scheduling.{% endif %}</p></details>
+          <details class="cy-faq__item"><summary>{% if is_fr %}Est-ce adapt&eacute; &agrave; un bureau ?{% else %}Is it suited to a desk?{% endif %}</summary><p>{% if is_fr %}Oui. DESK a &eacute;t&eacute; pens&eacute; pour rester compact, proche et simple &agrave; utiliser pendant la journ&eacute;e.{% else %}Yes. DESK is designed to stay compact, close, and easy to use during the day.{% endif %}</p></details>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-final">
+    <div class="cy-final__media">
+      <img src="{{ 'cytolight-desk-luxury.png' | asset_url }}" alt="" width="1600" height="900" loading="lazy">
+    </div>
+    <div class="cy-shell">
+      <div class="cy-final__content cy-reveal">
+        <p class="cy-kicker">CytoLight DESK</p>
+        <h2>{% if is_fr %}Votre nouveau rituel commence ici.{% else %}Your new ritual starts here.{% endif %}</h2>
+        <p>{% if is_fr %}Sept longueurs d'onde, un contr&ocirc;le intuitif et un format con&ccedil;u pour rester &agrave; port&eacute;e de main.{% else %}Seven wavelengths, intuitive control, and a form designed to stay within reach.{% endif %}</p>
+        <div class="cy-actions">
+          <a class="cy-button cy-button--light" href="{{ desk_url }}">{% if is_fr %}D&eacute;couvrir le produit{% else %}Discover the product{% endif %}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cy-reassure" aria-label="{% if is_fr %}Services{% else %}Services{% endif %}">
+    <div class="cy-shell cy-reassure__grid">
+      <div class="cy-reassure__item"><strong>{% if is_fr %}Livraison rapide{% else %}Fast delivery{% endif %}</strong><span>{% if is_fr %}Exp&eacute;dition suivie et prot&eacute;g&eacute;e{% else %}Tracked and protected shipping{% endif %}</span></div>
+      <div class="cy-reassure__item"><strong>{% if is_fr %}Essai 30 jours{% else %}30-day trial{% endif %}</strong><span>{% if is_fr %}Testez-le dans votre vraie routine{% else %}Test it in your real routine{% endif %}</span></div>
+      <div class="cy-reassure__item"><strong>{% if is_fr %}Garantie 2 ans{% else %}2-year warranty{% endif %}</strong><span>{% if is_fr %}Protection mat&eacute;rielle incluse{% else %}Hardware protection included{% endif %}</span></div>
+      <div class="cy-reassure__item"><strong>{% if is_fr %}Support sp&eacute;cialis&eacute;{% else %}Specialist support{% endif %}</strong><span>{% if is_fr %}Avant et apr&egrave;s votre achat{% else %}Before and after purchase{% endif %}</span></div>
+    </div>
+  </section>
+</main>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "CytoLight",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "url": "{{ shop.url }}{{ desk_url }}",
+      "name": "CytoLight DESK"
+    }
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "CytoLight Cinematic Home",
+  "settings": [
+    { "type": "product", "id": "featured_product", "label": "Featured product" },
+    { "type": "collection", "id": "product_collection", "label": "Product rail collection" },
+    { "type": "range", "id": "product_limit", "label": "Products to show", "min": 1, "max": 12, "step": 1, "default": 6 },
+    { "type": "url", "id": "hero_video_url", "label": "Hero video URL" },
+    { "type": "image_picker", "id": "desk_image", "label": "CytoLight DESK fallback image" },
+    { "type": "image_picker", "id": "pano_image", "label": "CytoLight PANO PLUS image" },
+    { "type": "image_picker", "id": "pro_image", "label": "CytoLight PANO ULTRA image" },
+    { "type": "text", "id": "hero_heading_en", "label": "Hero heading EN", "default": "Light that transforms your everyday." },
+    { "type": "text", "id": "hero_heading_fr", "label": "Hero heading FR", "default": "La lumi&egrave;re qui transforme votre quotidien." },
+    { "type": "textarea", "id": "hero_text_en", "label": "Hero text EN", "default": "Intelligent red light therapy systems designed for recovery, skin, sleep, and energy." },
+    { "type": "textarea", "id": "hero_text_fr", "label": "Hero text FR", "default": "Des syst&egrave;mes de luminoth&eacute;rapie rouge intelligents, con&ccedil;us pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l'&eacute;nergie." },
+    { "type": "text", "id": "primary_cta_en", "label": "Primary CTA EN", "default": "Discover CytoLight DESK" },
+    { "type": "text", "id": "primary_cta_fr", "label": "Primary CTA FR", "default": "D&eacute;couvrir CytoLight DESK" },
+    { "type": "url", "id": "primary_cta_url", "label": "Primary CTA URL" },
+    { "type": "text", "id": "secondary_cta_en", "label": "Secondary CTA EN", "default": "Explore the range" },
+    { "type": "text", "id": "secondary_cta_fr", "label": "Secondary CTA FR", "default": "Voir la gamme" },
+    { "type": "url", "id": "secondary_cta_url", "label": "Secondary CTA URL" }
+  ],
+  "blocks": [
+    {
+      "type": "technical_fact",
+      "name": "Hero fact",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "7" },
+        { "type": "text", "id": "label_en", "label": "Label EN", "default": "targeted wavelengths" },
+        { "type": "text", "id": "label_fr", "label": "Label FR", "default": "longueurs d'onde cibl&eacute;es" }
+      ]
+    },
+    {
+      "type": "goal",
+      "name": "Goal card",
+      "settings": [
+        { "type": "text", "id": "title_en", "label": "Title EN", "default": "Recovery" },
+        { "type": "text", "id": "title_fr", "label": "Title FR", "default": "R&eacute;cup&eacute;ration" },
+        { "type": "textarea", "id": "text_en", "label": "Text EN", "default": "For muscles, joints, and post-effort routines." },
+        { "type": "textarea", "id": "text_fr", "label": "Text FR", "default": "Pour les muscles, articulations et routines apr&egrave;s effort." },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    },
+    {
+      "type": "trust_point",
+      "name": "Trust point",
+      "settings": [
+        { "type": "text", "id": "value", "label": "Value", "default": "30 days" },
+        { "type": "text", "id": "label_en", "label": "Label EN", "default": "money-back home trial" },
+        { "type": "text", "id": "label_fr", "label": "Label FR", "default": "d'essai satisfait ou rembours&eacute;" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        { "type": "text", "id": "question_en", "label": "Question EN", "default": "How long is a session?" },
+        { "type": "text", "id": "question_fr", "label": "Question FR", "default": "Combien de temps dure une s&eacute;ance ?" },
+        { "type": "textarea", "id": "answer_en", "label": "Answer EN", "default": "Most routines start around 10 minutes. Always adjust based on comfort and the quick-start guide." },
+        { "type": "textarea", "id": "answer_fr", "label": "Answer FR", "default": "La plupart des routines commencent autour de 10 minutes. Ajustez toujours selon votre confort et les recommandations du guide." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CytoLight Cinematic Home",
+      "blocks": [
+        { "type": "technical_fact", "settings": { "value": "7", "label_en": "targeted wavelengths", "label_fr": "longueurs d'onde cibl&eacute;es" } },
+        { "type": "technical_fact", "settings": { "value": "590-940", "label_en": "nm, amber to deep NIR", "label_fr": "nm, de l'ambre au NIR profond" } },
+        { "type": "technical_fact", "settings": { "value": "1-40 Hz", "label_en": "configurable pulsing", "label_fr": "pulsations configurables" } },
+        { "type": "technical_fact", "settings": { "value": "30 days", "label_en": "to try it at home", "label_fr": "pour l'essayer chez vous" } },
+        { "type": "goal", "settings": { "title_en": "Recovery", "title_fr": "R&eacute;cup&eacute;ration" } },
+        { "type": "goal", "settings": { "title_en": "Skin", "title_fr": "Peau", "text_en": "For tone, texture, and visible radiance.", "text_fr": "Pour le teint, la texture et l'&eacute;clat visible." } },
+        { "type": "goal", "settings": { "title_en": "Focus", "title_fr": "Focus", "text_en": "For a short ritual around deep work.", "text_fr": "Pour un rituel court autour du travail profond." } },
+        { "type": "goal", "settings": { "title_en": "Sleep", "title_fr": "Sommeil", "text_en": "For a calm signal at the end of the day.", "text_fr": "Pour un signal calme en fin de journ&eacute;e." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,24 @@
+<section class="container" style="padding: 60px 0;">
+  <span class="eyebrow">Journal</span>
+  <h1>{{ blog.title }}</h1>
+  <div class="article-grid" style="margin-top:32px;">
+    {% paginate blog.articles by 12 %}
+      {% for article in blog.articles %}
+        <a class="article-card" href="{{ article.url }}">
+          <div class="article-card__media">
+            {% if article.image != blank %}
+              <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title | escape }}" loading="lazy">
+            {% else %}
+              {{ 'lifestyle-2' | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+          <h3 class="article-card__title">{{ article.title }}</h3>
+          <p class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+        </a>
+      {% endfor %}
+      {% if paginate.pages > 1 %}
+        <div style="grid-column: 1 / -1; text-align:center; padding: 24px 0;">{{ paginate | default_pagination }}</div>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</section>
