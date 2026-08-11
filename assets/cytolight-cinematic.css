@@ -74,7 +74,7 @@
 .cy-intro__aside p, .cy-range__aside p, .cy-faq__aside p { margin: 0 0 22px; color: var(--cy-muted); font-size: 16px; line-height: 1.7; }
 
 .cy-cinema {
-  min-height: 420vh;
+  min-height: 220vh;
   background: var(--cy-bg);
   color: #fff;
 }
@@ -93,11 +93,31 @@
   transform-origin: 58% 50%;
   will-change: transform;
 }
-.cy-cinema__world img { width: 100%; height: 100%; object-fit: cover; opacity: .7; filter: brightness(.78) saturate(.92); }
+.cy-cinema__world::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: calc(var(--cy-light-step, 0) * .72);
+  background:
+    radial-gradient(circle at 68% 50%, rgba(255, 22, 56, .48), transparent 25%),
+    radial-gradient(circle at 78% 78%, rgba(210, 13, 47, .34), transparent 34%);
+  mix-blend-mode: screen;
+}
+.cy-cinema__world img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: calc(.84 + var(--cy-light-step, 0) * .1);
+  filter:
+    brightness(calc(1.04 + var(--cy-light-step, 0) * .28))
+    saturate(calc(1.1 + var(--cy-light-step, 0) * .24))
+    contrast(1.03);
+}
 .cy-cinema__glow {
   position: absolute; inset: 0; z-index: 1;
-  background: radial-gradient(circle at 67% 52%, rgba(210,13,47,.34), transparent 30%),
-              linear-gradient(90deg, rgba(0,0,0,.76), rgba(0,0,0,.16) 58%, rgba(0,0,0,.56));
+  background: radial-gradient(circle at 67% 52%, rgba(210,13,47,calc(.26 + var(--cy-light-step, 0) * .26)), transparent 31%),
+              linear-gradient(90deg, rgba(0,0,0,.58), rgba(0,0,0,.04) 58%, rgba(0,0,0,.36));
 }
 .cy-cinema__panel {
   position: relative; z-index: 2; width: min(560px, calc(100% - 48px));
@@ -115,11 +135,24 @@
   transform-origin: 36% 50%;
   transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .038));
 }
-.cy-cinema--cap .cy-cinema__world img { object-position: 34% center; opacity: .88; filter: brightness(.86) saturate(.98); }
+.cy-cinema--cap .cy-cinema__world img {
+  object-position: 34% center;
+  opacity: calc(.94 + var(--cy-light-step, 0) * .06);
+  filter:
+    brightness(calc(1.1 + var(--cy-light-step, 0) * .24))
+    saturate(calc(1.12 + var(--cy-light-step, 0) * .22))
+    contrast(1.03);
+}
+.cy-cinema--cap .cy-cinema__world::after {
+  opacity: calc(var(--cy-light-step, 0) * .58);
+  background:
+    radial-gradient(circle at 31% 45%, rgba(255, 20, 55, .44), transparent 24%),
+    radial-gradient(circle at 22% 63%, rgba(210, 13, 47, .28), transparent 28%);
+}
 .cy-cinema--cap .cy-cinema__glow {
   background:
-    radial-gradient(circle at 32% 45%, rgba(210,13,47,.28), transparent 26%),
-    linear-gradient(90deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.28) 34%, rgba(0,0,0,.76) 66%, rgba(0,0,0,.92) 100%);
+    radial-gradient(circle at 32% 45%, rgba(210,13,47,calc(.22 + var(--cy-light-step, 0) * .24)), transparent 26%),
+    linear-gradient(90deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.14) 34%, rgba(0,0,0,.58) 66%, rgba(0,0,0,.78) 100%);
 }
 .cy-cinema--cap .cy-cinema__panel {
   margin-left: auto;
@@ -138,11 +171,24 @@
   transform-origin: 62% 50%;
   transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .042));
 }
-.cy-cinema--pano .cy-cinema__world img { object-position: 64% center; opacity: .86; filter: brightness(.8) saturate(1.04); }
+.cy-cinema--pano .cy-cinema__world img {
+  object-position: 64% center;
+  opacity: calc(.94 + var(--cy-light-step, 0) * .06);
+  filter:
+    brightness(calc(1.08 + var(--cy-light-step, 0) * .28))
+    saturate(calc(1.14 + var(--cy-light-step, 0) * .25))
+    contrast(1.04);
+}
+.cy-cinema--pano .cy-cinema__world::after {
+  opacity: calc(var(--cy-light-step, 0) * .7);
+  background:
+    radial-gradient(circle at 72% 48%, rgba(255, 20, 55, .48), transparent 24%),
+    radial-gradient(circle at 82% 75%, rgba(210, 13, 47, .34), transparent 32%);
+}
 .cy-cinema--pano .cy-cinema__glow {
   background:
-    radial-gradient(circle at 66% 48%, rgba(210,13,47,.32), transparent 28%),
-    linear-gradient(90deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.68) 34%, rgba(0,0,0,.26) 68%, rgba(0,0,0,.62) 100%);
+    radial-gradient(circle at 66% 48%, rgba(210,13,47,calc(.26 + var(--cy-light-step, 0) * .3)), transparent 28%),
+    linear-gradient(90deg, rgba(0,0,0,.76) 0%, rgba(0,0,0,.5) 34%, rgba(0,0,0,.1) 68%, rgba(0,0,0,.42) 100%);
 }
 .cy-cinema--pano .cy-cinema__panel {
   margin-left: max(24px, 8vw);
@@ -242,7 +288,7 @@
   min-height: 100%;
   object-fit: cover;
   display: block;
-  filter: saturate(.98) contrast(1.04);
+  filter: brightness(1.08) saturate(1.08) contrast(1.04);
   transition: transform .45s var(--cy-ease);
 }
 .cy-use__item:hover .cy-use__media img { transform: scale(1.045); }
@@ -332,7 +378,7 @@
 
 .cy-final { position: relative; min-height: 660px; display: flex; align-items: center; background: #111; color: #fff; overflow: hidden; }
 .cy-final__media { position: absolute; inset: 0; }
-.cy-final__media img { width: 100%; height: 100%; object-fit: cover; opacity: .52; }
+.cy-final__media img { width: 100%; height: 100%; object-fit: cover; opacity: .68; filter: brightness(1.06) saturate(1.08); }
 .cy-final__media::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.38); }
 .cy-final__content { position: relative; z-index: 1; max-width: 760px; padding: 96px 0; }
 .cy-final h2 { margin: 0; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(48px, 7vw, 94px); line-height: .96; font-weight: 400; letter-spacing: -.018em; }
@@ -377,7 +423,7 @@
   .cy-products, .cy-use__grid, .cy-faq__grid { grid-template-columns: 1fr; }
   .cy-product:first-child { grid-column: auto; }
   .cy-product__desc { min-height: 0; }
-  .cy-cinema { min-height: 320vh; }
+  .cy-cinema { min-height: 190vh; }
   .cy-cinema__panel { margin: 0 auto; }
   .cy-cinema--cap .cy-cinema__panel { margin: 0 auto; }
   .cy-cinema--cap .cy-cinema__world img { object-position: 34% center; }

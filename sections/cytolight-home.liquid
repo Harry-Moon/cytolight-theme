@@ -243,16 +243,16 @@
               assign goal_alt = 'CytoLight desk ritual'
               case forloop.index
                 when 1
-                  assign goal_image = 'cytolight-pano-ultra-athlete.png'
+                  assign goal_image = 'cytolight-goal-recovery-pano-athlete.png'
                   assign goal_alt = 'CytoLight recovery routine'
                 when 2
-                  assign goal_image = 'cytolight-cap-cinema-face.png'
+                  assign goal_image = 'cytolight-goal-skin-red-halo.png'
                   assign goal_alt = 'CytoLight skin and glow routine'
                 when 3
                   assign goal_image = 'cytolight-desk-luxury.png'
                   assign goal_alt = 'CytoLight focus ritual'
                 when 4
-                  assign goal_image = 'cytolight-pano-ultra-goal-session.png'
+                  assign goal_image = 'cytolight-goal-sleep-pano-bedroom.png'
                   assign goal_alt = 'CytoLight evening routine'
               endcase
             -%}
@@ -266,10 +266,10 @@
             </a>
           {%- endfor -%}
         {%- else -%}
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-pano-ultra-athlete.png' | asset_url }}" alt="{% if is_fr %}Routine de r&eacute;cup&eacute;ration CytoLight{% else %}CytoLight recovery routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">01</span><h3>{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</h3><p>{% if is_fr %}Pour les muscles, articulations et routines apr&egrave;s effort.{% else %}For muscles, joints, and post-effort routines.{% endif %}</p></span></a>
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-cap-cinema-face.png' | asset_url }}" alt="{% if is_fr %}Routine peau CytoLight{% else %}CytoLight skin routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">02</span><h3>{% if is_fr %}Peau{% else %}Skin{% endif %}</h3><p>{% if is_fr %}Pour une routine r&eacute;guli&egrave;re orient&eacute;e teint, texture et &eacute;clat.{% else %}For a consistent routine focused on tone, texture, and radiance.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-recovery-pano-athlete.png' | asset_url }}" alt="{% if is_fr %}Routine de r&eacute;cup&eacute;ration CytoLight{% else %}CytoLight recovery routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">01</span><h3>{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</h3><p>{% if is_fr %}Pour les muscles, articulations et routines apr&egrave;s effort.{% else %}For muscles, joints, and post-effort routines.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-skin-red-halo.png' | asset_url }}" alt="{% if is_fr %}Routine peau CytoLight{% else %}CytoLight skin routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">02</span><h3>{% if is_fr %}Peau{% else %}Skin{% endif %}</h3><p>{% if is_fr %}Pour une routine r&eacute;guli&egrave;re orient&eacute;e teint, texture et &eacute;clat.{% else %}For a consistent routine focused on tone, texture, and radiance.{% endif %}</p></span></a>
           <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-desk-luxury.png' | asset_url }}" alt="{% if is_fr %}Rituel de concentration CytoLight{% else %}CytoLight focus ritual{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">03</span><h3>{% if is_fr %}Focus{% else %}Focus{% endif %}</h3><p>{% if is_fr %}Pour installer un rituel lumineux autour du travail profond.{% else %}For building a short light ritual around deep work.{% endif %}</p></span></a>
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-pano-ultra-goal-session.png' | asset_url }}" alt="{% if is_fr %}Routine du soir CytoLight{% else %}CytoLight evening routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">04</span><h3>{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</h3><p>{% if is_fr %}Pour cr&eacute;er un signal calme et r&eacute;p&eacute;table en fin de journ&eacute;e.{% else %}For creating a repeatable calm signal at the end of the day.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-sleep-pano-bedroom.png' | asset_url }}" alt="{% if is_fr %}Routine du soir CytoLight{% else %}CytoLight evening routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">04</span><h3>{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</h3><p>{% if is_fr %}Pour cr&eacute;er un signal calme et r&eacute;p&eacute;table en fin de journ&eacute;e.{% else %}For creating a repeatable calm signal at the end of the day.{% endif %}</p></span></a>
         {%- endif -%}
       </div>
     </div>
