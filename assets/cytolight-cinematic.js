@@ -21,8 +21,14 @@
       return Math.min(max, Math.max(min, value));
     }
 
-    function smootherStep(value) {
-      return value * value * value * (value * (value * 6 - 15) + 10);
+    function responsiveEase(value) {
+      return 1 - Math.pow(1 - value, 3);
+    }
+
+    function lightStep(value) {
+      if (value > 0.62) return 1;
+      if (value > 0.28) return 0.56;
+      return 0;
     }
 
     function measureCinema(scene) {
@@ -37,7 +43,7 @@
       if (!cinemas.length || reduceMotion) return;
       var delta = lastFrameTime ? Math.min(48, now - lastFrameTime) : 16;
       lastFrameTime = now;
-      var follow = 1 - Math.pow(0.001, delta / 520);
+      var follow = 1 - Math.pow(0.001, delta / 180);
       var shouldContinue = false;
       cinemas.forEach(function (scene) {
         measureCinema(scene);
@@ -50,7 +56,8 @@
           scene.currentProgress = scene.targetProgress;
         }
         scene.el.style.setProperty('--cy-p', scene.currentProgress.toFixed(4));
-        scene.el.style.setProperty('--cy-pe', smootherStep(scene.currentProgress).toFixed(4));
+        scene.el.style.setProperty('--cy-pe', responsiveEase(scene.currentProgress).toFixed(4));
+        scene.el.style.setProperty('--cy-light-step', lightStep(scene.currentProgress).toFixed(2));
         if (scene.currentProgress !== scene.targetProgress) {
           shouldContinue = true;
         }
