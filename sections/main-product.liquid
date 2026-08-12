@@ -506,7 +506,7 @@
   <section class='cl-feature-showcase' id='cl-highlights' aria-label='Product highlights'>
     <div class='cl-feature-showcase__inner'>
       <div class='cl-feature-tile cl-feature-tile--large {% if is_cap %}cl-feature-tile--image-bg{% else %}cl-feature-tile--infographic{% endif %}'>
-        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-targeted-ritual.jpg" | asset_url }});'{% else %}style='background-image:url({{ "cytolight-7-wavelengths-infographic.jpg" | asset_url }});'{% endif %}></div>
+        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-targeted-ritual.jpg" | file_url }});'{% else %}style='background-image:url({{ "cytolight-7-wavelengths-infographic.jpg" | file_url }});'{% endif %}></div>
         <div class='cl-feature-tile__content'>
           <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Rituel capillaire ciblé{% else %}Targeted hair ritual{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Thérapie spectrale complète{% else %}Full-spectrum therapy{% endif %}{% endif %}</p>
           <h2 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Rouge et proche infrarouge. Un geste quotidien.{% else %}Red and near-infrared. One daily habit.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Sept longueurs d'onde. Un rituel quotidien.{% else %}Seven wavelengths. One daily ritual.{% endif %}{% endif %}</h2>
@@ -514,7 +514,7 @@
         </div>
       </div>
       <div class='cl-feature-tile cl-feature-tile--light {% if is_cap %}cl-feature-tile--cap-head-bg{% endif %}'>
-        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-head-scalp.jpg" | asset_url }});'{% endif %}></div>
+        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-head-scalp.jpg" | file_url }});'{% endif %}></div>
         <div class='cl-feature-tile__content'>
           <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Grand format{% else %}Large format{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Prêt pour le bureau{% else %}Desk-ready{% endif %}{% endif %}</p>
           <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Pensé pour rester dans votre routine.{% else %}Built to stay in your routine.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Conçu pour les espaces dédiés.{% else %}Built for dedicated spaces.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Conçu pour rester visible.{% else %}Built to stay visible.{% endif %}{% endif %}</h3>
@@ -530,7 +530,7 @@
         </div>
       </div>
       <div class='cl-feature-tile {% if is_cap %}cl-feature-tile--image-bg cl-feature-tile--scalp-bg{% endif %}'>
-        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-scalp-density.jpg" | asset_url }});'{% endif %}></div>
+        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-scalp-density.jpg" | file_url }});'{% endif %}></div>
         <div class='cl-feature-tile__content'>
           <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Cheveux et cuir chevelu{% else %}Hair and scalp{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Récupération et bien-être{% else %}Recovery and wellness{% endif %}{% endif %}</p>
           <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Pour une apparence de cheveux plus dense.{% else %}For fuller-looking hair routines.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Visage, corps, articulations et concentration.{% else %}Face, body, joints, and focus.{% endif %}{% endif %}</h3>
@@ -748,7 +748,7 @@
     <div class='cl-editorial__inner'>
       <div class='cl-editorial__img-wrap'>
         {%- if is_cap -%}
-          <img src='{{ "cytolight-cap-editorial-consistency.jpg" | asset_url }}' alt='{% if is_fr %}CYTOLIGHT cap avec LED int&eacute;gr&eacute;es pour une routine cheveux r&eacute;guli&egrave;re{% else %}CYTOLIGHT cap with integrated LEDs for a consistent hair routine{% endif %}' loading='lazy' class='cl-editorial__img' width='1456' height='1042'>
+          <img src='{{ "cytolight-cap-editorial-consistency.jpg" | file_url }}' alt='{% if is_fr %}CYTOLIGHT cap avec LED int&eacute;gr&eacute;es pour une routine cheveux r&eacute;guli&egrave;re{% else %}CYTOLIGHT cap with integrated LEDs for a consistent hair routine{% endif %}' loading='lazy' class='cl-editorial__img' width='1456' height='1042'>
         {%- elsif product.featured_image -%}
           <img src='{{ product.featured_image | image_url: width: 900 }}' alt='{{ product.featured_image.alt | escape }}' loading='lazy' class='cl-editorial__img'>
         {%- else -%}
@@ -843,15 +843,15 @@
       <div class='cl-why-header {% if is_cap or is_pano_ultra %}cl-why-header--cap{% else %}cl-why-header--desk{% endif %}'>
         {%- if is_cap -%}
           <div class='cl-why-header__visual'>
-            <img class='cl-why-header__image' src='{{ "cytolight-cap-why-routine.jpg" | asset_url }}' alt='{% if is_fr %}Rituel cheveux avec CYTOLIGHT cap{% else %}Hair routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1536' height='1024'>
+            <img class='cl-why-header__image' src='{{ "cytolight-cap-why-routine.jpg" | file_url }}' alt='{% if is_fr %}Rituel cheveux avec CYTOLIGHT cap{% else %}Hair routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1536' height='1024'>
           </div>
         {%- elsif is_pano_ultra -%}
           <div class='cl-why-header__visual'>
-            <img class='cl-why-header__image' src='{{ "cytolight-pano-ultra-goal-session.jpg" | asset_url }}' alt='{% if is_fr %}Session CytoLight PANO ULTRA guid&eacute;e par objectif{% else %}Goal-guided CytoLight PANO ULTRA session{% endif %}' loading='lazy' width='2048' height='1024'>
+            <img class='cl-why-header__image' src='{{ "cytolight-pano-ultra-goal-session.jpg" | file_url }}' alt='{% if is_fr %}Session CytoLight PANO ULTRA guid&eacute;e par objectif{% else %}Goal-guided CytoLight PANO ULTRA session{% endif %}' loading='lazy' width='2048' height='1024'>
           </div>
         {%- else -%}
           <div class='cl-why-header__visual'>
-            <img class='cl-why-header__image' src='{{ "cytolight-desk-professional.jpg" | asset_url }}' alt='{% if is_fr %}Panneau CytoLight DESK sur un bureau professionnel{% else %}CytoLight DESK panel on a professional desk{% endif %}' loading='lazy' width='1536' height='1024'>
+            <img class='cl-why-header__image' src='{{ "cytolight-desk-professional.jpg" | file_url }}' alt='{% if is_fr %}Panneau CytoLight DESK sur un bureau professionnel{% else %}CytoLight DESK panel on a professional desk{% endif %}' loading='lazy' width='1536' height='1024'>
           </div>
         {%- endif -%}
         <p class='cl-why-eyebrow'>{% if is_cap %}{% if is_fr %}Pourquoi CYTOLIGHT cap{% else %}Why CYTOLIGHT cap{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Pourquoi PANO ULTRA{% else %}Why PANO ULTRA{% endif %}{% else %}{% if is_fr %}Pourquoi CytoLight{% else %}Why CytoLight{% endif %}{% endif %}</p>
@@ -872,7 +872,7 @@
             </div>
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
-            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-recovery.jpg" | asset_url }}' alt='{% if is_fr %}Athl&egrave;te face au panneau CytoLight PANO ULTRA{% else %}Athlete facing the CytoLight PANO ULTRA panel{% endif %}' loading='lazy' width='1135' height='1408'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-recovery.jpg" | file_url }}' alt='{% if is_fr %}Athl&egrave;te face au panneau CytoLight PANO ULTRA{% else %}Athlete facing the CytoLight PANO ULTRA panel{% endif %}' loading='lazy' width='1135' height='1408'>
           </div>
         </div>
         <div class='cl-why-card'>
@@ -887,7 +887,7 @@
             </div>
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
-            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-goal-session.jpg" | asset_url }}' alt='{% if is_fr %}PANO ULTRA dans un salon wellness{% else %}PANO ULTRA in a wellness living room{% endif %}' loading='lazy' width='2048' height='1024'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-goal-session.jpg" | file_url }}' alt='{% if is_fr %}PANO ULTRA dans un salon wellness{% else %}PANO ULTRA in a wellness living room{% endif %}' loading='lazy' width='2048' height='1024'>
           </div>
         </div>
         <div class='cl-why-card'>
@@ -902,7 +902,7 @@
             </div>
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
-            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-control.jpg" | asset_url }}' alt='{% if is_fr %}Contr&ocirc;le de session PANO ULTRA depuis l&apos;application{% else %}PANO ULTRA session control from the app{% endif %}' loading='lazy' width='1135' height='1408'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-control.jpg" | file_url }}' alt='{% if is_fr %}Contr&ocirc;le de session PANO ULTRA depuis l&apos;application{% else %}PANO ULTRA session control from the app{% endif %}' loading='lazy' width='1135' height='1408'>
           </div>
         </div>
         <div class='cl-why-card'>
@@ -917,7 +917,7 @@
             </div>
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
-            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-luxury.jpg" | asset_url }}' alt='{% if is_fr %}D&eacute;tail premium du panneau CytoLight PANO ULTRA{% else %}Premium detail of the CytoLight PANO ULTRA panel{% endif %}' loading='lazy' width='1600' height='900'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-luxury.jpg" | file_url }}' alt='{% if is_fr %}D&eacute;tail premium du panneau CytoLight PANO ULTRA{% else %}Premium detail of the CytoLight PANO ULTRA panel{% endif %}' loading='lazy' width='1600' height='900'>
           </div>
         </div>
         <div class='cl-why-card'>
@@ -932,7 +932,7 @@
             </div>
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
-            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-unboxing.jpg" | asset_url }}' alt='{% if is_fr %}Emballage premium de CytoLight PANO ULTRA{% else %}Premium packaging for CytoLight PANO ULTRA{% endif %}' loading='lazy' width='1135' height='1408'>
+            <img class='cl-why-card__image' src='{{ "cytolight-pano-ultra-unboxing.jpg" | file_url }}' alt='{% if is_fr %}Emballage premium de CytoLight PANO ULTRA{% else %}Premium packaging for CytoLight PANO ULTRA{% endif %}' loading='lazy' width='1135' height='1408'>
           </div>
         </div>
       </div>
@@ -951,9 +951,9 @@
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
             {%- if is_cap -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-cap-morning-routine.jpg" | asset_url }}' alt='{% if is_fr %}Routine matinale avec CYTOLIGHT cap{% else %}Morning routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1792' height='1024'>
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-morning-routine.jpg" | file_url }}' alt='{% if is_fr %}Routine matinale avec CYTOLIGHT cap{% else %}Morning routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1792' height='1024'>
             {%- else -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-recovery-ready.jpg" | asset_url }}' alt='{% if is_fr %}Athl&egrave;te utilisant un panneau CytoLight pour une routine de r&eacute;cup&eacute;ration{% else %}Athlete using a CytoLight red light panel for a recovery routine{% endif %}' loading='lazy' width='1136' height='1408'>
+              <img class='cl-why-card__image' src='{{ "cytolight-recovery-ready.jpg" | file_url }}' alt='{% if is_fr %}Athl&egrave;te utilisant un panneau CytoLight pour une routine de r&eacute;cup&eacute;ration{% else %}Athlete using a CytoLight red light panel for a recovery routine{% endif %}' loading='lazy' width='1136' height='1408'>
             {%- endif -%}
           </div>
         </div>
@@ -970,9 +970,9 @@
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
             {%- if is_cap -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-cap-scalp-care.jpg" | asset_url }}' alt='{% if is_fr %}CYTOLIGHT cap proche du cuir chevelu{% else %}CYTOLIGHT cap close to the scalp{% endif %}' loading='lazy' width='1135' height='1408'>
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-scalp-care.jpg" | file_url }}' alt='{% if is_fr %}CYTOLIGHT cap proche du cuir chevelu{% else %}CYTOLIGHT cap close to the scalp{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- else -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-skin-glow.jpg" | asset_url }}' alt='{% if is_fr %}Routine peau avec lumi&egrave;re rouge subtile pour un &eacute;clat plus sain{% else %}Skin routine with subtle red light for a healthier-looking glow{% endif %}' loading='lazy' width='1154' height='1536'>
+              <img class='cl-why-card__image' src='{{ "cytolight-skin-glow.jpg" | file_url }}' alt='{% if is_fr %}Routine peau avec lumi&egrave;re rouge subtile pour un &eacute;clat plus sain{% else %}Skin routine with subtle red light for a healthier-looking glow{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
           </div>
         </div>
@@ -989,9 +989,9 @@
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
             {%- if is_cap -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-cap-control.jpg" | asset_url }}' alt='{% if is_fr %}Contr&ocirc;leur CYTOLIGHT cap avec r&eacute;glage de session{% else %}CYTOLIGHT cap controller with session adjustment{% endif %}' loading='lazy' width='1135' height='1408'>
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-control.jpg" | file_url }}' alt='{% if is_fr %}Contr&ocirc;leur CYTOLIGHT cap avec r&eacute;glage de session{% else %}CYTOLIGHT cap controller with session adjustment{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- else -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-evening-signal.jpg" | asset_url }}' alt='{% if is_fr %}Routine du soir calme avec panneau CytoLight et lumi&egrave;re rouge douce{% else %}Calm evening routine with CytoLight panel and soft red light{% endif %}' loading='lazy' width='1154' height='1536'>
+              <img class='cl-why-card__image' src='{{ "cytolight-evening-signal.jpg" | file_url }}' alt='{% if is_fr %}Routine du soir calme avec panneau CytoLight et lumi&egrave;re rouge douce{% else %}Calm evening routine with CytoLight panel and soft red light{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
           </div>
         </div>
@@ -1008,9 +1008,9 @@
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
             {%- if is_cap -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-cap-comfort.jpg" | asset_url }}' alt='{% if is_fr %}CYTOLIGHT cap port&eacute;e pendant un moment calme{% else %}CYTOLIGHT cap worn during a calm moment{% endif %}' loading='lazy' width='1135' height='1408'>
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-comfort.jpg" | file_url }}' alt='{% if is_fr %}CYTOLIGHT cap port&eacute;e pendant un moment calme{% else %}CYTOLIGHT cap worn during a calm moment{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- else -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-kitchen-focus.jpg" | asset_url }}' alt='{% if is_fr %}Panneau CytoLight DESK sur un comptoir de cuisine avec une tasse de caf&eacute;{% else %}CytoLight DESK panel on a kitchen counter beside a coffee mug{% endif %}' loading='lazy' width='1154' height='1536'>
+              <img class='cl-why-card__image' src='{{ "cytolight-kitchen-focus.jpg" | file_url }}' alt='{% if is_fr %}Panneau CytoLight DESK sur un comptoir de cuisine avec une tasse de caf&eacute;{% else %}CytoLight DESK panel on a kitchen counter beside a coffee mug{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
           </div>
         </div>
@@ -1027,9 +1027,9 @@
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
             {%- if is_cap -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-cap-personal.jpg" | asset_url }}' alt='{% if is_fr %}R&eacute;glage personnalis&eacute; de CYTOLIGHT cap{% else %}Personalized CYTOLIGHT cap session setting{% endif %}' loading='lazy' width='1135' height='1408'>
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-personal.jpg" | file_url }}' alt='{% if is_fr %}R&eacute;glage personnalis&eacute; de CYTOLIGHT cap{% else %}Personalized CYTOLIGHT cap session setting{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- else -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-control-screen.jpg" | asset_url }}' alt='{% if is_fr %}&Eacute;cran de contr&ocirc;le CytoLight avec r&eacute;glage rouge et proche infrarouge{% else %}CytoLight control screen with red and near-infrared adjustment{% endif %}' loading='lazy' width='1154' height='1536'>
+              <img class='cl-why-card__image' src='{{ "cytolight-control-screen.jpg" | file_url }}' alt='{% if is_fr %}&Eacute;cran de contr&ocirc;le CytoLight avec r&eacute;glage rouge et proche infrarouge{% else %}CytoLight control screen with red and near-infrared adjustment{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
           </div>
         </div>
@@ -1046,7 +1046,7 @@
           </div>
           <div class='cl-why-card__media {% if is_cap %}cl-why-card__media--photo{% else %}cl-why-card__media--science{% endif %}'>
             {%- if is_cap -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-cap-confidence.jpg" | asset_url }}' alt='{% if is_fr %}Routine CYTOLIGHT cap simple et facile &agrave; comprendre{% else %}Simple and easy-to-understand CYTOLIGHT cap routine{% endif %}' loading='lazy' width='1135' height='1408'>
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-confidence.jpg" | file_url }}' alt='{% if is_fr %}Routine CYTOLIGHT cap simple et facile &agrave; comprendre{% else %}Simple and easy-to-understand CYTOLIGHT cap routine{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- else -%}
               <div class='cl-spectrum-science' aria-label='{% if is_fr %}Aper&ccedil;u des sept longueurs d&apos;onde CytoLight{% else %}CytoLight seven wavelength overview{% endif %}'>
                 <div class='cl-spectrum-science__head'>
@@ -1102,9 +1102,9 @@
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
             {%- if is_cap -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-cap-peace-mind.jpg" | asset_url }}' alt='{% if is_fr %}CYTOLIGHT cap dans son emballage premium pour essai &agrave; domicile{% else %}CYTOLIGHT cap in premium packaging for home trial{% endif %}' loading='lazy' width='1135' height='1408'>
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-peace-mind.jpg" | file_url }}' alt='{% if is_fr %}CYTOLIGHT cap dans son emballage premium pour essai &agrave; domicile{% else %}CYTOLIGHT cap in premium packaging for home trial{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- else -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-home-trial-living-room.jpg" | asset_url }}' alt='{% if is_fr %}Panneau CytoLight DESK dans un salon avec t&eacute;l&eacute;vision flout&eacute;e en arri&egrave;re-plan{% else %}CytoLight DESK panel in a living room with a blurred TV in the background{% endif %}' loading='lazy' width='1154' height='1536'>
+              <img class='cl-why-card__image' src='{{ "cytolight-home-trial-living-room.jpg" | file_url }}' alt='{% if is_fr %}Panneau CytoLight DESK dans un salon avec t&eacute;l&eacute;vision flout&eacute;e en arri&egrave;re-plan{% else %}CytoLight DESK panel in a living room with a blurred TV in the background{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
           </div>
         </div>
@@ -1121,9 +1121,9 @@
           </div>
           <div class='cl-why-card__media cl-why-card__media--photo'>
             {%- if is_cap -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-cap-consistency.jpg" | asset_url }}' alt='{% if is_fr %}Routine quotidienne simple avec CYTOLIGHT cap{% else %}Simple daily routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1135' height='1408'>
+              <img class='cl-why-card__image' src='{{ "cytolight-cap-consistency.jpg" | file_url }}' alt='{% if is_fr %}Routine quotidienne simple avec CYTOLIGHT cap{% else %}Simple daily routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- else -%}
-              <img class='cl-why-card__image' src='{{ "cytolight-consistency-desk.jpg" | asset_url }}' alt='{% if is_fr %}Panneau CytoLight DESK dans un salon pour une routine facile &agrave; r&eacute;p&eacute;ter{% else %}CytoLight DESK panel in a living room for an easy repeatable routine{% endif %}' loading='lazy' width='1154' height='1536'>
+              <img class='cl-why-card__image' src='{{ "cytolight-consistency-desk.jpg" | file_url }}' alt='{% if is_fr %}Panneau CytoLight DESK dans un salon pour une routine facile &agrave; r&eacute;p&eacute;ter{% else %}CytoLight DESK panel in a living room for an easy repeatable routine{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
           </div>
         </div>
