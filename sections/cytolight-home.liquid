@@ -33,6 +33,12 @@
   if foot_product != blank
     assign foot_url = foot_product.url
   endif
+
+  assign mask_product = all_products['cytolight-mask']
+  assign mask_url = '/products/cytolight-mask'
+  if mask_product != blank
+    assign mask_url = mask_product.url
+  endif
 -%}
 
 {{ 'cytolight-cinematic.css' | asset_url | stylesheet_tag }}
@@ -214,6 +220,24 @@
         </article>
 
         <article class="cy-product cy-reveal">
+          <a href="{{ mask_url }}">
+            <div class="cy-product__visual">
+              <img src="{{ '01_CytoLight_Mask_Product.png' | file_url }}" alt="CytoLight Mask" width="1600" height="900" loading="lazy">
+              <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
+            </div>
+            <div class="cy-product__body">
+              <p class="cy-product__type">{% if is_fr %}Visage &middot; Beaut&eacute;{% else %}Face &middot; Beauty{% endif %}</p>
+              <h3>CytoLight Mask</h3>
+              <p class="cy-product__desc">{% if is_fr %}Un masque LED souple en silicone, bleu, rouge et proche infrarouge, pens&eacute; pour une routine visage courte et r&eacute;guli&egrave;re.{% else %}A flexible silicone LED mask with blue, red, and near-infrared light, built for a short and consistent face routine.{% endif %}</p>
+              <div class="cy-product__meta">
+                <span class="cy-product__price">{% if mask_product != blank %}{{ mask_product.price | money }}{% else %}250 EUR{% endif %}</span>
+                <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <article class="cy-product cy-reveal">
           <a href="{{ foot_url }}">
             <div class="cy-product__visual">
               <img src="{{ 'cytolight-foot-therapy.png' | file_url }}" alt="CytoLight Foot Therapy" width="1600" height="900" loading="lazy">
@@ -336,12 +360,12 @@
       </div>
       <div class="cy-table-wrap cy-reveal">
         <table class="cy-table">
-          <thead><tr><th>{% if is_fr %}Mod&egrave;le{% else %}Model{% endif %}</th><th class="cy-table__desk">DESK</th><th>REDLIGHT CAP</th><th>FOOT</th><th>PANO ULTRA</th></tr></thead>
+          <thead><tr><th>{% if is_fr %}Mod&egrave;le{% else %}Model{% endif %}</th><th class="cy-table__desk">DESK</th><th>REDLIGHT CAP</th><th>MASK</th><th>FOOT</th><th>PANO ULTRA</th></tr></thead>
           <tbody>
-            <tr><td>{% if is_fr %}Espace id&eacute;al{% else %}Best space{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Bureau, chambre{% else %}Desk, bedroom{% endif %}</td><td>{% if is_fr %}Salon, lecture, routine cheveux{% else %}Living room, reading, hair routine{% endif %}</td><td>{% if is_fr %}Canap&eacute;, soir&eacute;e, r&eacute;cup&eacute;ration pieds{% else %}Sofa, evening, foot recovery{% endif %}</td><td>{% if is_fr %}Studio, salle wellness{% else %}Studio, wellness room{% endif %}</td></tr>
-            <tr><td>{% if is_fr %}Couverture{% else %}Coverage{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Cibl&eacute;e{% else %}Targeted{% endif %}</td><td>{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</td><td>{% if is_fr %}Pied et cheville{% else %}Foot and ankle{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td></tr>
-            <tr><td>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}</td><td class="cy-table__desk">{% if is_fr %}7 spectres ind&eacute;pendants{% else %}7 independent spectra{% endif %}</td><td>{% if is_fr %}Minuteur, intensit&eacute;, pulsation{% else %}Timer, intensity, pulsing{% endif %}</td><td>{% if is_fr %}Port confortable et minuterie{% else %}Comfort fit and timer{% endif %}</td><td>{% if is_fr %}Format avanc&eacute; grand panneau{% else %}Advanced large-panel format{% endif %}</td></tr>
-            <tr><td>{% if is_fr %}Lien achat{% else %}Buy link{% endif %}</td><td class="cy-table__desk"><a href="{{ desk_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ cap_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ foot_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ pano_ultra_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td></tr>
+            <tr><td>{% if is_fr %}Espace id&eacute;al{% else %}Best space{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Bureau, chambre{% else %}Desk, bedroom{% endif %}</td><td>{% if is_fr %}Salon, lecture, routine cheveux{% else %}Living room, reading, hair routine{% endif %}</td><td>{% if is_fr %}Salle de bain, voyage, routine beaut&eacute;{% else %}Bathroom, travel, beauty routine{% endif %}</td><td>{% if is_fr %}Canap&eacute;, soir&eacute;e, r&eacute;cup&eacute;ration pieds{% else %}Sofa, evening, foot recovery{% endif %}</td><td>{% if is_fr %}Studio, salle wellness{% else %}Studio, wellness room{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Couverture{% else %}Coverage{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Cibl&eacute;e{% else %}Targeted{% endif %}</td><td>{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</td><td>{% if is_fr %}Visage et cou{% else %}Face and neck{% endif %}</td><td>{% if is_fr %}Pied et cheville{% else %}Foot and ankle{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}</td><td class="cy-table__desk">{% if is_fr %}7 spectres ind&eacute;pendants{% else %}7 independent spectra{% endif %}</td><td>{% if is_fr %}Minuteur, intensit&eacute;, pulsation{% else %}Timer, intensity, pulsing{% endif %}</td><td>{% if is_fr %}3 modes, intensit&eacute; variable, sans fil{% else %}3 modes, dimmable, cordless{% endif %}</td><td>{% if is_fr %}Port confortable et minuterie{% else %}Comfort fit and timer{% endif %}</td><td>{% if is_fr %}Format avanc&eacute; grand panneau{% else %}Advanced large-panel format{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Lien achat{% else %}Buy link{% endif %}</td><td class="cy-table__desk"><a href="{{ desk_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ cap_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ mask_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ foot_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ pano_ultra_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td></tr>
           </tbody>
         </table>
       </div>
