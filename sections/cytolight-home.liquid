@@ -86,7 +86,7 @@
   <section class="cy-cinema" data-cy-cinema id="cy-science">
     <div class="cy-cinema__stage">
       <div class="cy-cinema__world">
-        <img src="{{ 'cytolight-desk-luxury.jpg' | asset_url }}" alt="{% if is_fr %}CytoLight DESK en luminoth&eacute;rapie rouge{% else %}CytoLight DESK red light therapy panel{% endif %}" width="1600" height="900" loading="lazy">
+        <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="{% if is_fr %}CytoLight DESK en luminoth&eacute;rapie rouge{% else %}CytoLight DESK red light therapy panel{% endif %}" width="1600" height="900" loading="lazy">
         <span class="cy-cinema__glow" aria-hidden="true"></span>
       </div>
       <div class="cy-cinema__panel">
@@ -104,7 +104,7 @@
   <section class="cy-cinema cy-cinema--cap" data-cy-cinema id="cy-cap-ritual">
     <div class="cy-cinema__stage">
       <div class="cy-cinema__world">
-        <img src="{{ 'cytolight-cap-cinema-face.jpg' | asset_url }}" alt="{% if is_fr %}CytoLight Redlight Cap visible sur le visage pendant une routine cheveux mains libres{% else %}CytoLight Redlight Cap visible on the face during a hands-free hair routine{% endif %}" width="1792" height="1024" loading="lazy">
+        <img src="{{ 'cytolight-cap-cinema-face.jpg' | file_url }}" alt="{% if is_fr %}CytoLight Redlight Cap visible sur le visage pendant une routine cheveux mains libres{% else %}CytoLight Redlight Cap visible on the face during a hands-free hair routine{% endif %}" width="1792" height="1024" loading="lazy">
         <span class="cy-cinema__glow" aria-hidden="true"></span>
       </div>
       <div class="cy-cinema__panel">
@@ -126,7 +126,7 @@
   <section class="cy-cinema cy-cinema--pano" data-cy-cinema id="cy-pano-ultra">
     <div class="cy-cinema__stage">
       <div class="cy-cinema__world">
-        <img src="{{ 'cytolight-pano-ultra-athlete.jpg' | asset_url }}" alt="CytoLight PANO ULTRA with athlete recovery routine" width="1600" height="900" loading="lazy">
+        <img src="{{ 'cytolight-pano-ultra-athlete.jpg' | file_url }}" alt="CytoLight PANO ULTRA with athlete recovery routine" width="1600" height="900" loading="lazy">
         <span class="cy-cinema__glow" aria-hidden="true"></span>
       </div>
       <div class="cy-cinema__panel">
@@ -174,7 +174,7 @@
         <article class="cy-product cy-reveal">
           <a href="{{ desk_url }}">
             <div class="cy-product__visual">
-              <img src="{{ 'cytolight-desk-luxury.jpg' | asset_url }}" alt="CytoLight DESK" width="1600" height="900" loading="lazy">
+              <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight DESK" width="1600" height="900" loading="lazy">
               <span class="cy-product__badge">{% if is_fr %}Disponible maintenant{% else %}Available now{% endif %}</span>
             </div>
             <div class="cy-product__body">
@@ -192,7 +192,7 @@
         <article class="cy-product cy-reveal">
           <a href="{{ cap_url }}">
             <div class="cy-product__visual">
-              <img src="{{ 'cytolight-cap-ambiance.jpg' | asset_url }}" alt="CytoLight Redlight Cap" width="1600" height="900" loading="lazy">
+              <img src="{{ 'cytolight-cap-ambiance.jpg' | file_url }}" alt="CytoLight Redlight Cap" width="1600" height="900" loading="lazy">
               <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
             </div>
             <div class="cy-product__body">
@@ -210,7 +210,7 @@
         <article class="cy-product cy-reveal">
           <a href="{{ pano_ultra_url }}">
             <div class="cy-product__visual">
-              <img src="{{ 'cytolight-pano-ultra-luxury.jpg' | asset_url }}" alt="CytoLight PANO ULTRA" width="1600" height="900" loading="lazy">
+              <img src="{{ 'cytolight-pano-ultra-luxury.jpg' | file_url }}" alt="CytoLight PANO ULTRA" width="1600" height="900" loading="lazy">
               <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
             </div>
             <div class="cy-product__body">
@@ -257,7 +257,7 @@
               endcase
             -%}
             <a class="cy-use__item cy-reveal" href="{{ block.settings.url | default: desk_url }}" {{ block.shopify_attributes }}>
-              <span class="cy-use__media"><img src="{{ goal_image | asset_url }}" alt="{{ goal_alt }}" width="900" height="720" loading="lazy"></span>
+              <span class="cy-use__media"><img src="{{ goal_image | file_url }}" alt="{{ goal_alt }}" width="900" height="720" loading="lazy"></span>
               <span class="cy-use__content">
                 <span class="cy-use__num">0{{ forloop.index }}</span>
                 <h3>{% if is_fr %}{{ block.settings.title_fr }}{% else %}{{ block.settings.title_en }}{% endif %}</h3>
@@ -266,10 +266,10 @@
             </a>
           {%- endfor -%}
         {%- else -%}
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-recovery-pano-athlete.jpg' | asset_url }}" alt="{% if is_fr %}Routine de r&eacute;cup&eacute;ration CytoLight{% else %}CytoLight recovery routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">01</span><h3>{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</h3><p>{% if is_fr %}Pour les muscles, articulations et routines apr&egrave;s effort.{% else %}For muscles, joints, and post-effort routines.{% endif %}</p></span></a>
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-skin-red-halo.jpg' | asset_url }}" alt="{% if is_fr %}Routine peau CytoLight{% else %}CytoLight skin routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">02</span><h3>{% if is_fr %}Peau{% else %}Skin{% endif %}</h3><p>{% if is_fr %}Pour une routine r&eacute;guli&egrave;re orient&eacute;e teint, texture et &eacute;clat.{% else %}For a consistent routine focused on tone, texture, and radiance.{% endif %}</p></span></a>
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-desk-luxury.jpg' | asset_url }}" alt="{% if is_fr %}Rituel de concentration CytoLight{% else %}CytoLight focus ritual{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">03</span><h3>{% if is_fr %}Focus{% else %}Focus{% endif %}</h3><p>{% if is_fr %}Pour installer un rituel lumineux autour du travail profond.{% else %}For building a short light ritual around deep work.{% endif %}</p></span></a>
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-sleep-pano-bedroom.jpg' | asset_url }}" alt="{% if is_fr %}Routine du soir CytoLight{% else %}CytoLight evening routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">04</span><h3>{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</h3><p>{% if is_fr %}Pour cr&eacute;er un signal calme et r&eacute;p&eacute;table en fin de journ&eacute;e.{% else %}For creating a repeatable calm signal at the end of the day.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-recovery-pano-athlete.jpg' | file_url }}" alt="{% if is_fr %}Routine de r&eacute;cup&eacute;ration CytoLight{% else %}CytoLight recovery routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">01</span><h3>{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</h3><p>{% if is_fr %}Pour les muscles, articulations et routines apr&egrave;s effort.{% else %}For muscles, joints, and post-effort routines.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-skin-red-halo.jpg' | file_url }}" alt="{% if is_fr %}Routine peau CytoLight{% else %}CytoLight skin routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">02</span><h3>{% if is_fr %}Peau{% else %}Skin{% endif %}</h3><p>{% if is_fr %}Pour une routine r&eacute;guli&egrave;re orient&eacute;e teint, texture et &eacute;clat.{% else %}For a consistent routine focused on tone, texture, and radiance.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="{% if is_fr %}Rituel de concentration CytoLight{% else %}CytoLight focus ritual{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">03</span><h3>{% if is_fr %}Focus{% else %}Focus{% endif %}</h3><p>{% if is_fr %}Pour installer un rituel lumineux autour du travail profond.{% else %}For building a short light ritual around deep work.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-sleep-pano-bedroom.jpg' | file_url }}" alt="{% if is_fr %}Routine du soir CytoLight{% else %}CytoLight evening routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">04</span><h3>{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</h3><p>{% if is_fr %}Pour cr&eacute;er un signal calme et r&eacute;p&eacute;table en fin de journ&eacute;e.{% else %}For creating a repeatable calm signal at the end of the day.{% endif %}</p></span></a>
         {%- endif -%}
       </div>
     </div>
@@ -350,7 +350,7 @@
 
   <section class="cy-final">
     <div class="cy-final__media">
-      <img src="{{ 'cytolight-desk-luxury.jpg' | asset_url }}" alt="" width="1600" height="900" loading="lazy">
+      <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="" width="1600" height="900" loading="lazy">
     </div>
     <div class="cy-shell">
       <div class="cy-final__content cy-reveal">
