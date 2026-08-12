@@ -175,7 +175,7 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .site-header__nav a:hover::after,
 .site-header__compare:hover::after { opacity: 1; transform: scaleX(1); }
 .site-header__logo { font-family: var(--font-body); font-weight: 900; font-size: clamp(1rem, 1.6vw, 1.35rem); letter-spacing: .16em; text-align: center; text-transform: uppercase; }
-.site-header__logo img { max-height: 40px; width: auto; }
+.site-header__logo img { display: block; max-height: 46px; width: auto; object-fit: contain; }
 .site-header__utils { display: flex; gap: 12px; justify-content: flex-end; align-items: center; min-width: 0; }
 .site-header__utils button, .site-header__utils a { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: .85rem; }
 .site-header__utils > a:not(.site-header__cta):not(.site-header__compare) {
@@ -247,6 +247,7 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   .site-header__proof::-webkit-scrollbar { display: none; }
   .site-header__inner { grid-template-columns: auto 1fr auto; gap: 12px; padding: 11px 0; }
   .site-header__logo { justify-self: center; letter-spacing: .12em; }
+  .site-header__logo img { max-height: 38px; max-width: 138px; }
   .site-header__utils { gap: 8px; }
   .site-header__compare,
   .site-header__utils a[aria-label="Search"],
