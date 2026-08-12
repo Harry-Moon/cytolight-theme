@@ -27,6 +27,12 @@
   if pano_ultra_product != blank
     assign pano_ultra_url = pano_ultra_product.url
   endif
+
+  assign foot_product = all_products['cytolight-foot']
+  assign foot_url = '/products/cytolight-foot'
+  if foot_product != blank
+    assign foot_url = foot_product.url
+  endif
 -%}
 
 {{ 'cytolight-cinematic.css' | asset_url | stylesheet_tag }}
@@ -208,6 +214,24 @@
         </article>
 
         <article class="cy-product cy-reveal">
+          <a href="{{ foot_url }}">
+            <div class="cy-product__visual">
+              <img src="{{ 'cytolight-foot-therapy.png' | asset_url }}" alt="CytoLight Foot Therapy" width="1600" height="900" loading="lazy">
+              <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
+            </div>
+            <div class="cy-product__body">
+              <p class="cy-product__type">{% if is_fr %}Pieds &middot; R&eacute;cup&eacute;ration{% else %}Feet &middot; Recovery{% endif %}</p>
+              <h3>CytoLight Foot</h3>
+              <p class="cy-product__desc">{% if is_fr %}Une chaussette de luminoth&eacute;rapie rouge et proche infrarouge pour les pieds fatigu&eacute;s, les chevilles et les routines de confort &agrave; domicile.{% else %}A red and near-infrared light therapy sock for tired feet, ankles, and simple at-home comfort routines.{% endif %}</p>
+              <div class="cy-product__meta">
+                <span class="cy-product__price">{% if foot_product != blank %}{{ foot_product.price | money }}{% else %}220 EUR{% endif %}</span>
+                <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <article class="cy-product cy-reveal">
           <a href="{{ pano_ultra_url }}">
             <div class="cy-product__visual">
               <img src="{{ 'cytolight-pano-ultra-luxury.jpg' | file_url }}" alt="CytoLight PANO ULTRA" width="1600" height="900" loading="lazy">
@@ -312,12 +336,12 @@
       </div>
       <div class="cy-table-wrap cy-reveal">
         <table class="cy-table">
-          <thead><tr><th>{% if is_fr %}Mod&egrave;le{% else %}Model{% endif %}</th><th class="cy-table__desk">DESK</th><th>REDLIGHT CAP</th><th>PANO ULTRA</th></tr></thead>
+          <thead><tr><th>{% if is_fr %}Mod&egrave;le{% else %}Model{% endif %}</th><th class="cy-table__desk">DESK</th><th>REDLIGHT CAP</th><th>FOOT</th><th>PANO ULTRA</th></tr></thead>
           <tbody>
-            <tr><td>{% if is_fr %}Espace id&eacute;al{% else %}Best space{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Bureau, chambre{% else %}Desk, bedroom{% endif %}</td><td>{% if is_fr %}Salon, lecture, routine cheveux{% else %}Living room, reading, hair routine{% endif %}</td><td>{% if is_fr %}Studio, salle wellness{% else %}Studio, wellness room{% endif %}</td></tr>
-            <tr><td>{% if is_fr %}Couverture{% else %}Coverage{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Cibl&eacute;e{% else %}Targeted{% endif %}</td><td>{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td></tr>
-            <tr><td>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}</td><td class="cy-table__desk">{% if is_fr %}7 spectres ind&eacute;pendants{% else %}7 independent spectra{% endif %}</td><td>{% if is_fr %}Minuteur, intensit&eacute;, pulsation{% else %}Timer, intensity, pulsing{% endif %}</td><td>{% if is_fr %}Format avanc&eacute; grand panneau{% else %}Advanced large-panel format{% endif %}</td></tr>
-            <tr><td>{% if is_fr %}Lien achat{% else %}Buy link{% endif %}</td><td class="cy-table__desk"><a href="{{ desk_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ cap_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ pano_ultra_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td></tr>
+            <tr><td>{% if is_fr %}Espace id&eacute;al{% else %}Best space{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Bureau, chambre{% else %}Desk, bedroom{% endif %}</td><td>{% if is_fr %}Salon, lecture, routine cheveux{% else %}Living room, reading, hair routine{% endif %}</td><td>{% if is_fr %}Canap&eacute;, soir&eacute;e, r&eacute;cup&eacute;ration pieds{% else %}Sofa, evening, foot recovery{% endif %}</td><td>{% if is_fr %}Studio, salle wellness{% else %}Studio, wellness room{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Couverture{% else %}Coverage{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Cibl&eacute;e{% else %}Targeted{% endif %}</td><td>{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</td><td>{% if is_fr %}Pied et cheville{% else %}Foot and ankle{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}</td><td class="cy-table__desk">{% if is_fr %}7 spectres ind&eacute;pendants{% else %}7 independent spectra{% endif %}</td><td>{% if is_fr %}Minuteur, intensit&eacute;, pulsation{% else %}Timer, intensity, pulsing{% endif %}</td><td>{% if is_fr %}Port confortable et minuterie{% else %}Comfort fit and timer{% endif %}</td><td>{% if is_fr %}Format avanc&eacute; grand panneau{% else %}Advanced large-panel format{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Lien achat{% else %}Buy link{% endif %}</td><td class="cy-table__desk"><a href="{{ desk_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ cap_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ foot_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ pano_ultra_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td></tr>
           </tbody>
         </table>
       </div>
