@@ -240,7 +240,11 @@
         <article class="cy-product cy-reveal">
           <a href="{{ foot_url }}">
             <div class="cy-product__visual">
-              <img src="{{ 'cytolight-foot-therapy.png' | file_url }}" alt="CytoLight Foot Therapy" width="1600" height="900" loading="lazy">
+              {%- if foot_product.featured_image -%}
+                <img src="{{ foot_product.featured_image | image_url: width: 1600 }}" alt="{{ foot_product.featured_image.alt | escape }}" width="1600" height="900" loading="lazy">
+              {%- else -%}
+                <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight Foot Therapy" width="1600" height="900" loading="lazy">
+              {%- endif -%}
               <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
             </div>
             <div class="cy-product__body">
