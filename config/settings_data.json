@@ -9,6 +9,8 @@
  */
 {
   "current": {
+    "favicon": "shopify://shop_images/cytolight-logo_copie.jpg",
+    "logo": "shopify://shop_images/cytolight-logo.jpg",
     "color_background": "#f5eee7",
     "color_background_soft": "#faede3",
     "color_foreground": "#171110",
@@ -24,11 +26,19 @@
         "type": "cytolight-home",
         "settings": {
           "featured_product": "shopify://products/cytolight-desk",
+          "product_collection": "",
           "product_limit": 6,
           "hero_video_url": "",
-          "desk_image": "shopify://shop_images/CityLight_Desk_84a3d2aa-a9c4-42a6-9b94-c6d8325dd749.png",
-          "pano_image": "shopify://shop_images/small_panel.png",
-          "pro_image": "shopify://shop_images/small_panel.png"
+          "hero_heading_en": "Light that transforms your everyday.",
+          "hero_heading_fr": "La lumi&egrave;re qui transforme votre quotidien.",
+          "hero_text_en": "Intelligent red light therapy systems designed for recovery, skin, sleep, and energy.",
+          "hero_text_fr": "Des syst&egrave;mes de luminoth&eacute;rapie rouge intelligents, con&ccedil;us pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l'&eacute;nergie.",
+          "primary_cta_en": "Discover CytoLight DESK",
+          "primary_cta_fr": "D&eacute;couvrir CytoLight DESK",
+          "primary_cta_url": "",
+          "secondary_cta_en": "Explore the range",
+          "secondary_cta_fr": "Voir la gamme",
+          "secondary_cta_url": ""
         }
       },
       "vg-homepage": {
@@ -89,6 +99,12 @@
           "testi3_text": "",
           "testi3_name": "Amira K.",
           "testi3_location": "Marseille, FR &middot; Verified Buyer"
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "main-menu"
         }
       }
     },
