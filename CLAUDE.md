@@ -55,10 +55,10 @@ Pour ajouter un visuel :
 > `shopify://shop_images/...` ne se résout que dans les fichiers de réglages JSON, alimentés par des
 > réglages `image_picker`. Ce n'est pas une URI utilisable directement en Liquid.
 
-## Bilingue FR / EN
+## Langues
 
 Le thème n'utilise pas les fichiers de traduction pour son contenu éditorial. Chaque section dérive un
-booléen depuis la locale, puis inline les deux langues :
+booléen depuis la locale, puis inline les langues :
 
 ```liquid
 {%- assign is_fr = false -%}
@@ -69,8 +69,12 @@ booléen depuis la locale, puis inline les deux langues :
 {% if is_fr %}Récupération{% else %}Recovery{% endif %}
 ```
 
-Tout texte ajouté doit l'être dans les deux langues. Les accents sont écrits en entités HTML
-(`&eacute;`) dans les sections existantes — s'aligner sur le fichier modifié.
+Le thème est **bilingue FR / EN partout, sauf `header.liquid`** qui gère en plus le portugais via un
+booléen `is_pt`. Tout texte ajouté doit couvrir les langues du fichier modifié — vérifier lesquelles
+avant d'écrire plutôt que de le supposer.
+
+Les accents sont écrits en entités HTML (`&eacute;`) dans les sections existantes. S'aligner sur le
+fichier modifié.
 
 ## Contenu conditionné au produit
 
