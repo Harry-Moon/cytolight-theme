@@ -48,11 +48,19 @@
       "name": {{ shop.name | json }},
       "inLanguage": {{ request.locale.iso_code | json }},
       "publisher": { "@id": {{ shop.url | append: '/#organization' | json }} },
+      {%- comment -%}
+        Les accolades du gabarit sont assemblees a partir de variables : ecrites
+        litteralement, elles sont interpretees par le lexer Liquid et cassent le
+        fichier.
+      {%- endcomment -%}
+      {%- assign brace_open = '{' -%}
+      {%- assign brace_close = '}' -%}
+      {%- assign search_template = shop.url | append: routes.search_url | append: '?q=' | append: brace_open | append: 'search_term_string' | append: brace_close -%}
       "potentialAction": {
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": {{ shop.url | append: routes.search_url | append: '?q={search_term_string}' | json }}
+          "urlTemplate": {{ search_template | json }}
         },
         "query-input": "required name=search_term_string"
       }

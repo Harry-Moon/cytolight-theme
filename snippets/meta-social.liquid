@@ -27,9 +27,14 @@
 
   case request.page_type
     when 'index'
+      comment
+        Accents en caracteres reels et non en entites HTML : ces valeurs
+        passent par le filtre escape, qui transformerait le & d'une entite en
+        &amp; et la ferait apparaitre telle quelle dans la vignette partagee.
+      endcomment
       if is_fr
-        assign og_title = 'CytoLight | Luminotherapie rouge intelligente'
-        assign og_description = 'Des systemes de luminotherapie rouge et proche infrarouge concus pour la recuperation, la peau, le sommeil et l energie.'
+        assign og_title = 'CytoLight | Luminothérapie rouge intelligente'
+        assign og_description = 'Des systèmes de luminothérapie rouge et proche infrarouge conçus pour la récupération, la peau, le sommeil et l’énergie.'
       else
         assign og_title = 'CytoLight | Intelligent Red Light Therapy'
         assign og_description = 'Red and near-infrared light therapy systems designed for recovery, skin, sleep, and everyday energy.'
@@ -56,7 +61,7 @@
 
   if og_description == blank
     if is_fr
-      assign og_description = 'CytoLight, luminotherapie rouge et proche infrarouge pour la recuperation, la peau, le sommeil et l energie.'
+      assign og_description = 'CytoLight, luminothérapie rouge et proche infrarouge pour la récupération, la peau, le sommeil et l’énergie.'
     else
       assign og_description = 'CytoLight red and near-infrared light therapy for recovery, skin, sleep, and everyday energy.'
     endif
@@ -97,7 +102,12 @@
   {%- endif -%}
 {%- endif -%}
 
-<meta name="twitter:card" content="{% if og_image != blank %}summary_large_image{% else %}summary{% endif %}">
+{%- comment -%}
+  summary_large_image meme sans twitter:image : quand la balise est absente,
+  X et LinkedIn retombent sur og:image, y compris celui injecte par Shopify
+  depuis l'image de partage de la boutique.
+{%- endcomment -%}
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | strip_html | escape }}">
 <meta name="twitter:description" content="{{ og_description | escape }}">
 {%- if og_image != blank -%}

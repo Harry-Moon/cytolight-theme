@@ -7,7 +7,10 @@
         <a class="article-card" href="{{ article.url }}">
           <div class="article-card__media">
             {% if article.image != blank %}
-              <img src="{{ article.image | image_url: width: 600 }}" alt="{{ article.title | escape }}" loading="lazy">
+              <img src="{{ article.image | image_url: width: 600 }}"
+                   alt="{{ article.title | escape }}"
+                   width="600" height="{{ 600 | divided_by: article.image.aspect_ratio | round }}"
+                   loading="lazy">
             {% else %}
               {{ 'lifestyle-2' | placeholder_svg_tag }}
             {% endif %}

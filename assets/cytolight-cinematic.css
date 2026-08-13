@@ -47,8 +47,14 @@
   position: relative; min-height: min(920px, 96svh); display: flex; align-items: flex-end;
   background: var(--cy-bg); color: #fff; isolation: isolate;
 }
-.cy-hero__media, .cy-hero__media video { position: absolute; inset: 0; width: 100%; height: 100%; }
-.cy-hero__media video { object-fit: cover; }
+.cy-hero__media, .cy-hero__media video, .cy-hero__media img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cy-hero__media video, .cy-hero__media img { object-fit: cover; }
+/* La video se superpose a l'image et n'apparait qu'une fois prete a jouer. */
+.cy-hero__video { opacity: 0; transition: opacity .6s ease; }
+.cy-hero__video.is-ready { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .cy-hero__video { display: none; }
+}
 .cy-hero__media::after {
   content: ""; position: absolute; inset: 0;
   background:

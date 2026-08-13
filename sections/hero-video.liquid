@@ -4,7 +4,10 @@
       <video src="{{ section.settings.video.sources[1].url | default: section.settings.video.sources[0].url }}"
              autoplay loop muted playsinline poster="{% if section.settings.poster != blank %}{{ section.settings.poster | image_url: width: 1800 }}{% endif %}"></video>
     {%- elsif section.settings.image != blank -%}
-      <img src="{{ section.settings.image | image_url: width: 1800 }}" alt="{{ section.settings.image.alt | escape }}" loading="eager">
+      <img src="{{ section.settings.image | image_url: width: 1800 }}"
+           alt="{{ section.settings.image.alt | escape }}"
+           width="1800" height="{{ 1800 | divided_by: section.settings.image.aspect_ratio | round }}"
+           loading="eager" fetchpriority="high">
     {%- endif -%}
   </div>
   <div class="hero__overlay"></div>

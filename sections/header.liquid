@@ -36,8 +36,14 @@
 
     <a class="site-header__logo" href="{{ routes.root_url }}">
       {%- if section.settings.logo != blank -%}
+        {%- comment -%}
+          height="auto" n'est pas une valeur valide pour l'attribut : le
+          navigateur l'ignore, ne connait plus le ratio et decale la mise en
+          page a l'arrivee de l'image. La hauteur est calculee depuis le ratio
+          reel du fichier.
+        {%- endcomment -%}
         <img src="{{ section.settings.logo | image_url: width: 240 }}"
-             width="120" height="auto"
+             width="120" height="{{ 120 | divided_by: section.settings.logo.aspect_ratio | round }}"
              alt="CytoLight">
       {%- else -%}
         <img src="{{ 'cytolight-logo.jpg' | file_url }}"
@@ -64,14 +70,20 @@
           {{ localization.language.iso_code | default: request.locale.iso_code | upcase }}
         </span>
       {%- endif -%}
-      <a href="{{ routes.search_url }}" aria-label="Search">
+      <a href="{{ routes.search_url }}" aria-label="{% if is_fr %}Rechercher{% elsif is_pt %}Pesquisar{% else %}Search{% endif %}">
         {% render 'icon', name: 'search' %}
-        <span class="visually-hidden">Search</span>
       </a>
-      <a href="{{ routes.account_url }}" aria-label="Account">
+      <a href="{{ routes.account_url }}" aria-label="{% if is_fr %}Mon compte{% elsif is_pt %}Minha conta{% else %}Account{% endif %}">
         {% render 'icon', name: 'user' %}
       </a>
-      <a href="{{ routes.cart_url }}" aria-label="Cart">
+      {%- comment -%}
+        Le nom accessible doit contenir le texte visible, ici le compteur
+        d'articles, sinon la commande vocale "cliquer sur Panier" ne trouve pas
+        la cible (WCAG 2.5.3, echec label-content-name-mismatch releve par
+        Lighthouse). Les libelles etaient par ailleurs en anglais sur les trois
+        langues du fichier.
+      {%- endcomment -%}
+      <a href="{{ routes.cart_url }}" aria-label="{% if is_fr %}Panier, {{ cart.item_count }} article{% if cart.item_count > 1 %}s{% endif %}{% elsif is_pt %}Carrinho, {{ cart.item_count }} artigo{% if cart.item_count > 1 %}s{% endif %}{% else %}Cart, {{ cart.item_count }} item{% if cart.item_count > 1 %}s{% endif %}{% endif %}">
         {% render 'icon', name: 'cart' %}
         <span class="site-header__cart-count">{{ cart.item_count }}</span>
       </a>

@@ -771,9 +771,17 @@
         </div>
       {%- endif -%}
       <div class='cl-wave-bar'>
-        <p class='cl-wave-bar__title'>{% if is_cap %}{% if is_fr %}Longueurs d'onde pour les cheveux{% else %}Hair-focused wavelengths{% endif %}{% elsif is_mask %}{% if is_fr %}Longueurs d'onde pour le visage{% else %}Face-focused wavelengths{% endif %}{% else %}7 Therapeutic Wavelengths{% endif %}</p>
+        <p class='cl-wave-bar__title'>{% if is_cap %}{% if is_fr %}Longueurs d'onde pour les cheveux{% else %}Hair-focused wavelengths{% endif %}{% elsif is_mask %}{% if is_fr %}Longueurs d'onde pour le visage{% else %}Face-focused wavelengths{% endif %}{% elsif is_foot %}{% if is_fr %}Longueurs d'onde pour les pieds{% else %}Foot-focused wavelengths{% endif %}{% elsif is_knee %}{% if is_fr %}Longueurs d'onde pour le genou{% else %}Knee-focused wavelengths{% endif %}{% elsif is_pano_ultra %}7 Therapeutic Wavelengths{% else %}7 Therapeutic Wavelengths{% endif %}</p>
         <div class='cl-wave-dots'>
-          {%- if is_mask -%}
+          {%- comment -%}
+            Foot et Knee tombaient dans la branche par defaut et affichaient les
+            sept longueurs d'onde du DESK, dont 590 nm ambre et 940 nm, alors
+            qu'ils n'emettent qu'en 660 et 850 nm.
+          {%- endcomment -%}
+          {%- if is_foot or is_knee -%}
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#c8102e;'></div><span class='cl-wave-dot__nm'>660</span><span class='cl-wave-dot__label'>{% if is_fr %}Rouge{% else %}Red{% endif %}</span></div>
+          <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#5b2d8e;'></div><span class='cl-wave-dot__nm'>850</span><span class='cl-wave-dot__label'>NIR</span></div>
+          {%- elsif is_mask -%}
           <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#2f6fd0;'></div><span class='cl-wave-dot__nm'>460</span><span class='cl-wave-dot__label'>{% if is_fr %}Bleu{% else %}Blue{% endif %}</span></div>
           <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#e8303a;'></div><span class='cl-wave-dot__nm'>630</span><span class='cl-wave-dot__label'>{% if is_fr %}Rouge{% else %}Red{% endif %}</span></div>
           <div class='cl-wave-dot'><div class='cl-wave-dot__circle' style='background:#5b2d8e;'></div><span class='cl-wave-dot__nm'>850</span><span class='cl-wave-dot__label'>NIR</span></div>

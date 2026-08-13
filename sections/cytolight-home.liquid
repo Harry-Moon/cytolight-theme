@@ -34,6 +34,12 @@
     assign foot_url = foot_product.url
   endif
 
+  assign knee_product = all_products['cytolight-knee']
+  assign knee_url = '/products/cytolight-knee'
+  if knee_product != blank
+    assign knee_url = knee_product.url
+  endif
+
   assign mask_product = all_products['cytolight-mask']
   assign mask_url = '/products/cytolight-mask'
   if mask_product != blank
@@ -52,8 +58,51 @@
 
 <main class="cy-home" data-cytolight-home>
   <section class="cy-hero" aria-labelledby="cy-home-title">
+    {%- comment -%}
+      Le hero portait une video autoplay de 1,58 Mo servie depuis
+      media.paretophysio.com. Lighthouse mobile la designait comme element LCP,
+      a 7,3 s : elle etait telechargee avant tout affichage, depuis un domaine
+      tiers sans preconnexion.
+
+      Une image du CDN Shopify sert desormais de premiere couche et devient
+      l'element LCP. La video ne demarre qu'apres l'evenement load, en
+      progressive enhancement : sur connexion lente, en data saver ou en
+      mouvement reduit, elle ne se charge pas du tout et l'image reste.
+    {%- endcomment -%}
+    {%- assign hero_poster = section.settings.hero_poster_file | default: 'cytolight-desk-luxury.jpg' -%}
+    {%- assign hero_video = section.settings.hero_video_url | default: 'https://media.paretophysio.com/videos/ouided/Luxury.mp4' -%}
     <div class="cy-hero__media" aria-hidden="true">
-      <video src="{{ section.settings.hero_video_url | default: 'https://media.paretophysio.com/videos/ouided/Luxury.mp4' }}" autoplay loop muted playsinline preload="metadata"></video>
+      {%- if section.settings.hero_poster_image != blank -%}
+        <img class="cy-hero__poster"
+             src="{{ section.settings.hero_poster_image | image_url: width: 1800 }}"
+             srcset="{{ section.settings.hero_poster_image | image_url: width: 800 }} 800w,
+                     {{ section.settings.hero_poster_image | image_url: width: 1200 }} 1200w,
+                     {{ section.settings.hero_poster_image | image_url: width: 1800 }} 1800w"
+             sizes="100vw"
+             alt=""
+             width="1800" height="1013"
+             fetchpriority="high" decoding="async" loading="eager">
+      {%- else -%}
+        {%- comment -%}
+          file_url ne passe pas par image_url, mais le CDN Shopify accepte le
+          parametre width sur les URL de Content > Files : le srcset evite de
+          servir 1600 px de large a un telephone de 412 px.
+        {%- endcomment -%}
+        {%- assign hero_poster_url = hero_poster | file_url -%}
+        <img class="cy-hero__poster"
+             src="{{ hero_poster_url }}&width=1600"
+             srcset="{{ hero_poster_url }}&width=640 640w,
+                     {{ hero_poster_url }}&width=960 960w,
+                     {{ hero_poster_url }}&width=1600 1600w"
+             sizes="100vw"
+             alt=""
+             width="1600" height="900"
+             fetchpriority="high" decoding="async" loading="eager">
+      {%- endif -%}
+      {%- if hero_video != blank -%}
+        <video class="cy-hero__video" data-cy-hero-video data-src="{{ hero_video }}"
+               loop muted playsinline preload="none"></video>
+      {%- endif -%}
     </div>
     <div class="cy-hero__content">
       <div class="cy-shell">
@@ -258,7 +307,33 @@
               <h3>CytoLight Foot</h3>
               <p class="cy-product__desc">{% if is_fr %}Une botte de luminoth&eacute;rapie rouge et proche infrarouge pour les pieds fatigu&eacute;s, les chevilles et les routines de confort &agrave; domicile.{% else %}A red and near-infrared light therapy sock for tired feet, ankles, and simple at-home comfort routines.{% endif %}</p>
               <div class="cy-product__meta">
-                <span class="cy-product__price">{% if foot_product != blank %}{{ foot_product.price | money }}{% else %}220 EUR{% endif %}</span>
+                <span class="cy-product__price">{% if foot_product != blank %}{{ foot_product.price | money }}{% else %}250 EUR{% endif %}</span>
+                <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        {%- comment -%}
+          CytoLight Knee etait en vente sans etre reference nulle part dans le
+          theme : ni dans la grille, ni dans le comparatif, ni dans le menu.
+        {%- endcomment -%}
+        <article class="cy-product cy-reveal">
+          <a href="{{ knee_url }}">
+            <div class="cy-product__visual">
+              {%- if knee_product.featured_image -%}
+                <img src="{{ knee_product.featured_image | image_url: width: 1600 }}" alt="{{ knee_product.featured_image.alt | escape }}" width="1600" height="900" loading="lazy">
+              {%- else -%}
+                <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight Knee" width="1600" height="900" loading="lazy">
+              {%- endif -%}
+              <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
+            </div>
+            <div class="cy-product__body">
+              <p class="cy-product__type">{% if is_fr %}Genou &middot; Articulations{% else %}Knee &middot; Joints{% endif %}</p>
+              <h3>CytoLight Knee</h3>
+              <p class="cy-product__desc">{% if is_fr %}Une genouill&egrave;re de luminoth&eacute;rapie rouge et proche infrarouge, port&eacute;e sans fil pour une routine articulaire courte et r&eacute;guli&egrave;re.{% else %}A red and near-infrared light therapy knee wrap, worn cordless for a short and regular joint routine.{% endif %}</p>
+              <div class="cy-product__meta">
+                <span class="cy-product__price">{% if knee_product != blank %}{{ knee_product.price | money }}{% else %}250 EUR{% endif %}</span>
                 <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
               </div>
             </div>
@@ -417,12 +492,12 @@
       </div>
       <div class="cy-table-wrap cy-reveal">
         <table class="cy-table">
-          <thead><tr><th>{% if is_fr %}Mod&egrave;le{% else %}Model{% endif %}</th><th class="cy-table__desk">DESK</th><th>REDLIGHT CAP</th><th>MASK</th><th>FOOT</th><th>PANO ULTRA</th></tr></thead>
+          <thead><tr><th>{% if is_fr %}Mod&egrave;le{% else %}Model{% endif %}</th><th class="cy-table__desk">DESK</th><th>REDLIGHT CAP</th><th>MASK</th><th>FOOT</th><th>KNEE</th><th>PANO ULTRA</th></tr></thead>
           <tbody>
-            <tr><td>{% if is_fr %}Espace id&eacute;al{% else %}Best space{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Bureau, chambre{% else %}Desk, bedroom{% endif %}</td><td>{% if is_fr %}Salon, lecture, routine cheveux{% else %}Living room, reading, hair routine{% endif %}</td><td>{% if is_fr %}Salle de bain, voyage, routine beaut&eacute;{% else %}Bathroom, travel, beauty routine{% endif %}</td><td>{% if is_fr %}Canap&eacute;, soir&eacute;e, r&eacute;cup&eacute;ration pieds{% else %}Sofa, evening, foot recovery{% endif %}</td><td>{% if is_fr %}Studio, salle wellness{% else %}Studio, wellness room{% endif %}</td></tr>
-            <tr><td>{% if is_fr %}Couverture{% else %}Coverage{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Cibl&eacute;e{% else %}Targeted{% endif %}</td><td>{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</td><td>{% if is_fr %}Visage et cou{% else %}Face and neck{% endif %}</td><td>{% if is_fr %}Pied et cheville{% else %}Foot and ankle{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td></tr>
-            <tr><td>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}</td><td class="cy-table__desk">{% if is_fr %}7 spectres ind&eacute;pendants{% else %}7 independent spectra{% endif %}</td><td>{% if is_fr %}Minuteur, intensit&eacute;, pulsation{% else %}Timer, intensity, pulsing{% endif %}</td><td>{% if is_fr %}3 modes, intensit&eacute; variable, sans fil{% else %}3 modes, dimmable, cordless{% endif %}</td><td>{% if is_fr %}Port confortable et minuterie{% else %}Comfort fit and timer{% endif %}</td><td>{% if is_fr %}Format avanc&eacute; grand panneau{% else %}Advanced large-panel format{% endif %}</td></tr>
-            <tr><td>{% if is_fr %}Lien achat{% else %}Buy link{% endif %}</td><td class="cy-table__desk"><a href="{{ desk_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ cap_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ mask_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ foot_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ pano_ultra_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td></tr>
+            <tr><td>{% if is_fr %}Espace id&eacute;al{% else %}Best space{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Bureau, chambre{% else %}Desk, bedroom{% endif %}</td><td>{% if is_fr %}Salon, lecture, routine cheveux{% else %}Living room, reading, hair routine{% endif %}</td><td>{% if is_fr %}Salle de bain, voyage, routine beaut&eacute;{% else %}Bathroom, travel, beauty routine{% endif %}</td><td>{% if is_fr %}Canap&eacute;, soir&eacute;e, r&eacute;cup&eacute;ration pieds{% else %}Sofa, evening, foot recovery{% endif %}</td><td>{% if is_fr %}Canap&eacute;, apr&egrave;s l'effort, repos{% else %}Sofa, post-training, rest{% endif %}</td><td>{% if is_fr %}Studio, salle wellness{% else %}Studio, wellness room{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Couverture{% else %}Coverage{% endif %}</td><td class="cy-table__desk">{% if is_fr %}Cibl&eacute;e{% else %}Targeted{% endif %}</td><td>{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</td><td>{% if is_fr %}Visage et cou{% else %}Face and neck{% endif %}</td><td>{% if is_fr %}Pied et cheville{% else %}Foot and ankle{% endif %}</td><td>{% if is_fr %}Genou et articulation{% else %}Knee and joint{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}</td><td class="cy-table__desk">{% if is_fr %}7 spectres ind&eacute;pendants{% else %}7 independent spectra{% endif %}</td><td>{% if is_fr %}Minuteur, intensit&eacute;, pulsation{% else %}Timer, intensity, pulsing{% endif %}</td><td>{% if is_fr %}3 modes, intensit&eacute; variable, sans fil{% else %}3 modes, dimmable, cordless{% endif %}</td><td>{% if is_fr %}Port confortable et minuterie{% else %}Comfort fit and timer{% endif %}</td><td>{% if is_fr %}Sans fil, batterie 6000 mAh{% else %}Cordless, 6000mAh battery{% endif %}</td><td>{% if is_fr %}Format avanc&eacute; grand panneau{% else %}Advanced large-panel format{% endif %}</td></tr>
+            <tr><td>{% if is_fr %}Lien achat{% else %}Buy link{% endif %}</td><td class="cy-table__desk"><a href="{{ desk_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ cap_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ mask_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ foot_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ knee_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ pano_ultra_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -479,18 +554,99 @@
   </section>
 </main>
 
+{%- comment -%}
+  L'ItemList ne declarait qu'un seul produit sur les sept du catalogue. Elle
+  est desormais construite depuis les produits reellement presentes dans la
+  grille, avec prix et disponibilite pour l'eligibilite aux resultats enrichis.
+{%- endcomment -%}
+{%- assign range_handles = 'cytolight-desk,cytolight-cap,cytolight-mask,cytolight-foot,cytolight-knee,cytolight-pano-plus,cytolight-pano-ultra' | split: ',' -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "CytoLight",
+  "name": {{ shop.name | append: ' — ' | append: 'CytoLight' | json }},
+  "itemListOrder": "https://schema.org/ItemListOrderAscending",
   "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "url": "{{ shop.url }}{{ desk_url }}",
-      "name": "CytoLight DESK"
-    }
+    {%- assign position = 0 -%}
+    {%- for handle in range_handles -%}
+      {%- assign range_product = all_products[handle] -%}
+      {%- if range_product != blank and range_product.title != blank -%}
+        {%- assign position = position | plus: 1 -%}
+        {%- unless position == 1 %},{% endunless %}
+        {
+          "@type": "ListItem",
+          "position": {{ position }},
+          "item": {
+            "@type": "Product",
+            "name": {{ range_product.title | strip_html | json }},
+            "url": {{ shop.url | append: range_product.url | json }},
+            {%- if range_product.featured_media.preview_image != blank %}
+            "image": {{ range_product.featured_media.preview_image | image_url: width: 1200 | prepend: 'https:' | replace: 'https:https:', 'https:' | json }},
+            {%- endif %}
+            "brand": { "@type": "Brand", "name": {{ range_product.vendor | default: 'CytoLight' | json }} },
+            "offers": {
+              "@type": "Offer",
+              "price": {{ range_product.price | divided_by: 100.0 | json }},
+              "priceCurrency": {{ cart.currency.iso_code | json }},
+              "availability": "https://schema.org/{% if range_product.available %}InStock{% else %}OutOfStock{% endif %}",
+              "url": {{ shop.url | append: range_product.url | json }}
+            }
+          }
+        }
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+{%- comment -%}
+  FAQPage, alignee sur la FAQ visible plus haut dans la page. Google exige que
+  le balisage reprenne mot pour mot une question et une reponse reellement
+  affichees : les deux branches lisent donc la meme source que le rendu HTML.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- if faq_blocks.size > 0 -%}
+      {%- for block in faq_blocks -%}
+        {%- unless forloop.first %},{% endunless %}
+        {
+          "@type": "Question",
+          "name": {% if is_fr %}{{ block.settings.question_fr | strip_html | json }}{% else %}{{ block.settings.question_en | strip_html | json }}{% endif %},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {% if is_fr %}{{ block.settings.answer_fr | strip_html | json }}{% else %}{{ block.settings.answer_en | strip_html | json }}{% endif %}
+          }
+        }
+      {%- endfor -%}
+    {%- else -%}
+      {
+        "@type": "Question",
+        "name": {% if is_fr %}"Combien de temps dure une séance ?"{% else %}"How long is a session?"{% endif %},
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": {% if is_fr %}"La plupart des routines commencent autour de 10 minutes. Ajustez toujours selon votre confort et les recommandations du guide."{% else %}"Most routines start around 10 minutes. Always adjust based on comfort and the quick-start guide."{% endif %}
+        }
+      },
+      {
+        "@type": "Question",
+        "name": {% if is_fr %}"Dois-je utiliser l'application ?"{% else %}"Do I need the app?"{% endif %},
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": {% if is_fr %}"Non. L'écran tactile permet de piloter l'appareil directement ; l'application ajoute des préréglages et de la programmation."{% else %}"No. The touchscreen controls the device directly; the app adds presets and scheduling."{% endif %}
+        }
+      },
+      {
+        "@type": "Question",
+        "name": {% if is_fr %}"Est-ce adapté à un bureau ?"{% else %}"Is it suited to a desk?"{% endif %},
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": {% if is_fr %}"Oui. DESK a été pensé pour rester compact, proche et simple à utiliser pendant la journée."{% else %}"Yes. DESK is designed to stay compact, close, and easy to use during the day."{% endif %}
+        }
+      }
+    {%- endif -%}
   ]
 }
 </script>
@@ -502,7 +658,26 @@
     { "type": "product", "id": "featured_product", "label": "Featured product" },
     { "type": "collection", "id": "product_collection", "label": "Product rail collection" },
     { "type": "range", "id": "product_limit", "label": "Products to show", "min": 1, "max": 12, "step": 1, "default": 6 },
-    { "type": "url", "id": "hero_video_url", "label": "Hero video URL" },
+    { "type": "header", "content": "Hero background" },
+    {
+      "type": "image_picker",
+      "id": "hero_poster_image",
+      "label": "Hero image",
+      "info": "Shown immediately and used as the video poster. This is the LCP element, so it decides how fast the homepage feels. Ideally a still from the first frame of the video."
+    },
+    {
+      "type": "text",
+      "id": "hero_poster_file",
+      "label": "Hero image filename (Content > Files)",
+      "info": "Fallback used when no image is picked above. Defaults to cytolight-desk-luxury.jpg.",
+      "default": "cytolight-desk-luxury.jpg"
+    },
+    {
+      "type": "url",
+      "id": "hero_video_url",
+      "label": "Hero video URL",
+      "info": "Loaded only after the page has rendered, and skipped on slow or data-saver connections. Host it in Content > Files: the current default is served from media.paretophysio.com, a domain this store does not control."
+    },
     { "type": "image_picker", "id": "desk_image", "label": "CytoLight DESK fallback image" },
     { "type": "image_picker", "id": "pano_image", "label": "CytoLight PANO PLUS image" },
     { "type": "image_picker", "id": "pro_image", "label": "CytoLight PANO ULTRA image" },

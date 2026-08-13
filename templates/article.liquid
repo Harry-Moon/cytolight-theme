@@ -3,7 +3,11 @@
   <h1>{{ article.title }}</h1>
   <p style="color: var(--color-muted); font-size: .9rem;">{{ article.published_at | date: "%B %-d, %Y" }} · {{ article.author }}</p>
   {% if article.image != blank %}
-    <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.title | escape }}" style="border-radius: var(--radius-md); margin: 24px 0;">
+    <img src="{{ article.image | image_url: width: 1200 }}"
+         alt="{{ article.title | escape }}"
+         width="1200" height="{{ 1200 | divided_by: article.image.aspect_ratio | round }}"
+         loading="eager" fetchpriority="high"
+         style="border-radius: var(--radius-md); margin: 24px 0;">
   {% endif %}
   <div class="article-content" style="font-size: 1.05rem; line-height: 1.7;">
     {{ article.content }}

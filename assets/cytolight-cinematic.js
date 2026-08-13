@@ -98,6 +98,66 @@
     } else {
       root.querySelectorAll('.cy-reveal').forEach(function (el) { el.classList.add('is-visible'); });
     }
+
+    initHeroVideo(root, reduceMotion);
+  }
+
+  /*
+   * Video de fond du hero.
+   *
+   * Elle etait en autoplay avec un src direct : 1,4 Mo telecharges depuis un
+   * domaine tiers avant le moindre pixel peint, ce qui en faisait l'element LCP
+   * a 7,3 s sur mobile. Elle est purement decorative — l'image poster porte
+   * seule le contenu du hero.
+   *
+   * Elle n'est donc jamais chargee sur mobile, ou elle coute 1,4 Mo de data
+   * pour un fond, ni en mouvement reduit, ni en data saver, ni sur une
+   * connexion lente. Ailleurs, elle attend l'evenement load puis la premiere
+   * interaction du visiteur : le LCP est deja fige a ce moment-la.
+   */
+  function initHeroVideo(root, reduceMotion) {
+    var video = root.querySelector('[data-cy-hero-video]');
+    if (!video || video.dataset.cyVideoInit === 'true') return;
+    video.dataset.cyVideoInit = 'true';
+
+    if (reduceMotion) return;
+    if (!window.matchMedia('(min-width: 768px)').matches) return;
+
+    var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection) {
+      if (connection.saveData) return;
+      if (/(^|-)(2g|3g)$/.test(connection.effectiveType || '')) return;
+    }
+
+    var started = false;
+    var triggers = ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart', 'scroll'];
+
+    function start() {
+      if (started) return;
+      started = true;
+      triggers.forEach(function (name) { window.removeEventListener(name, start); });
+
+      var src = video.dataset.src;
+      if (!src) return;
+      video.src = src;
+      video.addEventListener('canplay', function () { video.classList.add('is-ready'); }, { once: true });
+      var played = video.play();
+      if (played && typeof played.catch === 'function') {
+        played.catch(function () { /* autoplay refuse : le poster reste affiche */ });
+      }
+    }
+
+    function arm() {
+      triggers.forEach(function (name) {
+        window.addEventListener(name, start, { passive: true });
+      });
+    }
+
+    if (document.readyState === 'complete') {
+      arm();
+    } else {
+      window.addEventListener('load', arm, { once: true });
+    }
   }
 
   function initAll() {
