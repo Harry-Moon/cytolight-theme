@@ -14,17 +14,15 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "shop": { "type": "menu_column", "settings": { "heading": "Shop", "menu": "footer" } },
-        "learn": { "type": "menu_column", "settings": { "heading": "Learn", "menu": "footer" } },
-        "support": { "type": "menu_column", "settings": { "heading": "Support", "menu": "footer" } }
+        "shop": { "type": "menu_column", "settings": { "heading": "Shop", "menu": "main-menu" } }
       },
-      "block_order": ["shop", "learn", "support"],
+      "block_order": ["shop"],
       "settings": {
         "tagline": "Science-backed wellness technologies to enhance sleep, recovery, and beauty.",
-        "instagram": "https://instagram.com/",
-        "facebook": "https://facebook.com/",
-        "tiktok": "https://tiktok.com/",
-        "youtube": "https://youtube.com/"
+        "instagram": "",
+        "facebook": "",
+        "tiktok": "",
+        "youtube": ""
       }
     }
   },

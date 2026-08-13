@@ -1,0 +1,171 @@
+{%- comment -%}
+  Donnees structurees schema.org.
+
+  Le theme n'en produisait aucune : les fiches produit sortaient sans JSON-LD,
+  donc sans prix, sans disponibilite et sans extrait enrichi dans Google.
+
+  Organization et WebSite sont emis sur toutes les pages ; Product, Offer et
+  BreadcrumbList sur la fiche produit. aggregateRating n'est ajoute que si des
+  avis reels existent (metafields reviews.*) : declarer une note sans avis
+  expose a une penalite manuelle Google en plus du risque juridique.
+
+  Usage : {% render 'structured-data' %}
+{%- endcomment -%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": {{ shop.url | append: '/#organization' | json }},
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }},
+      {%- if settings.logo != blank %}
+      "logo": {{ settings.logo | image_url: width: 512 | prepend: 'https:' | replace: 'https:https:', 'https:' | json }},
+      {%- endif %}
+      {%- assign social_profiles = '' -%}
+      {%- assign social_candidates = settings.social_instagram_url | append: ',' | append: settings.social_facebook_url | append: ',' | append: settings.social_tiktok_url | append: ',' | append: settings.social_youtube_url | append: ',' | append: settings.social_pinterest_url | append: ',' | append: settings.social_linkedin_url | split: ',' -%}
+      {%- for profile in social_candidates -%}
+        {%- assign trimmed = profile | strip -%}
+        {%- if trimmed != blank -%}
+          {%- if social_profiles == blank -%}
+            {%- assign social_profiles = trimmed | json -%}
+          {%- else -%}
+            {%- assign social_profiles = social_profiles | append: ',' | append: trimmed | json -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if social_profiles != blank %}
+      "sameAs": [{{ social_profiles }}],
+      {%- endif %}
+      "description": {{ shop.description | default: shop.name | strip_html | json }}
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ shop.url | append: '/#website' | json }},
+      "url": {{ shop.url | json }},
+      "name": {{ shop.name | json }},
+      "inLanguage": {{ request.locale.iso_code | json }},
+      "publisher": { "@id": {{ shop.url | append: '/#organization' | json }} },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": {{ shop.url | append: routes.search_url | append: '?q={search_term_string}' | json }}
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+
+    {%- if request.page_type == 'product' and product != blank -%}
+    ,{
+      "@type": "Product",
+      "@id": {{ shop.url | append: product.url | append: '#product' | json }},
+      "name": {{ product.title | strip_html | json }},
+      "url": {{ shop.url | append: product.url | json }},
+      "description": {{ product.description | strip_html | strip_newlines | truncate: 1000 | json }},
+      {%- if product.featured_media.preview_image != blank %}
+      "image": [
+        {%- for media in product.media limit: 6 -%}
+          {%- if media.preview_image != blank -%}
+            {%- unless forloop.first %},{% endunless -%}
+            {{ media.preview_image | image_url: width: 1600 | prepend: 'https:' | replace: 'https:https:', 'https:' | json }}
+          {%- endif -%}
+        {%- endfor -%}
+      ],
+      {%- endif %}
+      "brand": {
+        "@type": "Brand",
+        "name": {{ product.vendor | default: shop.name | json }}
+      },
+      {%- if product.type != blank %}
+      "category": {{ product.type | json }},
+      {%- endif %}
+      {%- comment -%} aggregateRating uniquement sur avis reels, jamais de valeur par defaut {%- endcomment -%}
+      {%- assign sd_rating = product.metafields.reviews.rating.value.rating -%}
+      {%- assign sd_count = product.metafields.reviews.rating_count.value | plus: 0 -%}
+      {%- if sd_rating and sd_count > 0 %}
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": {{ sd_rating | json }},
+        "reviewCount": {{ sd_count | json }},
+        "bestRating": {{ product.metafields.reviews.rating.value.scale_max | default: 5 | json }},
+        "worstRating": {{ product.metafields.reviews.rating.value.scale_min | default: 1 | json }}
+      },
+      {%- endif %}
+      "offers": [
+        {%- for variant in product.variants -%}
+          {%- unless forloop.first %},{% endunless %}
+          {
+            "@type": "Offer",
+            "url": {{ shop.url | append: variant.url | json }},
+            "price": {{ variant.price | divided_by: 100.0 | json }},
+            "priceCurrency": {{ cart.currency.iso_code | json }},
+            "priceValidUntil": {{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' | json }},
+            "availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+            "itemCondition": "https://schema.org/NewCondition",
+            {%- if variant.sku != blank %}
+            "sku": {{ variant.sku | json }},
+            {%- endif %}
+            {%- if variant.barcode != blank %}
+            "gtin": {{ variant.barcode | json }},
+            {%- endif %}
+            "seller": { "@id": {{ shop.url | append: '/#organization' | json }} }
+          }
+        {%- endfor -%}
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": {{ shop.name | json }},
+          "item": {{ shop.url | json }}
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": {% if request.locale.iso_code contains 'fr' %}"Produits"{% else %}"Products"{% endif %},
+          "item": {{ shop.url | append: routes.all_products_collection_url | json }}
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": {{ product.title | strip_html | json }},
+          "item": {{ shop.url | append: product.url | json }}
+        }
+      ]
+    }
+    {%- endif -%}
+
+    {%- if request.page_type == 'collection' and collection != blank -%}
+    ,{
+      "@type": "CollectionPage",
+      "name": {{ collection.title | strip_html | json }},
+      "url": {{ shop.url | append: collection.url | json }},
+      {%- if collection.description != blank %}
+      "description": {{ collection.description | strip_html | strip_newlines | truncate: 500 | json }},
+      {%- endif %}
+      "isPartOf": { "@id": {{ shop.url | append: '/#website' | json }} }
+    }
+    {%- endif -%}
+
+    {%- if request.page_type == 'article' and article != blank -%}
+    ,{
+      "@type": "BlogPosting",
+      "headline": {{ article.title | strip_html | json }},
+      "url": {{ shop.url | append: article.url | json }},
+      "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+      {%- if article.image != blank %}
+      "image": {{ article.image | image_url: width: 1600 | prepend: 'https:' | replace: 'https:https:', 'https:' | json }},
+      {%- endif %}
+      "author": { "@type": "Person", "name": {{ article.author | json }} },
+      "publisher": { "@id": {{ shop.url | append: '/#organization' | json }} }
+    }
+    {%- endif -%}
+  ]
+}
+</script>
