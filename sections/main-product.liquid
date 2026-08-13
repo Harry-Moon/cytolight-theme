@@ -26,6 +26,19 @@
 .cl-launch-stat strong{display:block;font-size:30px;font-weight:950;letter-spacing:0;color:#fff;line-height:1;}
 .cl-launch-stat span{display:block;margin-top:8px;font-size:12px;font-weight:700;line-height:1.35;color:rgba(255,255,255,.72);}
 .cl-feature-showcase{background:#f6f6f6;padding:28px 40px 72px;}
+.cl-persona-section{padding:64px 40px;background:#fff;border-top:1px solid #f0f0f0;}
+.cl-persona-inner{max-width:1400px;margin:0 auto;}
+.cl-persona-header{text-align:center;margin-bottom:36px;}
+.cl-persona-eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#c8102e;margin:0 0 12px;}
+.cl-persona-title{font-size:clamp(24px,3.2vw,34px);font-weight:900;color:#0d0d0d;margin:0 auto;max-width:760px;letter-spacing:-.02em;line-height:1.15;}
+.cl-persona-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.cl-persona-card{background:#fafafa;border:1px solid #eee;border-radius:16px;padding:22px 20px;transition:transform .2s,box-shadow .2s,border-color .2s,background .2s;}
+.cl-persona-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.08);border-color:#e2c9c9;background:#fff;}
+.cl-persona-card__kicker{display:block;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#c8102e;margin:0 0 10px;}
+.cl-persona-card__title{font-size:15px;font-weight:900;color:#0d0d0d;margin:0 0 6px;letter-spacing:-.01em;line-height:1.25;}
+.cl-persona-card__body{font-size:12.5px;line-height:1.55;color:#666;margin:0;}
+@media(max-width:900px){.cl-persona-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.cl-persona-section{padding:44px 18px;}.cl-persona-grid{grid-template-columns:1fr;}}
 .cl-feature-showcase__inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px;}
 .cl-feature-tile{position:relative;min-height:260px;border-radius:18px;overflow:hidden;background:#111;color:#fff;padding:26px;display:flex;flex-direction:column;justify-content:flex-end;}
 .cl-feature-tile--large{grid-row:span 2;min-height:540px;}
@@ -614,6 +627,54 @@
         <span>{% if is_fr %}288 LED{% else %}288 LEDs{% endif %}</span>
         <span>{% if is_fr %}375 g{% else %}375g{% endif %}</span>
         <span>{% if is_fr %}Sans fil{% else %}Cordless{% endif %}</span>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- if is_knee -%}
+  <section class='cl-persona-section' aria-label='{% if is_fr %}Pour qui est fait CytoLight Knee{% else %}Who CytoLight Knee is for{% endif %}'>
+    <div class='cl-persona-inner'>
+      <div class='cl-persona-header'>
+        <p class='cl-persona-eyebrow'>{% if is_fr %}Pens&eacute; pour votre profil{% else %}Built for your lifestyle{% endif %}</p>
+        <h2 class='cl-persona-title'>{% if is_fr %}Que vous couriez, conduisiez ou travailliez assis, votre genou en profite.{% else %}Whether you run, drive, or sit all day, your knee benefits.{% endif %}</h2>
+      </div>
+      <div class='cl-persona-grid'>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Coureur{% else %}Runner{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Apr&egrave;s chaque sortie.{% else %}After every run.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}La course accumule les chocs. Une session apr&egrave;s l'entra&icirc;nement, avant que la raideur ne s'installe.{% else %}Running adds up on the knees. A session after training, before stiffness sets in.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Footballeur{% else %}Football Player{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Pour tenir toute la saison.{% else %}To last the whole season.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Sprints, contacts, changements de direction : une routine de r&eacute;cup&eacute;ration entre deux matchs.{% else %}Sprints, contact, sharp turns &#8212; a recovery routine between matches.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Joueur de tennis{% else %}Tennis Player{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Entre deux sets, entre deux matchs.{% else %}Between sets, between matches.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Les appuis lat&eacute;raux sollicitent l'articulation. Une routine courte pour rester pr&ecirc;t.{% else %}Lateral footwork puts real strain on the joint. A short routine to stay ready.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Bureau{% else %}Office{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Genou raide apr&egrave;s une journ&eacute;e assise.{% else %}Stiff knee after a day at the desk.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Rester assis toute la journ&eacute;e n'aide pas l'articulation. Dix minutes le soir pour retrouver de la mobilit&eacute;.{% else %}A full day sitting doesn't help the joint. Ten minutes in the evening to restore mobility.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Conducteur{% else %}Driver{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Apr&egrave;s des heures au volant.{% else %}After hours behind the wheel.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Position fixe, genou pli&eacute; pendant des heures. Un rituel simple pour d&eacute;compresser l'articulation.{% else %}A fixed position, knee bent for hours. A simple ritual to loosen up the joint.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Vie active, tout &acirc;ge{% else %}Active at Any Age{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Pour rester actif, jour apr&egrave;s jour.{% else %}To stay active, day after day.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Une routine douce, sans effort, &agrave; faire assis chez soi &#8212; pens&eacute;e pour une articulation qui a bien servi.{% else %}A gentle, effortless routine you can do seated at home &#8212; built to support a joint that has done a lot of work.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}&Agrave; la maison{% else %}At Home{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Un rituel simple &agrave; la maison.{% else %}A simple ritual at home.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Pas besoin de salle de sport ni de rendez-vous. Enfilez-la devant un film et laissez la session faire le reste.{% else %}No gym, no appointment. Wrap it on in front of a film and let the session do the rest.{% endif %}</p>
+        </div>
       </div>
     </div>
   </section>
