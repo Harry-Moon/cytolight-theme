@@ -121,6 +121,27 @@
           <span>&#10003; {% if is_fr %}Garantie 2 ans{% else %}2-year warranty{% endif %}</span>
           <span>&#10003; {% if is_fr %}Paiement s&eacute;curis&eacute;{% else %}Secure checkout{% endif %}</span>
         </div>
+        {%- comment -%}
+          Moyens de paiement acceptes et rappel des politiques, en complement du
+          bloc de reassurance ci-dessus : le panier est l'ecran ou l'abandon
+          coute le plus cher. Chaque bloc est conditionnel — rien ne s'affiche
+          tant que la politique ou le fournisseur n'existe pas dans l'admin.
+        {%- endcomment -%}
+        {%- if shop.enabled_payment_types.size > 0 -%}
+          <div class="cart-trust__payments" aria-label="{% if is_fr %}Moyens de paiement accept&eacute;s{% else %}Accepted payment methods{% endif %}">
+            {%- for type in shop.enabled_payment_types -%}
+              {{ type | payment_type_svg_tag: class: 'cart-trust__payment-icon' }}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if shop.refund_policy != blank or shop.shipping_policy != blank -%}
+          <p class="cart-trust__policies">
+            {%- if shop.refund_policy != blank -%}<a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a>{%- endif -%}
+            {%- if shop.refund_policy != blank and shop.shipping_policy != blank %} &middot; {% endif -%}
+            {%- if shop.shipping_policy != blank -%}<a href="{{ shop.shipping_policy.url }}">{{ shop.shipping_policy.title }}</a>{%- endif -%}
+          </p>
+        {%- endif -%}
       </aside>
     </div>
   {% else %}

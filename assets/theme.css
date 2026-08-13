@@ -757,6 +757,12 @@ h1, h2, h3, h4,
 .cart-crosssell--empty { border-top: none; margin-top: 64px; text-align: left; }
 .cart-crosssell--empty h2 { text-align: center; }
 .cart-trust { display: flex; flex-direction: column; gap: 6px; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.1); font-size: .78rem; color: var(--color-muted); }
+/* Icones des moyens de paiement et liens de politiques, en complement du bloc
+   .cart-trust deja pose plus haut. */
+.cart-trust__payments { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 16px; }
+.cart-trust__payment-icon { width: 36px; height: 23px; border-radius: 3px; }
+.cart-trust__policies { margin: 12px 0 0; text-align: center; font-size: .78rem; color: var(--color-muted); }
+.cart-trust__policies a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 @media (max-width: 800px) {
   .cart { grid-template-columns: 1fr; }
   .cart-summary { position: static; }

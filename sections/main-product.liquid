@@ -559,7 +559,7 @@
   <section class='cl-launch-hero' aria-label='{% if is_cap %}CYTOLIGHT cap overview{% elsif is_mask %}CytoLight Mask overview{% elsif is_foot %}CytoLight Foot overview{% elsif is_knee %}CytoLight Knee overview{% elsif is_pano_ultra %}CytoLight PANO ULTRA overview{% else %}CytoLight overview{% endif %}'>
     <div class='cl-launch-hero__media'>
       {%- if product.featured_image -%}
-        <img src='{{ product.featured_image | image_url: width: 2000 }}' alt='{{ product.featured_image.alt | escape }}' loading='eager'>
+        <img src='{{ product.featured_image | image_url: width: 2000 }}' alt='{{ product.featured_image.alt | escape }}' width='2000' height='{{ 2000 | divided_by: product.featured_image.aspect_ratio | round }}' loading='eager' fetchpriority='high'>
       {%- else -%}
         {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
       {%- endif -%}
@@ -742,7 +742,7 @@
             <div class='cl-media-slot {% if forloop.first %}is-active{% endif %}' data-slot='{{ forloop.index0 }}'>
               {%- case media.media_type -%}
                 {%- when 'image' -%}
-                  <img src='{{ media | image_url: width: 1400 }}' alt='{{ media.alt | escape }}' loading='{% if forloop.first %}eager{% else %}lazy{% endif %}'>
+                  <img src='{{ media | image_url: width: 1400 }}' alt='{{ media.alt | escape }}' width='1400' height='{{ 1400 | divided_by: media.aspect_ratio | round }}' loading='{% if forloop.first %}eager{% else %}lazy{% endif %}'{% if forloop.first %} fetchpriority='high'{% endif %}>
                 {%- when 'video' -%}
                   {{ media | video_tag: autoplay: false, loop: false, controls: true, muted: false }}
                 {%- when 'external_video' -%}
@@ -750,7 +750,7 @@
                 {%- when 'model' -%}
                   {{ media | model_viewer_tag: reveal: 'interaction', toggleable: true }}
                 {%- else -%}
-                  <img src='{{ media.preview_image | image_url: width: 1400 }}' alt='{{ media.alt | escape }}' loading='lazy'>
+                  <img src='{{ media.preview_image | image_url: width: 1400 }}' alt='{{ media.alt | escape }}' width='1400' height='{{ 1400 | divided_by: media.preview_image.aspect_ratio | round }}' loading='lazy'>
               {%- endcase -%}
             </div>
           {%- endfor -%}
@@ -762,7 +762,7 @@
         <div class='cl-thumbstrip' id='cl-thumbstrip'>
           {%- for media in product.media limit: 10 -%}
             <div class='cl-thumbitem {% if forloop.first %}is-active{% endif %}' data-slot='{{ forloop.index0 }}'>
-              <img src='{{ media.preview_image | image_url: width: 200 }}' alt='{{ media.alt | escape }}'>
+              <img src='{{ media.preview_image | image_url: width: 200 }}' alt='{{ media.alt | escape }}' width='200' height='{{ 200 | divided_by: media.preview_image.aspect_ratio | round }}' loading='lazy'>
               {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
                 <span class='cl-thumbitem__play'>&#9654;</span>
               {%- endif -%}
@@ -1002,7 +1002,7 @@
         {%- elsif is_knee and foot_image_1 -%}
           <img src='{{ foot_image_1 | image_url: width: 1400 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' class='cl-editorial__img' width='1400' height='788'>
         {%- elsif product.featured_image -%}
-          <img src='{{ product.featured_image | image_url: width: 900 }}' alt='{{ product.featured_image.alt | escape }}' loading='lazy' class='cl-editorial__img'>
+          <img src='{{ product.featured_image | image_url: width: 900 }}' alt='{{ product.featured_image.alt | escape }}' width='900' height='{{ 900 | divided_by: product.featured_image.aspect_ratio | round }}' loading='lazy' class='cl-editorial__img'>
         {%- else -%}
           {{ 'product-2' | placeholder_svg_tag: 'cl-editorial__img' }}
         {%- endif -%}
