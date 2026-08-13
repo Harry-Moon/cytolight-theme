@@ -16,7 +16,20 @@
     {%- endif -%}
   </div>
   <div class="product-card__body">
-    <div class="product-card__rating"><span>&#9733;&#9733;&#9733;&#9733;&#9733;</span> {{ product.metafields.reviews.rating | default: '4.9' }}</div>
+    {%- comment -%} Note affichee uniquement si un avis reel existe, jamais de valeur par defaut. {%- endcomment -%}
+    {%- assign card_rating = product.metafields.reviews.rating.value.rating -%}
+    {%- assign card_count = product.metafields.reviews.rating_count.value | plus: 0 -%}
+    {%- if card_rating and card_count > 0 -%}
+      {%- assign card_rounded = card_rating | round -%}
+      <div class="product-card__rating">
+        <span aria-hidden="true">
+          {%- for i in (1..5) -%}
+            {%- if i <= card_rounded %}&#9733;{% else %}&#9734;{% endif -%}
+          {%- endfor -%}
+        </span>
+        {{ card_rating }} ({{ card_count }})
+      </div>
+    {%- endif -%}
     <div class="product-card__title">{{ product.title }}</div>
     <div class="product-card__price">
       {%- if product.compare_at_price > product.price -%}
