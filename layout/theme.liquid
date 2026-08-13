@@ -46,8 +46,13 @@
       Sous-ensemble latin uniquement (64 Ko) : il couvre le francais, l'anglais
       et le portugais.
     {%- endcomment -%}
+    {%- comment -%}
+      Seule la police de texte est prechargee : un preload est servi en priorite
+      haute et entre en concurrence avec le CSS critique. Instrument Serif, qui
+      ne sert qu'aux titres, se charge normalement — font-display: swap affiche
+      le repli Georgia en attendant.
+    {%- endcomment -%}
     <link rel="preload" as="font" type="font/woff2" href="{{ 'instrument-sans-latin.woff2' | asset_url }}" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="{{ 'instrument-serif-latin.woff2' | asset_url }}" crossorigin>
 
     {{ content_for_header }}
 

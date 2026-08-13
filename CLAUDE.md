@@ -19,14 +19,42 @@ Conséquences pratiques :
 | Dossier | Contenu |
 |---|---|
 | `sections/` | Sections de page. `main-product.liquid` (1500 lignes) et `cytolight-home.liquid` portent l'essentiel du contenu éditorial. |
-| `snippets/` | Fragments réutilisables (`product-card`, `icon`, `cytolight-device-card`). |
+| `snippets/` | Fragments réutilisables (`product-card`, `icon`, `meta-social`, `structured-data`, `marketing-pixels`). |
 | `templates/` | Points d'entrée. `index.liquid` appelle `cytolight-home` ; `product.json`, `collection.json` et `cart.json` référencent les sections `main-*`. |
 | `layout/` | `theme.liquid` (enveloppe globale) et `password.liquid`. |
-| `assets/` | **CSS et JS uniquement** — voir la convention ci-dessous. |
+| `assets/` | **CSS, JS et polices uniquement** — voir la convention ci-dessous. |
 | `config/` | `settings_schema.json` (définitions) et `settings_data.json` (valeurs, auto-généré). |
 
 `theme.css` porte les styles globaux et la palette ; `cytolight-cinematic.css` / `.js` gèrent les
 animations au scroll de la page d'accueil.
+
+### Code mort — ne pas s'y fier
+
+`sections/vg-homepage.liquid` (650 lignes), `snippets/vg-shader.liquid` et
+`snippets/cytolight-device-card.liquid` ne sont rendus par aucun template. `templates/index.liquid`
+appelle `cytolight-home`, pas `vg-homepage`. Les réglages `vg-homepage` de `settings_data.json`
+(témoignages, `diff*`, `prod*_url`) n'ont donc **aucun effet en production** — inutile de les corriger.
+Ces fichiers concentrent les 4 dernières erreurs `theme check` du dépôt.
+
+### Head : ordre imposé dans `theme.liquid`
+
+`meta-social` doit être rendu **avant** `content_for_header`. Shopify y injecte un `og:image`
+générique ; l'`og:image` spécifique à la page (produit, article, collection) doit apparaître en
+premier pour primer chez les crawlers. `structured-data` et `marketing-pixels` viennent après.
+
+### Polices
+
+Auto-hébergées dans `assets/` (`instrument-*.woff2`, sous-ensemble latin, 64 Ko), déclarées en
+`@font-face` inline dans `theme.liquid`. **Ne pas revenir à `fonts.googleapis.com`** : feuille tierce
+bloquant le rendu, et transmission de l'IP de chaque visiteur à Google sans consentement préalable.
+
+### Avis et notes
+
+Aucune note, aucun avis, aucun compteur ne doit être écrit en dur. Tout passe par les metafields
+standard `product.metafields.reviews.rating` et `.rating_count`, et ne s'affiche que s'ils existent.
+Publier un avis ou une note fictive est une pratique commerciale trompeuse (art. L.121-2 et
+L.121-4 11° du Code de la consommation) et fait échouer la validation des comptes publicitaires
+Meta et TikTok.
 
 ## Convention images
 
