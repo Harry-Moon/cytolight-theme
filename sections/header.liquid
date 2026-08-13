@@ -18,12 +18,19 @@
   <div class="container site-header__inner">
     <nav class="site-header__nav" aria-label="{% if is_fr %}Navigation principale{% elsif is_pt %}Navegacao principal{% else %}Primary navigation{% endif %}">
       <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% elsif is_pt %}Inicio{% else %}Home{% endif %}</a>
-      <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Produits{% elsif is_pt %}Produtos{% else %}Products{% endif %}</a>
-      <a href="/products/cytolight-desk">DESK</a>
-      <a href="/products/cytolight-cap">{% if is_fr %}Cheveux{% elsif is_pt %}Cabelo{% else %}Hair{% endif %}</a>
-      <a href="/products/cytolight-foot">{% if is_fr %}Pieds{% elsif is_pt %}Pes{% else %}Foot{% endif %}</a>
-      <a href="/products/cytolight-mask">{% if is_fr %}Visage{% elsif is_pt %}Rosto{% else %}Face{% endif %}</a>
-      <a href="/products/cytolight-pano-ultra">{% if is_fr %}Corps entier{% elsif is_pt %}Corpo inteiro{% else %}Full body{% endif %}</a>
+      <div class="site-header__nav-item" data-nav-submenu>
+        <a class="site-header__nav-link" href="{{ routes.all_products_collection_url }}">{% if is_fr %}Produits{% elsif is_pt %}Produtos{% else %}Products{% endif %}</a>
+        <button type="button" class="site-header__submenu-toggle" aria-expanded="false" aria-label="{% if is_fr %}Afficher le sous-menu Produits{% elsif is_pt %}Mostrar submenu Produtos{% else %}Show Products submenu{% endif %}">
+          <svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="site-header__submenu">
+          <a href="/products/cytolight-desk">DESK</a>
+          <a href="/products/cytolight-cap">{% if is_fr %}Cheveux{% elsif is_pt %}Cabelo{% else %}Hair{% endif %}</a>
+          <a href="/products/cytolight-foot">{% if is_fr %}Pieds{% elsif is_pt %}Pes{% else %}Foot{% endif %}</a>
+          <a href="/products/cytolight-mask">{% if is_fr %}Visage{% elsif is_pt %}Rosto{% else %}Face{% endif %}</a>
+          <a href="/products/cytolight-pano-ultra">{% if is_fr %}Corps entier{% elsif is_pt %}Corpo inteiro{% else %}Full body{% endif %}</a>
+        </div>
+      </div>
     </nav>
 
     <a class="site-header__logo" href="{{ routes.root_url }}">

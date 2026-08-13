@@ -61,6 +61,27 @@
     next?.addEventListener('click', () => track.scrollBy({ left: scrollBy(), behavior: 'smooth' }));
   });
 
+  // Header nav submenu (e.g. "Produits") — click/tap toggle on top of hover
+  document.querySelectorAll('[data-nav-submenu]').forEach((item) => {
+    const toggle = item.querySelector('.site-header__submenu-toggle');
+    if (!toggle) return;
+    const close = () => {
+      item.classList.remove('is-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = item.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+    document.addEventListener('click', (e) => {
+      if (!item.contains(e.target)) close();
+    });
+  });
+
   // Announcement bar rotator (if multiple items + data-rotate)
   document.querySelectorAll('[data-announcement-rotate]').forEach((bar) => {
     const items = bar.querySelectorAll('.announcement__item');
