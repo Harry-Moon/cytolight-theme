@@ -593,11 +593,7 @@
   {%- if is_knee -%}
   <section class='cl-foot-intro' aria-label='{% if is_fr %}Présentation CytoLight Knee{% else %}CytoLight Knee introduction{% endif %}'>
     <div class='cl-foot-intro__media'>
-      {%- if foot_image_1 -%}
-        <img src='{{ foot_image_1 | image_url: width: 1400 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1400' height='788'>
-      {%- elsif product.featured_image -%}
-        <img src='{{ product.featured_image | image_url: width: 1400 }}' alt='{{ product.featured_image.alt | escape }}' loading='lazy' width='1400' height='788'>
-      {%- endif -%}
+      <img src='{{ "Cytolight_-_Knee_1.jpg" | file_url }}' alt='{% if is_fr %}Genouillère CytoLight Knee avec lumière rouge et proche infrarouge activée{% else %}CytoLight Knee sleeve with red and near-infrared light active{% endif %}' loading='lazy' width='1400' height='788'>
     </div>
     <div class='cl-foot-intro__copy'>
       <p class='cl-eyebrow'>{% if is_fr %}Genou et articulation{% else %}Knee and joint{% endif %}</p>
@@ -675,7 +671,7 @@
   <section class='cl-feature-showcase' id='cl-highlights' aria-label='Product highlights'>
     <div class='cl-feature-showcase__inner'>
       <div class='cl-feature-tile cl-feature-tile--large {% if is_cap or is_mask or is_foot or is_knee %}cl-feature-tile--image-bg{% else %}cl-feature-tile--infographic{% endif %}'>
-        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-targeted-ritual.jpg" | file_url }});'{% elsif is_mask %}style='background-image:url({{ "05_CytoLight_Mask_Spa.png" | file_url }});'{% elsif is_foot and foot_image_3 %}style='background-image:url({{ foot_image_3 | image_url: width: 1600 }});'{% elsif is_knee and foot_image_1 %}style='background-image:url({{ foot_image_1 | image_url: width: 1600 }});'{% else %}style='background-image:url({{ "cytolight-7-wavelengths-infographic.jpg" | file_url }});'{% endif %}></div>
+        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-targeted-ritual.jpg" | file_url }});'{% elsif is_mask %}style='background-image:url({{ "05_CytoLight_Mask_Spa.png" | file_url }});'{% elsif is_foot and foot_image_3 %}style='background-image:url({{ foot_image_3 | image_url: width: 1600 }});'{% elsif is_knee %}style='background-image:url({{ "Cytolight_Knee_Garden.jpg" | file_url }});'{% else %}style='background-image:url({{ "cytolight-7-wavelengths-infographic.jpg" | file_url }});'{% endif %}></div>
         <div class='cl-feature-tile__content'>
           <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Rituel capillaire ciblé{% else %}Targeted hair ritual{% endif %}{% elsif is_mask %}{% if is_fr %}Rituel visage cibl&eacute;{% else %}Targeted face ritual{% endif %}{% elsif is_foot %}{% if is_fr %}Rituel pieds cibl&eacute;{% else %}Targeted foot ritual{% endif %}{% elsif is_knee %}{% if is_fr %}Rituel genou ciblé{% else %}Targeted knee ritual{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Thérapie spectrale complète{% else %}Full-spectrum therapy{% endif %}{% endif %}</p>
           <h2 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Rouge et proche infrarouge. Un geste quotidien.{% else %}Red and near-infrared. One daily habit.{% endif %}{% elsif is_mask %}{% if is_fr %}Bleu, rouge, proche infrarouge. Un seul masque.{% else %}Blue, red, near-infrared. One single mask.{% endif %}{% elsif is_foot %}{% if is_fr %}Rouge et proche infrarouge. Pour les pieds fatigu&eacute;s.{% else %}Red and near-infrared. For tired feet.{% endif %}{% elsif is_knee %}{% if is_fr %}Rouge et proche infrarouge. Pour l'articulation du genou.{% else %}Red and near-infrared. For the knee joint.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Sept longueurs d'onde. Un rituel quotidien.{% else %}Seven wavelengths. One daily ritual.{% endif %}{% endif %}</h2>
@@ -683,7 +679,7 @@
         </div>
       </div>
       <div class='cl-feature-tile cl-feature-tile--light {% if is_cap %}cl-feature-tile--cap-head-bg{% elsif is_mask or is_foot or is_knee %}cl-feature-tile--photo-light{% endif %}'>
-        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-head-scalp.jpg" | file_url }});'{% elsif is_mask %}style='background-image:url({{ "03_CytoLight_Mask_Home.png" | file_url }});'{% elsif is_foot and foot_image_4 %}style='background-image:url({{ foot_image_4 | image_url: width: 1400 }});'{% elsif is_knee and foot_image_1 %}style='background-image:url({{ foot_image_1 | image_url: width: 1400 }});'{% endif %}></div>
+        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-head-scalp.jpg" | file_url }});'{% elsif is_mask %}style='background-image:url({{ "03_CytoLight_Mask_Home.png" | file_url }});'{% elsif is_foot and foot_image_4 %}style='background-image:url({{ foot_image_4 | image_url: width: 1400 }});'{% elsif is_knee %}style='background-image:url({{ "Cytolight_Knee_-_Elder_Man.jpg" | file_url }});'{% endif %}></div>
         <div class='cl-feature-tile__content'>
           <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}{% elsif is_mask %}{% if is_fr %}Sans fil{% else %}Cordless{% endif %}{% elsif is_foot %}{% if is_fr %}Repos &agrave; domicile{% else %}At-home rest{% endif %}{% elsif is_knee %}{% if is_fr %}Repos à domicile{% else %}At-home rest{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Grand format{% else %}Large format{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Prêt pour le bureau{% else %}Desk-ready{% endif %}{% endif %}</p>
           <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Pensé pour rester dans votre routine.{% else %}Built to stay in your routine.{% endif %}{% elsif is_mask %}{% if is_fr %}Une batterie, z&eacute;ro c&acirc;ble.{% else %}One battery, zero cables.{% endif %}{% elsif is_foot %}{% if is_fr %}Portez-le pendant un moment calme.{% else %}Wear it during a calm moment.{% endif %}{% elsif is_knee %}{% if is_fr %}Portez-la pendant un moment calme.{% else %}Wear it during a calm moment.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Conçu pour les espaces dédiés.{% else %}Built for dedicated spaces.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Conçu pour rester visible.{% else %}Built to stay visible.{% endif %}{% endif %}</h3>
@@ -699,7 +695,7 @@
         </div>
       </div>
       <div class='cl-feature-tile {% if is_cap %}cl-feature-tile--image-bg cl-feature-tile--scalp-bg{% elsif is_mask or is_foot or is_knee %}cl-feature-tile--image-bg cl-feature-tile--photo-dark{% endif %}'>
-        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-scalp-density.jpg" | file_url }});'{% elsif is_mask %}style='background-image:url({{ "04_CytoLight_Mask_Relax_Meditation.png" | file_url }});'{% elsif is_foot and foot_image_1 %}style='background-image:url({{ foot_image_1 | image_url: width: 1600 }});'{% elsif is_knee and foot_image_1 %}style='background-image:url({{ foot_image_1 | image_url: width: 1600 }});'{% endif %}></div>
+        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-scalp-density.jpg" | file_url }});'{% elsif is_mask %}style='background-image:url({{ "04_CytoLight_Mask_Relax_Meditation.png" | file_url }});'{% elsif is_foot and foot_image_1 %}style='background-image:url({{ foot_image_1 | image_url: width: 1600 }});'{% elsif is_knee %}style='background-image:url({{ "Cytolight_Knee_Football_Soccer.jpg" | file_url }});'{% endif %}></div>
         <div class='cl-feature-tile__content'>
           <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Cheveux et cuir chevelu{% else %}Hair and scalp{% endif %}{% elsif is_mask %}{% if is_fr %}Peau et d&eacute;tente{% else %}Skin and calm{% endif %}{% elsif is_foot %}{% if is_fr %}Pied, talon et cheville{% else %}Foot, heel, and ankle{% endif %}{% elsif is_knee %}{% if is_fr %}Genou et articulation{% else %}Knee and joint{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Récupération et bien-être{% else %}Recovery and wellness{% endif %}{% endif %}</p>
           <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Pour une apparence de cheveux plus dense.{% else %}For fuller-looking hair routines.{% endif %}{% elsif is_mask %}{% if is_fr %}Un moment calme, allong&eacute; ou assis.{% else %}A calm moment, lying down or seated.{% endif %}{% elsif is_foot %}{% if is_fr %}Cibl&eacute; l&agrave; o&ugrave; les pieds travaillent le plus.{% else %}Targeted where feet work the most.{% endif %}{% elsif is_knee %}{% if is_fr %}Ciblé là où l'articulation travaille le plus.{% else %}Targeted where the joint works the most.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Visage, corps, articulations et concentration.{% else %}Face, body, joints, and focus.{% endif %}{% endif %}</h3>
@@ -948,8 +944,8 @@
           <img src='{{ "cytolight-cap-editorial-consistency.jpg" | file_url }}' alt='{% if is_fr %}CYTOLIGHT cap avec LED int&eacute;gr&eacute;es pour une routine cheveux r&eacute;guli&egrave;re{% else %}CYTOLIGHT cap with integrated LEDs for a consistent hair routine{% endif %}' loading='lazy' class='cl-editorial__img' width='1456' height='1042'>
         {%- elsif is_foot and foot_image_1 -%}
           <img src='{{ foot_image_1 | image_url: width: 1400 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' class='cl-editorial__img' width='1400' height='788'>
-        {%- elsif is_knee and foot_image_1 -%}
-          <img src='{{ foot_image_1 | image_url: width: 1400 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' class='cl-editorial__img' width='1400' height='788'>
+        {%- elsif is_knee -%}
+          <img src='{{ "Cytolight_Knee_Garden.jpg" | file_url }}' alt='{% if is_fr %}Femme active portant CytoLight Knee en jardinant{% else %}Active woman wearing CytoLight Knee while gardening{% endif %}' loading='lazy' class='cl-editorial__img' width='1400' height='788'>
         {%- elsif product.featured_image -%}
           <img src='{{ product.featured_image | image_url: width: 900 }}' alt='{{ product.featured_image.alt | escape }}' loading='lazy' class='cl-editorial__img'>
         {%- else -%}
@@ -1081,11 +1077,7 @@
           </div>
         {%- elsif is_knee -%}
           <div class='cl-why-header__visual'>
-            {%- if foot_image_1 -%}
-              <img class='cl-why-header__image' src='{{ foot_image_1 | image_url: width: 1600 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1600' height='900'>
-            {%- elsif product.featured_image -%}
-              <img class='cl-why-header__image' src='{{ product.featured_image | image_url: width: 1600 }}' alt='{{ product.featured_image.alt | escape }}' loading='lazy' width='1600' height='900'>
-            {%- endif -%}
+            <img class='cl-why-header__image' src='{{ "Cytolight_-_Knee_1.jpg" | file_url }}' alt='{% if is_fr %}Genouillère CytoLight Knee avec lumière rouge et proche infrarouge activée{% else %}CytoLight Knee sleeve with red and near-infrared light active{% endif %}' loading='lazy' width='1600' height='900'>
           </div>
         {%- elsif is_pano_ultra -%}
           <div class='cl-why-header__visual'>
