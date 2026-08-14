@@ -39,6 +39,12 @@
   if mask_product != blank
     assign mask_url = mask_product.url
   endif
+
+  assign knee_product = all_products['cytolight-knee']
+  assign knee_url = '/products/cytolight-knee'
+  if knee_product != blank
+    assign knee_url = knee_product.url
+  endif
 -%}
 
 {{ 'cytolight-cinematic.css' | asset_url | stylesheet_tag }}
@@ -253,6 +259,28 @@
               <p class="cy-product__desc">{% if is_fr %}Une botte de luminoth&eacute;rapie rouge et proche infrarouge pour les pieds fatigu&eacute;s, les chevilles et les routines de confort &agrave; domicile.{% else %}A red and near-infrared light therapy sock for tired feet, ankles, and simple at-home comfort routines.{% endif %}</p>
               <div class="cy-product__meta">
                 <span class="cy-product__price">{% if foot_product != blank %}{{ foot_product.price | money }}{% else %}220 EUR{% endif %}</span>
+                <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <article class="cy-product cy-reveal">
+          <a href="{{ knee_url }}">
+            <div class="cy-product__visual">
+              {%- if knee_product.featured_image -%}
+                <img src="{{ knee_product.featured_image | image_url: width: 1600 }}" alt="{{ knee_product.featured_image.alt | escape }}" width="1600" height="900" loading="lazy">
+              {%- else -%}
+                <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight Knee Therapy" width="1600" height="900" loading="lazy">
+              {%- endif -%}
+              <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
+            </div>
+            <div class="cy-product__body">
+              <p class="cy-product__type">{% if is_fr %}Genou &middot; R&eacute;cup&eacute;ration{% else %}Knee &middot; Recovery{% endif %}</p>
+              <h3>CytoLight Knee</h3>
+              <p class="cy-product__desc">{% if is_fr %}Une genouillère de luminothérapie rouge et proche infrarouge pour l'articulation du genou et les routines de confort à domicile.{% else %}A red and near-infrared light therapy sleeve for the knee joint and simple at-home comfort routines.{% endif %}</p>
+              <div class="cy-product__meta">
+                <span class="cy-product__price">{% if knee_product != blank %}{{ knee_product.price | money }}{% else %}250 EUR{% endif %}</span>
                 <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
               </div>
             </div>
