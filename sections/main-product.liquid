@@ -26,6 +26,21 @@
 .cl-launch-stat strong{display:block;font-size:30px;font-weight:950;letter-spacing:0;color:#fff;line-height:1;}
 .cl-launch-stat span{display:block;margin-top:8px;font-size:12px;font-weight:700;line-height:1.35;color:rgba(255,255,255,.72);}
 .cl-feature-showcase{background:#f6f6f6;padding:28px 40px 72px;}
+.cl-persona-section{padding:64px 40px;background:#fff;border-top:1px solid #f0f0f0;}
+.cl-persona-inner{max-width:1400px;margin:0 auto;}
+.cl-persona-header{text-align:center;margin-bottom:36px;}
+.cl-persona-eyebrow{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#c8102e;margin:0 0 12px;}
+.cl-persona-title{font-size:clamp(24px,3.2vw,34px);font-weight:900;color:#0d0d0d;margin:0 auto;max-width:760px;letter-spacing:-.02em;line-height:1.15;}
+.cl-persona-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
+.cl-persona-card{background:#fafafa;border:1px solid #eee;border-radius:16px;padding:22px 20px;transition:transform .2s,box-shadow .2s,border-color .2s,background .2s;}
+.cl-persona-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.08);border-color:#e2c9c9;background:#fff;}
+.cl-persona-card__kicker{display:block;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#c8102e;margin:0 0 10px;}
+.cl-persona-card__title{font-size:15px;font-weight:900;color:#0d0d0d;margin:0 0 6px;letter-spacing:-.01em;line-height:1.25;}
+.cl-persona-card__body{font-size:12.5px;line-height:1.55;color:#666;margin:0;}
+.cl-persona-card--senior{background:linear-gradient(180deg,#fff5f5,#fdf8f8);border-color:#f0dede;}
+@media(max-width:1100px){.cl-persona-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:700px){.cl-persona-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.cl-persona-section{padding:44px 18px;}.cl-persona-grid{grid-template-columns:1fr;}}
 .cl-feature-showcase__inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:14px;}
 .cl-feature-tile{position:relative;min-height:260px;border-radius:18px;overflow:hidden;background:#111;color:#fff;padding:26px;display:flex;flex-direction:column;justify-content:flex-end;}
 .cl-feature-tile--large{grid-row:span 2;min-height:540px;}
@@ -614,6 +629,44 @@
         <span>{% if is_fr %}288 LED{% else %}288 LEDs{% endif %}</span>
         <span>{% if is_fr %}375 g{% else %}375g{% endif %}</span>
         <span>{% if is_fr %}Sans fil{% else %}Cordless{% endif %}</span>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- if is_knee -%}
+  <section class='cl-persona-section' aria-label='{% if is_fr %}Adapt&eacute; &agrave; votre pratique{% else %}Built for your activity{% endif %}'>
+    <div class='cl-persona-inner'>
+      <div class='cl-persona-header'>
+        <p class='cl-persona-eyebrow'>{% if is_fr %}Pour chaque pratique{% else %}For every activity{% endif %}</p>
+        <h2 class='cl-persona-title'>{% if is_fr %}Sportif ou non, votre genou m&eacute;rite une routine adapt&eacute;e.{% else %}Athlete or not, your knee deserves a routine that fits.{% endif %}</h2>
+      </div>
+      <div class='cl-persona-grid'>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Salle de sport{% else %}Gym{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Apr&egrave;s la s&eacute;ance, avant la raideur.{% else %}After the session, before the stiffness.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Squats, fentes, leg press : le genou encaisse beaucoup. Une routine courte en sortant de la salle.{% else %}Squats, lunges, leg press &#8212; the knee takes a lot of load. A short routine on your way out of the gym.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Padel{% else %}Padel{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Freinages et pivots, match apr&egrave;s match.{% else %}Sharp stops and pivots, match after match.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Le padel multiplie les appuis brusques. Une session apr&egrave;s le match pour rester pr&ecirc;t pour le prochain.{% else %}Padel means constant sharp stops and turns. A post-match session to stay ready for the next one.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Tennis{% else %}Tennis{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Entre deux sets, entre deux matchs.{% else %}Between sets, between matches.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Les appuis lat&eacute;raux sollicitent fortement l'articulation. Une routine courte pour tenir tout le tournoi.{% else %}Lateral footwork puts real strain on the joint. A short routine to last the whole tournament.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Football{% else %}Soccer{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Pour tenir toute la saison.{% else %}To last the whole season.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Sprints, contacts, changements de direction : une routine de r&eacute;cup&eacute;ration entre deux matchs.{% else %}Sprints, contact, sharp turns &#8212; a recovery routine between matches.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card cl-persona-card--senior'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Seniors{% else %}Older Adults{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Une routine douce, &agrave; tout &acirc;ge.{% else %}A gentle routine, at any age.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Assis chez soi, sans effort ni contorsion : une session simple pens&eacute;e pour une articulation qui a bien servi, jour apr&egrave;s jour.{% else %}Seated at home, no effort or awkward positions &#8212; a simple session built for a joint that has done a lot of work, day after day.{% endif %}</p>
+        </div>
       </div>
     </div>
   </section>
