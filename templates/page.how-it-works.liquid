@@ -1,0 +1,22 @@
+{%- comment -%}
+  Gabarit Learn > Comment ca marche.
+
+  A assigner dans l'admin Shopify a une page de handle `how-it-works`
+  (Content > Pages > How it works > Theme template : page.how-it-works).
+{%- endcomment -%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% render 'learn-nav', variant: 'page', current: 'how' %}
+  {% section 'learn-how-it-works' %}
+
+  {%- if page.content != blank -%}
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-prose">{{ page.content }}</div>
+      </div>
+    </section>
+  {%- endif -%}
+</div>

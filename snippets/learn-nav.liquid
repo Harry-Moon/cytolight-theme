@@ -1,0 +1,142 @@
+{%- comment -%}
+  Navigation de l'espace Learn — source unique des URL et des libelles.
+
+  Rendue a trois endroits, d'ou le parametre `variant` :
+    header  sous-menu deroulant du header (desktop)
+    mobile  liste du panneau mobile
+    page    barre de sous-navigation collante en tete des pages Learn
+
+  Parametres :
+    variant  'header' | 'mobile' | 'page'   (defaut : 'page')
+    current  'science' | 'blog' | 'how' | 'values' | 'hub'  (variant 'page')
+
+  Trilingue FR / EN / PT : le snippet est rendu par header.liquid, qui gere le
+  portugais en plus des deux autres langues. Un libelle manquant y serait
+  visible sur toute la boutique.
+
+  Resolution des URL — les pages sont creees dans l'admin Shopify, le theme ne
+  peut pas les creer. On lit donc l'objet page par son handle : son `.url`
+  porte deja le prefixe de locale (/fr/pages/...). Si la page n'existe pas
+  encore, on retombe sur un chemin construit a la main plutot que sur un href
+  vide, qui rechargerait la page courante sans rien signaler.
+{%- endcomment -%}
+
+{%- liquid
+  assign variant = variant | default: 'page'
+
+  assign is_fr = false
+  assign is_pt = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+  if request.locale.iso_code contains 'pt'
+    assign is_pt = true
+  endif
+
+  comment
+    routes.root_url vaut '/' sur la locale primaire et '/fr' sur les autres.
+    Concatener tel quel donnerait '//pages/science', une URL protocol-relative
+    que le navigateur resoudrait vers l'hote 'pages'.
+  endcomment
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign hub_url = pages['learn'].url
+  if hub_url == blank
+    assign hub_url = locale_root | append: '/pages/learn'
+  endif
+
+  assign science_url = pages['science'].url
+  if science_url == blank
+    assign science_url = locale_root | append: '/pages/science'
+  endif
+
+  assign how_url = pages['how-it-works'].url
+  if how_url == blank
+    assign how_url = locale_root | append: '/pages/how-it-works'
+  endif
+
+  assign values_url = pages['our-values'].url
+  if values_url == blank
+    assign values_url = locale_root | append: '/pages/our-values'
+  endif
+
+  comment
+    Le blog par defaut de Shopify a le handle 'news'. On accepte 'journal' en
+    premier pour les boutiques qui ont renomme le leur.
+  endcomment
+  assign learn_blog = blogs['journal']
+  if learn_blog.url == blank
+    assign learn_blog = blogs['news']
+  endif
+  assign blog_url = learn_blog.url
+  if blog_url == blank
+    assign blog_url = locale_root | append: '/blogs/news'
+  endif
+
+  if is_fr
+    assign label_hub = 'Apprendre'
+    assign label_science = 'Science'
+    assign label_blog = 'Blog'
+    assign label_how = 'Comment &ccedil;a marche'
+    assign label_values = 'Nos valeurs'
+  elsif is_pt
+    assign label_hub = 'Aprender'
+    assign label_science = 'Ci&ecirc;ncia'
+    assign label_blog = 'Blog'
+    assign label_how = 'Como funciona'
+    assign label_values = 'Os nossos valores'
+  else
+    assign label_hub = 'Learn'
+    assign label_science = 'Science'
+    assign label_blog = 'Blog'
+    assign label_how = 'How it works'
+    assign label_values = 'Our values'
+  endif
+-%}
+
+{%- case variant -%}
+  {%- when 'header' -%}
+    {%- comment -%}
+      Rend l'element de navigation complet, pas seulement les liens : le bouton
+      de bascule porte un aria-label traduit, et theme.js branche le clic sur
+      tout element portant data-nav-submenu. Le survol reste gere en CSS.
+    {%- endcomment -%}
+    <div class="site-header__nav-item" data-nav-submenu>
+      <a class="site-header__nav-link" href="{{ hub_url }}">{{ label_hub }}</a>
+      <button type="button" class="site-header__submenu-toggle" aria-expanded="false"
+              aria-label="{% if is_fr %}Afficher le sous-menu Apprendre{% elsif is_pt %}Mostrar submenu Aprender{% else %}Show Learn submenu{% endif %}">
+        <svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="site-header__submenu">
+        <a href="{{ science_url }}">{{ label_science }}</a>
+        <a href="{{ blog_url }}">{{ label_blog }}</a>
+        <a href="{{ how_url }}">{{ label_how }}</a>
+        <a href="{{ values_url }}">{{ label_values }}</a>
+      </div>
+    </div>
+
+  {%- when 'mobile' -%}
+    <a href="{{ hub_url }}">{{ label_hub }}</a>
+    <a href="{{ science_url }}">{{ label_science }}</a>
+    <a href="{{ blog_url }}">{{ label_blog }}</a>
+    <a href="{{ how_url }}">{{ label_how }}</a>
+    <a href="{{ values_url }}">{{ label_values }}</a>
+
+  {%- else -%}
+    <nav class="ln-subnav" aria-label="{% if is_fr %}Sections Apprendre{% elsif is_pt %}Sec&ccedil;&otilde;es Aprender{% else %}Learn sections{% endif %}">
+      <div class="ln-shell ln-subnav__inner">
+        <a class="ln-subnav__home" href="{{ hub_url }}">{{ label_hub }}</a>
+        <a class="ln-subnav__link{% if current == 'science' %} is-current{% endif %}"
+           href="{{ science_url }}"{% if current == 'science' %} aria-current="page"{% endif %}>{{ label_science }}</a>
+        <a class="ln-subnav__link{% if current == 'blog' %} is-current{% endif %}"
+           href="{{ blog_url }}"{% if current == 'blog' %} aria-current="page"{% endif %}>{{ label_blog }}</a>
+        <a class="ln-subnav__link{% if current == 'how' %} is-current{% endif %}"
+           href="{{ how_url }}"{% if current == 'how' %} aria-current="page"{% endif %}>{{ label_how }}</a>
+        <a class="ln-subnav__link{% if current == 'values' %} is-current{% endif %}"
+           href="{{ values_url }}"{% if current == 'values' %} aria-current="page"{% endif %}>{{ label_values }}</a>
+      </div>
+    </nav>
+{%- endcase -%}

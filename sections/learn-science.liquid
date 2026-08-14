@@ -1,0 +1,724 @@
+{%- comment -%}
+  Learn > Science — frise de la recherche en photobiomodulation et etat des
+  preuves par domaine.
+
+  Toutes les etudes citees sont reelles, verifiables et lient vers leur DOI.
+  Aucune n'a ete conduite sur un appareil CytoLight, et la section le dit
+  explicitement : ecrire l'inverse serait une pratique commerciale trompeuse
+  (art. L.121-2 du Code de la consommation) et ferait echouer la validation
+  des comptes publicitaires Meta et TikTok. Le bloc "limites" n'est donc pas
+  une precaution decorative, c'est la condition pour publier cette page.
+
+  Ne jamais ajouter ici une reference sans DOI ou identifiant verifiable.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign how_url = pages['how-it-works'].url
+  if how_url == blank
+    assign how_url = locale_root | append: '/pages/how-it-works'
+  endif
+
+  assign values_url = pages['our-values'].url
+  if values_url == blank
+    assign values_url = locale_root | append: '/pages/our-values'
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Apprendre{% else %}Learn{% endif %}
+      <span aria-hidden="true">/</span>
+      Science
+    </p>
+    <p class="ln-kicker">{% if is_fr %}Un si&egrave;cle de recherche{% else %}A century of research{% endif %}</p>
+    <h1 class="ln-title">
+      {%- if is_fr -%}
+        La luminoth&eacute;rapie rouge n'est pas nouvelle. Elle est seulement mal racont&eacute;e.
+      {%- else -%}
+        Red light therapy is not new. It is just badly told.
+      {%- endif -%}
+    </h1>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Un prix Nobel en 1903, une d&eacute;couverte accidentelle &agrave; Budapest en 1967, un programme
+        de la NASA, puis vingt ans d'essais cliniques. Voici cette histoire avec ses sources, et surtout
+        avec ce qu'elle ne prouve pas encore.
+      {%- else -%}
+        A Nobel Prize in 1903, an accidental discovery in Budapest in 1967, a NASA programme, then twenty
+        years of clinical trials. Here is that history with its sources &mdash; and, just as importantly,
+        with what it does not yet prove.
+      {%- endif -%}
+    </p>
+
+    <div class="ln-hero__facts" aria-label="{% if is_fr %}Rep&egrave;res{% else %}Key figures{% endif %}">
+      <div class="ln-hero__fact">
+        <strong>1903</strong>
+        <span>{% if is_fr %}premier prix Nobel r&eacute;compensant une th&eacute;rapie par la lumi&egrave;re{% else %}first Nobel Prize awarded for a light-based therapy{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>820</strong>
+        <span>{% if is_fr %}patients dans la m&eacute;ta-analyse publi&eacute;e par The Lancet en 2009{% else %}patients in the meta-analysis published by The Lancet in 2009{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>136</strong>
+        <span>{% if is_fr %}volontaires dans l'essai contr&ocirc;l&eacute; de r&eacute;f&eacute;rence sur la peau{% else %}volunteers in the reference controlled trial on skin{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>0</strong>
+        <span>{% if is_fr %}de ces &eacute;tudes n'a &eacute;t&eacute; men&eacute;e sur un appareil CytoLight{% else %}of these studies were run on a CytoLight device{% endif %}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  La frise. Le remplissage de la ligne rouge est pilote par learn.js via
+  --ln-progress ; chaque jalon s'allume a l'entree dans le viewport.
+{%- endcomment -%}
+<section class="ln-section ln-section--dark">
+  <div class="ln-shell">
+    <div class="ln-head">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}De l'accident de laboratoire &agrave; l'essai contr&ocirc;l&eacute;{% else %}From lab accident to controlled trial{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Cent vingt ans, quinze moments qui comptent.{%- else -%}One hundred and twenty years, fifteen moments that matter.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Chaque jalon renvoie &agrave; sa source d'origine. Les publications scientifiques s'ouvrent
+            sur leur DOI, l'identifiant permanent de l'article &mdash; pas sur un r&eacute;sum&eacute; de
+            seconde main.
+          {%- else -%}
+            Every milestone links to its original source. Scientific papers open on their DOI, the
+            permanent identifier of the article &mdash; not on a second-hand summary.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <ol class="ln-timeline" data-ln-timeline>
+      <span class="ln-timeline__spine" aria-hidden="true"><span class="ln-timeline__spark"></span></span>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">1903</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Le prix Nobel de m&eacute;decine pour une lampe{% else %}A Nobel Prize in medicine, for a lamp{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Le Danois Niels Ryberg Finsen re&ccedil;oit le prix Nobel de physiologie ou m&eacute;decine
+              pour avoir trait&eacute; le lupus vulgaire &mdash; une tuberculose cutan&eacute;e &mdash;
+              avec de la lumi&egrave;re concentr&eacute;e. La phototh&eacute;rapie entre en m&eacute;decine
+              par la grande porte.
+            {%- else -%}
+              Denmark's Niels Ryberg Finsen receives the Nobel Prize in Physiology or Medicine for treating
+              lupus vulgaris &mdash; tuberculosis of the skin &mdash; with concentrated light. Phototherapy
+              enters medicine through the front door.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://www.nobelprize.org/prizes/medicine/1903/finsen/facts/" target="_blank" rel="noopener">
+            NobelPrize.org <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">1917</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Einstein pose l'&eacute;quation du laser{% else %}Einstein writes the equation behind the laser{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Dans <cite>Zur Quantentheorie der Strahlung</cite>, Albert Einstein d&eacute;crit
+              l'&eacute;mission stimul&eacute;e : un photon peut en provoquer un second, identique.
+              Personne ne construira de laser avant quarante-trois ans, mais la th&eacute;orie est
+              &eacute;crite.
+            {%- else -%}
+              In <cite>Zur Quantentheorie der Strahlung</cite>, Albert Einstein describes stimulated
+              emission: one photon can trigger a second, identical one. Nobody will build a laser for
+              another forty-three years, but the theory is on paper.
+            {%- endif -%}
+          </p>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">1960</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Le premier laser fonctionnel{% else %}The first working laser{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Theodore Maiman fait fonctionner un laser &agrave; rubis chez Hughes Research Laboratories et
+              publie le r&eacute;sultat dans <cite>Nature</cite>. La lumi&egrave;re devient un instrument
+              dont on ma&icirc;trise la longueur d'onde et l'intensit&eacute;.
+            {%- else -%}
+              Theodore Maiman fires a working ruby laser at Hughes Research Laboratories and publishes the
+              result in <cite>Nature</cite>. Light becomes an instrument whose wavelength and intensity can
+              be controlled.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1038/187493a0" target="_blank" rel="noopener">
+            Maiman, <cite>Nature</cite> 187, 493 (1960) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">1967</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Budapest, une exp&eacute;rience qui rate bien{% else %}Budapest: an experiment that fails usefully{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              &Agrave; l'universit&eacute; Semmelweis, Endre Mester cherche &agrave; savoir si un laser de
+              faible puissance provoque des cancers chez la souris. Il n'en provoque aucun &mdash; mais les
+              poils des souris irradi&eacute;es repoussent plus vite que ceux du groupe t&eacute;moin.
+              La biostimulation par laser vient d'&ecirc;tre d&eacute;couverte par accident.
+            {%- else -%}
+              At Semmelweis University, Endre Mester sets out to find whether a low-power laser causes
+              cancer in mice. It causes none &mdash; but the hair of the irradiated mice grows back faster
+              than the control group's. Laser biostimulation has just been discovered by accident.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1089/pho.2017.4332" target="_blank" rel="noopener">
+            Mester &amp; Mester, <cite>Photomed Laser Surg</cite> (2017) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2003</span>
+          <h3 class="ln-tl__title">{% if is_fr %}La NASA remplace le laser par des LED{% else %}NASA swaps the laser for LEDs{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Des LED d&eacute;velopp&eacute;es &agrave; l'origine pour la culture de plantes en orbite sont
+              test&eacute;es sur la cicatrisation. L'&eacute;quipe de Harry Whelan montre qu'elles activent
+              les g&egrave;nes de la r&eacute;g&eacute;n&eacute;ration tissulaire. C'est le basculement
+              d&eacute;cisif : la LED, contrairement au laser, peut &eacute;quiper un appareil grand public.
+            {%- else -%}
+              LEDs originally developed to grow plants in orbit are tested on wound healing. Harry Whelan's
+              team shows they upregulate tissue-regeneration genes. This is the decisive shift: unlike a
+              laser, an LED can go into a consumer device.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1089/104454703765035484" target="_blank" rel="noopener">
+            Whelan et al., <cite>J Clin Laser Med Surg</cite> 21(2) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2005</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Tiina Karu trouve la serrure{% else %}Tiina Karu finds the lock{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              La biophysicienne russe identifie le photorecepteur : la cytochrome c oxydase, dernier maillon
+              de la cha&icirc;ne respiratoire mitochondriale. Elle montre aussi le r&ocirc;le du monoxyde
+              d'azote dans la r&eacute;action. Pour la premi&egrave;re fois, l'effet a un m&eacute;canisme
+              plut&ocirc;t qu'une observation.
+            {%- else -%}
+              The Russian biophysicist identifies the photoacceptor: cytochrome c oxidase, the last link in
+              the mitochondrial respiratory chain. She also shows the role nitric oxide plays in the
+              reaction. For the first time, the effect has a mechanism rather than an observation.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1002/lsm.20148" target="_blank" rel="noopener">
+            Karu et al., <cite>Lasers Surg Med</cite> 36(4) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2009</span>
+          <h3 class="ln-tl__title">{% if is_fr %}The Lancet publie la m&eacute;ta-analyse{% else %}The Lancet publishes the meta-analysis{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Roberta Chow et ses coauteurs agr&egrave;gent 16 essais randomis&eacute;s, 820 patients
+              souffrant de cervicalgies. La douleur baisse de pr&egrave;s de 20 mm sur une &eacute;chelle
+              visuelle de 100, et l'effet tient jusqu'&agrave; 22 semaines apr&egrave;s la fin du
+              traitement. Les effets ind&eacute;sirables ne diff&egrave;rent pas du placebo.
+            {%- else -%}
+              Roberta Chow and co-authors pool 16 randomised trials covering 820 patients with neck pain.
+              Pain drops by nearly 20 mm on a 100 mm visual scale, and the effect holds up to 22 weeks after
+              treatment ends. Side effects do not differ from placebo.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1016/S0140-6736(09)61522-1" target="_blank" rel="noopener">
+            Chow et al., <cite>The Lancet</cite> 374(9705) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2012</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Le sommeil entre dans le tableau{% else %}Sleep enters the picture{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Vingt basketteuses de haut niveau, quatorze jours, trente minutes d'irradiation corps entier
+              chaque soir. Le groupe trait&eacute; am&eacute;liore son score de sommeil, sa
+              m&eacute;latonine s&eacute;rique et sa performance sur douze minutes de course. Petit
+              &eacute;chantillon, mais r&eacute;sultat net.
+            {%- else -%}
+              Twenty elite female basketball players, fourteen days, thirty minutes of whole-body
+              irradiation each evening. The treated group improves its sleep score, its serum melatonin and
+              its twelve-minute run performance. Small sample, but a clean result.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.4085/1062-6050-47.6.08" target="_blank" rel="noopener">
+            Zhao et al., <cite>J Athl Train</cite> 47(6) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2013</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Les cheveux, en double aveugle{% else %}Hair, in double blind{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Quarante-quatre hommes atteints d'alop&eacute;cie androg&eacute;n&eacute;tique, un casque
+              &agrave; 655 nm, une s&eacute;ance un jour sur deux pendant seize semaines. Le groupe actif
+              gagne 35 &agrave; 39 % de cheveux compt&eacute;s par rapport au placebo. L'&eacute;tude sera
+              r&eacute;pliqu&eacute;e chez la femme l'ann&eacute;e suivante, avec 37 % de gain.
+            {%- else -%}
+              Forty-four men with androgenetic alopecia, a 655 nm helmet, one session every other day for
+              sixteen weeks. The active group gains 35 to 39 % in counted hairs versus placebo. The study is
+              replicated in women the following year, with a 37 % gain.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1002/lsm.22173" target="_blank" rel="noopener">
+            Lanzafame et al., <cite>Lasers Surg Med</cite> 45(8) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2014</span>
+          <h3 class="ln-tl__title">{% if is_fr %}La densit&eacute; de collag&egrave;ne, mesur&eacute;e{% else %}Collagen density, measured{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              136 volontaires, trente s&eacute;ances, deux spectres compar&eacute;s &agrave; un groupe
+              contr&ocirc;le. Rugosit&eacute; cutan&eacute;e en profilom&eacute;trie, densit&eacute; de
+              collag&egrave;ne en &eacute;chographie, photos &eacute;valu&eacute;es en aveugle : les trois
+              mesures s'am&eacute;liorent. Le spectre large n'apporte rien de plus que le rouge seul.
+            {%- else -%}
+              136 volunteers, thirty sessions, two spectra compared against a control group. Skin roughness
+              by profilometry, collagen density by ultrasound, photographs scored blind: all three measures
+              improve. The broadband spectrum adds nothing over red alone.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1089/pho.2013.3616" target="_blank" rel="noopener">
+            Wunsch &amp; Matuschka, <cite>Photomed Laser Surg</cite> 32(2) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2015</span>
+          <h3 class="ln-tl__title">{% if is_fr %}La dose compte plus que la puissance{% else %}Dose matters more than power{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Ernesto Leal-Junior agr&egrave;ge treize essais randomis&eacute;s sur la performance
+              musculaire. Le nombre de r&eacute;p&eacute;titions augmente, le temps avant &eacute;puisement
+              aussi &mdash; mais seulement pour le rouge et l'infrarouge, appliqu&eacute;s <em>avant</em>
+              l'effort, entre 50 et 200 mW et 5 &agrave; 6 joules par point.
+            {%- else -%}
+              Ernesto Leal-Junior pools thirteen randomised trials on muscle performance. Repetition counts
+              rise, so does time to exhaustion &mdash; but only for red and infrared, applied
+              <em>before</em> exercise, between 50 and 200 mW and 5 to 6 joules per spot.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1007/s10103-013-1465-4" target="_blank" rel="noopener">
+            Leal-Junior et al., <cite>Lasers Med Sci</cite> 30(2) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2016</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Harvard met le m&eacute;canisme &agrave; plat{% else %}Harvard lays out the mechanism{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Michael Hamblin, du Wellman Center for Photomedicine, synth&eacute;tise cinquante ans de
+              travaux : le photon d&eacute;croche le monoxyde d'azote qui bloquait la cytochrome c oxydase,
+              le transport d'&eacute;lectrons repart, l'ATP monte. C'est la r&eacute;f&eacute;rence encore
+              cit&eacute;e aujourd'hui.
+            {%- else -%}
+              Michael Hamblin, of the Wellman Center for Photomedicine, synthesises fifty years of work: the
+              photon displaces the nitric oxide that was blocking cytochrome c oxidase, electron transport
+              resumes, ATP rises. This is still the reference cited today.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1109/JSTQE.2016.2561201" target="_blank" rel="noopener">
+            de Freitas &amp; Hamblin, <cite>IEEE JSTQE</cite> 22(3) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2021</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Le genou, en compl&eacute;ment de l'exercice{% else %}The knee, as an adjunct to exercise{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Une m&eacute;ta-analyse de dix essais sur l'arthrose du genou conclut que le laser ajout&eacute;
+              &agrave; la r&eacute;&eacute;ducation fait mieux que la r&eacute;&eacute;ducation seule sur la
+              douleur, la raideur et la fonction. Le mot important est <em>ajout&eacute;</em> : la
+              lumi&egrave;re compl&egrave;te le mouvement, elle ne le remplace pas.
+            {%- else -%}
+              A meta-analysis of ten trials on knee osteoarthritis concludes that laser added to
+              rehabilitation exercise beats exercise alone on pain, stiffness and function. The important
+              word is <em>added</em>: light complements movement, it does not replace it.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1016/j.physio.2021.03.011" target="_blank" rel="noopener">
+            Ahmad et al., <cite>Physiotherapy</cite> 114 <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">2024</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Un essai randomis&eacute; sur la r&eacute;tine{% else %}A randomised trial on the retina{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              L'essai LIGHTSITE III suit 100 sujets atteints de DMLA s&egrave;che, trait&eacute;s en
+              590, 660 et 850 nm contre placebo. L'acuit&eacute; visuelle du groupe trait&eacute;
+              s'am&eacute;liore significativement. C'est l'un des essais les plus rigoureux du domaine
+              &mdash; et il porte sur un dispositif m&eacute;dical, pas sur un appareil domestique.
+            {%- else -%}
+              The LIGHTSITE III trial follows 100 subjects with dry AMD, treated at 590, 660 and 850 nm
+              against sham. Visual acuity in the treated group improves significantly. It is one of the most
+              rigorous trials in the field &mdash; and it concerns a medical device, not a home appliance.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1097/IAE.0000000000003980" target="_blank" rel="noopener">
+            Boyer et al., <cite>Retina</cite> 44(3) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
+          <span class="ln-tl__year">{% if is_fr %}Aujourd'hui{% else %}Today{% endif %}</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Beaucoup d'&eacute;tudes, peu de protocoles communs{% else %}Plenty of studies, few shared protocols{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Le champ compte aujourd'hui des milliers de publications, mais les doses, les distances et les
+              dur&eacute;es varient d'un essai &agrave; l'autre au point de rendre les comparaisons
+              difficiles. C'est pr&eacute;cis&eacute;ment pour cela que nous publions nos param&egrave;tres
+              plut&ocirc;t que des promesses &mdash; voir
+              <a href="{{ how_url }}">{% if is_fr %}comment &ccedil;a marche{% else %}how it works{% endif %}</a>
+              et <a href="{{ values_url }}">{% if is_fr %}nos valeurs{% else %}our values{% endif %}</a>.
+            {%- else -%}
+              The field now counts thousands of publications, but doses, distances and durations vary from
+              one trial to the next to the point where comparison gets hard. That is exactly why we publish
+              our parameters rather than promises &mdash; see
+              <a href="{{ how_url }}">how it works</a> and
+              <a href="{{ values_url }}">our values</a>.
+            {%- endif -%}
+          </p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+{%- comment -%} Etat des preuves par domaine. {%- endcomment -%}
+<section class="ln-section">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Ce que mesurent les essais{% else %}What the trials measured{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Huit domaines, huit publications, z&eacute;ro raccourci.{%- else -%}Eight domains, eight papers, zero shortcuts.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Nous indiquons la taille de l'&eacute;chantillon et ce qui a &eacute;t&eacute;
+            mesur&eacute; &mdash; pas seulement la conclusion. Un essai sur vingt personnes et une
+            m&eacute;ta-analyse sur huit cents ne pesent pas le m&ecirc;me poids.
+          {%- else -%}
+            We give the sample size and what was actually measured &mdash; not just the conclusion. A trial
+            on twenty people and a meta-analysis on eight hundred do not carry the same weight.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-evidence">
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}Peau{% else %}Skin{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Rugosit&eacute; en baisse, collag&egrave;ne en hausse{% else %}Roughness down, collagen up{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            Essai contr&ocirc;l&eacute; randomis&eacute;, 136 volontaires, 30 s&eacute;ances. Densit&eacute;
+            de collag&egrave;ne mesur&eacute;e par &eacute;chographie et rugosit&eacute; par
+            profilom&eacute;trie num&eacute;rique, avec &eacute;valuation photographique en aveugle.
+          {%- else -%}
+            Randomised controlled trial, 136 volunteers, 30 sessions. Collagen density measured by
+            ultrasound and roughness by digital profilometry, with blinded photographic assessment.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Wunsch A, Matuschka K. <cite>Photomed Laser Surg</cite> 2014;32(2):93&ndash;100.
+          <a href="https://doi.org/10.1089/pho.2013.3616" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}Cheveux{% else %}Hair{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}+37 % de cheveux compt&eacute;s chez la femme{% else %}+37 % counted hairs in women{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            Essai randomis&eacute; en double aveugle, 42 femmes, 655 nm, 16 semaines &agrave; raison d'une
+            s&eacute;ance un jour sur deux. Comptage photographique sur une zone tatou&eacute;e, lu par un
+            investigateur en aveugle. Aucun effet ind&eacute;sirable rapport&eacute;.
+          {%- else -%}
+            Double-blind randomised trial, 42 women, 655 nm, 16 weeks at one session every other day. Hair
+            counted photographically on a tattooed area, scored by a blinded investigator. No adverse events
+            reported.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Lanzafame RJ et al. <cite>Lasers Surg Med</cite> 2014;46(8):601&ndash;607.
+          <a href="https://doi.org/10.1002/lsm.22277" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}Douleur{% else %}Pain{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}20 mm de douleur en moins, jusqu'&agrave; 22 semaines{% else %}20 mm less pain, up to 22 weeks{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            M&eacute;ta-analyse de 16 essais randomis&eacute;s contre placebo ou traitement actif,
+            820 patients souffrant de cervicalgies aigu&euml;s ou chroniques. Effets ind&eacute;sirables non
+            diff&eacute;rents du placebo.
+          {%- else -%}
+            Meta-analysis of 16 randomised trials against placebo or active treatment, 820 patients with
+            acute or chronic neck pain. Side effects no different from placebo.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Chow RT et al. <cite>The Lancet</cite> 2009;374(9705):1897&ndash;1908.
+          <a href="https://doi.org/10.1016/S0140-6736(09)61522-1" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}Performance{% else %}Performance{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Plus de r&eacute;p&eacute;titions, si la lumi&egrave;re pr&eacute;c&egrave;de l'effort{% else %}More repetitions, if the light comes first{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            M&eacute;ta-analyse de 13 essais randomis&eacute;s de qualit&eacute; m&eacute;thodologique
+            suffisante. Gain moyen de 5,5 r&eacute;p&eacute;titions et de 4,1 secondes avant
+            &eacute;puisement, obtenu surtout par une application <em>avant</em> l'exercice.
+          {%- else -%}
+            Meta-analysis of 13 randomised trials of sufficient methodological quality. Mean gain of 5.5
+            repetitions and 4.1 seconds to exhaustion, obtained mainly by applying light <em>before</em>
+            exercise.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Leal-Junior ECP et al. <cite>Lasers Med Sci</cite> 2015;30(2):925&ndash;939.
+          <a href="https://doi.org/10.1007/s10103-013-1465-4" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Cr&eacute;atine kinase mieux contenue apr&egrave;s l'effort{% else %}Creatine kinase better contained after exercise{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            M&eacute;ta-analyse de 14 &eacute;tudes sur le marqueur sanguin de dommage musculaire. Effet
+            net sur l'exercice localis&eacute;, non concluant sur l'exercice g&eacute;n&eacute;ral &mdash;
+            une nuance que la plupart des pages produit passent sous silence.
+          {%- else -%}
+            Meta-analysis of 14 studies on the blood marker of muscle damage. Clear effect for localised
+            exercise, inconclusive for general exercise &mdash; a nuance most product pages leave out.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Machado AF et al. <cite>Clin J Sport Med</cite> 2020;30(3):267&ndash;274.
+          <a href="https://doi.org/10.1097/JSM.0000000000000606" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Score de sommeil et m&eacute;latonine en hausse{% else %}Sleep score and melatonin both up{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            Essai randomis&eacute; sur 20 athl&egrave;tes, 14 jours, 30 minutes par soir. Index de
+            qualit&eacute; du sommeil de Pittsburgh, m&eacute;latonine s&eacute;rique et course de
+            12 minutes. &Eacute;chantillon petit : &agrave; consid&eacute;rer comme un signal, pas comme une
+            preuve d&eacute;finitive.
+          {%- else -%}
+            Randomised trial on 20 athletes, 14 days, 30 minutes each evening. Pittsburgh Sleep Quality
+            Index, serum melatonin and a 12-minute run. Small sample: treat it as a signal, not as
+            definitive proof.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Zhao J et al. <cite>J Athl Train</cite> 2012;47(6):673&ndash;678.
+          <a href="https://doi.org/10.4085/1062-6050-47.6.08" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}Articulations{% else %}Joints{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Meilleur que l'exercice seul, en compl&eacute;ment{% else %}Better than exercise alone, as an adjunct{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            M&eacute;ta-analyse de 10 essais randomis&eacute;s sur l'arthrose du genou, tous de bon score
+            PEDro. Douleur, raideur et fonction am&eacute;lior&eacute;es lorsque la lumi&egrave;re
+            s'ajoute &agrave; un programme d'exercices.
+          {%- else -%}
+            Meta-analysis of 10 randomised trials on knee osteoarthritis, all with good PEDro scores. Pain,
+            stiffness and function improve when light is added to an exercise programme.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Ahmad MA et al. <cite>Physiotherapy</cite> 2021;114:85&ndash;95.
+          <a href="https://doi.org/10.1016/j.physio.2021.03.011" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}M&eacute;canisme{% else %}Mechanism{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Le photon, le monoxyde d'azote et l'ATP{% else %}The photon, nitric oxide and ATP{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            Revue de r&eacute;f&eacute;rence du Wellman Center for Photomedicine (Harvard) sur les
+            m&eacute;canismes propos&eacute;s : photorecepteur, canaux ioniques photosensibles, cascades de
+            signalisation. Point de d&eacute;part de toute lecture s&eacute;rieuse du sujet.
+          {%- else -%}
+            Reference review from the Wellman Center for Photomedicine (Harvard) on the proposed mechanisms:
+            photoacceptor, light-sensitive ion channels, signalling cascades. The starting point for any
+            serious reading of the field.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          de Freitas LF, Hamblin MR. <cite>IEEE J Sel Top Quantum Electron</cite> 2016;22(3).
+          <a href="https://doi.org/10.1109/JSTQE.2016.2561201" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Bloc limites. Obligatoire : sans lui, la page devient une allegation de
+  sante non etayee sur les appareils vendus.
+{%- endcomment -%}
+<section class="ln-section ln-section--soft ln-section--tight">
+  <div class="ln-shell">
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">
+        {%- if is_fr -%}Ce que ces &eacute;tudes ne disent pas{%- else -%}What these studies do not say{%- endif -%}
+      </h2>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucune n'a &eacute;t&eacute; men&eacute;e sur un appareil CytoLight.</strong> Elles
+            portent sur la photobiomodulation en g&eacute;n&eacute;ral, avec des dispositifs, des doses et
+            des protocoles propres &agrave; chaque essai.
+          {%- else -%}
+            <strong>None of them was run on a CytoLight device.</strong> They concern photobiomodulation in
+            general, with devices, doses and protocols specific to each trial.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            La dose n'est pas lin&eacute;aire. Trop peu d'&eacute;nergie ne produit rien ; trop
+            d'&eacute;nergie r&eacute;duit l'effet au lieu de l'amplifier. C'est la r&eacute;ponse
+            biphasique, et c'est la raison pour laquelle &laquo; plus puissant &raquo; n'est pas un argument.
+          {%- else -%}
+            Dose is not linear. Too little energy does nothing; too much reduces the effect instead of
+            amplifying it. That is the biphasic dose response, and it is why &ldquo;more powerful&rdquo; is
+            not an argument.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Plusieurs de ces essais portent sur de petits &eacute;chantillons, et une partie de la
+            litt&eacute;rature du domaine est financ&eacute;e par des fabricants. Nous les citons quand
+            m&ecirc;me, en le pr&eacute;cisant.
+          {%- else -%}
+            Several of these trials use small samples, and part of the literature in this field is funded by
+            manufacturers. We cite them anyway, and say so.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Les appareils CytoLight sont des produits de bien-&ecirc;tre. Ils ne diagnostiquent, ne traitent
+            et ne gu&eacute;rissent aucune maladie. En cas de sympt&ocirc;me, de traitement en cours ou de
+            grossesse, l'avis d'un professionnel de sant&eacute; pr&eacute;vaut sur cette page.
+          {%- else -%}
+            CytoLight devices are wellness products. They do not diagnose, treat or cure any disease. If you
+            have symptoms, an ongoing treatment or are pregnant, a healthcare professional's advice takes
+            precedence over this page.
+          {%- endif -%}
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% render 'learn-product-cta',
+   handles: 'cytolight-desk,cytolight-mask,cytolight-pano-ultra',
+   heading_fr: 'Les param&egrave;tres des essais, sur un appareil que vous utiliserez vraiment.',
+   heading_en: 'Trial parameters, on a device you will actually use.',
+   text_fr: "Nous publions longueur d'onde, irradiance et dur&eacute;e pour chaque produit, afin que vous puissiez comparer &agrave; ce que vous venez de lire.",
+   text_en: 'We publish wavelength, irradiance and duration for every product, so you can compare them against what you have just read.'
+%}
+
+{% schema %}
+{
+  "name": "Learn — Science",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Contenu editorial bilingue FR / EN ecrit en Liquid, comme le reste du theme. Les references scientifiques et leurs DOI se modifient dans sections/learn-science.liquid. Ne jamais ajouter une reference sans identifiant verifiable."
+    }
+  ]
+}
+{% endschema %}

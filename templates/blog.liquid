@@ -1,27 +1,115 @@
-<section class="container" style="padding: 60px 0;">
-  <span class="eyebrow">Journal</span>
-  <h1>{{ blog.title }}</h1>
-  <div class="article-grid" style="margin-top:32px;">
-    {% paginate blog.articles by 12 %}
-      {% for article in blog.articles %}
-        <a class="article-card" href="{{ article.url }}">
-          <div class="article-card__media">
-            {% if article.image != blank %}
-              <img src="{{ article.image | image_url: width: 600 }}"
-                   alt="{{ article.title | escape }}"
-                   width="600" height="{{ 600 | divided_by: article.image.aspect_ratio | round }}"
-                   loading="lazy">
-            {% else %}
-              {{ 'lifestyle-2' | placeholder_svg_tag }}
-            {% endif %}
+{%- comment -%}
+  Liste du blog, rattachee visuellement a l'espace Learn.
+
+  Ce gabarit sert n'importe quel blog de la boutique : le titre et les articles
+  viennent de l'objet `blog`, rien n'est code en dur. La sous-navigation Learn
+  reste affichee pour que le blog ne soit pas une impasse dans le parcours.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+-%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% render 'learn-nav', variant: 'page', current: 'blog' %}
+
+  <section class="ln-hero">
+    <div class="ln-shell">
+      <p class="ln-crumbs">
+        <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+        <span aria-hidden="true">/</span>
+        {% if is_fr %}Apprendre{% else %}Learn{% endif %}
+        <span aria-hidden="true">/</span>
+        {{ blog.title }}
+      </p>
+      <p class="ln-kicker">{% if is_fr %}Le journal CytoLight{% else %}The CytoLight journal{% endif %}</p>
+      <h1 class="ln-title">
+        {%- if current_tags -%}
+          {{ current_tags | join: ' &middot; ' }}
+        {%- else -%}
+          {%- if is_fr -%}
+            Ce que nous lisons, testons et corrigeons.
+          {%- else -%}
+            What we read, test and correct.
+          {%- endif -%}
+        {%- endif -%}
+      </h1>
+      <p class="ln-copy">
+        {%- if is_fr -%}
+          Lectures d'&eacute;tudes r&eacute;centes, protocoles de test, r&eacute;ponses aux questions qui
+          reviennent. Quand nous nous trompons, l'article est corrig&eacute; et la correction est
+          indiqu&eacute;e.
+        {%- else -%}
+          Readings of recent studies, testing protocols, answers to the questions that keep coming back.
+          When we get something wrong, the article is corrected and the correction is flagged.
+        {%- endif -%}
+      </p>
+    </div>
+  </section>
+
+  <section class="ln-section">
+    <div class="ln-shell">
+      {%- paginate blog.articles by 12 -%}
+        {%- if blog.articles.size > 0 -%}
+          <div class="ln-articles">
+            {%- for article in blog.articles -%}
+              <a class="ln-article ln-reveal" href="{{ article.url }}">
+                <div class="ln-article__media">
+                  {%- if article.image != blank -%}
+                    <img src="{{ article.image | image_url: width: 720 }}"
+                         srcset="{{ article.image | image_url: width: 480 }} 480w,
+                                 {{ article.image | image_url: width: 720 }} 720w,
+                                 {{ article.image | image_url: width: 1080 }} 1080w"
+                         sizes="(min-width: 1000px) 380px, 90vw"
+                         alt="{{ article.title | escape }}"
+                         width="720" height="{{ 720 | divided_by: article.image.aspect_ratio | round }}"
+                         loading="lazy" decoding="async">
+                  {%- else -%}
+                    {{ 'lifestyle-2' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </div>
+                <p class="ln-article__meta">
+                  {{ article.published_at | date: '%d.%m.%Y' }}
+                  {%- if article.tags.size > 0 %} &middot; {{ article.tags | first }}{% endif -%}
+                </p>
+                <h2 class="ln-article__title">{{ article.title }}</h2>
+                <p class="ln-article__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+                <span class="ln-link">{% if is_fr %}Lire{% else %}Read{% endif %} <span aria-hidden="true">&rarr;</span></span>
+              </a>
+            {%- endfor -%}
           </div>
-          <h3 class="article-card__title">{{ article.title }}</h3>
-          <p class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
-        </a>
-      {% endfor %}
-      {% if paginate.pages > 1 %}
-        <div style="grid-column: 1 / -1; text-align:center; padding: 24px 0;">{{ paginate | default_pagination }}</div>
-      {% endif %}
-    {% endpaginate %}
-  </div>
-</section>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="ln-pagination" aria-label="{% if is_fr %}Pagination{% else %}Pagination{% endif %}">
+              {{ paginate | default_pagination }}
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <div class="ln-empty">
+            <h2>{% if is_fr %}Aucun article pour le moment{% else %}No articles yet{% endif %}</h2>
+            <p>
+              {%- if is_fr -%}
+                Le journal n'est pas encore ouvert. La page Science contient d&eacute;j&agrave; l'essentiel
+                des sources, avec leur DOI.
+              {%- else -%}
+                The journal is not open yet. The Science page already holds most of the sources, with their
+                DOIs.
+              {%- endif -%}
+            </p>
+            <a class="ln-button" href="{{ routes.all_products_collection_url }}">
+              {% if is_fr %}Voir la gamme{% else %}See the range{% endif %}
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+  </section>
+
+  {% render 'learn-product-cta' %}
+</div>

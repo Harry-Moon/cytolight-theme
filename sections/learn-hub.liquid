@@ -1,0 +1,244 @@
+{%- comment -%}
+  Learn — page d'accueil de l'espace editorial.
+
+  Sert de point d'entree unique pour le SEO : c'est la page qui recoit les
+  liens internes depuis le header et le footer, et qui redistribue vers les
+  quatre sous-sections. Les derniers articles sont tires du blog s'il en
+  contient ; sinon un etat vide ramene vers la gamme plutot que d'afficher une
+  grille creuse.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign science_url = pages['science'].url
+  if science_url == blank
+    assign science_url = locale_root | append: '/pages/science'
+  endif
+
+  assign how_url = pages['how-it-works'].url
+  if how_url == blank
+    assign how_url = locale_root | append: '/pages/how-it-works'
+  endif
+
+  assign values_url = pages['our-values'].url
+  if values_url == blank
+    assign values_url = locale_root | append: '/pages/our-values'
+  endif
+
+  assign learn_blog = blogs['journal']
+  if learn_blog.url == blank
+    assign learn_blog = blogs['news']
+  endif
+  assign blog_url = learn_blog.url
+  if blog_url == blank
+    assign blog_url = locale_root | append: '/blogs/news'
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Apprendre{% else %}Learn{% endif %}
+    </p>
+    <p class="ln-kicker">{% if is_fr %}Apprendre{% else %}Learn{% endif %}</p>
+    <h1 class="ln-title">
+      {%- if is_fr -%}
+        Comprendre avant d'acheter. M&ecirc;me si &ccedil;a nous co&ucirc;te une vente.
+      {%- else -%}
+        Understand before you buy. Even if it costs us the sale.
+      {%- endif -%}
+    </h1>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Quatre espaces&nbsp;: la recherche avec ses sources, le fonctionnement r&eacute;el des longueurs
+        d'onde, nos r&egrave;gles de s&eacute;lection, et un journal o&ugrave; nous publions nos lectures.
+        Aucun ne contient de promesse que nous ne puissions pas documenter.
+      {%- else -%}
+        Four spaces: the research with its sources, how wavelengths actually behave, our selection rules,
+        and a journal where we publish what we read. None of them contains a promise we cannot document.
+      {%- endif -%}
+    </p>
+
+    <div class="ln-actions">
+      <a class="ln-button ln-button--light" href="{{ science_url }}">
+        {% if is_fr %}Commencer par la science{% else %}Start with the science{% endif %}
+      </a>
+      <a class="ln-button ln-button--line" href="{{ routes.all_products_collection_url }}">
+        {% if is_fr %}Voir la gamme{% else %}See the range{% endif %}
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Quatre entr&eacute;es{% else %}Four ways in{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Par o&ugrave; vous voulez commencer&nbsp;?{%- else -%}Where would you like to start?{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Si vous ne savez pas, prenez la science : le reste s'y rattache, et c'est la page qui explique
+            pourquoi nous refusons certaines formulations que vous verrez ailleurs.
+          {%- else -%}
+            If you are not sure, take the science: everything else hangs off it, and it is the page that
+            explains why we refuse wording you will see elsewhere.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-hub">
+      <a class="ln-hub__card ln-reveal" href="{{ science_url }}">
+        <span class="ln-hub__num">01</span>
+        <h3 class="ln-hub__title">Science</h3>
+        <p class="ln-hub__text">
+          {%- if is_fr -%}
+            Du prix Nobel de 1903 &agrave; l'essai randomis&eacute; de 2024 : quinze jalons, chacun li&eacute;
+            &agrave; sa publication d'origine. Avec un bloc entier sur ce que ces travaux ne prouvent pas.
+          {%- else -%}
+            From the 1903 Nobel Prize to a 2024 randomised trial: fifteen milestones, each linked to its
+            original paper. With a whole block on what this work does not prove.
+          {%- endif -%}
+        </p>
+        <span class="ln-link">{% if is_fr %}Voir la frise{% else %}See the timeline{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="ln-hub__card ln-reveal" href="{{ blog_url }}">
+        <span class="ln-hub__num">02</span>
+        <h3 class="ln-hub__title">Blog</h3>
+        <p class="ln-hub__text">
+          {%- if is_fr -%}
+            Nos lectures d'&eacute;tudes r&eacute;centes, nos protocoles de test, et les questions que nous
+            recevons le plus souvent. Publi&eacute; au fil de l'eau, sans calendrier &eacute;ditorial forc&eacute;.
+          {%- else -%}
+            Our readings of recent studies, our testing protocols, and the questions we get asked most.
+            Published as we go, with no forced editorial calendar.
+          {%- endif -%}
+        </p>
+        <span class="ln-link">{% if is_fr %}Lire les articles{% else %}Read the articles{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="ln-hub__card ln-reveal" href="{{ how_url }}">
+        <span class="ln-hub__num">03</span>
+        <h3 class="ln-hub__title">{% if is_fr %}Comment &ccedil;a marche{% else %}How it works{% endif %}</h3>
+        <p class="ln-hub__text">
+          {%- if is_fr -%}
+            Le photon, la cytochrome c oxydase, l'ATP. Les sept longueurs d'onde et leur r&ocirc;le
+            respectif. La dose, la distance, et pourquoi doubler la s&eacute;ance ne double pas l'effet.
+          {%- else -%}
+            The photon, cytochrome c oxidase, ATP. The seven wavelengths and what each one does. Dose,
+            distance, and why doubling the session does not double the effect.
+          {%- endif -%}
+        </p>
+        <span class="ln-link">{% if is_fr %}Comprendre{% else %}Understand it{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="ln-hub__card ln-reveal" href="{{ values_url }}">
+        <span class="ln-hub__num">04</span>
+        <h3 class="ln-hub__title">{% if is_fr %}Nos valeurs{% else %}Our values{% endif %}</h3>
+        <p class="ln-hub__text">
+          {%- if is_fr -%}
+            Comment un appareil entre dans la gamme, et les six engagements que nous tenons sur ce site
+            &mdash; dont trois choses que nous refusons de faire, m&ecirc;me quand elles vendent.
+          {%- else -%}
+            How a device joins the range, and the six commitments we hold on this site &mdash; including
+            three things we refuse to do, even when they sell.
+          {%- endif -%}
+        </p>
+        <span class="ln-link">{% if is_fr %}Lire la m&eacute;thode{% else %}Read the method{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section ln-section--soft">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Le journal{% else %}The journal{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Derniers articles.{%- else -%}Latest articles.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <a class="ln-link" href="{{ blog_url }}">
+          {% if is_fr %}Tous les articles{% else %}All articles{% endif %} <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    {%- if learn_blog.articles_count > 0 -%}
+      <div class="ln-articles">
+        {%- for article in learn_blog.articles limit: 3 -%}
+          <a class="ln-article ln-reveal" href="{{ article.url }}">
+            <div class="ln-article__media">
+              {%- if article.image != blank -%}
+                <img src="{{ article.image | image_url: width: 720 }}"
+                     srcset="{{ article.image | image_url: width: 480 }} 480w,
+                             {{ article.image | image_url: width: 720 }} 720w,
+                             {{ article.image | image_url: width: 1080 }} 1080w"
+                     sizes="(min-width: 1000px) 380px, 90vw"
+                     alt="{{ article.title | escape }}"
+                     width="720" height="{{ 720 | divided_by: article.image.aspect_ratio | round }}"
+                     loading="lazy" decoding="async">
+              {%- else -%}
+                {{ 'lifestyle-2' | placeholder_svg_tag }}
+              {%- endif -%}
+            </div>
+            <p class="ln-article__meta">{{ article.published_at | date: '%d.%m.%Y' }}</p>
+            <h3 class="ln-article__title">{{ article.title }}</h3>
+            <p class="ln-article__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 22 }}</p>
+            <span class="ln-link">{% if is_fr %}Lire{% else %}Read{% endif %} <span aria-hidden="true">&rarr;</span></span>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="ln-empty ln-reveal">
+        <h3>{% if is_fr %}Le premier article arrive{% else %}The first article is on its way{% endif %}</h3>
+        <p>
+          {%- if is_fr -%}
+            Le journal ouvrira avec nos lectures d'&eacute;tudes et nos protocoles de test. En attendant,
+            la page Science contient d&eacute;j&agrave; l'essentiel des sources.
+          {%- else -%}
+            The journal will open with our study readings and testing protocols. In the meantime, the
+            Science page already holds most of the sources.
+          {%- endif -%}
+        </p>
+        <a class="ln-button" href="{{ science_url }}">
+          {% if is_fr %}Aller &agrave; la page Science{% else %}Go to the Science page{% endif %}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% render 'learn-product-cta' %}
+
+{% schema %}
+{
+  "name": "Learn — Hub",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Page d'entree de l'espace Learn. Les liens vers les sous-pages sont resolus par handle (science, how-it-works, our-values) et vers le blog journal ou news. Creer ces pages dans l'admin Shopify avant la mise en ligne."
+    }
+  ]
+}
+{% endschema %}

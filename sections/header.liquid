@@ -32,6 +32,13 @@
           <a href="/products/cytolight-pano-ultra">{% if is_fr %}Corps entier{% elsif is_pt %}Corpo inteiro{% else %}Full body{% endif %}</a>
         </div>
       </div>
+      {%- comment -%}
+        Espace editorial. Les URL et les libelles des quatre sous-pages vivent
+        dans snippets/learn-nav.liquid, partages avec le menu mobile et avec la
+        barre de sous-navigation des pages Learn : un handle qui change ne se
+        corrige qu'a un seul endroit.
+      {%- endcomment -%}
+      {% render 'learn-nav', variant: 'header' %}
     </nav>
 
     <a class="site-header__logo" href="{{ routes.root_url }}">
@@ -102,6 +109,7 @@
         <a href="/products/cytolight-mask">CytoLight MASK</a>
         <a href="/products/cytolight-pano-plus">CytoLight PANO PLUS</a>
         <a href="/products/cytolight-pano-ultra">CytoLight PANO ULTRA</a>
+        {% render 'learn-nav', variant: 'mobile' %}
       </div>
     </details>
   </div>

@@ -1,0 +1,22 @@
+{%- comment -%}
+  Gabarit Learn > Nos valeurs.
+
+  A assigner dans l'admin Shopify a une page de handle `our-values`
+  (Content > Pages > Our values > Theme template : page.our-values).
+{%- endcomment -%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% render 'learn-nav', variant: 'page', current: 'values' %}
+  {% section 'learn-values' %}
+
+  {%- if page.content != blank -%}
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-prose">{{ page.content }}</div>
+      </div>
+    </section>
+  {%- endif -%}
+</div>

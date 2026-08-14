@@ -113,6 +113,50 @@ via des booléens dérivés en début de section : `is_cap` (`cytolight-cap`), `
 
 Une modification dans ce fichier doit être vérifiée sur **chaque** variante, pas seulement celle en cours.
 
+## Espace Learn
+
+Quatre pages éditoriales, plus le blog, regroupées sous l'onglet Apprendre / Learn du header.
+
+| Gabarit | Section | Page à créer dans l'admin (handle) |
+|---|---|---|
+| `page.learn.liquid` | `learn-hub` | `learn` |
+| `page.science.liquid` | `learn-science` | `science` |
+| `page.how-it-works.liquid` | `learn-how-it-works` | `how-it-works` |
+| `page.our-values.liquid` | `learn-values` | `our-values` |
+| `blog.liquid`, `article.liquid` | — | blog existant (`journal`, sinon `news`) |
+
+**Les quatre pages doivent exister dans Content → Pages, avec le gabarit assigné, avant le merge.**
+Le thème ne peut pas les créer. `snippets/learn-nav.liquid` résout chaque URL par son handle et
+retombe sur un chemin construit à la main si la page manque : les liens ne pointent alors dans le
+vide qu'à cet endroit précis, sans casser le reste.
+
+`snippets/learn-nav.liquid` est la **source unique** des URL et des libellés (trilingue FR / EN / PT,
+comme `header.liquid` qui le rend). Il produit trois variantes via `variant` : `header`, `mobile`,
+`page`. Un handle qui change ne se corrige qu'à cet endroit.
+
+`assets/learn.css` et `learn.js` ne sont chargés que par ces gabarits. Le CSS ne masque **jamais**
+rien de lui-même : c'est `learn.js` qui pose `is-armed` sur ce qu'il va animer. Sans le script — bloqué,
+404 sur le CDN, mouvement réduit — rien n'est armé et la page s'affiche entièrement. Ne pas
+réintroduire de règle du type `.ln-reveal { opacity: 0 }`, elle rendrait la page blanche au moindre
+incident.
+
+Le header colle : `position: sticky` est posé sur `#shopify-section-header`, l'enveloppe que Shopify
+ajoute autour de la section, et non sur `.site-header` — sur celle-ci le collant était borné par une
+enveloppe de sa propre hauteur, donc sans effet. `theme.js` mesure le header et publie sa hauteur
+dans `--header-h`. La sous-navigation Learn s'y cale (`top: var(--header-h, 0px)`), comme la colonne
+galerie de la fiche produit et le récapitulatif du panier. Toujours garder une valeur de repli : sans
+le script, rien ne doit bouger.
+
+### Références scientifiques
+
+`learn-science.liquid` cite quinze jalons et huit publications, chacun lié à son DOI. Aucune de ces
+études n'a été menée sur un appareil CytoLight, et la section le dit explicitement dans son bloc
+« Ce que ces études ne disent pas ». Ce bloc n'est pas décoratif : sans lui la page devient une
+allégation de santé non étayée sur les produits vendus, sanctionnée par l'article L.121-2 du Code de
+la consommation et rejetée à la validation des comptes publicitaires.
+
+Ne jamais ajouter une référence sans identifiant vérifiable, ni retirer le cadrage sur les limites.
+
 ## Fichiers auto-générés
 
 `config/settings_data.json`, `templates/cart.json`, `templates/collection.json` et

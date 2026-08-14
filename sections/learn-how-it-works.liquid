@@ -1,0 +1,459 @@
+{%- comment -%}
+  Learn > Comment ca marche — mecanisme, longueurs d'onde, dose, securite.
+
+  Les profondeurs de penetration sont donnees en ordres de grandeur et
+  presentees comme telles. Les chiffres precis au millimetre que l'on voit
+  ailleurs dans le secteur n'existent pas : la penetration depend du tissu, de
+  la pigmentation et de l'irradiance, et l'energie decroit de facon
+  exponentielle avec la profondeur. Annoncer "10 cm" serait une allegation
+  invendable devant la DGCCRF comme devant un comite publicitaire.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign science_url = pages['science'].url
+  if science_url == blank
+    assign science_url = locale_root | append: '/pages/science'
+  endif
+
+  assign values_url = pages['our-values'].url
+  if values_url == blank
+    assign values_url = locale_root | append: '/pages/our-values'
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Apprendre{% else %}Learn{% endif %}
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Comment &ccedil;a marche{% else %}How it works{% endif %}
+    </p>
+    <p class="ln-kicker">{% if is_fr %}Du photon &agrave; la mitochondrie{% else %}From photon to mitochondrion{% endif %}</p>
+    <h1 class="ln-title">
+      {%- if is_fr -%}
+        Une seule enzyme explique presque tout le reste.
+      {%- else -%}
+        One enzyme explains almost all of the rest.
+      {%- endif -%}
+    </h1>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        La luminoth&eacute;rapie rouge n'est pas de la chaleur, pas des UV, et pas de la magie. C'est une
+        r&eacute;action photochimique pr&eacute;cise, dans un organite pr&eacute;cis, &agrave; des longueurs
+        d'onde pr&eacute;cises. Voici la cha&icirc;ne compl&egrave;te, et l&agrave; o&ugrave; elle
+        s'arr&ecirc;te.
+      {%- else -%}
+        Red light therapy is not heat, not UV, and not magic. It is a specific photochemical reaction, in a
+        specific organelle, at specific wavelengths. Here is the full chain &mdash; and where it stops.
+      {%- endif -%}
+    </p>
+
+    <div class="ln-hero__facts" aria-label="{% if is_fr %}Rep&egrave;res{% else %}Key figures{% endif %}">
+      <div class="ln-hero__fact">
+        <strong>600&ndash;950</strong>
+        <span>{% if is_fr %}nm, la fen&ecirc;tre optique o&ugrave; le tissu humain laisse passer la lumi&egrave;re{% else %}nm, the optical window where human tissue lets light through{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>0 UV</strong>
+        <span>{% if is_fr %}aucune longueur d'onde ultraviolette dans le spectre utilis&eacute;{% else %}no ultraviolet wavelength anywhere in the spectrum used{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>5&ndash;6 J</strong>
+        <span>{% if is_fr %}par point, la dose qui ressort des m&eacute;ta-analyses sur le muscle{% else %}per spot, the dose that emerges from muscle meta-analyses{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>10&ndash;20</strong>
+        <span>{% if is_fr %}minutes par zone, la dur&eacute;e sur laquelle les protocoles convergent{% else %}minutes per area, the duration protocols converge on{% endif %}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Le mecanisme, en quatre etapes. {%- endcomment -%}
+<section class="ln-section">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Le m&eacute;canisme{% else %}The mechanism{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Quatre &eacute;tapes, et rien &agrave; croire sur parole.{%- else -%}Four steps, and nothing to take on faith.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Cette cha&icirc;ne est celle d&eacute;crite par la revue de r&eacute;f&eacute;rence du Wellman
+            Center for Photomedicine de Harvard. Elle reste une hypoth&egrave;se dominante, pas un dogme.
+          {%- else -%}
+            This chain is the one described in the reference review from Harvard's Wellman Center for
+            Photomedicine. It remains a leading hypothesis, not a dogma.
+          {%- endif -%}
+        </p>
+        <a class="ln-link" href="{{ science_url }}">
+          {% if is_fr %}Voir les sources{% else %}See the sources{% endif %} <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="ln-steps">
+      <article class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Le photon traverse la peau{% else %}The photon crosses the skin{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Entre 600 et 950 nm, l'h&eacute;moglobine et l'eau absorbent peu : c'est la fen&ecirc;tre
+            optique du tissu vivant. En dessous, le sang absorbe tout ; au-dessus, l'eau prend le relais.
+            Cette fen&ecirc;tre n'est pas un choix marketing, c'est une contrainte physique.
+          {%- else -%}
+            Between 600 and 950 nm, haemoglobin and water absorb little: this is the optical window of
+            living tissue. Below it, blood absorbs everything; above it, water takes over. The window is not
+            a marketing choice, it is a physical constraint.
+          {%- endif -%}
+        </p>
+      </article>
+
+      <article class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}La cytochrome c oxydase l'absorbe{% else %}Cytochrome c oxidase absorbs it{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Cette enzyme est le dernier maillon de la cha&icirc;ne respiratoire, dans la mitochondrie. Ses
+            centres cuivre et h&egrave;me absorbent pr&eacute;cis&eacute;ment dans le rouge et le proche
+            infrarouge. C'est le photorecepteur identifi&eacute; par Tiina Karu.
+          {%- else -%}
+            This enzyme is the last link of the respiratory chain, inside the mitochondrion. Its copper and
+            haem centres absorb precisely in the red and near-infrared. It is the photoacceptor identified
+            by Tiina Karu.
+          {%- endif -%}
+        </p>
+      </article>
+
+      <article class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Le monoxyde d'azote l&acirc;che prise{% else %}Nitric oxide lets go{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Sous stress, du monoxyde d'azote vient se fixer sur l'enzyme et freine le transport
+            d'&eacute;lectrons. L'hypoth&egrave;se dominante est que le photon d&eacute;place cette
+            mol&eacute;cule. Lib&eacute;r&eacute;e, elle dilate aussi les vaisseaux &mdash; d'o&ugrave; la
+            rougeur pendant la s&eacute;ance.
+          {%- else -%}
+            Under stress, nitric oxide binds to the enzyme and slows electron transport. The leading
+            hypothesis is that the photon displaces that molecule. Once released, it also dilates blood
+            vessels &mdash; hence the flush during a session.
+          {%- endif -%}
+        </p>
+      </article>
+
+      <article class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}L'ATP remonte, la cellule signale{% else %}ATP rises, the cell signals{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Le transport d'&eacute;lectrons repart, la production d'ATP augmente, et des cascades de
+            signalisation s'activent : synth&egrave;se prot&eacute;ique, migration cellulaire,
+            r&eacute;ponse anti-inflammatoire. C'est &agrave; ce niveau, et pas avant, que les effets
+            observ&eacute;s en essai clinique deviennent plausibles.
+          {%- else -%}
+            Electron transport resumes, ATP production rises, and signalling cascades switch on: protein
+            synthesis, cell migration, anti-inflammatory response. It is at this level, and not before, that
+            the effects observed in clinical trials become plausible.
+          {%- endif -%}
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Spectre et longueurs d'onde. {%- endcomment -%}
+<section class="ln-section ln-section--dark">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Les longueurs d'onde{% else %}The wavelengths{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Sept spectres, sept r&ocirc;les diff&eacute;rents.{%- else -%}Seven spectra, seven different jobs.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Un nanom&egrave;tre n'est pas une nuance de couleur : c'est ce qui d&eacute;cide de la
+            profondeur atteinte et de la mol&eacute;cule qui absorbe. Un appareil &agrave; une seule
+            longueur d'onde fait une seule chose.
+          {%- else -%}
+            A nanometre is not a shade of colour: it decides how deep the light reaches and which molecule
+            absorbs it. A single-wavelength device does a single thing.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-spectrum ln-reveal">
+      <div class="ln-spectrum__bar" role="img" aria-label="{% if is_fr %}Spectre continu de 590 &agrave; 940 nanom&egrave;tres, de l'ambre au proche infrarouge profond{% else %}Continuous spectrum from 590 to 940 nanometres, amber through deep near-infrared{% endif %}"></div>
+      <div class="ln-spectrum__scale">
+        <span>590 nm &middot; {% if is_fr %}ambre{% else %}amber{% endif %}</span>
+        <span>{% if is_fr %}rouge{% else %}red{% endif %}</span>
+        <span>{% if is_fr %}proche infrarouge{% else %}near-infrared{% endif %}</span>
+        <span>940 nm</span>
+      </div>
+
+      <div class="ln-waves">
+        <article class="ln-wave">
+          <p class="ln-wave__nm">590 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ffb547, #ff9a3c);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Ambre &mdash; surface{% else %}Amber &mdash; surface{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Absorb&eacute; d&egrave;s l'&eacute;piderme. Utilis&eacute; pour le teint et la sensation de confort cutan&eacute;, pas pour atteindre un muscle.{% else %}Absorbed within the epidermis. Used for complexion and skin comfort, not to reach a muscle.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">630 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ff5f3a, #ea1f36);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; peau{% else %}Red &mdash; skin{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}&Eacute;piderme et derme superficiel. C'est le canal rouge du masque CytoLight, celui que documentent les essais sur le collag&egrave;ne.{% else %}Epidermis and upper dermis. This is the red channel of the CytoLight mask, the one collagen trials document.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">660 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ea1f36, #d20d2f);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; derme{% else %}Red &mdash; dermis{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}La longueur d'onde rouge la plus &eacute;tudi&eacute;e du domaine. Pr&eacute;sente sur la genouill&egrave;re CytoLight avec le 850 nm.{% else %}The most studied red wavelength in the field. Present on the CytoLight knee wrap alongside 850 nm.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">810 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #a3122c, #7a1226);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; invisible{% else %}Near-infrared &mdash; invisible{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Invisible &agrave; l'&oelig;il : une LED en 810 nm peut &ecirc;tre allum&eacute;e sans qu'on la voie. C'est le spectre le plus utilis&eacute; en recherche sur les tissus profonds.{% else %}Invisible to the eye: an 810 nm LED can be on without looking like it. This is the spectrum most used in deep-tissue research.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">830 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #7a1226, #5c1020);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; tissus{% else %}Near-infrared &mdash; tissue{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Document&eacute; sur la cicatrisation et la r&eacute;ponse tissulaire. Souvent associ&eacute; au rouge plut&ocirc;t qu'utilis&eacute; seul.{% else %}Documented for wound healing and tissue response. Usually paired with red rather than used alone.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">850 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #5c1020, #45101c);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; profondeur{% else %}Near-infrared &mdash; depth{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Le proche infrarouge le plus courant sur les appareils grand public. Pr&eacute;sent sur le masque, la genouill&egrave;re et les panneaux CytoLight.{% else %}The most common near-infrared on consumer devices. Present on the CytoLight mask, knee wrap and panels.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">940 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #45101c, #2b0d15);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Bord de fen&ecirc;tre{% else %}Edge of the window{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Au-del&agrave; de 950 nm, l'eau des tissus absorbe de plus en plus : aller plus loin dans l'infrarouge ne fait pas p&eacute;n&eacute;trer plus profond&eacute;ment.{% else %}Past 950 nm, tissue water absorbs more and more: going further into the infrared does not mean going deeper.{% endif %}
+          </p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%}
+      Profondeur relative. Les barres sont proportionnelles entre elles et non
+      calees sur une echelle absolue : le libelle le dit explicitement.
+    {%- endcomment -%}
+    <div class="ln-head ln-reveal" style="margin-top: 92px;">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Profondeur relative{% else %}Relative depth{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Plus la longueur d'onde monte, plus la lumi&egrave;re descend.{%- else -%}The longer the wavelength, the deeper the light goes.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Ces barres sont des ordres de grandeur, proportionnels entre eux. Personne ne peut vous donner
+            une profondeur au millim&egrave;tre : elle d&eacute;pend du tissu, de la pigmentation et de
+            l'irradiance, et l'&eacute;nergie d&eacute;cro&icirc;t de fa&ccedil;on exponentielle.
+          {%- else -%}
+            These bars are orders of magnitude, proportional to each other. Nobody can give you a depth to
+            the millimetre: it depends on tissue, pigmentation and irradiance, and energy falls off
+            exponentially.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-depth ln-reveal">
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">590 nm <small>{% if is_fr %}&Eacute;piderme{% else %}Epidermis{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 12%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">630 nm <small>{% if is_fr %}Derme superficiel{% else %}Upper dermis{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 26%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">660 nm <small>{% if is_fr %}Derme{% else %}Dermis{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 38%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">810 nm <small>{% if is_fr %}Sous-cutan&eacute;, muscle{% else %}Subcutaneous, muscle{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 78%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">850 nm <small>{% if is_fr %}Muscle, articulation{% else %}Muscle, joint{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 92%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">940 nm <small>{% if is_fr %}Absorption par l'eau croissante{% else %}Rising water absorption{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 70%;"></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Dose et pratique. {%- endcomment -%}
+<section class="ln-section ln-section--soft">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}La dose{% else %}Dose{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Plus long et plus fort n'est pas mieux. C'est mesur&eacute;.{%- else -%}Longer and stronger is not better. That has been measured.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            La photobiomodulation suit une r&eacute;ponse biphasique : l'effet monte avec la dose, atteint
+            un plateau, puis redescend. C'est le point que le marketing du secteur &eacute;vite le plus
+            soigneusement.
+          {%- else -%}
+            Photobiomodulation follows a biphasic dose response: the effect rises with dose, plateaus, then
+            falls back. It is the point this industry's marketing avoids most carefully.
+          {%- endif -%}
+        </p>
+        <a class="ln-link" href="{{ values_url }}">
+          {% if is_fr %}Pourquoi nous l'&eacute;crivons{% else %}Why we write it down{% endif %} <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="ln-steps">
+      <article class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Dur&eacute;e{% else %}Duration{% endif %}</h3>
+        <p class="ln-step__text">
+          {% if is_fr %}Les protocoles convergent autour de 10 &agrave; 20 minutes par zone. Doubler la s&eacute;ance ne double pas le r&eacute;sultat, et peut le r&eacute;duire.{% else %}Protocols converge around 10 to 20 minutes per area. Doubling the session does not double the result, and may reduce it.{% endif %}
+        </p>
+      </article>
+      <article class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Fr&eacute;quence{% else %}Frequency{% endif %}</h3>
+        <p class="ln-step__text">
+          {% if is_fr %}Trois &agrave; cinq s&eacute;ances par semaine, tenues sur plusieurs semaines. Les essais sur la peau et les cheveux mesurent &agrave; seize semaines, pas &agrave; sept jours.{% else %}Three to five sessions a week, sustained over weeks. Skin and hair trials measure at sixteen weeks, not seven days.{% endif %}
+        </p>
+      </article>
+      <article class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Distance{% else %}Distance{% endif %}</h3>
+        <p class="ln-step__text">
+          {% if is_fr %}Pour un panneau, entre 15 et 50 cm selon l'irradiance de l'appareil. Un appareil port&eacute; &mdash; masque, genouill&egrave;re, botte &mdash; supprime cette variable.{% else %}For a panel, between 15 and 50 cm depending on the device's irradiance. A worn device &mdash; mask, knee wrap, boot &mdash; removes this variable entirely.{% endif %}
+        </p>
+      </article>
+      <article class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}R&eacute;gularit&eacute;{% else %}Consistency{% endif %}</h3>
+        <p class="ln-step__text">
+          {% if is_fr %}C'est la variable la plus d&eacute;terminante, et la seule qui d&eacute;pende enti&egrave;rement de vous. Un appareil que vous n'utilisez pas a une efficacit&eacute; de z&eacute;ro, quels que soient ses nanom&egrave;tres.{% else %}The most decisive variable, and the only one entirely up to you. A device you do not use has an efficacy of zero, whatever its nanometres.{% endif %}
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} Securite et FAQ. {%- endcomment -%}
+<section class="ln-section">
+  <div class="ln-shell ln-shell--narrow">
+    <p class="ln-kicker">{% if is_fr %}S&eacute;curit&eacute; et questions{% else %}Safety and questions{% endif %}</p>
+    <h2 class="ln-title">
+      {%- if is_fr -%}Les questions qu'il faut poser avant d'acheter.{%- else -%}The questions worth asking before you buy.{%- endif -%}
+    </h2>
+
+    <div class="ln-faq">
+      <details class="ln-faq__item">
+        <summary class="ln-faq__q">{% if is_fr %}Y a-t-il des UV&nbsp;?{% else %}Is there any UV?{% endif %}</summary>
+        <p class="ln-faq__a">
+          {% if is_fr %}Non. Le spectre utilis&eacute; commence &agrave; 590 nm, tr&egrave;s au-dessus des ultraviolets qui s'arr&ecirc;tent &agrave; 400 nm. Il n'y a ni bronzage, ni risque photo-carcinog&egrave;ne li&eacute; aux UV. La chaleur ressentie vient des LED elles-m&ecirc;mes, pas d'un effet infrarouge lointain.{% else %}No. The spectrum used starts at 590 nm, well above ultraviolet, which stops at 400 nm. There is no tanning and no UV-related photocarcinogenic risk. Any warmth you feel comes from the LEDs themselves, not from far-infrared heating.{% endif %}
+        </p>
+      </details>
+
+      <details class="ln-faq__item">
+        <summary class="ln-faq__q">{% if is_fr %}Faut-il prot&eacute;ger les yeux&nbsp;?{% else %}Do I need eye protection?{% endif %}</summary>
+        <p class="ln-faq__a">
+          {% if is_fr %}Ne fixez pas les LED. La lumi&egrave;re n'est pas dangereuse aux irradiances domestiques, mais elle est &eacute;blouissante dans le rouge visible et invisible dans le proche infrarouge &mdash; le r&eacute;flexe de clignement ne vous prot&egrave;ge donc pas. Fermez les yeux ou utilisez les lunettes fournies avec l'appareil.{% else %}Do not stare into the LEDs. The light is not dangerous at home irradiances, but it is dazzling in visible red and invisible in the near-infrared &mdash; so the blink reflex does not protect you. Close your eyes or use the goggles supplied with the device.{% endif %}
+        </p>
+      </details>
+
+      <details class="ln-faq__item">
+        <summary class="ln-faq__q">{% if is_fr %}Qui doit demander un avis m&eacute;dical d'abord&nbsp;?{% else %}Who should ask a doctor first?{% endif %}</summary>
+        <p class="ln-faq__a">
+          {% if is_fr %}Toute personne enceinte, sous traitement photosensibilisant (certains antibiotiques, r&eacute;tino&iuml;des, millepertuis), pr&eacute;sentant une l&eacute;sion cutan&eacute;e non diagnostiqu&eacute;e, une pathologie oculaire, une &eacute;pilepsie photosensible &mdash; les modes puls&eacute;s sont alors &agrave; &eacute;viter &mdash; ou suivant un traitement oncologique. Nos appareils sont des produits de bien-&ecirc;tre&nbsp;: ils ne remplacent aucun avis m&eacute;dical.{% else %}Anyone pregnant, on photosensitising medication (some antibiotics, retinoids, St John's wort), with an undiagnosed skin lesion, an eye condition, photosensitive epilepsy &mdash; avoid pulsed modes in that case &mdash; or undergoing cancer treatment. Our devices are wellness products: they replace no medical advice.{% endif %}
+        </p>
+      </details>
+
+      <details class="ln-faq__item">
+        <summary class="ln-faq__q">{% if is_fr %}Au bout de combien de temps voit-on quelque chose&nbsp;?{% else %}How long before anything shows?{% endif %}</summary>
+        <p class="ln-faq__a">
+          {% if is_fr %}Cela d&eacute;pend de ce que vous mesurez. Sur la r&eacute;cup&eacute;ration musculaire, les essais observent un effet d&egrave;s la premi&egrave;re s&eacute;ance. Sur la peau et les cheveux, les &eacute;tudes de r&eacute;f&eacute;rence mesurent &agrave; seize semaines de s&eacute;ances r&eacute;guli&egrave;res. M&eacute;fiez-vous de toute marque qui promet un r&eacute;sultat visible en une semaine.{% else %}It depends what you are measuring. For muscle recovery, trials see an effect from the first session. For skin and hair, the reference studies measure at sixteen weeks of regular sessions. Be sceptical of any brand promising a visible result in a week.{% endif %}
+        </p>
+      </details>
+
+      <details class="ln-faq__item">
+        <summary class="ln-faq__q">{% if is_fr %}Un appareil plus puissant est-il meilleur&nbsp;?{% else %}Is a more powerful device better?{% endif %}</summary>
+        <p class="ln-faq__a">
+          {% if is_fr %}Pas au-del&agrave; d'un certain seuil. La r&eacute;ponse biphasique signifie qu'au-del&agrave; de la dose optimale, l'effet redescend. Une irradiance &eacute;lev&eacute;e permet surtout de raccourcir la s&eacute;ance &mdash; elle ne remplace pas la r&eacute;gularit&eacute;, et elle rend le respect des dur&eacute;es plus important, pas moins.{% else %}Not beyond a certain point. The biphasic response means that past the optimal dose, the effect declines. High irradiance mainly lets you shorten the session &mdash; it does not replace consistency, and it makes respecting durations more important, not less.{% endif %}
+        </p>
+      </details>
+
+      <details class="ln-faq__item">
+        <summary class="ln-faq__q">{% if is_fr %}Comment comparer deux appareils honn&ecirc;tement&nbsp;?{% else %}How do I compare two devices honestly?{% endif %}</summary>
+        <p class="ln-faq__a">
+          {% if is_fr %}Regardez l'irradiance en mW/cm&sup2; <em>&agrave; une distance annonc&eacute;e</em>, les longueurs d'onde exactes en nanom&egrave;tres, et la surface r&eacute;ellement couverte. Un nombre de LED seul ne dit rien. Nos param&egrave;tres figurent sur chaque <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}fiche produit{% else %}product page{% endif %}</a>, et notre m&eacute;thode de s&eacute;lection est d&eacute;taill&eacute;e dans <a href="{{ values_url }}">nos valeurs</a>.{% else %}Look at irradiance in mW/cm&sup2; <em>at a stated distance</em>, the exact wavelengths in nanometres, and the area actually covered. An LED count on its own tells you nothing. Our parameters are on every <a href="{{ routes.all_products_collection_url }}">product page</a>, and our selection method is set out in <a href="{{ values_url }}">our values</a>.{% endif %}
+        </p>
+      </details>
+    </div>
+  </div>
+</section>
+
+{% render 'learn-product-cta',
+   handles: 'cytolight-desk,cytolight-knee,cytolight-cap',
+   heading_fr: 'Choisissez la longueur d&#39;onde en fonction de la zone, pas de la fiche technique.',
+   heading_en: 'Pick the wavelength for the area, not for the spec sheet.',
+   text_fr: 'Un masque ne remplace pas une genouill&egrave;re, et un panneau ne remplace ni l&#39;un ni l&#39;autre. Chaque format existe pour une raison physique.',
+   text_en: 'A mask does not replace a knee wrap, and a panel replaces neither. Each format exists for a physical reason.'
+%}
+
+{% schema %}
+{
+  "name": "Learn — How it works",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Contenu editorial bilingue FR / EN ecrit en Liquid. Les profondeurs de penetration sont donnees en ordres de grandeur relatifs, jamais en millimetres absolus : la page le dit et ce cadrage ne doit pas etre retire."
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,323 @@
+{%- comment -%}
+  Learn > Nos valeurs — methode de selection et engagements.
+
+  Les engagements listes ici ne sont pas decoratifs : ils decrivent des regles
+  qui existent deja dans le code du theme (aucune note ni avis en dur, tout
+  passe par les metafields reviews.rating). Modifier cette page sans modifier
+  la regle correspondante rendrait la promesse fausse.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign science_url = pages['science'].url
+  if science_url == blank
+    assign science_url = locale_root | append: '/pages/science'
+  endif
+
+  assign how_url = pages['how-it-works'].url
+  if how_url == blank
+    assign how_url = locale_root | append: '/pages/how-it-works'
+  endif
+
+  assign learn_blog = blogs['journal']
+  if learn_blog.url == blank
+    assign learn_blog = blogs['news']
+  endif
+  assign blog_url = learn_blog.url
+  if blog_url == blank
+    assign blog_url = locale_root | append: '/blogs/news'
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Apprendre{% else %}Learn{% endif %}
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Nos valeurs{% else %}Our values{% endif %}
+    </p>
+    <p class="ln-kicker">{% if is_fr %}Notre m&eacute;thode{% else %}How we work{% endif %}</p>
+    <h1 class="ln-title">
+      {%- if is_fr -%}
+        Nous vendons peu de produits. C'est le r&eacute;sultat, pas le point de d&eacute;part.
+      {%- else -%}
+        We sell few products. That is the result, not the starting point.
+      {%- endif -%}
+    </h1>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Le march&eacute; de la luminoth&eacute;rapie rouge est satur&eacute; d'appareils dont personne ne
+        publie l'irradiance, vendus avec des avis invent&eacute;s et des promesses th&eacute;rapeutiques
+        ill&eacute;gales. Voici les r&egrave;gles que nous nous imposons pour ne pas en faire partie.
+      {%- else -%}
+        The red light therapy market is saturated with devices whose irradiance nobody publishes, sold with
+        invented reviews and illegal therapeutic promises. Here are the rules we hold ourselves to so we are
+        not part of it.
+      {%- endif -%}
+    </p>
+
+    <div class="ln-hero__facts" aria-label="{% if is_fr %}Engagements{% else %}Commitments{% endif %}">
+      <div class="ln-hero__fact">
+        <strong>30 {% if is_fr %}jours{% else %}days{% endif %}</strong>
+        <span>{% if is_fr %}pour essayer chez vous et renvoyer si &ccedil;a ne s'int&egrave;gre pas{% else %}to try it at home and send it back if it does not fit{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>2 {% if is_fr %}ans{% else %}years{% endif %}</strong>
+        <span>{% if is_fr %}de garantie sur chaque appareil de la gamme{% else %}of warranty on every device in the range{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>DOI</strong>
+        <span>{% if is_fr %}sur chaque &eacute;tude cit&eacute;e, jamais un r&eacute;sum&eacute; de seconde main{% else %}on every study we cite, never a second-hand summary{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>0</strong>
+        <span>{% if is_fr %}avis, note ou compteur &eacute;crit &agrave; la main sur ce site{% else %}reviews, ratings or counters hand-written on this site{% endif %}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Quatre principes{% else %}Four principles{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Ce qui d&eacute;cide si un produit entre dans la gamme.{%- else -%}What decides whether a product joins the range.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Ces principes se traduisent en crit&egrave;res concrets plus bas. S'ils ne sont pas
+            respect&eacute;s, l'appareil ne rentre pas, m&ecirc;me si la marge est bonne.
+          {%- else -%}
+            These principles turn into concrete criteria further down. If they are not met, the device does
+            not come in, however good the margin is.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-values">
+      <article class="ln-value ln-reveal">
+        <span class="ln-value__index">01</span>
+        <h3 class="ln-value__title">{% if is_fr %}La preuve avant l'argument{% else %}Evidence before argument{% endif %}</h3>
+        <p class="ln-value__text">
+          {%- if is_fr -%}
+            Nous ne vendons pas un usage que la litt&eacute;rature ne documente pas. Quand la recherche est
+            mince ou contradictoire, nous l'&eacute;crivons au lieu de l'arrondir &mdash; c'est
+            exactement ce que fait notre <a href="{{ science_url }}">page Science</a>, bloc des limites
+            inclus.
+          {%- else -%}
+            We do not sell a use case the literature does not document. Where research is thin or
+            contradictory, we write that down instead of rounding it up &mdash; which is exactly what our
+            <a href="{{ science_url }}">Science page</a> does, limitations block included.
+          {%- endif -%}
+        </p>
+      </article>
+
+      <article class="ln-value ln-reveal">
+        <span class="ln-value__index">02</span>
+        <h3 class="ln-value__title">{% if is_fr %}Un format par usage r&eacute;el{% else %}One format per real use{% endif %}</h3>
+        <p class="ln-value__text">
+          {%- if is_fr -%}
+            Une genouill&egrave;re existe parce qu'un panneau &eacute;claire mal un genou pli&eacute;. Un
+            masque existe parce que tenir un panneau devant son visage vingt minutes ne tient pas dans une
+            vraie semaine. Nous n'ajoutons pas un format pour &eacute;toffer un catalogue.
+          {%- else -%}
+            A knee wrap exists because a panel lights a bent knee badly. A mask exists because holding a
+            panel in front of your face for twenty minutes does not survive a real week. We do not add a
+            format to pad out a catalogue.
+          {%- endif -%}
+        </p>
+      </article>
+
+      <article class="ln-value ln-reveal">
+        <span class="ln-value__index">03</span>
+        <h3 class="ln-value__title">{% if is_fr %}Des chiffres v&eacute;rifiables{% else %}Numbers you can check{% endif %}</h3>
+        <p class="ln-value__text">
+          {%- if is_fr -%}
+            Longueurs d'onde exactes en nanom&egrave;tres, irradiance avec la distance de mesure, surface
+            couverte. Un nombre de LED seul ne veut rien dire, et nous refusons de le mettre en avant
+            comme s'il voulait dire quelque chose. La m&eacute;thode de comparaison est expliqu&eacute;e
+            dans <a href="{{ how_url }}">comment &ccedil;a marche</a>.
+          {%- else -%}
+            Exact wavelengths in nanometres, irradiance with the distance it was measured at, area covered.
+            An LED count on its own means nothing, and we refuse to headline it as though it did. The
+            comparison method is set out in <a href="{{ how_url }}">how it works</a>.
+          {%- endif -%}
+        </p>
+      </article>
+
+      <article class="ln-value ln-reveal">
+        <span class="ln-value__index">04</span>
+        <h3 class="ln-value__title">{% if is_fr %}Le droit de dire non{% else %}The right to say no{% endif %}</h3>
+        <p class="ln-value__text">
+          {%- if is_fr -%}
+            La plupart des appareils que nous testons ne sont jamais mis en vente. Un produit qui
+            d&eacute;livre moins que sa fiche technique, qui chauffe trop pour &ecirc;tre port&eacute;, ou
+            dont le fabricant refuse de communiquer ses mesures est &eacute;cart&eacute; sans discussion.
+          {%- else -%}
+            Most devices we test never go on sale. A product that delivers less than its spec sheet, runs
+            too hot to be worn, or whose manufacturer refuses to share measurements is dropped without
+            discussion.
+          {%- endif -%}
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section ln-section--dark">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Engagements v&eacute;rifiables{% else %}Commitments you can verify{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Ce que nous faisons, et ce que nous refusons de faire.{%- else -%}What we do, and what we refuse to do.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Chaque ligne ci-dessous est v&eacute;rifiable sur ce site m&ecirc;me. Si vous en trouvez une
+            prise en d&eacute;faut, &eacute;crivez-nous : c'est un bug, pas une strat&eacute;gie.
+          {%- else -%}
+            Every line below can be checked on this site. If you find one that does not hold, write to us:
+            that is a bug, not a strategy.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-pledge ln-reveal">
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark" aria-hidden="true">&#10003;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Nous citons chaque &eacute;tude avec son DOI{% else %}We cite every study with its DOI{% endif %}</p>
+          <p class="ln-pledge__text">{% if is_fr %}L'identifiant permanent de l'article, qui ouvre la publication d'origine. Pas un billet de blog qui r&eacute;sume une d&eacute;p&ecirc;che qui r&eacute;sume un communiqu&eacute;.{% else %}The permanent identifier of the paper, opening the original publication. Not a blog post summarising a newswire summarising a press release.{% endif %}</p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark" aria-hidden="true">&#10003;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Nous signalons les limites d'une &eacute;tude{% else %}We flag a study's limitations{% endif %}</p>
+          <p class="ln-pledge__text">{% if is_fr %}&Eacute;chantillon de vingt personnes, financement par un fabricant, effet mesur&eacute; sur un marqueur biologique et non sur un ressenti : c'est &eacute;crit &agrave; c&ocirc;t&eacute; du r&eacute;sultat, pas en note de bas de page.{% else %}A twenty-person sample, manufacturer funding, an effect measured on a biological marker rather than on how you feel: it is written next to the result, not in a footnote.{% endif %}</p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark" aria-hidden="true">&#10003;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Nous publions l'irradiance avec sa distance{% else %}We publish irradiance with its distance{% endif %}</p>
+          <p class="ln-pledge__text">{% if is_fr %}Une irradiance sans distance de mesure est un chiffre sans unit&eacute; utile. Elle appara&icirc;t toujours sous la forme mW/cm&sup2; &agrave; X cm.{% else %}Irradiance without a measurement distance is a number with no usable unit. It always appears as mW/cm&sup2; at X cm.{% endif %}</p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Aucun avis ni aucune note &eacute;crits &agrave; la main{% else %}No hand-written reviews or ratings{% endif %}</p>
+          <p class="ln-pledge__text">{% if is_fr %}Les notes affich&eacute;es sur ce site proviennent uniquement d'avis clients v&eacute;rifi&eacute;s. Tant qu'il n'y en a pas, il n'y a pas d'&eacute;toiles. Publier une note fictive est trompeur au sens des articles L.121-2 et L.121-4 du Code de la consommation.{% else %}Ratings shown on this site come only from verified customer reviews. Until there are any, there are no stars. Publishing a fictitious rating is a misleading commercial practice under French consumer law.{% endif %}</p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Aucune promesse th&eacute;rapeutique{% else %}No therapeutic promise{% endif %}</p>
+          <p class="ln-pledge__text">{% if is_fr %}Nos appareils sont des produits de bien-&ecirc;tre. Ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie, et nous n'&eacute;crirons jamais le contraire pour vendre.{% else %}Our devices are wellness products. They do not diagnose, treat or cure any disease, and we will never write otherwise to make a sale.{% endif %}</p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Aucun avant / apr&egrave;s retouch&eacute;{% else %}No retouched before / after{% endif %}</p>
+          <p class="ln-pledge__text">{% if is_fr %}Ni retouche, ni changement d'&eacute;clairage entre les deux photos, ni image g&eacute;n&eacute;r&eacute;e. En l'absence de photo honn&ecirc;te, nous pr&eacute;f&eacute;rons ne rien montrer.{% else %}No retouching, no lighting change between the two shots, no generated image. Absent an honest photo, we would rather show nothing.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section ln-section--soft ln-section--tight">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Continuer{% else %}Keep going{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}V&eacute;rifiez-nous.{%- else -%}Check us.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Les trois pages ci-contre sont celles sur lesquelles ces engagements sont les plus faciles
+            &agrave; prendre en d&eacute;faut. C'est volontaire.
+          {%- else -%}
+            The three pages listed here are the ones where these commitments are easiest to catch out.
+            That is deliberate.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-hub">
+      <a class="ln-hub__card ln-reveal" href="{{ science_url }}">
+        <span class="ln-hub__num">01</span>
+        <h3 class="ln-hub__title">{% if is_fr %}La recherche, sources comprises{% else %}The research, sources included{% endif %}</h3>
+        <p class="ln-hub__text">{% if is_fr %}Cent vingt ans de photobiomodulation, quinze jalons, chaque publication liant vers son DOI &mdash; et un bloc sur ce que ces travaux ne prouvent pas.{% else %}One hundred and twenty years of photobiomodulation, fifteen milestones, every paper linking to its DOI &mdash; and a block on what this work does not prove.{% endif %}</p>
+        <span class="ln-link">{% if is_fr %}Voir la frise{% else %}See the timeline{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="ln-hub__card ln-reveal" href="{{ how_url }}">
+        <span class="ln-hub__num">02</span>
+        <h3 class="ln-hub__title">{% if is_fr %}Le m&eacute;canisme et la dose{% else %}The mechanism and the dose{% endif %}</h3>
+        <p class="ln-hub__text">{% if is_fr %}Du photon &agrave; l'ATP, les sept longueurs d'onde et leur r&ocirc;le, et pourquoi &laquo; plus puissant &raquo; n'est pas un argument de vente.{% else %}From photon to ATP, the seven wavelengths and their roles, and why &ldquo;more powerful&rdquo; is not a selling point.{% endif %}</p>
+        <span class="ln-link">{% if is_fr %}Comprendre{% else %}Understand it{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="ln-hub__card ln-reveal" href="{{ blog_url }}">
+        <span class="ln-hub__num">03</span>
+        <h3 class="ln-hub__title">{% if is_fr %}Le journal{% else %}The journal{% endif %}</h3>
+        <p class="ln-hub__text">{% if is_fr %}Nos lectures d'&eacute;tudes, nos protocoles de test et les questions que nous recevons le plus souvent, publi&eacute;s au fil de l'eau.{% else %}Our readings of new studies, our testing protocols and the questions we get asked most, published as we go.{% endif %}</p>
+        <span class="ln-link">{% if is_fr %}Lire les articles{% else %}Read the articles{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% render 'learn-product-cta',
+   handles: 'cytolight-desk,cytolight-foot,cytolight-pano-ultra',
+   heading_fr: 'Sept appareils. Chacun a d&#251; justifier sa place.',
+   heading_en: 'Seven devices. Each one had to earn its place.',
+   text_fr: 'Si vous h&eacute;sitez entre deux formats, la question utile n&#39;est pas lequel est le plus puissant, mais lequel vous utiliserez encore dans trois mois.',
+   text_en: 'If you are hesitating between two formats, the useful question is not which is more powerful, but which one you will still be using in three months.'
+%}
+
+{% schema %}
+{
+  "name": "Learn — Our values",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Contenu editorial bilingue FR / EN ecrit en Liquid. Les engagements listes decrivent des regles reellement appliquees dans le theme : ne pas en ajouter un qui ne soit pas tenu par le code."
+    }
+  ]
+}
+{% endschema %}
