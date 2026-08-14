@@ -32,44 +32,6 @@ ul, ol { list-style: none; padding: 0; margin: 0; }
   border: 0 !important;
 }
 
-.global-language {
-  position: fixed;
-  top: 18px;
-  right: 18px;
-  z-index: 120;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-.global-language__form { display: inline-flex; align-items: center; }
-.global-language__select,
-.global-language__static {
-  appearance: none;
-  min-width: 54px;
-  border: 1px solid rgba(255,255,255,.34);
-  border-radius: 999px;
-  background: rgba(13,13,13,.38);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .08em;
-  line-height: 1;
-  padding: 9px 12px;
-  text-align: center;
-  text-transform: uppercase;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 10px 28px rgba(0,0,0,.16);
-}
-.global-language__select {
-  padding-right: 28px;
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 11px center;
-  background-size: 10px 6px;
-}
-.global-language__select:hover,
-.global-language__static:hover { border-color: rgba(255,255,255,.58); }
-.global-language__select:focus { outline: 2px solid rgba(200,16,46,.38); outline-offset: 2px; }
 
 h1, h2, h3, h4 { font-family: "Instrument Serif", var(--font-display), Georgia, serif; font-weight: 400; letter-spacing: -0.01em; line-height: 1.08; margin: 0 0 .5em; }
 h1 { font-size: clamp(2.25rem, 5vw, 4rem); }
@@ -111,15 +73,30 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .announcement__divider { color: var(--color-promo); }
 
 /* ---------- Header ---------- */
-.site-header {
+/*
+ * Le collant vit sur #shopify-section-header, l'enveloppe que Shopify ajoute
+ * automatiquement autour de la section. Pose sur .site-header, il etait borne
+ * par cette enveloppe, haute exactement de la hauteur du header : la course
+ * disponible valait zero, donc le header ne collait sur aucune page, malgre
+ * position: sticky. Le fond translucide et le flou n'avaient plus de sens.
+ *
+ * theme.js publie la hauteur mesuree dans --header-h pour que les barres de
+ * sous-navigation (espace Learn) se calent dessous plutot que derriere.
+ */
+#shopify-section-header {
   position: sticky;
   top: 0;
   z-index: 50;
+}
+.site-header {
+  position: relative;
   background: rgba(255,255,255,.9);
   border-bottom: 1px solid rgba(0,0,0,.08);
   backdrop-filter: blur(18px);
   box-shadow: 0 18px 50px rgba(0,0,0,.05);
+  transition: box-shadow .2s ease;
 }
+.site-header.is-scrolled { box-shadow: 0 10px 30px rgba(0,0,0,.10); }
 .site-header__proof {
   display: flex;
   justify-content: center;
@@ -303,9 +280,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .site-header__cart-count { background: var(--color-accent); color: #fff; border-radius: 999px; min-width: 20px; height: 20px; font-size: .7rem; display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; }
 .site-header__mobile-menu { display: none; }
 @media (max-width: 900px) {
-  .global-language { top: 14px; right: 14px; }
-  .global-language__select,
-  .global-language__static { min-width: 46px; padding: 8px 10px; font-size: 11px; }
   .site-header__nav { display: none; }
   .site-header__proof { overflow-x: auto; justify-content: flex-start; padding: 7px 20px; scrollbar-width: none; }
   .site-header__proof::-webkit-scrollbar { display: none; }
@@ -477,8 +451,6 @@ body {
 .site-header__logo,
 .site-nav,
 .announcement,
-.global-language__select,
-.global-language__static,
 .btn,
 .product-card__title,
 .product-card__price,
@@ -735,7 +707,7 @@ h1, h2, h3, h4,
 .cart-item__title { font-weight: 600; font-size: 1rem; }
 .cart-item__variant { font-size: .85rem; color: var(--color-muted); }
 .cart-item__price { font-size: 1rem; }
-.cart-summary { background: var(--color-background-soft); padding: 32px; border-radius: var(--radius-md); height: fit-content; position: sticky; top: 100px; }
+.cart-summary { background: var(--color-background-soft); padding: 32px; border-radius: var(--radius-md); height: fit-content; position: sticky; top: calc(var(--header-h, 88px) + 20px); }
 .cart-summary__row { display: flex; justify-content: space-between; padding: 8px 0; font-size: .95rem; }
 .cart-summary__total { font-size: 1.25rem; font-weight: 600; border-top: 1px solid rgba(0,0,0,.12); padding-top: 16px; margin-top: 8px; }
 .cart-summary .btn { width: 100%; margin-top: 16px; }

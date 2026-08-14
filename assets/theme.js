@@ -10,6 +10,29 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+    /*
+     * Publie la hauteur du header dans --header-h.
+     *
+     * Le header est collant sur #shopify-section-header ; toute autre barre
+     * collante de la page (sous-navigation de l'espace Learn) doit donc se
+     * caler dessous, sinon elle glisse derriere lui. La hauteur varie selon la
+     * largeur d'ecran et selon la presence du bandeau de reassurance : elle est
+     * mesuree plutot qu'ecrite en dur.
+     *
+     * Le CSS garde une valeur de repli : sans ce script, la barre reste
+     * collante en haut, comme avant.
+     */
+    const publishHeaderHeight = () => {
+      const h = Math.round(header.getBoundingClientRect().height);
+      if (h > 0) document.documentElement.style.setProperty('--header-h', h + 'px');
+    };
+    publishHeaderHeight();
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(publishHeaderHeight).observe(header);
+    } else {
+      window.addEventListener('resize', publishHeaderHeight, { passive: true });
+    }
   }
 
   // Quantity selectors
