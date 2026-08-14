@@ -1,53 +1,150 @@
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+  assign free_shipping_cents = 12500
+  assign subtotal_cents = cart.items_subtotal_price
+  assign shipping_remaining_cents = free_shipping_cents | minus: subtotal_cents
+  if shipping_remaining_cents < 0
+    assign shipping_remaining_cents = 0
+  endif
+  assign shipping_progress = subtotal_cents | times: 100 | divided_by: free_shipping_cents
+  if shipping_progress > 100
+    assign shipping_progress = 100
+  endif
+
+  assign cross_sell_handles = 'cytolight-desk,cytolight-cap,cytolight-mask,cytolight-foot,cytolight-knee,cytolight-pano-ultra' | split: ','
+  assign cross_sell_shown = 0
+-%}
 <section class="container">
   {% if cart.item_count > 0 %}
     <div class="cart">
-      <form action="{{ routes.cart_url }}" method="post" novalidate class="cart__form">
-        <h1>{% if request.locale.iso_code contains 'fr' %}Votre panier{% else %}Your cart{% endif %}</h1>
-        <div class="cart__items">
-          {% for item in cart.items %}
-            <div class="cart-item" data-line="{{ forloop.index }}">
-              <a href="{{ item.url }}" class="cart-item__img">
-                {% if item.image != blank %}
-                  <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}">
-                {% endif %}
-              </a>
-              <div>
-                <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>
-                {% unless item.product.has_only_default_variant %}
-                  <div class="cart-item__variant">{{ item.variant.title }}</div>
-                {% endunless %}
-                <div class="product__qty" style="margin-top:10px;">
-                  <button type="button" data-qty-step="-1">−</button>
-                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line-key="{{ item.key }}">
-                  <button type="button" data-qty-step="1">+</button>
+      <div class="cart__main">
+        <form action="{{ routes.cart_url }}" method="post" novalidate class="cart__form">
+          <h1>{% if is_fr %}Votre panier{% else %}Your cart{% endif %}</h1>
+
+          <div class="cart-shipping-bar" aria-live="polite">
+            {% if shipping_remaining_cents > 0 %}
+              <p>{% if is_fr %}Plus que <strong>{{ shipping_remaining_cents | money }}</strong> pour la livraison offerte !{% else %}You're <strong>{{ shipping_remaining_cents | money }}</strong> away from free shipping!{% endif %}</p>
+            {% else %}
+              <p>{% if is_fr %}&#10003; Livraison offerte d&eacute;bloqu&eacute;e !{% else %}&#10003; You've unlocked free shipping!{% endif %}</p>
+            {% endif %}
+            <div class="cart-shipping-bar__track"><div class="cart-shipping-bar__fill" style="width:{{ shipping_progress }}%;"></div></div>
+          </div>
+
+          <div class="cart__items">
+            {% for item in cart.items %}
+              <div class="cart-item" data-line="{{ forloop.index }}">
+                <a href="{{ item.url }}" class="cart-item__img">
+                  {% if item.image != blank %}
+                    <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}" width="120" height="120" loading="lazy">
+                  {% endif %}
+                </a>
+                <div>
+                  <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>
+                  {% unless item.product.has_only_default_variant %}
+                    <div class="cart-item__variant">{{ item.variant.title }}</div>
+                  {% endunless %}
+                  <div class="product__qty" style="margin-top:10px;">
+                    <button type="button" data-qty-step="-1">&minus;</button>
+                    <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line-key="{{ item.key }}">
+                    <button type="button" data-qty-step="1">+</button>
+                  </div>
+                  <a href="{{ item.url_to_remove }}" style="font-size:.8rem; color: var(--color-muted); margin-top:8px; display:inline-block;">{% if is_fr %}Retirer{% else %}Remove{% endif %}</a>
                 </div>
-                <a href="{{ item.url_to_remove }}" style="font-size:.8rem; color: var(--color-muted); margin-top:8px; display:inline-block;">{% if request.locale.iso_code contains 'fr' %}Retirer{% else %}Remove{% endif %}</a>
+                <div class="cart-item__price">{{ item.final_line_price | money }}</div>
               </div>
-              <div class="cart-item__price">{{ item.final_line_price | money }}</div>
-            </div>
-          {% endfor %}
+            {% endfor %}
+          </div>
+          <button type="submit" name="update" class="btn btn--ghost btn--sm" style="margin-top:16px;">{% if is_fr %}Mettre &agrave; jour le panier{% else %}Update cart{% endif %}</button>
+        </form>
+
+        <div class="cart-crosssell">
+          <h2>{% if is_fr %}Compl&eacute;tez votre rituel{% else %}Complete your ritual{% endif %}</h2>
+          <div class="cart-crosssell__grid">
+            {% for handle in cross_sell_handles %}
+              {% assign cs_product = all_products[handle] %}
+              {% if cs_product == blank or cs_product.available == false %}
+                {% continue %}
+              {% endif %}
+              {% assign in_cart = false %}
+              {% for item in cart.items %}
+                {% if item.product_id == cs_product.id %}
+                  {% assign in_cart = true %}
+                {% endif %}
+              {% endfor %}
+              {% if in_cart %}
+                {% continue %}
+              {% endif %}
+              {% if cross_sell_shown >= 3 %}
+                {% break %}
+              {% endif %}
+              {% assign cross_sell_shown = cross_sell_shown | plus: 1 %}
+              <div class="cart-crosssell-card">
+                <a href="{{ cs_product.url }}" class="cart-crosssell-card__img">
+                  {% if cs_product.featured_image != blank %}
+                    <img src="{{ cs_product.featured_image | image_url: width: 160 }}" alt="{{ cs_product.featured_image.alt | escape }}" width="64" height="64" loading="lazy">
+                  {% endif %}
+                </a>
+                <div class="cart-crosssell-card__body">
+                  <a href="{{ cs_product.url }}" class="cart-crosssell-card__title">{{ cs_product.title }}</a>
+                  <p class="cart-crosssell-card__price">{{ cs_product.price | money }}</p>
+                  {% form 'product', cs_product %}
+                    <input type="hidden" name="id" value="{{ cs_product.selected_or_first_available_variant.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <input type="hidden" name="return_to" value="{{ routes.cart_url }}">
+                    <button type="submit" class="btn btn--ghost btn--sm" {% unless cs_product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+                      {% if cs_product.selected_or_first_available_variant.available %}{% if is_fr %}Ajouter{% else %}Add{% endif %}{% else %}{% if is_fr %}&Eacute;puis&eacute;{% else %}Sold out{% endif %}{% endif %}
+                    </button>
+                  {% endform %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
         </div>
-        <button type="submit" name="update" class="btn btn--ghost btn--sm" style="margin-top:16px;">{% if request.locale.iso_code contains 'fr' %}Mettre &agrave; jour le panier{% else %}Update cart{% endif %}</button>
-      </form>
+      </div>
 
       <aside class="cart-summary">
-        <div class="cart-summary__row"><span>{% if request.locale.iso_code contains 'fr' %}Sous-total{% else %}Subtotal{% endif %}</span><span>{{ cart.items_subtotal_price | money }}</span></div>
+        <div class="cart-summary__row"><span>{% if is_fr %}Sous-total{% else %}Subtotal{% endif %}</span><span>{{ cart.items_subtotal_price | money }}</span></div>
         {% if cart.cart_level_discount_applications.size > 0 %}
           {% for discount in cart.cart_level_discount_applications %}
-            <div class="cart-summary__row"><span>{{ discount.title }}</span><span>−{{ discount.total_allocated_amount | money }}</span></div>
+            <div class="cart-summary__row"><span>{{ discount.title }}</span><span>&minus;{{ discount.total_allocated_amount | money }}</span></div>
           {% endfor %}
         {% endif %}
         <div class="cart-summary__row cart-summary__total"><span>Total</span><span>{{ cart.total_price | money }}</span></div>
-        <p style="font-size:.8rem; color: var(--color-muted); margin: 8px 0 0;">{% if request.locale.iso_code contains 'fr' %}Taxes et livraison calcul&eacute;es au paiement.{% else %}Taxes and shipping calculated at checkout.{% endif %}</p>
-        <a href="{{ routes.cart_url }}/checkout" class="btn btn--primary">{% if request.locale.iso_code contains 'fr' %}Paiement{% else %}Checkout{% endif %} &rarr;</a>
-        <p style="text-align:center; margin: 12px 0 0; font-size:.8rem;"><a href="{{ routes.all_products_collection_url }}">{% if request.locale.iso_code contains 'fr' %}Continuer mes achats{% else %}Continue shopping{% endif %}</a></p>
+        <p style="font-size:.8rem; color: var(--color-muted); margin: 8px 0 0;">{% if is_fr %}Taxes et livraison calcul&eacute;es au paiement.{% else %}Taxes and shipping calculated at checkout.{% endif %}</p>
+        <a href="{{ routes.cart_url }}/checkout" class="btn btn--primary">{% if is_fr %}Paiement{% else %}Checkout{% endif %} &rarr;</a>
+        <p style="text-align:center; margin: 12px 0 0; font-size:.8rem;"><a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Continuer mes achats{% else %}Continue shopping{% endif %}</a></p>
+        <div class="cart-trust">
+          <span>&#10003; {% if is_fr %}Essai satisfait ou rembours&eacute; de 30 jours{% else %}30-day money-back trial{% endif %}</span>
+          <span>&#10003; {% if is_fr %}Garantie 2 ans{% else %}2-year warranty{% endif %}</span>
+          <span>&#10003; {% if is_fr %}Paiement s&eacute;curis&eacute;{% else %}Secure checkout{% endif %}</span>
+        </div>
       </aside>
     </div>
   {% else %}
     <div class="cart-empty">
-      <h1>{% if request.locale.iso_code contains 'fr' %}Votre panier est vide{% else %}Your cart is empty{% endif %}</h1>
-      <p style="color: var(--color-muted);">{% if request.locale.iso_code contains 'fr' %}D&eacute;couvrez nos meilleures ventes et commencez votre rituel bien-&ecirc;tre.{% else %}Discover our best sellers and start your wellness ritual.{% endif %}</p>
-      <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary" style="margin-top:16px;">{% if request.locale.iso_code contains 'fr' %}Voir les meilleures ventes{% else %}Shop best sellers{% endif %} &rarr;</a>
+      <h1>{% if is_fr %}Votre panier est vide{% else %}Your cart is empty{% endif %}</h1>
+      <p style="color: var(--color-muted);">{% if is_fr %}D&eacute;couvrez nos meilleures ventes et commencez votre rituel bien-&ecirc;tre.{% else %}Discover our best sellers and start your wellness ritual.{% endif %}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary" style="margin-top:16px;">{% if is_fr %}Voir les meilleures ventes{% else %}Shop best sellers{% endif %} &rarr;</a>
+
+      <div class="cart-crosssell cart-crosssell--empty">
+        <h2>{% if is_fr %}Nos rituels les plus populaires{% else %}Our most popular rituals{% endif %}</h2>
+        <div class="collection-grid">
+          {% for handle in cross_sell_handles %}
+            {% assign cs_product = all_products[handle] %}
+            {% if cs_product == blank or cs_product.available == false %}
+              {% continue %}
+            {% endif %}
+            {% if cross_sell_shown >= 4 %}
+              {% break %}
+            {% endif %}
+            {% assign cross_sell_shown = cross_sell_shown | plus: 1 %}
+            {% render 'product-card', product: cs_product %}
+          {% endfor %}
+        </div>
+      </div>
     </div>
   {% endif %}
 </section>
