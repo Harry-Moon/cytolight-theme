@@ -363,6 +363,13 @@
 .cy-proof__stat { min-height: 160px; padding: 27px; border-right: 1px solid #bbb; border-bottom: 1px solid #bbb; }
 .cy-proof__stat strong { display: block; font-size: 35px; font-weight: 650; }
 .cy-proof__stat span { display: block; margin-top: 8px; color: var(--cy-muted); font-size: 13px; line-height: 1.55; }
+.cy-proof__certs { grid-column: 1 / -1; margin-top: 56px; padding-top: 40px; border-top: 1px solid #bbb; }
+.cy-proof__certs-label { font-size: 11px; font-weight: 650; letter-spacing: .18em; text-transform: uppercase; color: var(--cy-muted); margin: 0 0 26px; }
+.cy-proof__certs-row { display: flex; flex-wrap: wrap; align-items: center; gap: 26px; }
+.cy-cert-badge { position: relative; display: flex; align-items: center; justify-content: center; width: 58px; height: 58px; flex-shrink: 0; color: var(--cy-ink); transition: color .2s ease; }
+.cy-cert-badge:hover { color: var(--cy-accent, #c8102e); }
+.cy-cert-badge__ring { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cy-cert-badge__text { position: relative; font-size: 10.5px; font-weight: 700; letter-spacing: .03em; line-height: 1; text-align: center; }
 
 .cy-table-wrap { margin-top: 54px; overflow-x: auto; border-top: 1px solid var(--cy-line); }
 .cy-table { width: 100%; min-width: 760px; border-collapse: collapse; }
@@ -438,6 +445,10 @@
   .cy-proof__grid { gap: 50px; }
   .cy-proof__stat { min-height: 140px; padding: 22px 18px; }
   .cy-proof__stat strong { font-size: 28px; }
+  .cy-proof__certs { margin-top: 40px; padding-top: 28px; }
+  .cy-proof__certs-row { gap: 18px; }
+  .cy-cert-badge { width: 50px; height: 50px; }
+  .cy-cert-badge__text { font-size: 9.5px; }
   .cy-final { min-height: 620px; }
   .cy-reassure__grid { grid-template-columns: 1fr; }
   .cy-reassure__item { border-right: 0; border-bottom: 1px solid var(--cy-line); }
