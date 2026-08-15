@@ -15,8 +15,8 @@
               <img class='cl-why-card__image' src='{{ "cytolight-cap-morning-routine.jpg" | file_url }}' alt='{% if is_fr %}Routine matinale avec CYTOLIGHT cap{% else %}Morning routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1792' height='1024'>
             {%- elsif is_foot and foot_image_3 -%}
               <img class='cl-why-card__image' src='{{ foot_image_3 | image_url: width: 1600 }}' alt='{{ foot_image_3.alt | escape }}' loading='lazy' width='1600' height='900'>
-            {%- elsif is_knee and foot_image_1 -%}
-              <img class='cl-why-card__image' src='{{ foot_image_1 | image_url: width: 1600 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1600' height='900'>
+            {%- elsif is_knee -%}
+              <img class='cl-why-card__image' src='{{ "Cytolight_Knee_-_Elder_Man.jpg" | file_url }}' alt='{% if is_fr %}Homme senior portant CytoLight Knee, d&eacute;tendu &agrave; la maison{% else %}Senior man wearing CytoLight Knee, relaxing at home{% endif %}' loading='lazy' width='1600' height='900'>
             {%- else -%}
               <img class='cl-why-card__image' src='{{ "cytolight-recovery-ready.jpg" | file_url }}' alt='{% if is_fr %}Athl&egrave;te utilisant un panneau CytoLight pour une routine de r&eacute;cup&eacute;ration{% else %}Athlete using a CytoLight red light panel for a recovery routine{% endif %}' loading='lazy' width='1136' height='1408'>
             {%- endif -%}
@@ -38,8 +38,8 @@
               <img class='cl-why-card__image' src='{{ "cytolight-cap-scalp-care.jpg" | file_url }}' alt='{% if is_fr %}CYTOLIGHT cap proche du cuir chevelu{% else %}CYTOLIGHT cap close to the scalp{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- elsif is_foot and foot_image_1 -%}
               <img class='cl-why-card__image' src='{{ foot_image_1 | image_url: width: 1600 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1600' height='900'>
-            {%- elsif is_knee and foot_image_1 -%}
-              <img class='cl-why-card__image' src='{{ foot_image_1 | image_url: width: 1600 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1600' height='900'>
+            {%- elsif is_knee -%}
+              <img class='cl-why-card__image' src='{{ "Cytolight_Knee_Football_Soccer.jpg" | file_url }}' alt='{% if is_fr %}Joueur de football portant CytoLight Knee apr&egrave;s l&apos;entra&icirc;nement{% else %}Soccer player wearing CytoLight Knee after training{% endif %}' loading='lazy' width='1600' height='900'>
             {%- else -%}
               <img class='cl-why-card__image' src='{{ "cytolight-skin-glow.jpg" | file_url }}' alt='{% if is_fr %}Routine peau avec lumi&egrave;re rouge subtile pour un &eacute;clat plus sain{% else %}Skin routine with subtle red light for a healthier-looking glow{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
@@ -61,8 +61,8 @@
               <img class='cl-why-card__image' src='{{ "cytolight-cap-control.jpg" | file_url }}' alt='{% if is_fr %}Contr&ocirc;leur CYTOLIGHT cap avec r&eacute;glage de session{% else %}CYTOLIGHT cap controller with session adjustment{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- elsif is_foot and foot_image_2 -%}
               <img class='cl-why-card__image' src='{{ foot_image_2 | image_url: width: 1600 }}' alt='{{ foot_image_2.alt | escape }}' loading='lazy' width='1600' height='900'>
-            {%- elsif is_knee and foot_image_1 -%}
-              <img class='cl-why-card__image' src='{{ foot_image_1 | image_url: width: 1600 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1600' height='900'>
+            {%- elsif is_knee -%}
+              <img class='cl-why-card__image' src='{{ "Cytolight_Knee_Garden.jpg" | file_url }}' alt='{% if is_fr %}Femme active portant CytoLight Knee en jardinant{% else %}Active woman wearing CytoLight Knee while gardening{% endif %}' loading='lazy' width='1600' height='900'>
             {%- else -%}
               <img class='cl-why-card__image' src='{{ "cytolight-evening-signal.jpg" | file_url }}' alt='{% if is_fr %}Routine du soir calme avec panneau CytoLight et lumi&egrave;re rouge douce{% else %}Calm evening routine with CytoLight panel and soft red light{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
@@ -84,8 +84,8 @@
               <img class='cl-why-card__image' src='{{ "cytolight-cap-comfort.jpg" | file_url }}' alt='{% if is_fr %}CYTOLIGHT cap port&eacute;e pendant un moment calme{% else %}CYTOLIGHT cap worn during a calm moment{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- elsif is_foot and foot_image_4 -%}
               <img class='cl-why-card__image' src='{{ foot_image_4 | image_url: width: 1600 }}' alt='{{ foot_image_4.alt | escape }}' loading='lazy' width='1600' height='900'>
-            {%- elsif is_knee and foot_image_1 -%}
-              <img class='cl-why-card__image' src='{{ foot_image_1 | image_url: width: 1600 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1600' height='900'>
+            {%- elsif is_knee -%}
+              <img class='cl-why-card__image' src='{{ "Cytolight_-_Knee_1.jpg" | file_url }}' alt='{% if is_fr %}Genouillère CytoLight Knee avec lumière rouge et proche infrarouge activée{% else %}CytoLight Knee sleeve with red and near-infrared light active{% endif %}' loading='lazy' width='1600' height='900'>
             {%- else -%}
               <img class='cl-why-card__image' src='{{ "cytolight-kitchen-focus.jpg" | file_url }}' alt='{% if is_fr %}Panneau CytoLight DESK sur un comptoir de cuisine avec une tasse de caf&eacute;{% else %}CytoLight DESK panel on a kitchen counter beside a coffee mug{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
@@ -107,8 +107,8 @@
               <img class='cl-why-card__image' src='{{ "cytolight-cap-personal.jpg" | file_url }}' alt='{% if is_fr %}R&eacute;glage personnalis&eacute; de CYTOLIGHT cap{% else %}Personalized CYTOLIGHT cap session setting{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- elsif is_foot and foot_image_3 -%}
               <img class='cl-why-card__image' src='{{ foot_image_3 | image_url: width: 1600 }}' alt='{{ foot_image_3.alt | escape }}' loading='lazy' width='1600' height='900'>
-            {%- elsif is_knee and foot_image_1 -%}
-              <img class='cl-why-card__image' src='{{ foot_image_1 | image_url: width: 1600 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1600' height='900'>
+            {%- elsif is_knee -%}
+              <img class='cl-why-card__image' src='{{ "Cytolight_Knee_-_Elder_Man.jpg" | file_url }}' alt='{% if is_fr %}Homme senior portant CytoLight Knee, d&eacute;tendu &agrave; la maison{% else %}Senior man wearing CytoLight Knee, relaxing at home{% endif %}' loading='lazy' width='1600' height='900'>
             {%- else -%}
               <img class='cl-why-card__image' src='{{ "cytolight-control-screen.jpg" | file_url }}' alt='{% if is_fr %}&Eacute;cran de contr&ocirc;le CytoLight avec r&eacute;glage rouge et proche infrarouge{% else %}CytoLight control screen with red and near-infrared adjustment{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
@@ -186,8 +186,8 @@
               <img class='cl-why-card__image' src='{{ "cytolight-cap-peace-mind.jpg" | file_url }}' alt='{% if is_fr %}CYTOLIGHT cap dans son emballage premium pour essai &agrave; domicile{% else %}CYTOLIGHT cap in premium packaging for home trial{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- elsif is_foot and foot_image_4 -%}
               <img class='cl-why-card__image' src='{{ foot_image_4 | image_url: width: 1600 }}' alt='{{ foot_image_4.alt | escape }}' loading='lazy' width='1600' height='900'>
-            {%- elsif is_knee and foot_image_1 -%}
-              <img class='cl-why-card__image' src='{{ foot_image_1 | image_url: width: 1600 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1600' height='900'>
+            {%- elsif is_knee -%}
+              <img class='cl-why-card__image' src='{{ "Cytolight_Knee_Football_Soccer.jpg" | file_url }}' alt='{% if is_fr %}Joueur de football portant CytoLight Knee apr&egrave;s l&apos;entra&icirc;nement{% else %}Soccer player wearing CytoLight Knee after training{% endif %}' loading='lazy' width='1600' height='900'>
             {%- else -%}
               <img class='cl-why-card__image' src='{{ "cytolight-home-trial-living-room.jpg" | file_url }}' alt='{% if is_fr %}Panneau CytoLight DESK dans un salon avec t&eacute;l&eacute;vision flout&eacute;e en arri&egrave;re-plan{% else %}CytoLight DESK panel in a living room with a blurred TV in the background{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
@@ -209,8 +209,8 @@
               <img class='cl-why-card__image' src='{{ "cytolight-cap-consistency.jpg" | file_url }}' alt='{% if is_fr %}Routine quotidienne simple avec CYTOLIGHT cap{% else %}Simple daily routine with CYTOLIGHT cap{% endif %}' loading='lazy' width='1135' height='1408'>
             {%- elsif is_foot and foot_image_2 -%}
               <img class='cl-why-card__image' src='{{ foot_image_2 | image_url: width: 1600 }}' alt='{{ foot_image_2.alt | escape }}' loading='lazy' width='1600' height='900'>
-            {%- elsif is_knee and foot_image_1 -%}
-              <img class='cl-why-card__image' src='{{ foot_image_1 | image_url: width: 1600 }}' alt='{{ foot_image_1.alt | escape }}' loading='lazy' width='1600' height='900'>
+            {%- elsif is_knee -%}
+              <img class='cl-why-card__image' src='{{ "Cytolight_Knee_Garden.jpg" | file_url }}' alt='{% if is_fr %}Femme active portant CytoLight Knee en jardinant{% else %}Active woman wearing CytoLight Knee while gardening{% endif %}' loading='lazy' width='1600' height='900'>
             {%- else -%}
               <img class='cl-why-card__image' src='{{ "cytolight-consistency-desk.jpg" | file_url }}' alt='{% if is_fr %}Panneau CytoLight DESK dans un salon pour une routine facile &agrave; r&eacute;p&eacute;ter{% else %}CytoLight DESK panel in a living room for an easy repeatable routine{% endif %}' loading='lazy' width='1154' height='1536'>
             {%- endif -%}
