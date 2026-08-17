@@ -196,20 +196,26 @@
 .cl-benefit__icon svg{width:24px;height:24px;color:#c8102e;}
 .cl-benefit__label{font-size:12px;font-weight:800;color:#0d0d0d;line-height:1.3;}
 .cl-benefit__sub{font-size:11px;color:#aaa;margin-top:1px;}
-.cl-notice-section{max-width:1400px;margin:0 auto;padding:8px 40px 56px;}
-.cl-notice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:0 0 30px;}
-.cl-notice-card{display:flex;align-items:flex-start;gap:12px;background:#fafafa;border:1px solid #efefef;border-radius:14px;padding:18px 20px;}
-.cl-notice-card__icon{flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1.5px solid #c8102e;display:flex;align-items:center;justify-content:center;color:#c8102e;}
-.cl-notice-card__icon svg{width:14px;height:14px;}
-.cl-notice-card h4{margin:0 0 4px;font-size:15px;font-weight:800;color:#0d0d0d;line-height:1.3;}
-.cl-notice-card p{margin:0;font-size:13px;line-height:1.55;color:#666;}
-.cl-how-flow{margin:0 0 4px;padding-top:6px;border-top:1px solid #eee;}
-.cl-how-flow__title{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#999;margin:22px 0 16px;}
-.cl-how-flow__steps{list-style:none;margin:0;padding:0;display:grid;gap:18px;}
-.cl-how-flow__steps li{display:flex;gap:16px;align-items:flex-start;}
-.cl-how-flow__num{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:#0d0d0d;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;}
-.cl-how-flow__steps h4{margin:0 0 4px;font-size:15px;font-weight:800;color:#0d0d0d;line-height:1.3;}
-.cl-how-flow__steps p{margin:0;font-size:13px;line-height:1.55;color:#666;}
+.cl-notice-section{background:linear-gradient(180deg,#fdf6f6 0%,#faf9f7 100%);border-radius:32px;max-width:1400px;margin:0 auto 48px;padding:56px 48px 64px;}
+.cl-notice-head{text-align:center;max-width:640px;margin:0 auto 40px;}
+.cl-notice-head .cl-eyebrow{text-align:center;}
+.cl-notice-head h2{margin:0;font-size:clamp(28px,3.4vw,42px);font-weight:900;letter-spacing:-.01em;color:#0d0d0d;line-height:1.1;font-family:inherit;}
+.cl-notice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:0 0 56px;}
+.cl-notice-card{display:flex;align-items:flex-start;gap:16px;background:#fff;border:1px solid #f0e9e9;border-radius:20px;padding:26px 28px;box-shadow:0 14px 34px rgba(200,16,46,.05);transition:transform .25s ease,box-shadow .25s ease;}
+.cl-notice-card:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(200,16,46,.1);}
+.cl-notice-card__icon{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#e8304a,#c8102e);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 18px rgba(200,16,46,.28);}
+.cl-notice-card__icon svg{width:20px;height:20px;stroke-width:3;}
+.cl-notice-card h4{margin:0 0 6px;font-size:18px;font-weight:800;color:#0d0d0d;line-height:1.3;font-family:inherit;}
+.cl-notice-card p{margin:0;font-size:14.5px;line-height:1.6;color:#666;}
+.cl-how-flow__title{text-align:center;margin:0 0 32px;}
+.cl-how-flow__title .cl-eyebrow{text-align:center;}
+.cl-how-flow__title h3{margin:0;font-size:clamp(22px,2.4vw,28px);font-weight:900;color:#0d0d0d;font-family:inherit;}
+.cl-how-flow__steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative;}
+.cl-how-flow__steps::before{content:'';position:absolute;top:28px;left:calc(100%/6);right:calc(100%/6);height:2px;background:repeating-linear-gradient(90deg,#e8b9c0 0,#e8b9c0 8px,transparent 8px,transparent 16px);z-index:0;}
+.cl-how-flow__steps li{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding:0 18px;position:relative;z-index:1;}
+.cl-how-flow__num{flex-shrink:0;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1a1a1a,#000);color:#fff;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(0,0,0,.22);}
+.cl-how-flow__steps h4{margin:0 0 6px;font-size:17px;font-weight:800;color:#0d0d0d;line-height:1.3;font-family:inherit;}
+.cl-how-flow__steps p{margin:0;font-size:14px;line-height:1.6;color:#666;max-width:240px;}
 .cl-reviews{border:1px solid #eee;border-radius:14px;padding:18px 20px;}
 .cl-reviews__header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .cl-reviews__title{font-size:13px;font-weight:800;color:#0d0d0d;}
@@ -416,7 +422,13 @@
   .cl-mask-use{min-height:230px;border-radius:16px;}
   .cl-mask-use__title{font-size:18px;}
   .cl-product-wrap{grid-template-columns:1fr;padding:20px 16px;}
-  .cl-notice-section{padding:4px 16px 36px;}
+  .cl-notice-section{border-radius:22px;padding:40px 20px 44px;}
+  .cl-notice-grid{grid-template-columns:1fr;margin-bottom:40px;}
+  .cl-notice-card{padding:20px;}
+  .cl-how-flow__steps{grid-template-columns:1fr;gap:28px;}
+  .cl-how-flow__steps::before{display:none;}
+  .cl-how-flow__steps li{padding:0;}
+  .cl-how-flow__steps p{max-width:none;}
   .cl-col-left{position:static;padding-right:0;}
   .cl-col-right{padding-left:0;margin-top:28px;}
   .cl-title{font-size:26px;}
@@ -950,7 +962,10 @@
   </div>
 
   <div class='cl-notice-section' id='cl-notice'>
-    <p class='cl-section-label'>{% if is_fr %}Ce que vous remarquerez{% else %}What You'll Notice{% endif %}</p>
+    <div class='cl-notice-head'>
+      <p class='cl-eyebrow'>{% if is_fr %}Résultats attendus{% else %}What to Expect{% endif %}</p>
+      <h2>{% if is_fr %}Ce que vous remarquerez{% else %}What You'll Notice{% endif %}</h2>
+    </div>
           {%- assign ck = "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>" -%}
           {%- if is_cap -%}
           <div class='cl-notice-grid'>
@@ -960,7 +975,10 @@
             <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Cheveux à l'apparence plus saine</h4><p>Conçu pour soutenir la régularité et un rituel capillaire plus premium.</p>{% else %}<h4>Healthier-Looking Hair</h4><p>Built to support consistency and a more premium hair wellness ritual.</p>{% endif %}</div></div>
           </div>
           <div class='cl-how-flow'>
-            <p class='cl-how-flow__title'>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</p>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
             <ol class='cl-how-flow__steps'>
               <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Portez la casquette</h4><p>Placez-la sur votre tête comme une casquette classique ; les LED restent proches du cuir chevelu.</p>{% else %}<h4>Wear the Cap</h4><p>Place it on your head like any cap &mdash; LEDs sit close to the scalp.</p>{% endif %}</div></li>
               <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Lancez votre session</h4><p>Réglez la luminosité, le minuteur et la pulsation, puis démarrez.</p>{% else %}<h4>Start Your Session</h4><p>Adjust brightness, timer, and pulsing, then begin.</p>{% endif %}</div></li>
@@ -975,7 +993,10 @@
             <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Séances sans fil</h4><p>Une batterie de 1800 mAh signifie aucune prise ni câble pendant l'utilisation.</p>{% else %}<h4>Cordless Sessions</h4><p>An 1800mAh battery means no socket and no cable during use.</p>{% endif %}</div></div>
           </div>
           <div class='cl-how-flow'>
-            <p class='cl-how-flow__title'>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</p>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
             <ol class='cl-how-flow__steps'>
               <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Placez le masque</h4><p>Le silicone souple épouse les contours de votre visage.</p>{% else %}<h4>Place the Mask</h4><p>The flexible silicone follows the contours of your face.</p>{% endif %}</div></li>
               <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Choisissez votre mode</h4><p>Sélectionnez un mode de lumière, ajustez l'intensité, lancez le minuteur intégré.</p>{% else %}<h4>Choose Your Mode</h4><p>Pick a light mode, adjust brightness, start the built-in timer.</p>{% endif %}</div></li>
@@ -990,7 +1011,10 @@
             <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Pensé pour les longues journées</h4><p>Conçu pour le sport, les journées debout, le voyage ou un moment de récupération calme.</p>{% else %}<h4>Built for After Long Days</h4><p>Designed for training, standing days, travel, or a quiet recovery moment.</p>{% endif %}</div></div>
           </div>
           <div class='cl-how-flow'>
-            <p class='cl-how-flow__title'>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</p>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
             <ol class='cl-how-flow__steps'>
               <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Enfilez la botte</h4><p>Glissez-la autour du pied, du talon et de la cheville.</p>{% else %}<h4>Wear the Boot</h4><p>Slip it on around the foot, heel, and ankle.</p>{% endif %}</div></li>
               <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Lancez une session confortable</h4><p>Commande simple pour démarrer, sans réglage compliqué.</p>{% else %}<h4>Start a Comfortable Session</h4><p>Simple control to begin &mdash; no complicated settings.</p>{% endif %}</div></li>
@@ -1005,7 +1029,10 @@
             <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Batterie magnétique 6000 mAh</h4><p>Rechargeable et sans contrainte de câble pendant la session.</p>{% else %}<h4>6000mAh Magnetic Battery</h4><p>Rechargeable and free of cable constraints during the session.</p>{% endif %}</div></div>
           </div>
           <div class='cl-how-flow'>
-            <p class='cl-how-flow__title'>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</p>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
             <ol class='cl-how-flow__steps'>
               <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Enfilez-la</h4><p>La genouillère s'enroule autour de l'articulation en quelques secondes.</p>{% else %}<h4>Wrap It On</h4><p>The sleeve wraps around the knee joint in seconds.</p>{% endif %}</div></li>
               <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Lancez la session</h4><p>Commande simple, aucun réglage compliqué à apprendre.</p>{% else %}<h4>Start the Session</h4><p>Simple control, no complicated settings to learn.</p>{% endif %}</div></li>
@@ -1020,7 +1047,10 @@
             <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Tapis énergétique</h4><p>Billes d'ions négatifs et pierres de cristal intégrées au tapis.</p>{% else %}<h4>Energy Stone Mat</h4><p>Negative ion balls and crystal stones built into the mat.</p>{% endif %}</div></div>
           </div>
           <div class='cl-how-flow'>
-            <p class='cl-how-flow__title'>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</p>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
             <ol class='cl-how-flow__steps'>
               <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Trouvez votre emplacement</h4><p>Le dôme s'intègre dans une chambre, une salle bien-être ou un coin calme.</p>{% else %}<h4>Find Your Spot</h4><p>The dome fits into a bedroom, wellness room, or quiet corner.</p>{% endif %}</div></li>
               <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Réglez votre session</h4><p>Choisissez la température, la fréquence PEMF et la durée depuis le boîtier de contrôle.</p>{% else %}<h4>Set Your Session</h4><p>Choose temperature, PEMF frequency, and duration from the control box.</p>{% endif %}</div></li>
@@ -1035,7 +1065,10 @@
             <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Lunettes de protection incluses</h4><p>Lunettes de protection, système de support et essai à domicile de 30 jours.</p>{% else %}<h4>Included Safety Goggles</h4><p>Protective goggles, support system, and a 30-day home trial.</p>{% endif %}</div></div>
           </div>
           <div class='cl-how-flow'>
-            <p class='cl-how-flow__title'>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</p>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
             <ol class='cl-how-flow__steps'>
               <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Positionnez le panneau</h4><p>Placez-vous debout ou assis face au panneau, à une distance confortable.</p>{% else %}<h4>Position the Panel</h4><p>Stand or sit facing the panel at a comfortable distance.</p>{% endif %}</div></li>
               <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Choisissez votre objectif</h4><p>Sélectionnez récupération, peau, sommeil ou routine corps entier depuis l'écran tactile ou l'application.</p>{% else %}<h4>Choose Your Goal</h4><p>Select recovery, skin, sleep, or a full-body routine from the touch screen or app.</p>{% endif %}</div></li>
@@ -1050,7 +1083,10 @@
             <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Soutien de la peau</h4><p>Les longueurs d'onde rouges sont utilisées pour l'éclat, la texture et le soutien du collagène.</p>{% else %}<h4>Skin Support</h4><p>Red wavelengths are used for radiance, texture, and collagen support.</p>{% endif %}</div></div>
           </div>
           <div class='cl-how-flow'>
-            <p class='cl-how-flow__title'>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</p>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
             <ol class='cl-how-flow__steps'>
               <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Installez-le sur votre bureau</h4><p>Le panneau compact s'intègre à tout espace de travail grâce à son support ajustable.</p>{% else %}<h4>Set Up on Your Desk</h4><p>The compact panel fits any workspace with its adjustable stand.</p>{% endif %}</div></li>
               <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Choisissez votre objectif</h4><p>Sélectionnez récupération, concentration, sommeil ou peau depuis l'écran tactile ou l'application.</p>{% else %}<h4>Choose Your Goal</h4><p>Select recovery, focus, sleep, or skin from the touch screen or app.</p>{% endif %}</div></li>
