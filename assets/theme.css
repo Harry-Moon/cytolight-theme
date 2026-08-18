@@ -272,6 +272,8 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 }
 .site-header__megamenu--wide {
   grid-template-columns: repeat(2, minmax(150px, 1fr));
+  grid-template-rows: repeat(5, auto);
+  grid-auto-flow: column;
   min-width: 320px;
   gap: 2px 8px;
 }
