@@ -1,0 +1,134 @@
+  <div class='cl-notice-section' id='cl-notice'>
+    <div class='cl-notice-head'>
+      <p class='cl-eyebrow'>{% if is_fr %}Résultats attendus{% else %}What to Expect{% endif %}</p>
+      <h2>{% if is_fr %}Ce que vous remarquerez{% else %}What You'll Notice{% endif %}</h2>
+    </div>
+          {%- assign ck = "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg>" -%}
+          {%- if is_cap -%}
+          <div class='cl-notice-grid'>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Routine cuir chevelu régulière</h4><p>Le format casquette portable rend chaque séance facile à répéter.</p>{% else %}<h4>Consistent Scalp Routine</h4><p>The wearable cap format makes each session easy to repeat.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>660nm rouge + 850nm proche infrarouge</h4><p>Deux longueurs d'onde utilisées ensemble pour une routine cuir chevelu en surface et en profondeur.</p>{% else %}<h4>660nm Red + 850nm NIR</h4><p>Two wavelengths used together for surface and deeper scalp routines.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Confort mains libres</h4><p>Portez-la pendant une lecture, le travail ou la détente, sans tenir d'appareil.</p>{% else %}<h4>Hands-Free Comfort</h4><p>Wear it while you read, work, or unwind &mdash; no device to hold.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Cheveux à l'apparence plus saine</h4><p>Conçu pour soutenir la régularité et un rituel capillaire plus premium.</p>{% else %}<h4>Healthier-Looking Hair</h4><p>Built to support consistency and a more premium hair wellness ritual.</p>{% endif %}</div></div>
+          </div>
+          <div class='cl-how-flow'>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
+            <ol class='cl-how-flow__steps'>
+              <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Portez la casquette</h4><p>Placez-la sur votre tête comme une casquette classique ; les LED restent proches du cuir chevelu.</p>{% else %}<h4>Wear the Cap</h4><p>Place it on your head like any cap &mdash; LEDs sit close to the scalp.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Lancez votre session</h4><p>Réglez la luminosité, le minuteur et la pulsation, puis démarrez.</p>{% else %}<h4>Start Your Session</h4><p>Adjust brightness, timer, and pulsing, then begin.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>3</span><div>{% if is_fr %}<h4>Continuez votre journée</h4><p>Lisez, travaillez ou détendez-vous : la session tourne en mains libres.</p>{% else %}<h4>Continue Your Day</h4><p>Read, work, or relax &mdash; the session runs hands-free.</p>{% endif %}</div></li>
+            </ol>
+          </div>
+          {%- elsif is_mask -%}
+          <div class='cl-notice-grid'>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Une routine visage qui s'intègre</h4><p>Le masque tient seul sur le visage, chaque séance est facile à répéter.</p>{% else %}<h4>A Face Routine That Fits</h4><p>The mask stays in place on its own, so each session is easy to repeat.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>460nm bleu + 630nm rouge</h4><p>Soutien peau du quotidien associé à l'éclat et à la texture de surface.</p>{% else %}<h4>460nm Blue + 630nm Red</h4><p>Everyday skin support paired with surface-level radiance and texture.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>850nm proche infrarouge</h4><p>Une longueur d'onde plus profonde qui complète les canaux de surface.</p>{% else %}<h4>850nm Near-Infrared</h4><p>A deeper wavelength that complements the surface-level channels.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Séances sans fil</h4><p>Une batterie de 1800 mAh signifie aucune prise ni câble pendant l'utilisation.</p>{% else %}<h4>Cordless Sessions</h4><p>An 1800mAh battery means no socket and no cable during use.</p>{% endif %}</div></div>
+          </div>
+          <div class='cl-how-flow'>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
+            <ol class='cl-how-flow__steps'>
+              <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Placez le masque</h4><p>Le silicone souple épouse les contours de votre visage.</p>{% else %}<h4>Place the Mask</h4><p>The flexible silicone follows the contours of your face.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Choisissez votre mode</h4><p>Sélectionnez un mode de lumière, ajustez l'intensité, lancez le minuteur intégré.</p>{% else %}<h4>Choose Your Mode</h4><p>Pick a light mode, adjust brightness, start the built-in timer.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>3</span><div>{% if is_fr %}<h4>Détendez-vous, sans fil</h4><p>Aucune prise ni câble : bougez librement pendant toute la séance.</p>{% else %}<h4>Relax, Cordless</h4><p>No socket, no cable &mdash; move freely for the whole session.</p>{% endif %}</div></li>
+            </ol>
+          </div>
+          {%- elsif is_foot -%}
+          <div class='cl-notice-grid'>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Un rituel pour les pieds fatigués</h4><p>Enfilez la botte pendant un repos, une lecture ou une soirée calme.</p>{% else %}<h4>A Ritual for Tired Feet</h4><p>Wear the boot during rest, reading, or a quiet evening at home.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>660nm rouge + 850nm proche infrarouge</h4><p>Lumière maintenue proche du pied, du talon et de la cheville pendant la séance.</p>{% else %}<h4>660nm Red + 850nm NIR</h4><p>Light kept close to the foot, heel, and ankle throughout the session.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Port mains libres</h4><p>Format enveloppant, aucun appareil à tenir pendant le repos.</p>{% else %}<h4>Hands-Free Wear</h4><p>Wraparound format, no device to hold while you rest.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Pensé pour les longues journées</h4><p>Conçu pour le sport, les journées debout, le voyage ou un moment de récupération calme.</p>{% else %}<h4>Built for After Long Days</h4><p>Designed for training, standing days, travel, or a quiet recovery moment.</p>{% endif %}</div></div>
+          </div>
+          <div class='cl-how-flow'>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
+            <ol class='cl-how-flow__steps'>
+              <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Enfilez la botte</h4><p>Glissez-la autour du pied, du talon et de la cheville.</p>{% else %}<h4>Wear the Boot</h4><p>Slip it on around the foot, heel, and ankle.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Lancez une session confortable</h4><p>Commande simple pour démarrer, sans réglage compliqué.</p>{% else %}<h4>Start a Comfortable Session</h4><p>Simple control to begin &mdash; no complicated settings.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>3</span><div>{% if is_fr %}<h4>Reposez-vous pendant la séance</h4><p>Lisez, détendez-vous : vos mains restent libres.</p>{% else %}<h4>Rest While It Works</h4><p>Read, relax, or unwind &mdash; hands stay free throughout.</p>{% endif %}</div></li>
+            </ol>
+          </div>
+          {%- elsif is_knee -%}
+          <div class='cl-notice-grid'>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Confort articulaire ciblé</h4><p>Une genouillère qui garde la lumière proche de l'articulation du genou.</p>{% else %}<h4>Targeted Joint Comfort</h4><p>A sleeve that keeps light close to the knee joint throughout the session.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>660nm rouge + 850nm proche infrarouge</h4><p>Lumière rouge et proche infrarouge en routine de photobiomodulation.</p>{% else %}<h4>660nm Red + 850nm NIR</h4><p>Red and near-infrared light in a photobiomodulation routine.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Port mains libres</h4><p>Enfilez-la et gardez une session calme sans tenir d'appareil.</p>{% else %}<h4>Hands-Free Wear</h4><p>Wrap it on and keep a calm session without holding a device.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Batterie magnétique 6000 mAh</h4><p>Rechargeable et sans contrainte de câble pendant la session.</p>{% else %}<h4>6000mAh Magnetic Battery</h4><p>Rechargeable and free of cable constraints during the session.</p>{% endif %}</div></div>
+          </div>
+          <div class='cl-how-flow'>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
+            <ol class='cl-how-flow__steps'>
+              <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Enfilez-la</h4><p>La genouillère s'enroule autour de l'articulation en quelques secondes.</p>{% else %}<h4>Wrap It On</h4><p>The sleeve wraps around the knee joint in seconds.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Lancez la session</h4><p>Commande simple, aucun réglage compliqué à apprendre.</p>{% else %}<h4>Start the Session</h4><p>Simple control, no complicated settings to learn.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>3</span><div>{% if is_fr %}<h4>Reposez-vous et récupérez</h4><p>Lisez, regardez un film ou détendez-vous pendant la séance.</p>{% else %}<h4>Rest and Recover</h4><p>Read, watch a film, or relax while it runs.</p>{% endif %}</div></li>
+            </ol>
+          </div>
+          {%- elsif is_sauna_dome -%}
+          <div class='cl-notice-grid'>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Récupération corps entier</h4><p>1 120 LED rouge et proche infrarouge réparties sur le dôme et le tapis.</p>{% else %}<h4>Full-Body Recovery</h4><p>1,120 red and near-infrared LEDs spread across the dome and mat.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Thérapie PEMF</h4><p>4 bobines, fréquence réglable de 1 à 30Hz, ajoutée à la session.</p>{% else %}<h4>PEMF Therapy</h4><p>4 coils, frequency adjustable from 1&ndash;30Hz, layered onto the session.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Chaleur infrarouge à 3 zones</h4><p>Haut du corps, taille et bas du corps, contrôlés indépendamment.</p>{% else %}<h4>3-Zone Infrared Heat</h4><p>Upper body, waist, and lower body, controlled independently.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Tapis énergétique</h4><p>Billes d'ions négatifs et pierres de cristal intégrées au tapis.</p>{% else %}<h4>Energy Stone Mat</h4><p>Negative ion balls and crystal stones built into the mat.</p>{% endif %}</div></div>
+          </div>
+          <div class='cl-how-flow'>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
+            <ol class='cl-how-flow__steps'>
+              <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Trouvez votre emplacement</h4><p>Le dôme s'intègre dans une chambre, une salle bien-être ou un coin calme.</p>{% else %}<h4>Find Your Spot</h4><p>The dome fits into a bedroom, wellness room, or quiet corner.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Réglez votre session</h4><p>Choisissez la température, la fréquence PEMF et la durée depuis le boîtier de contrôle.</p>{% else %}<h4>Set Your Session</h4><p>Choose temperature, PEMF frequency, and duration from the control box.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>3</span><div>{% if is_fr %}<h4>Installez-vous</h4><p>Lumière, chaleur, PEMF et tapis énergétique fonctionnent ensemble pendant que vous vous reposez.</p>{% else %}<h4>Settle In</h4><p>Light, heat, PEMF, and the energy stone mat run together while you rest.</p>{% endif %}</div></li>
+            </ol>
+          </div>
+          {%- elsif is_pano_ultra -%}
+          <div class='cl-notice-grid'>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Couverture lumineuse corps entier</h4><p>Une surface de panneau plus grande, pensée pour les routines corps entier et sportives.</p>{% else %}<h4>Full-Body Light Coverage</h4><p>A larger panel surface built for full-body and athletic routines.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>7 longueurs d'onde calibrées</h4><p>Contrôlables indépendamment depuis l'écran tactile ou l'application.</p>{% else %}<h4>7 Calibrated Wavelengths</h4><p>Independently controllable via touch screen or app.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Conçu pour les espaces dédiés</h4><p>Format vertical adapté aux studios, salles d'entraînement et salles de récupération.</p>{% else %}<h4>Built for Dedicated Spaces</h4><p>Vertical format suited to studios, training rooms, and recovery rooms.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Lunettes de protection incluses</h4><p>Lunettes de protection, système de support et essai à domicile de 30 jours.</p>{% else %}<h4>Included Safety Goggles</h4><p>Protective goggles, support system, and a 30-day home trial.</p>{% endif %}</div></div>
+          </div>
+          <div class='cl-how-flow'>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
+            <ol class='cl-how-flow__steps'>
+              <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Positionnez le panneau</h4><p>Placez-vous debout ou assis face au panneau, à une distance confortable.</p>{% else %}<h4>Position the Panel</h4><p>Stand or sit facing the panel at a comfortable distance.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Choisissez votre objectif</h4><p>Sélectionnez récupération, peau, sommeil ou routine corps entier depuis l'écran tactile ou l'application.</p>{% else %}<h4>Choose Your Goal</h4><p>Select recovery, skin, sleep, or a full-body routine from the touch screen or app.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>3</span><div>{% if is_fr %}<h4>Lancez la session</h4><p>Gardez une distance et une durée faciles à répéter.</p>{% else %}<h4>Run the Session</h4><p>Keep a distance and duration that are easy to repeat.</p>{% endif %}</div></li>
+            </ol>
+          </div>
+          {%- else -%}
+          <div class='cl-notice-grid'>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Récupération musculaire et tissulaire</h4><p>La lumière rouge et proche infrarouge soutient la circulation après le sport ou de longues heures de bureau.</p>{% else %}<h4>Muscle &amp; Tissue Recovery</h4><p>Red and near-infrared light support circulation after training or long desk hours.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Concentration accrue</h4><p>La lumière ambre soutient un rituel de bureau plus énergisant.</p>{% else %}<h4>Sharper Focus</h4><p>Amber light supports a more energizing desk ritual.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Un signal du soir plus calme</h4><p>Les séances du soir peuvent soutenir une routine de sommeil plus régulière.</p>{% else %}<h4>A Calmer Evening Signal</h4><p>Evening sessions can support a more consistent sleep routine.</p>{% endif %}</div></div>
+            <div class='cl-notice-card'><span class='cl-notice-card__icon'>{{ ck }}</span><div>{% if is_fr %}<h4>Soutien de la peau</h4><p>Les longueurs d'onde rouges sont utilisées pour l'éclat, la texture et le soutien du collagène.</p>{% else %}<h4>Skin Support</h4><p>Red wavelengths are used for radiance, texture, and collagen support.</p>{% endif %}</div></div>
+          </div>
+          <div class='cl-how-flow'>
+            <div class='cl-how-flow__title'>
+              <p class='cl-eyebrow'>{% if is_fr %}Trois étapes{% else %}Three Steps{% endif %}</p>
+              <h3>{% if is_fr %}Comment l'utiliser{% else %}How to Use It{% endif %}</h3>
+            </div>
+            <ol class='cl-how-flow__steps'>
+              <li><span class='cl-how-flow__num'>1</span><div>{% if is_fr %}<h4>Installez-le sur votre bureau</h4><p>Le panneau compact s'intègre à tout espace de travail grâce à son support ajustable.</p>{% else %}<h4>Set Up on Your Desk</h4><p>The compact panel fits any workspace with its adjustable stand.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>2</span><div>{% if is_fr %}<h4>Choisissez votre objectif</h4><p>Sélectionnez récupération, concentration, sommeil ou peau depuis l'écran tactile ou l'application.</p>{% else %}<h4>Choose Your Goal</h4><p>Select recovery, focus, sleep, or skin from the touch screen or app.</p>{% endif %}</div></li>
+              <li><span class='cl-how-flow__num'>3</span><div>{% if is_fr %}<h4>Lancez une courte session</h4><p>10 à 20 minutes est un bon point de départ, répétable chaque jour.</p>{% else %}<h4>Run a Short Session</h4><p>10&ndash;20 minutes is a good starting point, repeatable daily.</p>{% endif %}</div></li>
+            </ol>
+          </div>
+          {%- endif -%}
+  </div>
