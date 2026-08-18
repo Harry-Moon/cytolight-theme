@@ -63,25 +63,6 @@
   <body class="template-{{ template.name }}">
     <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_text' | t }}</a>
 
-    <div class="global-language">
-      {%- if localization.available_languages.size > 1 -%}
-        {% form 'localization', class: 'global-language__form' %}
-          <label class="visually-hidden" for="GlobalLanguageSelector">Language</label>
-          <select id="GlobalLanguageSelector" class="global-language__select" name="locale_code" onchange="this.form.submit()">
-            {%- for language in localization.available_languages -%}
-              <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
-                {{ language.iso_code | upcase }}
-              </option>
-            {%- endfor -%}
-          </select>
-        {% endform %}
-      {%- else -%}
-        <span class="global-language__static" aria-label="Current language">
-          {{ localization.language.iso_code | default: request.locale.iso_code | upcase }}
-        </span>
-      {%- endif -%}
-    </div>
-
     {% section 'header' %}
 
     <main id="MainContent" role="main">
