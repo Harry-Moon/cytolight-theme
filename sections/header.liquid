@@ -18,19 +18,95 @@
   <div class="container site-header__inner">
     <nav class="site-header__nav" aria-label="{% if is_fr %}Navigation principale{% elsif is_pt %}Navegacao principal{% else %}Primary navigation{% endif %}">
       <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% elsif is_pt %}Inicio{% else %}Home{% endif %}</a>
+
       <div class="site-header__nav-item" data-nav-submenu>
-        <a class="site-header__nav-link" href="{{ routes.all_products_collection_url }}">{% if is_fr %}Produits{% elsif is_pt %}Produtos{% else %}Products{% endif %}</a>
-        <button type="button" class="site-header__submenu-toggle" aria-expanded="false" aria-label="{% if is_fr %}Afficher le sous-menu Produits{% elsif is_pt %}Mostrar submenu Produtos{% else %}Show Products submenu{% endif %}">
-          <svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <button type="button" class="site-header__nav-link" aria-expanded="false">
+          {% if is_fr %}Boutique{% elsif is_pt %}Loja{% else %}Shop{% endif %}
+          <svg class="site-header__submenu-toggle" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <div class="site-header__submenu">
-          <a href="/products/cytolight-desk">DESK</a>
-          <a href="/products/cytolight-cap">{% if is_fr %}Cheveux{% elsif is_pt %}Cabelo{% else %}Hair{% endif %}</a>
-          <a href="/products/cytolight-foot">{% if is_fr %}Pieds{% elsif is_pt %}Pes{% else %}Foot{% endif %}</a>
+        <div class="site-header__megamenu site-header__megamenu--wide">
+          <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Tous les produits{% elsif is_pt %}Todos os produtos{% else %}All Products{% endif %}</a>
+          <a href="/products/cytolight-mask">{% if is_fr %}Masque{% elsif is_pt %}Mascara{% else %}Mask{% endif %}</a>
           <a href="/products/cytolight-knee">{% if is_fr %}Genou{% elsif is_pt %}Joelho{% else %}Knee{% endif %}</a>
-          <a href="/products/cytolight-sauna-dome">Sauna Dome</a>
-          <a href="/products/cytolight-mask">{% if is_fr %}Visage{% elsif is_pt %}Rosto{% else %}Face{% endif %}</a>
-          <a href="/products/cytolight-pano-ultra">{% if is_fr %}Corps entier{% elsif is_pt %}Corpo inteiro{% else %}Full body{% endif %}</a>
+          <a href="/products/cytolight-desk">{% if is_fr %}Desk{% elsif is_pt %}Desk{% else %}Desk{% endif %}</a>
+          <a href="{{ collections['panels'].url }}">{% if is_fr %}Panneaux{% elsif is_pt %}Paineis{% else %}Panels{% endif %}</a>
+          <a href="/products/cytolight-sauna-dome">{% if is_fr %}Dôme{% elsif is_pt %}Domo{% else %}Dome{% endif %}</a>
+          <a href="/pages/bundles">{% if is_fr %}Packs{% elsif is_pt %}Kits{% else %}Bundles{% endif %}</a>
+          <a href="/products/cytolight-cap">{% if is_fr %}Casquette{% elsif is_pt %}Bone{% else %}Cap{% endif %}</a>
+          <a href="/products/cytolight-foot">{% if is_fr %}Pieds{% elsif is_pt %}Pes{% else %}Foot{% endif %}</a>
+        </div>
+      </div>
+
+      <div class="site-header__nav-item" data-nav-submenu>
+        <button type="button" class="site-header__nav-link" aria-expanded="false">
+          {% if is_fr %}Par objectif{% elsif is_pt %}Por objetivo{% else %}By Goal{% endif %}
+          <svg class="site-header__submenu-toggle" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="site-header__megamenu">
+          <a href="{{ collections['recovery'].url }}">{% if is_fr %}Récupération{% elsif is_pt %}Recuperacao{% else %}Recovery{% endif %}</a>
+          <a href="{{ collections['performance'].url }}">{% if is_fr %}Performance{% elsif is_pt %}Performance{% else %}Performance{% endif %}</a>
+          <a href="{{ collections['skin-amp-glow'].url }}">{% if is_fr %}Peau &amp; Éclat{% elsif is_pt %}Pele &amp; Brilho{% else %}Skin &amp; Glow{% endif %}</a>
+          <a href="{{ collections['longevity'].url }}">{% if is_fr %}Longévité{% elsif is_pt %}Longevidade{% else %}Longevity{% endif %}</a>
+          <a href="{{ collections['work-amp-focus'].url }}">{% if is_fr %}Travail &amp; Concentration{% elsif is_pt %}Trabalho &amp; Foco{% else %}Work &amp; Focus{% endif %}</a>
+        </div>
+      </div>
+
+      <div class="site-header__nav-item" data-nav-submenu>
+        <button type="button" class="site-header__nav-link" aria-expanded="false">
+          {% if is_fr %}Protocoles{% elsif is_pt %}Protocolos{% else %}Protocols{% endif %}
+          <svg class="site-header__submenu-toggle" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="site-header__megamenu site-header__megamenu--wide">
+          <a href="/pages/protocols">{% if is_fr %}Tous les protocoles{% elsif is_pt %}Todos os protocolos{% else %}All Protocols{% endif %}</a>
+          <a href="/pages/pre-workout">{% if is_fr %}Avant l'entraînement{% elsif is_pt %}Pre-treino{% else %}Pre-Workout{% endif %}</a>
+          <a href="/pages/post-workout">{% if is_fr %}Après l'entraînement{% elsif is_pt %}Pos-treino{% else %}Post-Workout{% endif %}</a>
+          <a href="/pages/daily-recovery">{% if is_fr %}Récupération quotidienne{% elsif is_pt %}Recuperacao diaria{% else %}Daily Recovery{% endif %}</a>
+          <a href="/pages/skin-routine">{% if is_fr %}Routine peau{% elsif is_pt %}Rotina de pele{% else %}Skin Routine{% endif %}</a>
+          <a href="/pages/full-body-routine">{% if is_fr %}Routine corps entier{% elsif is_pt %}Rotina corpo inteiro{% else %}Full Body Routine{% endif %}</a>
+          <a href="/pages/workday-routine">{% if is_fr %}Routine journée de travail{% elsif is_pt %}Rotina de trabalho{% else %}Workday Routine{% endif %}</a>
+        </div>
+      </div>
+
+      <div class="site-header__nav-item" data-nav-submenu>
+        <button type="button" class="site-header__nav-link" aria-expanded="false">
+          {% if is_fr %}Apprendre{% elsif is_pt %}Aprender{% else %}Learn{% endif %}
+          <svg class="site-header__submenu-toggle" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="site-header__megamenu">
+          <a href="/pages/comment-ca-marche">{% if is_fr %}Comment ça marche{% elsif is_pt %}Como funciona{% else %}How It Works{% endif %}</a>
+          <a href="/pages/wavelengths">{% if is_fr %}Longueurs d'onde{% elsif is_pt %}Comprimentos de onda{% else %}Wavelengths{% endif %}</a>
+          <a href="/pages/science">{% if is_fr %}Science{% elsif is_pt %}Ciencia{% else %}Science{% endif %}</a>
+          <a href="/pages/how-to-use">{% if is_fr %}Mode d'emploi{% elsif is_pt %}Como usar{% else %}How to Use{% endif %}</a>
+          <a href="/pages/faq">FAQ</a>
+          <a href="/pages/academy">{% if is_fr %}Académie CytoLight{% elsif is_pt %}Academia CytoLight{% else %}CytoLight Academy{% endif %}</a>
+        </div>
+      </div>
+
+      <div class="site-header__nav-item" data-nav-submenu>
+        <button type="button" class="site-header__nav-link" aria-expanded="false">
+          CytoLight Pro
+          <svg class="site-header__submenu-toggle" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="site-header__megamenu">
+          <a href="/pages/clinics">{% if is_fr %}Cliniques{% elsif is_pt %}Clinicas{% else %}Clinics{% endif %}</a>
+          <a href="/pages/physios">{% if is_fr %}Kinésithérapeutes{% elsif is_pt %}Fisioterapeutas{% else %}Physios{% endif %}</a>
+          <a href="/pages/gyms">{% if is_fr %}Salles de sport{% elsif is_pt %}Academias{% else %}Gyms{% endif %}</a>
+          <a href="/pages/hotels-spas">{% if is_fr %}Hôtels &amp; Spas{% elsif is_pt %}Hoteis &amp; Spas{% else %}Hotels &amp; Spas{% endif %}</a>
+          <a href="/pages/corporate-wellness">{% if is_fr %}Bien-être en entreprise{% elsif is_pt %}Bem-estar corporativo{% else %}Corporate Wellness{% endif %}</a>
+          <a href="/pages/become-a-dealer">{% if is_fr %}Devenir revendeur{% elsif is_pt %}Torne-se revendedor{% else %}Become a Dealer{% endif %}</a>
+        </div>
+      </div>
+
+      <div class="site-header__nav-item" data-nav-submenu>
+        <button type="button" class="site-header__nav-link" aria-expanded="false">
+          {% if is_fr %}Pourquoi CytoLight{% elsif is_pt %}Por que CytoLight{% else %}Why CytoLight{% endif %}
+          <svg class="site-header__submenu-toggle" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="site-header__megamenu">
+          <a href="/pages/technology">{% if is_fr %}Technologie{% elsif is_pt %}Tecnologia{% else %}Technology{% endif %}</a>
+          <a href="/pages/quality">{% if is_fr %}Qualité{% elsif is_pt %}Qualidade{% else %}Quality{% endif %}</a>
+          <a href="/pages/our-approach">{% if is_fr %}Notre approche{% elsif is_pt %}Nossa abordagem{% else %}Our Approach{% endif %}</a>
+          <a href="/pages/our-story">{% if is_fr %}Notre histoire{% elsif is_pt %}Nossa historia{% else %}Our Story{% endif %}</a>
         </div>
       </div>
     </nav>
@@ -48,7 +124,6 @@
     </a>
 
     <div class="site-header__utils">
-      <a class="site-header__compare" href="{{ routes.all_products_collection_url }}">{% if is_fr %}Comparer{% elsif is_pt %}Comparar{% else %}Compare{% endif %}</a>
       {%- if localization.available_languages.size > 1 -%}
         {% form 'localization', class: 'site-header__language-form' %}
           <label class="visually-hidden" for="HeaderLanguageSelector">Language</label>
@@ -76,22 +151,87 @@
         {% render 'icon', name: 'cart' %}
         <span class="site-header__cart-count">{{ cart.item_count }}</span>
       </a>
-      <a class="site-header__cta" href="{{ routes.all_products_collection_url }}">{% if is_fr %}Acheter{% elsif is_pt %}Comprar{% else %}Buy now{% endif %}</a>
+      <a class="site-header__cta" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre CytoLight{% elsif is_pt %}Encontre seu CytoLight{% else %}Find Your CytoLight{% endif %}</a>
     </div>
 
     <details class="site-header__mobile-menu">
       <summary>{% if is_fr %}Menu{% elsif is_pt %}Menu{% else %}Menu{% endif %}</summary>
       <div class="site-header__mobile-panel">
-        <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% elsif is_pt %}Inicio{% else %}Home{% endif %}</a>
-        <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Voir tous les produits{% elsif is_pt %}Ver todos os produtos{% else %}View all products{% endif %}</a>
-        <a href="/products/cytolight-desk">CytoLight DESK</a>
-        <a href="/products/cytolight-cap">CytoLight REDLIGHT CAP</a>
-        <a href="/products/cytolight-foot">CytoLight FOOT</a>
-        <a href="/products/cytolight-knee">CytoLight KNEE</a>
-        <a href="/products/cytolight-sauna-dome">CytoLight SAUNA DOME</a>
-        <a href="/products/cytolight-mask">CytoLight MASK</a>
-        <a href="/products/cytolight-pano-plus">CytoLight PANO PLUS</a>
-        <a href="/products/cytolight-pano-ultra">CytoLight PANO ULTRA</a>
+        <a class="site-header__mobile-toplink" href="{{ routes.root_url }}">{% if is_fr %}Accueil{% elsif is_pt %}Inicio{% else %}Home{% endif %}</a>
+        <a class="site-header__mobile-toplink" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre CytoLight{% elsif is_pt %}Encontre seu CytoLight{% else %}Find Your CytoLight{% endif %}</a>
+
+        <details class="site-header__accordion" name="mobile-nav">
+          <summary>{% if is_fr %}Boutique{% elsif is_pt %}Loja{% else %}Shop{% endif %}</summary>
+          <div class="site-header__accordion-body">
+            <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Tous les produits{% elsif is_pt %}Todos os produtos{% else %}All Products{% endif %}</a>
+            <a href="/products/cytolight-mask">{% if is_fr %}Masque{% elsif is_pt %}Mascara{% else %}Mask{% endif %}</a>
+            <a href="/products/cytolight-knee">{% if is_fr %}Genou{% elsif is_pt %}Joelho{% else %}Knee{% endif %}</a>
+            <a href="/products/cytolight-desk">Desk</a>
+            <a href="{{ collections['panels'].url }}">{% if is_fr %}Panneaux{% elsif is_pt %}Paineis{% else %}Panels{% endif %}</a>
+            <a href="/products/cytolight-sauna-dome">{% if is_fr %}Dôme{% elsif is_pt %}Domo{% else %}Dome{% endif %}</a>
+            <a href="/pages/bundles">{% if is_fr %}Packs{% elsif is_pt %}Kits{% else %}Bundles{% endif %}</a>
+            <a href="/products/cytolight-cap">{% if is_fr %}Casquette{% elsif is_pt %}Bone{% else %}Cap{% endif %}</a>
+            <a href="/products/cytolight-foot">{% if is_fr %}Pieds{% elsif is_pt %}Pes{% else %}Foot{% endif %}</a>
+          </div>
+        </details>
+
+        <details class="site-header__accordion" name="mobile-nav">
+          <summary>{% if is_fr %}Par objectif{% elsif is_pt %}Por objetivo{% else %}By Goal{% endif %}</summary>
+          <div class="site-header__accordion-body">
+            <a href="{{ collections['recovery'].url }}">{% if is_fr %}Récupération{% elsif is_pt %}Recuperacao{% else %}Recovery{% endif %}</a>
+            <a href="{{ collections['performance'].url }}">Performance</a>
+            <a href="{{ collections['skin-amp-glow'].url }}">{% if is_fr %}Peau &amp; Éclat{% elsif is_pt %}Pele &amp; Brilho{% else %}Skin &amp; Glow{% endif %}</a>
+            <a href="{{ collections['longevity'].url }}">{% if is_fr %}Longévité{% elsif is_pt %}Longevidade{% else %}Longevity{% endif %}</a>
+            <a href="{{ collections['work-amp-focus'].url }}">{% if is_fr %}Travail &amp; Concentration{% elsif is_pt %}Trabalho &amp; Foco{% else %}Work &amp; Focus{% endif %}</a>
+          </div>
+        </details>
+
+        <details class="site-header__accordion" name="mobile-nav">
+          <summary>{% if is_fr %}Protocoles{% elsif is_pt %}Protocolos{% else %}Protocols{% endif %}</summary>
+          <div class="site-header__accordion-body">
+            <a href="/pages/protocols">{% if is_fr %}Tous les protocoles{% elsif is_pt %}Todos os protocolos{% else %}All Protocols{% endif %}</a>
+            <a href="/pages/pre-workout">{% if is_fr %}Avant l'entraînement{% elsif is_pt %}Pre-treino{% else %}Pre-Workout{% endif %}</a>
+            <a href="/pages/post-workout">{% if is_fr %}Après l'entraînement{% elsif is_pt %}Pos-treino{% else %}Post-Workout{% endif %}</a>
+            <a href="/pages/daily-recovery">{% if is_fr %}Récupération quotidienne{% elsif is_pt %}Recuperacao diaria{% else %}Daily Recovery{% endif %}</a>
+            <a href="/pages/skin-routine">{% if is_fr %}Routine peau{% elsif is_pt %}Rotina de pele{% else %}Skin Routine{% endif %}</a>
+            <a href="/pages/full-body-routine">{% if is_fr %}Routine corps entier{% elsif is_pt %}Rotina corpo inteiro{% else %}Full Body Routine{% endif %}</a>
+            <a href="/pages/workday-routine">{% if is_fr %}Routine journée de travail{% elsif is_pt %}Rotina de trabalho{% else %}Workday Routine{% endif %}</a>
+          </div>
+        </details>
+
+        <details class="site-header__accordion" name="mobile-nav">
+          <summary>{% if is_fr %}Apprendre{% elsif is_pt %}Aprender{% else %}Learn{% endif %}</summary>
+          <div class="site-header__accordion-body">
+            <a href="/pages/comment-ca-marche">{% if is_fr %}Comment ça marche{% elsif is_pt %}Como funciona{% else %}How It Works{% endif %}</a>
+            <a href="/pages/wavelengths">{% if is_fr %}Longueurs d'onde{% elsif is_pt %}Comprimentos de onda{% else %}Wavelengths{% endif %}</a>
+            <a href="/pages/science">{% if is_fr %}Science{% elsif is_pt %}Ciencia{% else %}Science{% endif %}</a>
+            <a href="/pages/how-to-use">{% if is_fr %}Mode d'emploi{% elsif is_pt %}Como usar{% else %}How to Use{% endif %}</a>
+            <a href="/pages/faq">FAQ</a>
+            <a href="/pages/academy">{% if is_fr %}Académie CytoLight{% elsif is_pt %}Academia CytoLight{% else %}CytoLight Academy{% endif %}</a>
+          </div>
+        </details>
+
+        <details class="site-header__accordion" name="mobile-nav">
+          <summary>CytoLight Pro</summary>
+          <div class="site-header__accordion-body">
+            <a href="/pages/clinics">{% if is_fr %}Cliniques{% elsif is_pt %}Clinicas{% else %}Clinics{% endif %}</a>
+            <a href="/pages/physios">{% if is_fr %}Kinésithérapeutes{% elsif is_pt %}Fisioterapeutas{% else %}Physios{% endif %}</a>
+            <a href="/pages/gyms">{% if is_fr %}Salles de sport{% elsif is_pt %}Academias{% else %}Gyms{% endif %}</a>
+            <a href="/pages/hotels-spas">{% if is_fr %}Hôtels &amp; Spas{% elsif is_pt %}Hoteis &amp; Spas{% else %}Hotels &amp; Spas{% endif %}</a>
+            <a href="/pages/corporate-wellness">{% if is_fr %}Bien-être en entreprise{% elsif is_pt %}Bem-estar corporativo{% else %}Corporate Wellness{% endif %}</a>
+            <a href="/pages/become-a-dealer">{% if is_fr %}Devenir revendeur{% elsif is_pt %}Torne-se revendedor{% else %}Become a Dealer{% endif %}</a>
+          </div>
+        </details>
+
+        <details class="site-header__accordion" name="mobile-nav">
+          <summary>{% if is_fr %}Pourquoi CytoLight{% elsif is_pt %}Por que CytoLight{% else %}Why CytoLight{% endif %}</summary>
+          <div class="site-header__accordion-body">
+            <a href="/pages/technology">{% if is_fr %}Technologie{% elsif is_pt %}Tecnologia{% else %}Technology{% endif %}</a>
+            <a href="/pages/quality">{% if is_fr %}Qualité{% elsif is_pt %}Qualidade{% else %}Quality{% endif %}</a>
+            <a href="/pages/our-approach">{% if is_fr %}Notre approche{% elsif is_pt %}Nossa abordagem{% else %}Our Approach{% endif %}</a>
+            <a href="/pages/our-story">{% if is_fr %}Notre histoire{% elsif is_pt %}Nossa historia{% else %}Our Story{% endif %}</a>
+          </div>
+        </details>
       </div>
     </details>
   </div>
