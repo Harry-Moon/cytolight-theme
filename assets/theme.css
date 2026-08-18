@@ -278,7 +278,8 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   gap: 2px 8px;
 }
 .site-header__megamenu a {
-  padding: 9px 12px;
+  position: relative;
+  padding: 9px 12px 9px 16px;
   border-radius: 9px;
   font-size: .74rem;
   font-weight: 800;
@@ -286,8 +287,28 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--color-foreground);
+  overflow: hidden;
+  transition: background .3s cubic-bezier(.4,0,.2,1), color .3s cubic-bezier(.4,0,.2,1), padding-left .3s cubic-bezier(.4,0,.2,1), letter-spacing .3s cubic-bezier(.4,0,.2,1);
 }
-.site-header__megamenu a:hover { background: rgba(210,13,47,.08); color: var(--color-accent-deep); }
+.site-header__megamenu a::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  background: linear-gradient(180deg, var(--color-accent), var(--color-accent-deep));
+  transform: translateY(-50%);
+  border-radius: 0 4px 4px 0;
+  transition: height .3s cubic-bezier(.4,0,.2,1);
+}
+.site-header__megamenu a:hover {
+  background: rgba(210,13,47,.06);
+  color: var(--color-accent-deep);
+  padding-left: 22px;
+  letter-spacing: .06em;
+}
+.site-header__megamenu a:hover::before { height: 62%; }
 .site-header__nav-item:hover .site-header__megamenu,
 .site-header__nav-item:focus-within .site-header__megamenu,
 .site-header__nav-item.is-open .site-header__megamenu {
