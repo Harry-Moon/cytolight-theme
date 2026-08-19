@@ -61,9 +61,9 @@
     next?.addEventListener('click', () => track.scrollBy({ left: scrollBy(), behavior: 'smooth' }));
   });
 
-  // Header nav submenu (e.g. "Produits") — click/tap toggle on top of hover
+  // Header nav submenu / mega-menu — click/tap toggle on top of hover
   document.querySelectorAll('[data-nav-submenu]').forEach((item) => {
-    const toggle = item.querySelector('.site-header__submenu-toggle');
+    const toggle = item.querySelector('.site-header__nav-link');
     if (!toggle) return;
     const close = () => {
       item.classList.remove('is-open');
