@@ -378,29 +378,15 @@
           <div class="cy-proof__stat"><strong>30 {% if is_fr %}jours{% else %}days{% endif %}</strong><span>{% if is_fr %}d'essai satisfait ou rembours&eacute;{% else %}money-back home trial{% endif %}</span></div>
         {%- endif -%}
       </div>
-      <div class="cy-proof__certs cy-reveal">
+      <div class="cy-proof__certs cy-proof__certs--photo cy-reveal" style="background-image:url({{ 'cytolight-goal-skin-red-halo.jpg' | file_url }});">
         <p class="cy-proof__certs-label">{% if is_fr %}Conformit&eacute; internationale{% else %}International compliance{% endif %}</p>
         <div class="cy-proof__certs-row">
-          <span class="cy-cert-badge">
-            <svg class="cy-cert-badge__ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-            <span class="cy-cert-badge__text">CE</span>
-          </span>
-          <span class="cy-cert-badge">
-            <svg class="cy-cert-badge__ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-            <span class="cy-cert-badge__text">RoHS</span>
-          </span>
-          <span class="cy-cert-badge">
-            <svg class="cy-cert-badge__ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-            <span class="cy-cert-badge__text">FDA</span>
-          </span>
-          <span class="cy-cert-badge">
-            <svg class="cy-cert-badge__ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-            <span class="cy-cert-badge__text">MDL</span>
-          </span>
-          <span class="cy-cert-badge">
-            <svg class="cy-cert-badge__ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22.5" fill="none" stroke="currentColor" stroke-width="1"/></svg>
-            <span class="cy-cert-badge__text">TGA</span>
-          </span>
+          {%- assign cert_logos = "01_MDSAP.png,02_BSI_ISO_13485.png,03_MDL.png,04_TGA.png,05_510K_K233114.png,06_UL_IEC60601.png,07_ETL_Intertek.png,08_Global_Mark.png,09_UKCA.png,10_SGS.png,11_RoHS.png,12_FCC.png" | split: "," -%}
+          {%- for logo in cert_logos -%}
+            <span class="cy-cert-badge">
+              <img class="cy-cert-badge__logo" src="{{ logo | file_url }}" alt="" loading="lazy" width="84" height="26">
+            </span>
+          {%- endfor -%}
         </div>
       </div>
     </div>

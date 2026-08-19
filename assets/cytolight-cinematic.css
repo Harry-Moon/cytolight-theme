@@ -366,10 +366,12 @@
 .cy-proof__certs { grid-column: 1 / -1; margin-top: 56px; padding-top: 40px; border-top: 1px solid #bbb; }
 .cy-proof__certs-label { font-size: 11px; font-weight: 650; letter-spacing: .18em; text-transform: uppercase; color: var(--cy-muted); margin: 0 0 26px; }
 .cy-proof__certs-row { display: flex; flex-wrap: wrap; align-items: center; gap: 26px; }
-.cy-cert-badge { position: relative; display: flex; align-items: center; justify-content: center; width: 58px; height: 58px; flex-shrink: 0; color: var(--cy-ink); transition: color .2s ease; }
-.cy-cert-badge:hover { color: var(--cy-accent, #c8102e); }
-.cy-cert-badge__ring { position: absolute; inset: 0; width: 100%; height: 100%; }
-.cy-cert-badge__text { position: relative; font-size: 10.5px; font-weight: 700; letter-spacing: .03em; line-height: 1; text-align: center; }
+.cy-proof__certs--photo { position: relative; margin-top: 56px; padding: 44px 40px; border-top: none; border-radius: 20px; overflow: hidden; background-size: cover; background-position: center; isolation: isolate; }
+.cy-proof__certs--photo::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 4, 5, .72), rgba(10, 4, 5, .82)); z-index: -1; }
+.cy-proof__certs--photo .cy-proof__certs-label { color: rgba(255, 255, 255, .68); }
+.cy-proof__certs--photo .cy-proof__certs-row { gap: 18px; }
+.cy-cert-badge { display: flex; align-items: center; justify-content: center; height: 40px; flex-shrink: 0; }
+.cy-cert-badge__logo { display: block; height: 100%; width: auto; max-width: 92px; object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .35)); }
 
 .cy-table-wrap { margin-top: 54px; overflow-x: auto; border-top: 1px solid var(--cy-line); }
 .cy-table { width: 100%; min-width: 760px; border-collapse: collapse; }
@@ -447,8 +449,9 @@
   .cy-proof__stat strong { font-size: 28px; }
   .cy-proof__certs { margin-top: 40px; padding-top: 28px; }
   .cy-proof__certs-row { gap: 18px; }
-  .cy-cert-badge { width: 50px; height: 50px; }
-  .cy-cert-badge__text { font-size: 9.5px; }
+  .cy-proof__certs--photo { padding: 32px 24px; }
+  .cy-cert-badge { height: 32px; }
+  .cy-cert-badge__logo { max-width: 74px; }
   .cy-final { min-height: 620px; }
   .cy-reassure__grid { grid-template-columns: 1fr; }
   .cy-reassure__item { border-right: 0; border-bottom: 1px solid var(--cy-line); }
