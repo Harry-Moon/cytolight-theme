@@ -117,9 +117,9 @@
         <p class="cy-kicker">{% if is_fr %}Sept spectres, un seul syst&egrave;me{% else %}Seven spectra, one system{% endif %}</p>
         <h2>{% if is_fr %}La bonne lumi&egrave;re. Au bon moment.{% else %}The right light. At the right time.{% endif %}</h2>
         <p>{% if is_fr %}De l'ambre au proche infrarouge profond, chaque longueur d'onde r&eacute;pond &agrave; un besoin diff&eacute;rent. CytoLight DESK vous permet de les utiliser ensemble ou de les ajuster individuellement depuis l'&eacute;cran tactile et l'application.{% else %}From amber to deep near-infrared, each wavelength serves a different purpose. CytoLight DESK lets you use them together or tune them individually from its touchscreen and app.{% endif %}</p>
-        <div class="cy-spectrum" aria-label="{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}">
-          <span><strong>590</strong>Amber</span><span><strong>630</strong>Red</span><span><strong>660</strong>Deep red</span>
-          <span><strong>810</strong>NIR</span><span><strong>830</strong>NIR</span><span><strong>850</strong>NIR</span><span><strong>940</strong>Deep NIR</span>
+        <div class="cy-spectrum cy-reveal" aria-label="{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}">
+          <span style="--wave-color:#ffb347;--wave-glow:rgba(255,179,71,.55)"><strong>590</strong>Amber</span><span style="--wave-color:#e8303a;--wave-glow:rgba(232,48,58,.55)"><strong>630</strong>Red</span><span style="--wave-color:#c8102e;--wave-glow:rgba(200,16,46,.55)"><strong>660</strong>Deep red</span>
+          <span style="--wave-color:#7b4fa6;--wave-glow:rgba(123,79,166,.55)"><strong>810</strong>NIR</span><span style="--wave-color:#6a3d9a;--wave-glow:rgba(106,61,154,.55)"><strong>830</strong>NIR</span><span style="--wave-color:#5b2d8e;--wave-glow:rgba(91,45,142,.55)"><strong>850</strong>NIR</span><span style="--wave-color:#3d1f6e;--wave-glow:rgba(61,31,110,.55)"><strong>940</strong>Deep NIR</span>
         </div>
       </div>
     </div>
