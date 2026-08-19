@@ -108,7 +108,7 @@
 }
 .cy-cinema__world {
   position: absolute; inset: 0; z-index: 0;
-  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .045));
+  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-zoom, 0) * .08));
   transform-origin: 58% 50%;
   will-change: transform;
 }
@@ -147,6 +147,18 @@
 }
 .cy-cinema__panel h2 { margin: 0; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(44px, 5.5vw, 82px); line-height: 1; font-weight: 400; letter-spacing: -.018em; }
 .cy-cinema__panel p:not(.cy-kicker) { margin: 24px 0 0; color: #bcbcbc; font-size: 17px; line-height: 1.75; }
+.cy-cinema__title-a, .cy-cinema__title-b, .cy-cinema__body { will-change: opacity, transform; }
+.cy-cinema__title-a {
+  opacity: clamp(0, calc(var(--cy-p, 0) / .08), 1);
+  transform: translateX(calc((1 - clamp(0, calc(var(--cy-p, 0) / .08), 1)) * -70px));
+}
+.cy-cinema__title-b {
+  opacity: clamp(0, calc((var(--cy-p, 0) - .08) / .08), 1);
+  transform: translateX(calc((1 - clamp(0, calc((var(--cy-p, 0) - .08) / .08), 1)) * 70px));
+}
+.cy-cinema__body {
+  opacity: clamp(0, calc((var(--cy-p, 0) - .16) / .1), 1);
+}
 .cy-spectrum { display: grid; grid-template-columns: repeat(7, 1fr); margin-top: 38px; border-top: 1px solid #3b3b3b; }
 .cy-spectrum span {
   position: relative; padding: 21px 4px 0 0; color: #a8a8a8; font-size: 11px;
@@ -170,7 +182,7 @@
 .cy-spectrum span:hover strong { text-shadow: 0 0 22px var(--wave-glow, transparent); }
 .cy-cinema--cap .cy-cinema__world {
   transform-origin: 36% 50%;
-  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .038));
+  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-zoom, 0) * .07));
 }
 .cy-cinema--cap .cy-cinema__world img, .cy-cinema--cap .cy-cinema__world video {
   object-position: 34% center;
@@ -219,7 +231,7 @@
 .cy-cap-points span:hover::before { width: 100%; }
 .cy-cinema--pano .cy-cinema__world {
   transform-origin: 62% 50%;
-  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .042));
+  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-zoom, 0) * .075));
 }
 .cy-cinema--pano .cy-cinema__world img {
   object-position: 64% center;
@@ -496,6 +508,7 @@
   .cy-cinema__stage { position: relative; min-height: auto; padding: 90px 0; }
   .cy-cinema__world { transform: none !important; }
   .cy-cinema__panel { opacity: 1 !important; transform: none !important; }
+  .cy-cinema__title-a, .cy-cinema__title-b, .cy-cinema__body { opacity: 1 !important; transform: none !important; }
   .cy-reveal { opacity: 1; transform: none; }
 }
 @media (max-width: 980px) {
