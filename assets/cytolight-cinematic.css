@@ -181,11 +181,11 @@
 .cy-spectrum strong { display: block; margin-bottom: 5px; color: #fff; font-size: 14px; text-shadow: 0 0 18px var(--wave-glow, transparent); transition: text-shadow .3s ease; }
 .cy-spectrum span:hover strong { text-shadow: 0 0 22px var(--wave-glow, transparent); }
 .cy-cinema--cap .cy-cinema__world {
-  transform-origin: 36% 50%;
+  transform-origin: 50% 20%;
   transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-zoom, 0) * .07));
 }
 .cy-cinema--cap .cy-cinema__world img, .cy-cinema--cap .cy-cinema__world video {
-  object-position: 34% center;
+  object-position: 50% 18%;
   opacity: calc(.94 + var(--cy-light-step, 0) * .06);
   filter:
     brightness(calc(1.1 + var(--cy-light-step, 0) * .24))
