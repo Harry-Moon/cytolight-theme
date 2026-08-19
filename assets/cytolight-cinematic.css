@@ -148,8 +148,26 @@
 .cy-cinema__panel h2 { margin: 0; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(44px, 5.5vw, 82px); line-height: 1; font-weight: 400; letter-spacing: -.018em; }
 .cy-cinema__panel p:not(.cy-kicker) { margin: 24px 0 0; color: #bcbcbc; font-size: 17px; line-height: 1.75; }
 .cy-spectrum { display: grid; grid-template-columns: repeat(7, 1fr); margin-top: 38px; border-top: 1px solid #3b3b3b; }
-.cy-spectrum span { padding: 17px 4px 0 0; color: #a8a8a8; font-size: 11px; }
-.cy-spectrum strong { display: block; margin-bottom: 5px; color: #fff; font-size: 14px; }
+.cy-spectrum span {
+  position: relative; padding: 21px 4px 0 0; color: #a8a8a8; font-size: 11px;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .55s var(--cy-ease), transform .55s var(--cy-ease), color .3s ease;
+}
+.cy-spectrum span::before {
+  content: ''; position: absolute; top: -1px; left: 0; width: 22px; height: 2px;
+  background: var(--wave-color, #c8102e);
+}
+.cy-spectrum.is-visible span { opacity: 1; transform: translateY(0); }
+.cy-spectrum.is-visible span:nth-child(1) { transition-delay: .05s; }
+.cy-spectrum.is-visible span:nth-child(2) { transition-delay: .12s; }
+.cy-spectrum.is-visible span:nth-child(3) { transition-delay: .19s; }
+.cy-spectrum.is-visible span:nth-child(4) { transition-delay: .26s; }
+.cy-spectrum.is-visible span:nth-child(5) { transition-delay: .33s; }
+.cy-spectrum.is-visible span:nth-child(6) { transition-delay: .4s; }
+.cy-spectrum.is-visible span:nth-child(7) { transition-delay: .47s; }
+.cy-spectrum span:hover { color: #fff; }
+.cy-spectrum strong { display: block; margin-bottom: 5px; color: #fff; font-size: 14px; text-shadow: 0 0 18px var(--wave-glow, transparent); transition: text-shadow .3s ease; }
+.cy-spectrum span:hover strong { text-shadow: 0 0 22px var(--wave-glow, transparent); }
 .cy-cinema--cap .cy-cinema__world {
   transform-origin: 36% 50%;
   transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .038));
