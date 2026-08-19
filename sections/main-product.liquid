@@ -284,6 +284,15 @@
 .cl-stat{text-align:center;padding:16px;}
 .cl-stat__num{font-size:48px;font-weight:900;color:#c8102e;display:block;letter-spacing:-.03em;line-height:1;}
 .cl-stat__label{font-size:12px;color:#888;font-weight:600;display:block;margin-top:8px;text-transform:uppercase;letter-spacing:.08em;}
+.cl-stats-strip--glow{position:relative;background:radial-gradient(120% 160% at 50% 0%,#160707 0%,#0d0d0d 55%,#0a0a0a 100%);overflow:hidden;}
+.cl-stats-strip--glow::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(200,16,46,.1),transparent 45%);pointer-events:none;}
+.cl-stats-strip--glow .cl-stats-inner{position:relative;}
+.cl-stats-strip--glow .cl-stat{position:relative;border-radius:16px;border:1px solid rgba(232,64,84,.22);background:rgba(255,255,255,.02);backdrop-filter:blur(6px);padding:26px 16px;transition:box-shadow .5s ease,border-color .5s ease,transform .35s ease;box-shadow:0 0 0 1px rgba(232,64,84,.05) inset,0 10px 30px rgba(200,16,46,.14),0 0 40px rgba(200,16,46,.08);}
+.cl-stats-strip--glow .cl-stat::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 100% at 50% -10%,rgba(232,64,84,.18),transparent 62%);opacity:.65;pointer-events:none;animation:cl-stat-glow-breathe 6s ease-in-out infinite;}
+.cl-stats-strip--glow .cl-stat__num{position:relative;text-shadow:0 0 26px rgba(232,64,84,.55);}
+.cl-stats-strip--glow .cl-stat__label{position:relative;color:rgba(255,255,255,.68);}
+.cl-stats-strip--glow .cl-stat:hover{border-color:rgba(232,64,84,.55);box-shadow:0 0 0 1px rgba(232,64,84,.12) inset,0 16px 40px rgba(200,16,46,.22),0 0 56px rgba(200,16,46,.14);transform:translateY(-4px);}
+@media (prefers-reduced-motion:reduce){.cl-stats-strip--glow .cl-stat::before{animation:none;opacity:.65;}}
 /* ===== EDITORIAL ===== */
 .cl-editorial{padding:80px 40px;}
 .cl-editorial--dark{background:#0d0d0d;position:relative;overflow:hidden;}
@@ -1018,7 +1027,7 @@
   </div>
 
   <!-- ===== STATS STRIP ===== -->
-  <div class='cl-stats-strip'>
+  <div class='cl-stats-strip{% if is_mask %} cl-stats-strip--glow{% endif %}'>
     <div class='cl-stats-inner'>
       <div class='cl-stat'>
         <span class='cl-stat__num'>{% if is_cap %}150{% elsif is_mask %}288{% elsif is_foot %}2{% elsif is_knee %}60{% elsif is_sauna_dome %}1,120{% else %}7{% endif %}</span>
