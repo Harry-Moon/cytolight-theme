@@ -61,12 +61,31 @@
 .cy-hero h1 { max-width: 930px; margin: 0; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(54px, 8vw, 116px); line-height: .94; font-weight: 400; letter-spacing: -.02em; }
 .cy-hero__sub { max-width: 670px; margin: 26px 0 0; color: rgba(255,255,255,.84); font-size: clamp(17px, 2vw, 22px); line-height: 1.55; }
 .cy-hero__facts {
+  position: relative; z-index: 1; overflow: hidden;
   display: grid; grid-template-columns: repeat(4, 1fr); max-width: 900px;
-  margin-top: 62px; border-top: 1px solid rgba(255,255,255,.3);
+  margin-top: 62px; padding: 26px 28px 6px; border-radius: 16px;
+  background: linear-gradient(180deg, rgba(24, 4, 6, .32), rgba(8, 2, 3, .52));
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, .1);
+  box-shadow: 0 0 0 1px rgba(210, 13, 47, .1) inset, 0 20px 60px rgba(0, 0, 0, .35);
 }
-.cy-hero__fact { padding: 20px 24px 0 0; }
-.cy-hero__fact strong { display: block; font-size: 25px; font-weight: 650; }
+.cy-hero__facts::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(210, 13, 47, .85), transparent);
+}
+.cy-hero__facts::after {
+  content: ''; position: absolute; inset: -35% -10%; z-index: 0; pointer-events: none;
+  background: radial-gradient(55% 130% at 16% 8%, rgba(210, 13, 47, .38), transparent 62%);
+  opacity: .7; animation: cy-facts-glow-breathe 6s ease-in-out infinite;
+}
+.cy-hero__fact { position: relative; z-index: 1; padding: 0 24px 20px 0; }
+.cy-hero__fact:not(:last-child) { border-right: 1px solid rgba(255, 255, 255, .12); }
+.cy-hero__fact strong { display: block; font-size: 25px; font-weight: 650; text-shadow: 0 0 24px rgba(210, 13, 47, .55); }
 .cy-hero__fact span { display: block; margin-top: 4px; color: rgba(255,255,255,.68); font-size: 12px; line-height: 1.45; }
+@keyframes cy-facts-glow-breathe { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .cy-hero__facts::after { animation: none; opacity: .6; }
+}
 
 .cy-intro, .cy-use, .cy-compare, .cy-faq { padding: 124px 0; background: #fff; }
 .cy-intro__top, .cy-range__head, .cy-compare__top, .cy-faq__top { display: flex; justify-content: space-between; gap: 64px; align-items: flex-end; }
@@ -452,8 +471,10 @@
   .cy-hero { min-height: 780px; }
   .cy-hero__content { padding: 108px 0 46px; }
   .cy-hero h1 { font-size: 49px; }
-  .cy-hero__facts { grid-template-columns: 1fr 1fr; margin-top: 42px; }
-  .cy-hero__fact { padding-top: 17px; }
+  .cy-hero__facts { grid-template-columns: 1fr 1fr; margin-top: 42px; padding: 20px 20px 2px; }
+  .cy-hero__fact { padding: 0 16px 16px 0; border-right: none; }
+  .cy-hero__fact:nth-child(odd) { border-right: 1px solid rgba(255,255,255,.12); }
+  .cy-hero__fact:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.12); padding-bottom: 16px; margin-bottom: 4px; }
   .cy-intro, .cy-range, .cy-use, .cy-rail, .cy-proof, .cy-compare, .cy-faq { padding: 82px 0; }
   .cy-products, .cy-use__grid, .cy-faq__grid { grid-template-columns: 1fr; }
   .cy-product:first-child { grid-column: auto; }
