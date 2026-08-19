@@ -361,7 +361,7 @@
 .cy-proof__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
 .cy-proof .cy-heading { font-size: clamp(30px, 3.2vw, 46px); max-width: 460px; }
 .cy-proof .cy-copy { max-width: 440px; margin-top: 16px; font-size: 15.5px; line-height: 1.6; }
-.cy-proof__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #d6d6d0; border-radius: 14px; overflow: hidden; }
+.cy-proof__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #d6d6d0; border-radius: 14px; overflow: hidden; }
 .cy-proof__stat { position: relative; min-height: 116px; padding: 20px 22px 18px; background: #efefec; transition: background .3s var(--cy-ease), transform .3s var(--cy-ease); }
 .cy-proof__stat::before { content: ''; position: absolute; top: 0; left: 22px; width: 26px; height: 2px; background: var(--cy-red); transition: width .4s var(--cy-ease); }
 .cy-proof__stat:hover { background: #fff; transform: translateY(-2px); }
@@ -450,7 +450,8 @@
   .cy-use__item { min-height: 340px; }
   .cy-use__item h3 { margin-top: 18px; }
   .cy-proof__grid { gap: 40px; }
-  .cy-proof__stat { min-height: 108px; padding: 18px 16px; }
+  .cy-proof__stats { grid-template-columns: 1fr; }
+  .cy-proof__stat { min-height: 92px; padding: 16px 18px; }
   .cy-proof__stat strong { font-size: 24px; }
   .cy-proof__certs { margin-top: 40px; padding-top: 28px; }
   .cy-proof__certs-row { gap: 18px; }
