@@ -134,9 +134,11 @@
         <span class="cy-cinema__glow" aria-hidden="true"></span>
       </div>
       <div class="cy-cinema__panel">
-        <p class="cy-kicker">{% if is_fr %}CytoLight Redlight Cap{% else %}CytoLight Redlight Cap{% endif %}</p>
-        <h2>{% if is_fr %}La routine cheveux que vous pouvez vraiment garder.{% else %}The hair ritual you can actually keep.{% endif %}</h2>
-        <p>{% if is_fr %}Une casquette de luminoth&eacute;rapie rouge et proche infrarouge, pens&eacute;e pour rester proche du cuir chevelu pendant que vous lisez, travaillez ou vous d&eacute;tendez. Moins d'effort. Plus de r&eacute;gularit&eacute;.{% else %}A red and near-infrared light therapy cap designed to stay close to the scalp while you read, work, or unwind. Less friction. More consistency.{% endif %}</p>
+        <div class="cy-cinema__lead">
+          <p class="cy-kicker cy-cinema__title-a">{% if is_fr %}CytoLight Redlight Cap{% else %}CytoLight Redlight Cap{% endif %}</p>
+          <h2 class="cy-cinema__title-b">{% if is_fr %}La routine cheveux que vous pouvez vraiment garder.{% else %}The hair ritual you can actually keep.{% endif %}</h2>
+        </div>
+        <p class="cy-cinema__body">{% if is_fr %}Une casquette de luminoth&eacute;rapie rouge et proche infrarouge, pens&eacute;e pour rester proche du cuir chevelu pendant que vous lisez, travaillez ou vous d&eacute;tendez. Moins d'effort. Plus de r&eacute;gularit&eacute;.{% else %}A red and near-infrared light therapy cap designed to stay close to the scalp while you read, work, or unwind. Less friction. More consistency.{% endif %}</p>
         <div class="cy-cap-points cy-reveal" aria-label="{% if is_fr %}B&eacute;n&eacute;fices CytoLight Cap{% else %}CytoLight Cap benefits{% endif %}">
           <span>{% if is_fr %}Format mains libres{% else %}Hands-free format{% endif %}</span>
           <span>660nm + 850nm</span>
