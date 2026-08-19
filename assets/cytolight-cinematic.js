@@ -85,18 +85,44 @@
       next && next.addEventListener('click', function () { track.scrollBy({ left: amount(), behavior: reduceMotion ? 'auto' : 'smooth' }); });
     });
 
+    function animateCount(el) {
+      var target = parseFloat(el.dataset.countTo);
+      var suffix = el.dataset.suffix || '';
+      if (!isFinite(target)) return;
+      if (reduceMotion) {
+        el.textContent = target.toLocaleString('en-US') + suffix;
+        return;
+      }
+      var duration = 1100;
+      var start = null;
+      function step(timestamp) {
+        if (start === null) start = timestamp;
+        var progress = Math.min(1, (timestamp - start) / duration);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased).toLocaleString('en-US') + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
     if ('IntersectionObserver' in window) {
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
+            var counter = entry.target.querySelector('[data-count-to]');
+            if (counter) animateCount(counter);
             observer.unobserve(entry.target);
           }
         });
       }, { threshold: 0.16 });
       root.querySelectorAll('.cy-reveal').forEach(function (el) { observer.observe(el); });
     } else {
-      root.querySelectorAll('.cy-reveal').forEach(function (el) { el.classList.add('is-visible'); });
+      root.querySelectorAll('.cy-reveal').forEach(function (el) {
+        el.classList.add('is-visible');
+        var counter = el.querySelector('[data-count-to]');
+        if (counter) animateCount(counter);
+      });
     }
   }
 

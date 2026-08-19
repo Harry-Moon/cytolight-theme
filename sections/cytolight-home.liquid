@@ -362,20 +362,20 @@
         <h2 class="cy-heading">{% if is_fr %}Con&ccedil;u pour &ecirc;tre utilis&eacute;. Con&ccedil;u pour durer.{% else %}Built to be used. Built to last.{% endif %}</h2>
         <p class="cy-copy">{% if is_fr %}Un design de qualit&eacute; clinique, des commandes simples et une politique d'essai claire pour vous permettre de juger CytoLight dans votre propre routine.{% else %}Clinical-grade design, clear controls, and a straightforward home trial so you can judge CytoLight in your own routine.{% endif %}</p>
       </div>
-      <div class="cy-proof__stats cy-reveal">
+      <div class="cy-proof__stats">
         {%- assign trust_blocks = section.blocks | where: 'type', 'trust_point' -%}
         {%- if trust_blocks.size > 0 -%}
           {%- for block in trust_blocks limit: 4 -%}
-            <div class="cy-proof__stat" {{ block.shopify_attributes }}>
+            <div class="cy-proof__stat cy-reveal" style="transition-delay:{{ forloop.index0 | times: 90 }}ms" {{ block.shopify_attributes }}>
               <strong>{{ block.settings.value }}</strong>
               <span>{% if is_fr %}{{ block.settings.label_fr }}{% else %}{{ block.settings.label_en }}{% endif %}</span>
             </div>
           {%- endfor -%}
         {%- else -%}
-          <div class="cy-proof__stat"><strong>4,000+</strong><span>{% if is_fr %}&eacute;tudes publi&eacute;es sur la photobiomodulation{% else %}published photobiomodulation studies{% endif %}</span></div>
-          <div class="cy-proof__stat"><strong>CE</strong><span>{% if is_fr %}conformit&eacute; et exigences de s&eacute;curit&eacute;{% else %}conformity and safety requirements{% endif %}</span></div>
-          <div class="cy-proof__stat"><strong>2 {% if is_fr %}ans{% else %}years{% endif %}</strong><span>{% if is_fr %}de garantie mat&eacute;rielle incluse{% else %}included hardware warranty{% endif %}</span></div>
-          <div class="cy-proof__stat"><strong>30 {% if is_fr %}jours{% else %}days{% endif %}</strong><span>{% if is_fr %}d'essai satisfait ou rembours&eacute;{% else %}money-back home trial{% endif %}</span></div>
+          <div class="cy-proof__stat cy-reveal" style="transition-delay:0ms"><strong><span class="cy-proof__stat-num" data-count-to="4000" data-suffix="+">0</span></strong><span>{% if is_fr %}&eacute;tudes publi&eacute;es sur la photobiomodulation{% else %}published photobiomodulation studies{% endif %}</span></div>
+          <div class="cy-proof__stat cy-reveal" style="transition-delay:90ms"><strong>CE</strong><span>{% if is_fr %}conformit&eacute; et exigences de s&eacute;curit&eacute;{% else %}conformity and safety requirements{% endif %}</span></div>
+          <div class="cy-proof__stat cy-reveal" style="transition-delay:180ms"><strong><span class="cy-proof__stat-num" data-count-to="2" data-suffix=" {% if is_fr %}ans{% else %}years{% endif %}">0</span></strong><span>{% if is_fr %}de garantie mat&eacute;rielle incluse{% else %}included hardware warranty{% endif %}</span></div>
+          <div class="cy-proof__stat cy-reveal" style="transition-delay:270ms"><strong><span class="cy-proof__stat-num" data-count-to="30" data-suffix=" {% if is_fr %}jours{% else %}days{% endif %}">0</span></strong><span>{% if is_fr %}d'essai satisfait ou rembours&eacute;{% else %}money-back home trial{% endif %}</span></div>
         {%- endif -%}
       </div>
       <div class="cy-proof__certs cy-proof__certs--photo cy-reveal" style="background-image:url({{ 'cytolight-goal-skin-red-halo.jpg' | file_url }});">
