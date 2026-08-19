@@ -197,7 +197,6 @@
       <div class="cy-products">
         <a class="cy-product cy-reveal" href="{{ desk_url }}">
           <span class="cy-product__media"><img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight DESK" width="900" height="1100" loading="lazy"></span>
-          <span class="cy-product__badge">{% if is_fr %}Disponible maintenant{% else %}Available now{% endif %}</span>
           <span class="cy-product__content">
             <span class="cy-product__type">{% if is_fr %}Personnel &middot; Bureau{% else %}Personal &middot; Desktop{% endif %}</span>
             <h3>CytoLight DESK</h3>
@@ -211,28 +210,26 @@
 
         <a class="cy-product cy-reveal" href="{{ cap_url }}">
           <span class="cy-product__media"><img src="{{ 'cytolight-cap-ambiance.jpg' | file_url }}" alt="CytoLight Redlight Cap" width="900" height="1100" loading="lazy"></span>
-          <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
           <span class="cy-product__content">
             <span class="cy-product__type">{% if is_fr %}Cheveux &middot; Mains libres{% else %}Hair &middot; Hands-free{% endif %}</span>
             <h3>CytoLight Redlight Cap</h3>
             <span class="cy-product__desc">{% if is_fr %}Routine cuir chevelu simple et facile &agrave; garder.{% else %}A simple scalp routine that is easy to keep.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if cap_product != blank %}{{ cap_product.price | money }}{% else %}330 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
             </span>
           </span>
         </a>
 
         <a class="cy-product cy-reveal" href="{{ mask_url }}">
           <span class="cy-product__media"><img src="{{ '01_CytoLight_Mask_Product.png' | file_url }}" alt="CytoLight Mask" width="900" height="1100" loading="lazy"></span>
-          <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
           <span class="cy-product__content">
             <span class="cy-product__type">{% if is_fr %}Visage &middot; Beaut&eacute;{% else %}Face &middot; Beauty{% endif %}</span>
             <h3>CytoLight Mask</h3>
             <span class="cy-product__desc">{% if is_fr %}Masque LED souple pour une routine visage courte.{% else %}A flexible LED mask for a short face routine.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if mask_product != blank %}{{ mask_product.price | money }}{% else %}250 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
             </span>
           </span>
         </a>
@@ -245,14 +242,13 @@
               <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight Foot Therapy" width="900" height="1100" loading="lazy">
             {%- endif -%}
           </span>
-          <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
           <span class="cy-product__content">
             <span class="cy-product__type">{% if is_fr %}Pieds &middot; R&eacute;cup&eacute;ration{% else %}Feet &middot; Recovery{% endif %}</span>
             <h3>CytoLight Foot</h3>
             <span class="cy-product__desc">{% if is_fr %}Pour les pieds fatigu&eacute;s et les routines &agrave; domicile.{% else %}For tired feet and simple at-home routines.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if foot_product != blank %}{{ foot_product.price | money }}{% else %}220 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
             </span>
           </span>
         </a>
@@ -265,42 +261,39 @@
               <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight Knee Therapy" width="900" height="1100" loading="lazy">
             {%- endif -%}
           </span>
-          <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
           <span class="cy-product__content">
             <span class="cy-product__type">{% if is_fr %}Genou &middot; R&eacute;cup&eacute;ration{% else %}Knee &middot; Recovery{% endif %}</span>
             <h3>CytoLight Knee</h3>
             <span class="cy-product__desc">{% if is_fr %}Pour l'articulation du genou et le confort &agrave; domicile.{% else %}For the knee joint and simple at-home comfort.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if knee_product != blank %}{{ knee_product.price | money }}{% else %}250 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
             </span>
           </span>
         </a>
 
         <a class="cy-product cy-reveal" href="{{ sauna_dome_url }}">
           <span class="cy-product__media"><img src="{{ 'Cytolight_Sauna_Dome_2.jpg' | file_url }}" alt="CytoLight Sauna Dome" width="900" height="1100" loading="lazy"></span>
-          <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
           <span class="cy-product__content">
             <span class="cy-product__type">{% if is_fr %}Corps entier &middot; R&eacute;cup&eacute;ration{% else %}Full Body &middot; Recovery{% endif %}</span>
             <h3>CytoLight Sauna Dome</h3>
             <span class="cy-product__desc">{% if is_fr %}Lumi&egrave;re, chaleur et PEMF pour une session compl&egrave;te.{% else %}Light, heat, and PEMF for a complete session.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if sauna_dome_product != blank %}{{ sauna_dome_product.price | money }}{% else %}1997 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
             </span>
           </span>
         </a>
 
         <a class="cy-product cy-reveal" href="{{ pano_ultra_url }}">
           <span class="cy-product__media"><img src="{{ 'cytolight-pano-ultra-luxury.jpg' | file_url }}" alt="CytoLight PANO ULTRA" width="900" height="1100" loading="lazy"></span>
-          <span class="cy-product__badge">{% if is_fr %}Acheter maintenant{% else %}Buy now{% endif %}</span>
           <span class="cy-product__content">
             <span class="cy-product__type">{% if is_fr %}Performance &middot; Professionnel{% else %}Performance &middot; Professional{% endif %}</span>
             <h3>CytoLight PANO ULTRA</h3>
             <span class="cy-product__desc">{% if is_fr %}Panneau grand format pour routines corps entier.{% else %}Large-format panel for full-body routines.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if pano_ultra_product != blank %}{{ pano_ultra_product.price | money }}{% else %}1500 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}Acheter{% else %}Buy now{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
             </span>
           </span>
         </a>
