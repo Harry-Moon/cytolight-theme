@@ -25,10 +25,22 @@
       return 1 - Math.pow(1 - value, 3);
     }
 
+    function smoothstep(value) {
+      return value * value * (3 - 2 * value);
+    }
+
+    // Zoom finishes early (by ~45% of scroll through the pinned section),
+    // eased out so it settles smoothly instead of drifting linearly.
+    function zoomStep(value) {
+      var t = clamp(value / 0.45, 0, 1);
+      return responsiveEase(t);
+    }
+
+    // Red light glow only starts once the zoom has essentially finished,
+    // then ramps in smoothly (no more instant jump between fixed steps).
     function lightStep(value) {
-      if (value > 0.62) return 1;
-      if (value > 0.28) return 0.56;
-      return 0;
+      var t = clamp((value - 0.45) / 0.45, 0, 1);
+      return smoothstep(t);
     }
 
     function measureCinema(scene) {
@@ -57,6 +69,7 @@
         }
         scene.el.style.setProperty('--cy-p', scene.currentProgress.toFixed(4));
         scene.el.style.setProperty('--cy-pe', responsiveEase(scene.currentProgress).toFixed(4));
+        scene.el.style.setProperty('--cy-zoom', zoomStep(scene.currentProgress).toFixed(4));
         scene.el.style.setProperty('--cy-light-step', lightStep(scene.currentProgress).toFixed(2));
         if (scene.currentProgress !== scene.targetProgress) {
           shouldContinue = true;

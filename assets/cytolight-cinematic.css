@@ -108,7 +108,7 @@
 }
 .cy-cinema__world {
   position: absolute; inset: 0; z-index: 0;
-  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .045));
+  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-zoom, 0) * .08));
   transform-origin: 58% 50%;
   will-change: transform;
 }
@@ -179,7 +179,7 @@
 .cy-spectrum span:hover strong { text-shadow: 0 0 22px var(--wave-glow, transparent); }
 .cy-cinema--cap .cy-cinema__world {
   transform-origin: 36% 50%;
-  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .038));
+  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-zoom, 0) * .07));
 }
 .cy-cinema--cap .cy-cinema__world img, .cy-cinema--cap .cy-cinema__world video {
   object-position: 34% center;
@@ -228,7 +228,7 @@
 .cy-cap-points span:hover::before { width: 100%; }
 .cy-cinema--pano .cy-cinema__world {
   transform-origin: 62% 50%;
-  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .042));
+  transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-zoom, 0) * .075));
 }
 .cy-cinema--pano .cy-cinema__world img {
   object-position: 64% center;
