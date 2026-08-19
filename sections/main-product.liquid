@@ -18,9 +18,11 @@
 .cl-launch-hero__title{font-size:clamp(48px,7vw,92px);font-weight:950;line-height:.96;letter-spacing:0;margin:0 0 18px;color:#fff;}
 .cl-launch-hero__subtitle{font-size:clamp(18px,2vw,25px);line-height:1.45;color:rgba(255,255,255,.86);max-width:620px;margin:0 0 30px;}
 .cl-launch-hero__ctas{display:flex;gap:12px;flex-wrap:wrap;}
-.cl-launch-hero__primary,.cl-launch-hero__secondary{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:14px 24px;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;}
-.cl-launch-hero__primary{background:#fff;color:#0d0d0d;}
-.cl-launch-hero__secondary{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);}
+.cl-launch-hero__primary,.cl-launch-hero__secondary{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:14px 24px;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;transition:transform .3s ease,box-shadow .3s ease,background .3s ease,border-color .3s ease;}
+.cl-launch-hero__primary{background:#fff;color:#0d0d0d;box-shadow:0 0 0 1px rgba(232,64,84,.18),0 8px 26px rgba(200,16,46,.22);}
+.cl-launch-hero__primary:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(232,64,84,.4),0 14px 36px rgba(200,16,46,.38),0 0 44px rgba(200,16,46,.28);}
+.cl-launch-hero__secondary{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);box-shadow:0 0 0 1px rgba(232,64,84,.1) inset;}
+.cl-launch-hero__secondary:hover{border-color:rgba(232,64,84,.65);background:rgba(232,64,84,.14);transform:translateY(-2px);box-shadow:0 0 0 1px rgba(232,64,84,.22) inset,0 0 34px rgba(200,16,46,.26);}
 .cl-launch-hero__stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:920px;}
 .cl-launch-stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:18px;backdrop-filter:blur(12px);}
 .cl-launch-stat strong{display:block;font-size:30px;font-weight:950;letter-spacing:0;color:#fff;line-height:1;}
@@ -642,7 +644,7 @@
           <a class='cl-launch-hero__secondary' href='#cl-highlights'>{% if request.locale.iso_code contains 'fr' %}Découvrir les fonctions{% else %}Explore Features{% endif %}</a>
         </div>
       </div>
-      <div class='cl-launch-hero__stats{% if is_mask %} cl-launch-hero__stats--glow{% endif %}'>
+      <div class='cl-launch-hero__stats cl-launch-hero__stats--glow'>
         <div class='cl-launch-stat'><strong>{% if is_cap %}150{% elsif is_mask %}288{% elsif is_foot %}Foot{% elsif is_knee %}60{% elsif is_sauna_dome %}1,120{% elsif is_pano_ultra %}Full{% else %}7{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}LED 3-en-1 placées pour une couverture du cuir chevelu{% else %}3-in-1 LEDs arranged for scalp coverage{% endif %}{% elsif is_mask %}{% if is_fr %}LED r&eacute;parties sur 4 canaux (72 x 4){% else %}LEDs across 4 channels (72 x 4){% endif %}{% elsif is_foot %}{% if is_fr %}Format enveloppant pour pied, talon et cheville{% else %}Wraparound format for foot, heel, and ankle comfort{% endif %}{% elsif is_knee %}{% if is_fr %}LED réparties pour une couverture homogène du genou{% else %}LEDs arranged for even knee coverage{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}LED 3 puces réparties sur tout le tapis{% else %}3-chip LEDs spread across the full mat{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Format grand panneau pour routines corps entier{% else %}Large panel format for full-body routines{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Longueurs d'onde thérapeutiques ciblées{% else %}Targeted therapeutic wavelengths{% endif %}{% endif %}</span></div>
         <div class='cl-launch-stat'><strong>{% if is_cap or is_foot or is_knee or is_sauna_dome %}660+850{% elsif is_mask %}460-850{% else %}590-940{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}nm rouge et proche infrarouge pour routine cheveux{% else %}nm red and near-infrared for hair routines{% endif %}{% elsif is_mask %}{% if is_fr %}nm : bleu, rouge et proche infrarouge pour le visage{% else %}nm range: blue, red, and near-infrared for the face{% endif %}{% elsif is_foot %}{% if is_fr %}nm rouge et proche infrarouge pour routines pieds{% else %}nm red and near-infrared for foot routines{% endif %}{% elsif is_knee %}{% if is_fr %}nm rouge et proche infrarouge pour routine genou{% else %}nm red and near-infrared for knee routines{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}nm rouge et proche infrarouge, sur tout le corps{% else %}nm red and near-infrared, across the whole body{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}nm, de l'ambre au proche infrarouge profond{% else %}nm range from amber to deep NIR{% endif %}{% endif %}</span></div>
         <div class='cl-launch-stat'><strong>{% if is_cap %}4{% elsif is_mask %}3{% elsif is_foot %}Easy{% elsif is_knee %}6000{% elsif is_sauna_dome %}3{% else %}40 Hz{% endif %}</strong><span>{% if is_cap %}{% if is_fr %}Contrôles : intensité, minuteur, pulsation, longueur d'onde{% else %}Controls: dimming, timer, pulsing, wavelength selection{% endif %}{% elsif is_mask %}{% if is_fr %}Modes de lumi&egrave;re, avec intensit&eacute; variable et minuteur{% else %}Light modes, with adjustable brightness and timer{% endif %}{% elsif is_foot %}{% if is_fr %}Routine mains libres &agrave; enfiler et r&eacute;p&eacute;ter chez soi{% else %}Hands-free wearable ritual to repeat at home{% endif %}{% elsif is_knee %}{% if is_fr %}mAh, batterie magnétique rechargeable{% else %}mAh rechargeable magnetic battery{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Zones de chauffe indépendantes : haut du corps, taille, bas du corps{% else %}Independent heating zones: upper body, waist, lower body{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Contrôle intelligent des pulsations pour les sessions avancées{% else %}Smart pulse control for advanced sessions{% endif %}{% endif %}</span></div>
@@ -1027,7 +1029,7 @@
   </div>
 
   <!-- ===== STATS STRIP ===== -->
-  <div class='cl-stats-strip{% if is_mask %} cl-stats-strip--glow{% endif %}'>
+  <div class='cl-stats-strip cl-stats-strip--glow'>
     <div class='cl-stats-inner'>
       <div class='cl-stat'>
         <span class='cl-stat__num'>{% if is_cap %}150{% elsif is_mask %}288{% elsif is_foot %}2{% elsif is_knee %}60{% elsif is_sauna_dome %}1,120{% else %}7{% endif %}</span>
