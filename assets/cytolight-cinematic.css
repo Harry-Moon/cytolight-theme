@@ -200,10 +200,23 @@
   gap: 10px; margin-top: 30px;
 }
 .cy-cap-points span {
+  position: relative; display: block;
   border-top: 1px solid rgba(255,255,255,.22);
   padding-top: 13px; color: rgba(255,255,255,.72);
   font-size: 12px; line-height: 1.35; font-weight: 650;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .55s var(--cy-ease), transform .55s var(--cy-ease), color .3s ease;
 }
+.cy-cap-points span::before {
+  content: ''; position: absolute; top: -1px; left: 0; width: 0; height: 1px;
+  background: var(--cy-red); transition: width .4s var(--cy-ease);
+}
+.cy-cap-points.is-visible span { opacity: 1; transform: translateY(0); }
+.cy-cap-points.is-visible span:nth-child(1) { transition-delay: .05s; }
+.cy-cap-points.is-visible span:nth-child(2) { transition-delay: .15s; }
+.cy-cap-points.is-visible span:nth-child(3) { transition-delay: .25s; }
+.cy-cap-points span:hover { color: #fff; }
+.cy-cap-points span:hover::before { width: 100%; }
 .cy-cinema--pano .cy-cinema__world {
   transform-origin: 62% 50%;
   transform: translate3d(0, 0, 0) scale(calc(1 + var(--cy-pe, 0) * .042));
