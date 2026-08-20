@@ -94,4 +94,36 @@
       items[i].style.display = '';
     }, 4000);
   });
+
+  // Policy pages (Shopify's built-in /policies/* markup): some policies —
+  // Terms of Service in particular — mark section titles as inline
+  // "<strong>SECTION 1 - ...</strong><br>" instead of real headings, so
+  // there's nothing for the .shopify-policy__body h2 styling to select.
+  // Promote those ALL-CAPS <strong> labels into real <h2> elements so they
+  // get the same heading treatment as policies that already use <h2>.
+  const policyBody = document.querySelector('.shopify-policy__body');
+  if (policyBody) {
+    const stripAdjacentBreaks = (start, direction) => {
+      let node = start;
+      while (node) {
+        const isBlankText = node.nodeType === Node.TEXT_NODE && !node.textContent.trim();
+        const isBreak = node.nodeName === 'BR';
+        if (!isBlankText && !isBreak) break;
+        const adjacent = direction === 'next' ? node.nextSibling : node.previousSibling;
+        node.remove();
+        node = adjacent;
+      }
+    };
+    Array.from(policyBody.querySelectorAll('strong')).forEach((el) => {
+      if (el.closest('h1, h2, h3, h4, h5, h6')) return;
+      const text = el.textContent.trim();
+      if (text.length < 3 || text.length > 80) return;
+      if (text !== text.toUpperCase() || !/[A-Z]/.test(text)) return;
+      const h2 = document.createElement('h2');
+      h2.textContent = text;
+      el.replaceWith(h2);
+      stripAdjacentBreaks(h2.nextSibling, 'next');
+      stripAdjacentBreaks(h2.previousSibling, 'previous');
+    });
+  }
 })();
