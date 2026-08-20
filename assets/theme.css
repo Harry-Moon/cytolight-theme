@@ -562,13 +562,15 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   display: inline-block;
   font-family: var(--font-body);
   font-size: .85rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: #fff;
   margin-bottom: 18px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #d20d2f;
+  text-decoration-line: underline;
+  text-decoration-color: #d20d2f;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
 }
 
 /* CytoLight luxury typography pass */
@@ -865,4 +867,61 @@ h1, h2, h3, h4,
 }
 @media (max-width: 700px) {
   .cart-crosssell__grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Policy pages (Privacy, Terms, Shipping, Refund) ---------- */
+/* Shopify renders /policies/* through its own fixed shopify-policy__* markup —
+   there is no theme template for this route, so these rules target that
+   markup directly rather than a custom section. */
+.shopify-policy__container { padding: clamp(56px, 8vw, 96px) 20px clamp(64px, 9vw, 120px); }
+.shopify-policy__title { margin-bottom: 40px; padding-bottom: 28px; border-bottom: 1px solid rgba(0,0,0,.08); }
+.shopify-policy__title h1 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
+.shopify-policy__body { font-size: 1rem; line-height: 1.85; color: var(--color-muted); }
+.shopify-policy__body > *:first-child { margin-top: 0; }
+.shopify-policy__body h1,
+.shopify-policy__body h2,
+.shopify-policy__body h3 {
+  display: block;
+  margin: 48px 0 20px;
+  font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--color-foreground);
+  text-decoration-line: underline;
+  text-decoration-color: #d20d2f;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
+}
+.shopify-policy__body p { margin: 0 0 22px; }
+.shopify-policy__body ul,
+.shopify-policy__body ol {
+  margin: 0 0 26px;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.shopify-policy__body li { position: relative; padding-left: 26px; line-height: 1.75; }
+.shopify-policy__body li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: .6em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d20d2f;
+}
+.shopify-policy__body strong { color: var(--color-foreground); font-weight: 700; }
+.shopify-policy__body a { color: #d20d2f; text-decoration: underline; text-underline-offset: 3px; }
+.shopify-policy__body a:hover { color: #9d0a23; }
+.shopify-policy__body br { content: ""; display: block; margin-top: 14px; }
+.shopify-policy__body h1 + br,
+.shopify-policy__body h2 + br,
+.shopify-policy__body h3 + br { display: none; }
+@media (max-width: 640px) {
+  .shopify-policy__title { margin-bottom: 30px; padding-bottom: 20px; }
+  .shopify-policy__body h1, .shopify-policy__body h2, .shopify-policy__body h3 { margin: 36px 0 16px; }
 }
