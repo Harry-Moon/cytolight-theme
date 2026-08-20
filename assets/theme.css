@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+/*
+ * Les polices sont auto-hebergees : Instrument Sans et Instrument Serif sont
+ * declarees en @font-face dans layout/theme.liquid, servies depuis le CDN
+ * Shopify (sous-ensemble latin, 64 Ko).
+ *
+ * L'@import vers fonts.googleapis.com qui se trouvait ici ajoutait une feuille
+ * tierce bloquant le rendu et transmettait l'IP de chaque visiteur a Google
+ * sans consentement prealable. Ne pas le reintroduire.
+ */
 
 /* ============================================================
    BON CHARGE-Inspired Shopify Theme
@@ -658,8 +666,10 @@ h1, h2, h3, h4,
 }
 .site-footer__col ul li { margin-bottom: 8px; font-size: .9rem; }
 .site-footer__bottom { border-top: 1px solid rgba(255,255,255,.12); padding-top: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: .8rem; opacity: .7; }
-.site-footer__socials { display: flex; gap: 14px; }
+.site-footer__socials { display: flex; gap: 14px; flex-wrap: wrap; }
 .site-footer__socials a { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: inline-flex; align-items: center; justify-content: center; }
+.site-footer__payments { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-bottom: 24px; }
+.site-footer__payment-icon { width: 38px; height: 24px; border-radius: 4px; background: #fff; padding: 1px; }
 @media (max-width: 800px) {
   .site-footer__top { grid-template-columns: 1fr 1fr; }
 }

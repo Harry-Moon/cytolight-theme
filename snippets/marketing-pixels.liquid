@@ -1,0 +1,137 @@
+{%- comment -%}
+  Pixels publicitaires, soumis au consentement.
+
+  A LIRE AVANT D'ACTIVER QUOI QUE CE SOIT ICI.
+
+  Le chemin recommande sur Shopify n'est pas ce snippet : ce sont les
+  applications de canal officielles (Facebook & Instagram, TikTok,
+  Google & YouTube) ou les Customer Events de l'admin. Elles seules couvrent
+  le checkout, donc l'evenement Purchase, et branchent la Conversions API en
+  server-side. Un pixel pose dans le theme ne voit jamais le checkout.
+
+  Renseigner un identifiant ici ALORS qu'une application de canal est deja
+  installee provoque un double comptage des evenements et fausse
+  l'optimisation des campagnes.
+
+  Ce snippet sert donc uniquement aux identifiants qu'aucune application ne
+  couvre. Tous les champs sont vides par defaut : tant qu'ils le restent,
+  rien n'est charge et le snippet n'a aucun effet.
+
+  Le chargement est conditionne au consentement via la Customer Privacy API
+  de Shopify (obligatoire RGPD / CNIL pour un trafic francais).
+{%- endcomment -%}
+
+{%- liquid
+  assign ga4_id = settings.pixel_ga4_id | strip
+  assign meta_id = settings.pixel_meta_id | strip
+  assign tiktok_id = settings.pixel_tiktok_id | strip
+  assign pinterest_id = settings.pixel_pinterest_id | strip
+
+  assign has_pixel = false
+  if ga4_id != blank or meta_id != blank or tiktok_id != blank or pinterest_id != blank
+    assign has_pixel = true
+  endif
+-%}
+
+{%- if has_pixel -%}
+  <script>
+    (function () {
+      var config = {
+        ga4: {{ ga4_id | json }},
+        meta: {{ meta_id | json }},
+        tiktok: {{ tiktok_id | json }},
+        pinterest: {{ pinterest_id | json }}
+      };
+      var loaded = false;
+
+      function inject(src) {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = src;
+        document.head.appendChild(s);
+      }
+
+      function loadGa4(id) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () { window.dataLayer.push(arguments); };
+        window.gtag('js', new Date());
+        window.gtag('config', id, { anonymize_ip: true });
+        inject('https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id));
+      }
+
+      function loadMeta(id) {
+        /* eslint-disable */
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+        (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        /* eslint-enable */
+        window.fbq('init', id);
+        window.fbq('track', 'PageView');
+      }
+
+      function loadTiktok(id) {
+        /* eslint-disable */
+        !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+        ttq.methods=['page','track','identify','instances','debug','on','off','once','ready','alias','group','enableCookie','disableCookie'];
+        ttq.setAndDefer=function(e,n){e[n]=function(){e.push([n].concat(Array.prototype.slice.call(arguments,0)))}};
+        for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+        ttq.instance=function(e){var n=ttq._i[e]||[];for(var r=0;r<ttq.methods.length;r++)ttq.setAndDefer(n,ttq.methods[r]);return n};
+        ttq.load=function(e,n){var r='https://analytics.tiktok.com/i18n/pixel/events.js';
+        ttq._i=ttq._i||{};ttq._i[e]=[];ttq._i[e]._u=r;ttq._t=ttq._t||{};ttq._t[e]=+new Date;
+        ttq._o=ttq._o||{};ttq._o[e]=n||{};var o=d.createElement('script');o.type='text/javascript';
+        o.async=!0;o.src=r+'?sdkid='+e+'&lib='+t;var a=d.getElementsByTagName('script')[0];
+        a.parentNode.insertBefore(o,a)};}(window,document,'ttq');
+        /* eslint-enable */
+        window.ttq.load(id);
+        window.ttq.page();
+      }
+
+      function loadPinterest(id) {
+        /* eslint-disable */
+        !function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(Array.prototype.slice.call(arguments))};
+        var n=window.pintrk;n.queue=[],n.version='3.0';var t=document.createElement('script');
+        t.async=!0,t.src=e;var r=document.getElementsByTagName('script')[0];
+        r.parentNode.insertBefore(t,r)}}('https://s.pinimg.com/ct/core.js');
+        /* eslint-enable */
+        window.pintrk('load', id);
+        window.pintrk('page');
+      }
+
+      function loadAll() {
+        if (loaded) return;
+        loaded = true;
+        if (config.ga4) loadGa4(config.ga4);
+        if (config.meta) loadMeta(config.meta);
+        if (config.tiktok) loadTiktok(config.tiktok);
+        if (config.pinterest) loadPinterest(config.pinterest);
+      }
+
+      function consentGranted() {
+        var cp = window.Shopify && window.Shopify.customerPrivacy;
+        if (!cp) return false;
+        try {
+          return cp.analyticsProcessingAllowed() && cp.marketingAllowed();
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function evaluate() {
+        if (consentGranted()) loadAll();
+      }
+
+      document.addEventListener('visitorConsentCollected', evaluate);
+
+      if (window.Shopify && window.Shopify.loadFeatures) {
+        window.Shopify.loadFeatures(
+          [{ name: 'consent-tracking-api', version: '0.1' }],
+          function (error) {
+            if (!error) evaluate();
+          }
+        );
+      }
+    })();
+  </script>
+{%- endif -%}
