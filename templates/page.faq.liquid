@@ -1,0 +1,44 @@
+{%- comment -%}
+  Gabarit Learn > FAQ.
+
+  A assigner dans l'admin Shopify a la page de handle `faq`
+  (Content > Pages > ... > Theme template : page.faq).
+
+  Le contenu reste celui saisi dans l'admin : ce gabarit ne fait que le poser
+  dans la coquille Learn, avec la sous-navigation et le rappel produit, pour
+  que la page ne soit pas la seule de l'espace a rompre la continuite.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+-%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% render 'learn-nav', current: 'faq' %}
+
+  <section class="ln-hero">
+    <div class="ln-shell ln-shell--narrow">
+      <p class="ln-crumbs">
+        <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+        <span aria-hidden="true">/</span>
+        {% if is_fr %}Apprendre{% else %}Learn{% endif %}
+      </p>
+      <p class="ln-kicker">{% if is_fr %}FAQ{% else %}FAQ{% endif %}</p>
+      <h1 class="ln-title">{% if is_fr %}Essai, garantie, certifications et les questions qui reviennent au support.{% else %}Trial, warranty, certifications and the questions support gets asked most.{% endif %}</h1>
+    </div>
+  </section>
+
+  <section class="ln-section">
+    <div class="ln-shell ln-shell--narrow">
+      <div class="ln-prose">{{ page.content }}</div>
+    </div>
+  </section>
+
+  {% render 'learn-product-cta', handles: 'cytolight-desk,cytolight-cap,cytolight-pano-ultra' %}
+</div>

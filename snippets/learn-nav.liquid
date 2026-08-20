@@ -1,0 +1,133 @@
+{%- comment -%}
+  Sous-navigation de l'espace Learn — source unique des URL et des libelles.
+
+  Ne produit plus que la barre collante en tete des pages Learn. Les variantes
+  `header` et `mobile` ont ete retirees : le mega-menu de header.liquid porte
+  desormais l'entree Apprendre, et deux menus concurrents s'affichaient.
+
+  Parametre :
+    current  'hub' | 'how' | 'wavelengths' | 'science' | 'howto' | 'faq'
+             | 'values' | 'blog'
+
+  Trilingue FR / EN / PT, comme le header.
+
+  Resolution des URL — les pages sont creees dans l'admin Shopify, le theme ne
+  peut pas les creer. On lit l'objet page par son handle : son `.url` porte
+  deja le prefixe de locale (/fr/pages/...). Si la page manque, on retombe sur
+  un chemin construit a la main plutot que sur un href vide, qui rechargerait
+  la page courante sans rien signaler.
+
+  Les handles sont ceux reellement crees en boutique. Un handle qui change ne
+  se corrige qu'ici.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  assign is_pt = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+  if request.locale.iso_code contains 'pt'
+    assign is_pt = true
+  endif
+
+  comment
+    routes.root_url vaut '/' sur la locale primaire et '/fr' sur les autres.
+    Concatener tel quel donnerait '//pages/science', une URL protocol-relative
+    que le navigateur resoudrait vers l'hote 'pages'.
+  endcomment
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign hub_url = pages['academy'].url
+  if hub_url == blank
+    assign hub_url = locale_root | append: '/pages/academy'
+  endif
+
+  assign how_url = pages['comment-ca-marche'].url
+  if how_url == blank
+    assign how_url = locale_root | append: '/pages/comment-ca-marche'
+  endif
+
+  assign wl_url = pages['wavelengths'].url
+  if wl_url == blank
+    assign wl_url = locale_root | append: '/pages/wavelengths'
+  endif
+
+  assign science_url = pages['science'].url
+  if science_url == blank
+    assign science_url = locale_root | append: '/pages/science'
+  endif
+
+  assign howto_url = pages['how-to-use'].url
+  if howto_url == blank
+    assign howto_url = locale_root | append: '/pages/how-to-use'
+  endif
+
+  assign faq_url = pages['faq'].url
+  if faq_url == blank
+    assign faq_url = locale_root | append: '/pages/faq'
+  endif
+
+  assign values_url = pages['nos-valeurs'].url
+  if values_url == blank
+    assign values_url = locale_root | append: '/pages/nos-valeurs'
+  endif
+
+  comment
+    Le blog par defaut de Shopify a le handle 'news'. On accepte 'journal' en
+    premier pour les boutiques qui ont renomme le leur.
+  endcomment
+  assign learn_blog = blogs['journal']
+  if learn_blog.url == blank
+    assign learn_blog = blogs['news']
+  endif
+  assign blog_url = learn_blog.url
+  if blog_url == blank
+    assign blog_url = locale_root | append: '/blogs/news'
+  endif
+
+  if is_fr
+    assign label_how = 'Comment &ccedil;a marche'
+    assign label_wl = "Longueurs d'onde"
+    assign label_science = 'Science'
+    assign label_howto = "Mode d'emploi"
+    assign label_faq = 'FAQ'
+    assign label_values = 'Nos valeurs'
+    assign label_blog = 'Blog'
+    assign nav_label = 'Sections Apprendre'
+  elsif is_pt
+    assign label_how = 'Como funciona'
+    assign label_wl = 'Comprimentos de onda'
+    assign label_science = 'Ci&ecirc;ncia'
+    assign label_howto = 'Como usar'
+    assign label_faq = 'FAQ'
+    assign label_values = 'Os nossos valores'
+    assign label_blog = 'Blog'
+    assign nav_label = 'Sec&ccedil;&otilde;es Aprender'
+  else
+    assign label_how = 'How it works'
+    assign label_wl = 'Wavelengths'
+    assign label_science = 'Science'
+    assign label_howto = 'How to use'
+    assign label_faq = 'FAQ'
+    assign label_values = 'Our values'
+    assign label_blog = 'Blog'
+    assign nav_label = 'Learn sections'
+  endif
+-%}
+
+<nav class="ln-subnav" aria-label="{{ nav_label }}">
+  <div class="ln-shell ln-subnav__inner">
+    <a class="ln-subnav__home" href="{{ hub_url }}">{% if is_fr %}Apprendre{% elsif is_pt %}Aprender{% else %}Learn{% endif %}</a>
+    <a class="ln-subnav__link{% if current == 'how' %} is-current{% endif %}" href="{{ how_url }}"{% if current == 'how' %} aria-current="page"{% endif %}>{{ label_how }}</a>
+    <a class="ln-subnav__link{% if current == 'wavelengths' %} is-current{% endif %}" href="{{ wl_url }}"{% if current == 'wavelengths' %} aria-current="page"{% endif %}>{{ label_wl }}</a>
+    <a class="ln-subnav__link{% if current == 'science' %} is-current{% endif %}" href="{{ science_url }}"{% if current == 'science' %} aria-current="page"{% endif %}>{{ label_science }}</a>
+    <a class="ln-subnav__link{% if current == 'howto' %} is-current{% endif %}" href="{{ howto_url }}"{% if current == 'howto' %} aria-current="page"{% endif %}>{{ label_howto }}</a>
+    <a class="ln-subnav__link{% if current == 'faq' %} is-current{% endif %}" href="{{ faq_url }}"{% if current == 'faq' %} aria-current="page"{% endif %}>{{ label_faq }}</a>
+    <a class="ln-subnav__link{% if current == 'values' %} is-current{% endif %}" href="{{ values_url }}"{% if current == 'values' %} aria-current="page"{% endif %}>{{ label_values }}</a>
+    <a class="ln-subnav__link{% if current == 'blog' %} is-current{% endif %}" href="{{ blog_url }}"{% if current == 'blog' %} aria-current="page"{% endif %}>{{ label_blog }}</a>
+  </div>
+</nav>

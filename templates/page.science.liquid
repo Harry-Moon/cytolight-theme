@@ -1,0 +1,22 @@
+{%- comment -%}
+  Gabarit Learn > Science.
+
+  A assigner dans l'admin Shopify a une page de handle `science`
+  (Content > Pages > Science > Theme template : page.science).
+{%- endcomment -%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% render 'learn-nav', current: 'science' %}
+  {% section 'learn-science' %}
+
+  {%- if page.content != blank -%}
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-prose">{{ page.content }}</div>
+      </div>
+    </section>
+  {%- endif -%}
+</div>

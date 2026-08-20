@@ -1,0 +1,25 @@
+{%- comment -%}
+  Gabarit Learn > Longueurs d'onde.
+
+  A assigner dans l'admin Shopify a la page de handle `wavelengths`
+  (Content > Pages > Wavelengths > Theme template : page.wavelengths).
+
+  Le corps saisi dans l'admin est desormais porte par la section ; s'il reste
+  du texte dans l'editeur, il est rendu en bas plutot que perdu sans trace.
+{%- endcomment -%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% render 'learn-nav', current: 'wavelengths' %}
+  {% section 'learn-wavelengths' %}
+
+  {%- if page.content != blank -%}
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-prose">{{ page.content }}</div>
+      </div>
+    </section>
+  {%- endif -%}
+</div>
