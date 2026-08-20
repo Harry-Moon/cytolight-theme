@@ -72,10 +72,22 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .announcement__divider { color: var(--color-promo); }
 
 /* ---------- Header ---------- */
-.site-header {
+/*
+ * Le collant est pose sur #shopify-section-header, l'enveloppe que Shopify
+ * ajoute autour de la section, et non sur .site-header.
+ *
+ * Un element colle ne peut pas sortir des limites de son parent. Sur
+ * .site-header, ce parent etait justement l'enveloppe de section, haute de la
+ * hauteur du header : la course disponible etait nulle et le header defilait
+ * avec la page malgre son position: sticky. Le symptome est silencieux — la
+ * regle est bien appliquee, elle ne produit simplement aucun effet.
+ */
+#shopify-section-header {
   position: sticky;
   top: 0;
   z-index: 50;
+}
+.site-header {
   background: rgba(255,255,255,.9);
   border-bottom: 1px solid rgba(0,0,0,.08);
   backdrop-filter: blur(18px);
@@ -821,7 +833,7 @@ h1, h2, h3, h4,
 .cart-item__title { font-weight: 600; font-size: 1rem; }
 .cart-item__variant { font-size: .85rem; color: var(--color-muted); }
 .cart-item__price { font-size: 1rem; }
-.cart-summary { background: var(--color-background-soft); padding: 32px; border-radius: var(--radius-md); height: fit-content; position: sticky; top: 100px; }
+.cart-summary { background: var(--color-background-soft); padding: 32px; border-radius: var(--radius-md); height: fit-content; position: sticky; top: calc(var(--header-h, 88px) + 12px); }
 .cart-summary__row { display: flex; justify-content: space-between; padding: 8px 0; font-size: .95rem; }
 .cart-summary__total { font-size: 1.25rem; font-weight: 600; border-top: 1px solid rgba(0,0,0,.12); padding-top: 16px; margin-top: 8px; }
 .cart-summary .btn { width: 100%; margin-top: 16px; }
