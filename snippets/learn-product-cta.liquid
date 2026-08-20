@@ -1,0 +1,118 @@
+{%- comment -%}
+  Bande de rappel produit fermant chaque page Learn.
+
+  Le contenu editorial n'a d'interet commercial que s'il ramene au catalogue :
+  chaque page Learn se termine donc par ce bloc, avec une selection adaptee au
+  sujet de la page.
+
+  Parametres :
+    handles     handles produit separes par une virgule (3 recommandes)
+    heading_fr  / heading_en   titre du bloc
+    text_fr     / text_en      phrase d'accroche
+
+  Les prix viennent de `all_products` : ils suivent la devise et les
+  promotions du marche courant. Un produit absent du catalogue est simplement
+  saute plutot que rendu avec un prix vide.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign handle_list = handles | default: 'cytolight-desk,cytolight-mask,cytolight-pano-ultra' | split: ','
+-%}
+
+<section class="ln-cta">
+  <div class="ln-shell">
+    <p class="ln-kicker">{% if is_fr %}Passer &agrave; la pratique{% else %}Put it into practice{% endif %}</p>
+    <h2 class="ln-title ln-cta__title">
+      {%- if is_fr -%}
+        {{ heading_fr | default: 'La science ne sert &agrave; rien sans une routine que vous tenez.' }}
+      {%- else -%}
+        {{ heading_en | default: 'The science means nothing without a routine you actually keep.' }}
+      {%- endif -%}
+    </h2>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        {{ text_fr | default: "Chaque appareil CytoLight est con&ccedil;u pour une zone et un moment pr&eacute;cis. Trouvez celui qui s'ins&egrave;re dans votre semaine, pas celui qui a le plus de LED." }}
+      {%- else -%}
+        {{ text_en | default: 'Every CytoLight device is built around one area and one moment. Pick the one that fits your week, not the one with the most LEDs.' }}
+      {%- endif -%}
+    </p>
+
+    <div class="ln-picks">
+      {%- for raw_handle in handle_list -%}
+        {%- assign handle = raw_handle | strip -%}
+        {%- assign item = all_products[handle] -%}
+        {%- if item != blank -%}
+          {%- liquid
+            case handle
+              when 'cytolight-desk'
+                assign pick_type_fr = 'Personnel &middot; Bureau'
+                assign pick_type_en = 'Personal &middot; Desktop'
+                assign pick_text_fr = 'Panneau compact &agrave; 7 spectres, du rouge au proche infrarouge, pour une s&eacute;ance quotidienne pos&eacute;e sur le bureau.'
+                assign pick_text_en = 'Compact 7-spectrum panel, red through near-infrared, for a daily session that sits on your desk.'
+              when 'cytolight-mask'
+                assign pick_type_fr = 'Visage &middot; Sans fil'
+                assign pick_type_en = 'Face &middot; Cordless'
+                assign pick_text_fr = 'Masque silicone souple, 288 LED sur 4 canaux dont le rouge 630 nm et le proche infrarouge 850 nm.'
+                assign pick_text_en = 'Flexible silicone mask, 288 LEDs across 4 channels including 630 nm red and 850 nm near-infrared.'
+              when 'cytolight-cap'
+                assign pick_type_fr = 'Cuir chevelu &middot; Mains libres'
+                assign pick_type_en = 'Scalp &middot; Hands-free'
+                assign pick_text_fr = 'Casquette &agrave; 150 LED 3-en-1, pour la routine cuir chevelu la plus simple &agrave; tenir dans la dur&eacute;e.'
+                assign pick_text_en = 'Cap with 150 3-in-1 LEDs, for the scalp routine that is easiest to keep up over months.'
+              when 'cytolight-knee'
+                assign pick_type_fr = 'Genou &middot; Sans fil'
+                assign pick_type_en = 'Knee &middot; Cordless'
+                assign pick_text_fr = 'Genouill&egrave;re souple, 60 LED en 660 nm et 850 nm, batterie magn&eacute;tique de 6000 mAh.'
+                assign pick_text_en = 'Soft knee wrap, 60 LEDs at 660 nm and 850 nm, 6000 mAh magnetic battery.'
+              when 'cytolight-foot'
+                assign pick_type_fr = 'Pied &middot; Enveloppant'
+                assign pick_type_en = 'Foot &middot; Wraparound'
+                assign pick_text_fr = "Botte souple qui enveloppe pied, talon et cheville pour une routine calme apr&egrave;s l'effort."
+                assign pick_text_en = 'Soft boot wrapping the foot, heel, and ankle for a calm routine after training or long days.'
+              when 'cytolight-pano-ultra'
+                assign pick_type_fr = 'Corps entier &middot; Grand format'
+                assign pick_type_en = 'Full body &middot; Large format'
+                assign pick_text_fr = 'Panneau grand format pour les routines corps entier, les studios et la r&eacute;cup&eacute;ration sportive.'
+                assign pick_text_en = 'Large-format panel for full-body routines, studios, and athletic recovery.'
+              else
+                assign pick_type_fr = 'Rouge &middot; Proche infrarouge'
+                assign pick_type_en = 'Red &middot; Near-infrared'
+                assign pick_text_fr = 'Rouge et proche infrarouge, pens&eacute; pour une routine r&eacute;guli&egrave;re &agrave; la maison.'
+                assign pick_text_en = 'Red and near-infrared, built for a routine you can repeat at home.'
+            endcase
+          -%}
+          <a class="ln-pick" href="{{ item.url }}">
+            <p class="ln-pick__type">{% if is_fr %}{{ pick_type_fr }}{% else %}{{ pick_type_en }}{% endif %}</p>
+            {%- comment -%}
+              Certains titres du catalogue portent un suffixe descriptif apres
+              un tiret ("CytoLight DESK - Panneau de luminotherapie rouge a
+              7 spectres"), qui deborde sur quatre lignes dans une carte etroite
+              et desequilibre la rangee. On ne garde que le nom du produit ; le
+              descriptif est deja porte par la ligne en dessous.
+            {%- endcomment -%}
+            <h3 class="ln-pick__name">{{ item.title | split: ' - ' | first }}</h3>
+            <p class="ln-pick__text">{% if is_fr %}{{ pick_text_fr }}{% else %}{{ pick_text_en }}{% endif %}</p>
+            <span class="ln-pick__foot">
+              <span class="ln-pick__price">{{ item.price | money }}</span>
+              <span class="ln-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
+            </span>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="ln-actions">
+      <a class="ln-button" href="{{ routes.all_products_collection_url }}">
+        {% if is_fr %}Voir toute la gamme{% else %}See the full range{% endif %}
+      </a>
+      <a class="ln-button ln-button--line" href="{{ routes.root_url }}">
+        {% if is_fr %}Retour &agrave; l'accueil{% else %}Back to the homepage{% endif %}
+      </a>
+    </div>
+  </div>
+</section>

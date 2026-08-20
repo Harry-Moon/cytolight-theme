@@ -85,6 +85,68 @@ via des booléens dérivés en début de section : `is_cap` (`cytolight-cap`), `
 
 Une modification dans ce fichier doit être vérifiée sur **chaque** variante, pas seulement celle en cours.
 
+## Espace Learn
+
+Sept pages éditoriales plus le blog, regroupées sous l'entrée **Apprendre / Learn** du mega-menu.
+L'espace fusionne deux lots de contenu : les pages rédigées dans l'admin (`wavelengths`, `how-to-use`,
+`faq`, `academy`) et les sections Liquid écrites dans le thème.
+
+| Page (handle) | Gabarit | Section | Contenu porté par |
+|---|---|---|---|
+| `academy` | `page.academy.liquid` | `learn-hub` | le thème |
+| `comment-ca-marche` | `page.comment-ca-marche.liquid` | `learn-how-it-works` | le thème |
+| `wavelengths` | `page.wavelengths.liquid` | `learn-wavelengths` | le thème |
+| `science` | `page.science.liquid` | `learn-science` | le thème |
+| `how-to-use` | `page.how-to-use.liquid` | — (contenu admin) | l'admin |
+| `faq` | `page.faq.liquid` | — (contenu admin) | l'admin |
+| `nos-valeurs` | `page.nos-valeurs.liquid` | `learn-values` | le thème |
+| blog | `blog.liquid`, `article.liquid` | — | l'admin |
+
+**Les gabarits doivent être assignés à la main dans Content → Pages, après le merge.** Le sélecteur
+« Theme template » de l'admin ne liste que les gabarits du thème **publié** : tant que la PR n'est pas
+mergée, `page.science` & co. n'y apparaissent pas. Le thème ne peut pas créer les pages.
+
+Les handles sont ceux réellement créés en boutique, d'où le mélange FR / EN (`comment-ca-marche`,
+`nos-valeurs` d'un côté, `wavelengths`, `science`, `faq` de l'autre). Shopify ne dérive le handle du
+titre **qu'à la création** : renommer le titre d'une page existante ne change jamais son URL, elle se
+corrige dans *Search engine listing → Edit → URL handle*.
+
+`snippets/learn-nav.liquid` est la **source unique** des URL et des libellés de la sous-navigation
+(trilingue FR / EN / PT). Il ne rend plus que la barre collante des pages Learn : les variantes
+`header` et `mobile` ont été retirées, le mega-menu de `header.liquid` porte l'entrée Apprendre et
+deux menus concurrents s'affichaient. Un handle qui change ne se corrige qu'à cet endroit — sauf dans
+`header.liquid`, où les liens du mega-menu sont écrits en dur comme le reste de la navigation.
+
+`assets/learn.css` et `learn.js` ne sont chargés que par ces gabarits. Le CSS ne masque **jamais**
+rien de lui-même : c'est `learn.js` qui pose `is-armed` sur ce qu'il va animer. Sans le script — bloqué,
+404 sur le CDN, mouvement réduit — rien n'est armé et la page s'affiche entièrement. Ne pas
+réintroduire de règle du type `.ln-reveal { opacity: 0 }`, elle rendrait la page blanche au moindre
+incident. Même logique pour les états d'animation : la transition n'est déclarée que dans l'état
+révélé, sinon l'élément s'efface visiblement avant de revenir.
+
+`.site-header` porte `position: sticky` mais Shopify l'enveloppe dans `#shopify-section-header`, haut
+de 88 px : un élément collant ne peut pas sortir des limites de son parent, **le header ne colle donc
+pas**. La sous-navigation Learn est en `top: 0` pour cette raison, avec un `z-index` sous les 50 du
+header pour se glisser dessous si sa stickiness est un jour réparée.
+
+### Répartition des contenus
+
+`learn-how-it-works` traite le mécanisme, la dose et la sécurité ; le spectre détaillé vit sur
+`learn-wavelengths` pour ne pas maintenir deux fois la même liste de longueurs d'onde. La FAQ
+commerciale (essai, garantie, certifications) reste sur la page `faq` de l'admin ; le bloc sécurité de
+`learn-how-it-works` y renvoie. `learn-wavelengths` reprend la correspondance longueur d'onde /
+appareil qui était saisie dans l'admin — elle doit rester alignée sur les fiches produit.
+
+### Références scientifiques
+
+`learn-science.liquid` cite quinze jalons et huit publications, chacun lié à son DOI. Aucune de ces
+études n'a été menée sur un appareil CytoLight, et la section le dit explicitement dans son bloc
+« Ce que ces études ne disent pas ». Ce bloc n'est pas décoratif : sans lui la page devient une
+allégation de santé non étayée sur les produits vendus, sanctionnée par l'article L.121-2 du Code de
+la consommation et rejetée à la validation des comptes publicitaires.
+
+Ne jamais ajouter une référence sans identifiant vérifiable, ni retirer le cadrage sur les limites.
+
 ## Fichiers auto-générés
 
 `config/settings_data.json`, `templates/cart.json`, `templates/collection.json` et

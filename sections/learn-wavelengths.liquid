@@ -1,0 +1,310 @@
+{%- comment -%}
+  Learn > Longueurs d'onde.
+
+  Le spectre et les profondeurs relatives viennent de learn-how-it-works, d'ou
+  ils ont ete extraits pour que cette page porte le sujet en entier plutot que
+  d'en dupliquer la moitie. La correspondance longueur d'onde / appareil, elle,
+  reprend le contenu redige dans l'admin sur l'ancienne page /pages/wavelengths.
+
+  Les profondeurs sont des ordres de grandeur relatifs, jamais des millimetres
+  absolus : la penetration depend du tissu, de la pigmentation et de
+  l'irradiance, et l'energie decroit de facon exponentielle. Ce cadrage ne doit
+  pas etre retire.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign science_url = pages['science'].url
+  if science_url == blank
+    assign science_url = locale_root | append: '/pages/science'
+  endif
+
+  assign how_url = pages['comment-ca-marche'].url
+  if how_url == blank
+    assign how_url = locale_root | append: '/pages/comment-ca-marche'
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Apprendre{% else %}Learn{% endif %}
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}
+    </p>
+    <p class="ln-kicker">{% if is_fr %}Du 460 au 940 nm{% else %}From 460 to 940 nm{% endif %}</p>
+    <h1 class="ln-title">
+      {%- if is_fr -%}
+        Un nanom&egrave;tre n'est pas une nuance de couleur.
+      {%- else -%}
+        A nanometre is not a shade of colour.
+      {%- endif -%}
+    </h1>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        C'est ce qui d&eacute;cide de la profondeur atteinte et de la mol&eacute;cule qui absorbe. Voici les
+        sept spectres de la gamme, ce que chacun fait, et sur quel appareil vous le trouverez.
+      {%- else -%}
+        It decides how deep the light reaches and which molecule absorbs it. Here are the seven spectra in
+        the range, what each one does, and which device carries it.
+      {%- endif -%}
+    </p>
+  </div>
+</section>
+
+{%- comment -%} Spectre et longueurs d'onde. {%- endcomment -%}
+<section class="ln-section ln-section--dark">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Les longueurs d'onde{% else %}The wavelengths{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Sept spectres, sept r&ocirc;les diff&eacute;rents.{%- else -%}Seven spectra, seven different jobs.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Un nanom&egrave;tre n'est pas une nuance de couleur : c'est ce qui d&eacute;cide de la
+            profondeur atteinte et de la mol&eacute;cule qui absorbe. Un appareil &agrave; une seule
+            longueur d'onde fait une seule chose.
+          {%- else -%}
+            A nanometre is not a shade of colour: it decides how deep the light reaches and which molecule
+            absorbs it. A single-wavelength device does a single thing.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-spectrum ln-reveal">
+      <div class="ln-spectrum__bar" role="img" aria-label="{% if is_fr %}Spectre continu de 590 &agrave; 940 nanom&egrave;tres, de l'ambre au proche infrarouge profond{% else %}Continuous spectrum from 590 to 940 nanometres, amber through deep near-infrared{% endif %}"></div>
+      <div class="ln-spectrum__scale">
+        <span>590 nm &middot; {% if is_fr %}ambre{% else %}amber{% endif %}</span>
+        <span>{% if is_fr %}rouge{% else %}red{% endif %}</span>
+        <span>{% if is_fr %}proche infrarouge{% else %}near-infrared{% endif %}</span>
+        <span>940 nm</span>
+      </div>
+
+      <div class="ln-waves">
+        <article class="ln-wave">
+          <p class="ln-wave__nm">590 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ffb547, #ff9a3c);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Ambre &mdash; surface{% else %}Amber &mdash; surface{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Absorb&eacute; d&egrave;s l'&eacute;piderme. Utilis&eacute; pour le teint et la sensation de confort cutan&eacute;, pas pour atteindre un muscle.{% else %}Absorbed within the epidermis. Used for complexion and skin comfort, not to reach a muscle.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">630 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ff5f3a, #ea1f36);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; peau{% else %}Red &mdash; skin{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}&Eacute;piderme et derme superficiel. C'est le canal rouge du masque CytoLight, celui que documentent les essais sur le collag&egrave;ne.{% else %}Epidermis and upper dermis. This is the red channel of the CytoLight mask, the one collagen trials document.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">660 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ea1f36, #d20d2f);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; derme{% else %}Red &mdash; dermis{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}La longueur d'onde rouge la plus &eacute;tudi&eacute;e du domaine. Pr&eacute;sente sur la genouill&egrave;re CytoLight avec le 850 nm.{% else %}The most studied red wavelength in the field. Present on the CytoLight knee wrap alongside 850 nm.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">810 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #a3122c, #7a1226);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; invisible{% else %}Near-infrared &mdash; invisible{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Invisible &agrave; l'&oelig;il : une LED en 810 nm peut &ecirc;tre allum&eacute;e sans qu'on la voie. C'est le spectre le plus utilis&eacute; en recherche sur les tissus profonds.{% else %}Invisible to the eye: an 810 nm LED can be on without looking like it. This is the spectrum most used in deep-tissue research.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">830 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #7a1226, #5c1020);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; tissus{% else %}Near-infrared &mdash; tissue{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Document&eacute; sur la cicatrisation et la r&eacute;ponse tissulaire. Souvent associ&eacute; au rouge plut&ocirc;t qu'utilis&eacute; seul.{% else %}Documented for wound healing and tissue response. Usually paired with red rather than used alone.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">850 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #5c1020, #45101c);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; profondeur{% else %}Near-infrared &mdash; depth{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Le proche infrarouge le plus courant sur les appareils grand public. Pr&eacute;sent sur le masque, la genouill&egrave;re et les panneaux CytoLight.{% else %}The most common near-infrared on consumer devices. Present on the CytoLight mask, knee wrap and panels.{% endif %}
+          </p>
+        </article>
+
+        <article class="ln-wave">
+          <p class="ln-wave__nm">940 <i>nm</i></p>
+          <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #45101c, #2b0d15);" aria-hidden="true"></span>
+          <p class="ln-wave__label">{% if is_fr %}Bord de fen&ecirc;tre{% else %}Edge of the window{% endif %}</p>
+          <p class="ln-wave__text">
+            {% if is_fr %}Au-del&agrave; de 950 nm, l'eau des tissus absorbe de plus en plus : aller plus loin dans l'infrarouge ne fait pas p&eacute;n&eacute;trer plus profond&eacute;ment.{% else %}Past 950 nm, tissue water absorbs more and more: going further into the infrared does not mean going deeper.{% endif %}
+          </p>
+        </article>
+      </div>
+    </div>
+
+    {%- comment -%}
+      Profondeur relative. Les barres sont proportionnelles entre elles et non
+      calees sur une echelle absolue : le libelle le dit explicitement.
+    {%- endcomment -%}
+    <div class="ln-head ln-reveal" style="margin-top: 92px;">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Profondeur relative{% else %}Relative depth{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Plus la longueur d'onde monte, plus la lumi&egrave;re descend.{%- else -%}The longer the wavelength, the deeper the light goes.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Ces barres sont des ordres de grandeur, proportionnels entre eux. Personne ne peut vous donner
+            une profondeur au millim&egrave;tre : elle d&eacute;pend du tissu, de la pigmentation et de
+            l'irradiance, et l'&eacute;nergie d&eacute;cro&icirc;t de fa&ccedil;on exponentielle.
+          {%- else -%}
+            These bars are orders of magnitude, proportional to each other. Nobody can give you a depth to
+            the millimetre: it depends on tissue, pigmentation and irradiance, and energy falls off
+            exponentially.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-depth ln-reveal">
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">590 nm <small>{% if is_fr %}&Eacute;piderme{% else %}Epidermis{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 12%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">630 nm <small>{% if is_fr %}Derme superficiel{% else %}Upper dermis{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 26%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">660 nm <small>{% if is_fr %}Derme{% else %}Dermis{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 38%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">810 nm <small>{% if is_fr %}Sous-cutan&eacute;, muscle{% else %}Subcutaneous, muscle{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 78%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">850 nm <small>{% if is_fr %}Muscle, articulation{% else %}Muscle, joint{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 92%;"></span></span>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">940 nm <small>{% if is_fr %}Absorption par l'eau croissante{% else %}Rising water absorption{% endif %}</small></p>
+        <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 70%;"></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+{%- comment -%}
+  Correspondance longueur d'onde / appareil. Reprend le contenu redige dans
+  l'admin sur l'ancienne page /pages/wavelengths, la seule information que le
+  bloc spectre ci-dessus ne portait pas.
+{%- endcomment -%}
+<section class="ln-section ln-section--soft">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Sur quel appareil{% else %}On which device{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Chaque spectre, et o&ugrave; il se trouve dans la gamme.{%- else -%}Each spectrum, and where it sits in the range.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            La plupart des appareils combinent deux ou trois longueurs d'onde choisies pour un usage
+            pr&eacute;cis, plut&ocirc;t qu'une seule pouss&eacute;e au maximum. Le DESK fait exception :
+            ses sept canaux se pilotent ind&eacute;pendamment.
+          {%- else -%}
+            Most devices combine two or three wavelengths chosen for one specific use, rather than a single
+            one pushed to maximum. DESK is the exception: its seven channels are independently controlled.
+          {%- endif -%}
+        </p>
+        <a class="ln-link" href="{{ science_url }}">
+          {% if is_fr %}La recherche derri&egrave;re ces spectres{% else %}The research behind these spectra{% endif %} <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="ln-depth ln-reveal">
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">460 nm <small>{% if is_fr %}Bleu{% else %}Blue{% endif %}</small></p>
+        <p class="ln-depth__label" style="font-weight: 400;">{% if is_fr %}Routines peau du quotidien &mdash; CytoLight Mask{% else %}Everyday skin routines &mdash; CytoLight Mask{% endif %}</p>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">590 nm <small>{% if is_fr %}Ambre{% else %}Amber{% endif %}</small></p>
+        <p class="ln-depth__label" style="font-weight: 400;">CytoLight DESK</p>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">630 nm <small>{% if is_fr %}Rouge{% else %}Red{% endif %}</small></p>
+        <p class="ln-depth__label" style="font-weight: 400;">CytoLight Mask, DESK</p>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">660 nm <small>{% if is_fr %}Rouge profond{% else %}Deep red{% endif %}</small></p>
+        <p class="ln-depth__label" style="font-weight: 400;">CytoLight Knee, Foot, Cap, Sauna Dome, DESK</p>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">810&ndash;850 nm <small>{% if is_fr %}Proche infrarouge{% else %}Near-infrared{% endif %}</small></p>
+        <p class="ln-depth__label" style="font-weight: 400;">{% if is_fr %}Presque tous les appareils de la gamme{% else %}Nearly every device in the range{% endif %}</p>
+      </div>
+      <div class="ln-depth__row">
+        <p class="ln-depth__label">940 nm <small>{% if is_fr %}Infrarouge profond{% else %}Deep infrared{% endif %}</small></p>
+        <p class="ln-depth__label" style="font-weight: 400;">CytoLight DESK</p>
+      </div>
+    </div>
+
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Le nombre de spectres n'est pas un score. Un appareil &agrave; deux longueurs d'onde bien
+        choisies pour une zone fait mieux qu'un appareil qui en empile sept sans raison &mdash; voir
+        <a href="{{ how_url }}">comment &ccedil;a marche</a> pour la question de la dose.
+      {%- else -%}
+        The number of spectra is not a score. A device with two wavelengths well chosen for one area beats
+        one stacking seven for no reason &mdash; see <a href="{{ how_url }}">how it works</a> on the
+        question of dose.
+      {%- endif -%}
+    </p>
+  </div>
+</section>
+
+{% render 'learn-product-cta',
+   handles: 'cytolight-desk,cytolight-mask,cytolight-knee',
+   heading_fr: 'Sept canaux sur le DESK. Deux ou trois, bien plac&eacute;s, ailleurs.',
+   heading_en: 'Seven channels on DESK. Two or three, well placed, everywhere else.',
+   text_fr: 'Le bon appareil est celui dont les spectres correspondent &agrave; la zone que vous voulez traiter, pas celui qui en affiche le plus.',
+   text_en: 'The right device is the one whose spectra match the area you want to treat, not the one listing the most.'
+%}
+
+{% schema %}
+{
+  "name": "Learn — Wavelengths",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Contenu editorial bilingue FR / EN ecrit en Liquid. Les profondeurs sont des ordres de grandeur relatifs, jamais des millimetres absolus : ce cadrage ne doit pas etre retire. La correspondance longueur d'onde / appareil doit rester alignee sur les fiches produit."
+    }
+  ]
+}
+{% endschema %}

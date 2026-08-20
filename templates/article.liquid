@@ -1,11 +1,102 @@
-<article class="container" style="padding: 60px 0; max-width: 760px;">
-  <span class="eyebrow">{{ article.tags | join: ' · ' | default: 'Article' }}</span>
-  <h1>{{ article.title }}</h1>
-  <p style="color: var(--color-muted); font-size: .9rem;">{{ article.published_at | date: "%B %-d, %Y" }} · {{ article.author }}</p>
-  {% if article.image != blank %}
-    <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.title | escape }}" style="border-radius: var(--radius-md); margin: 24px 0;">
-  {% endif %}
-  <div class="article-content" style="font-size: 1.05rem; line-height: 1.7;">
-    {{ article.content }}
-  </div>
-</article>
+{%- comment -%}
+  Article de blog, rattache visuellement a l'espace Learn.
+
+  L'image de tete est chargee en eager avec fetchpriority high : sur un article
+  elle est presque toujours l'element LCP. Sa hauteur est calculee depuis le
+  ratio reel du fichier pour ne pas decaler la mise en page a l'arrivee.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+-%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% render 'learn-nav', current: 'blog' %}
+
+  <article>
+    <section class="ln-hero">
+      <div class="ln-shell ln-shell--narrow">
+        <p class="ln-crumbs">
+          <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+          <span aria-hidden="true">/</span>
+          <a href="{{ blog.url }}">{{ blog.title }}</a>
+        </p>
+        <p class="ln-kicker">
+          {%- if article.tags.size > 0 -%}
+            {{ article.tags | join: ' &middot; ' }}
+          {%- else -%}
+            {% if is_fr %}Article{% else %}Article{% endif %}
+          {%- endif -%}
+        </p>
+        <h1 class="ln-title ln-title--wide">{{ article.title }}</h1>
+        <p class="ln-copy">
+          <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%d.%m.%Y' }}</time>
+          {%- if article.author != blank %} &middot; {{ article.author }}{% endif -%}
+        </p>
+      </div>
+    </section>
+
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        {%- if article.image != blank -%}
+          <img src="{{ article.image | image_url: width: 1400 }}"
+               srcset="{{ article.image | image_url: width: 700 }} 700w,
+                       {{ article.image | image_url: width: 1080 }} 1080w,
+                       {{ article.image | image_url: width: 1400 }} 1400w"
+               sizes="(min-width: 920px) 860px, 92vw"
+               alt="{{ article.title | escape }}"
+               width="1400" height="{{ 1400 | divided_by: article.image.aspect_ratio | round }}"
+               loading="eager" fetchpriority="high" decoding="async"
+               style="width: 100%; height: auto; border-radius: var(--ln-radius); margin-bottom: 44px;">
+        {%- endif -%}
+
+        <div class="ln-prose">
+          {{ article.content }}
+        </div>
+
+        <p style="margin-top: 56px;">
+          <a class="ln-link" href="{{ blog.url }}">
+            <span aria-hidden="true">&larr;</span>
+            {% if is_fr %}Tous les articles{% else %}All articles{% endif %}
+          </a>
+        </p>
+      </div>
+    </section>
+
+    {%- comment -%}
+      Articles suivant et precedent. Shopify n'expose ces objets que dans le
+      contexte d'un article, d'ou l'absence de garde supplementaire.
+    {%- endcomment -%}
+    {%- if blog.next_article or blog.previous_article -%}
+      <section class="ln-section ln-section--soft ln-section--tight">
+        <div class="ln-shell">
+          <p class="ln-kicker">{% if is_fr %}Continuer la lecture{% else %}Keep reading{% endif %}</p>
+          <div class="ln-hub">
+            {%- if blog.previous_article -%}
+              <a class="ln-hub__card" href="{{ blog.previous_article.url }}">
+                <span class="ln-hub__num">{% if is_fr %}Pr&eacute;c&eacute;dent{% else %}Previous{% endif %}</span>
+                <h2 class="ln-hub__title">{{ blog.previous_article.title }}</h2>
+                <span class="ln-link">{% if is_fr %}Lire{% else %}Read{% endif %} <span aria-hidden="true">&rarr;</span></span>
+              </a>
+            {%- endif -%}
+            {%- if blog.next_article -%}
+              <a class="ln-hub__card" href="{{ blog.next_article.url }}">
+                <span class="ln-hub__num">{% if is_fr %}Suivant{% else %}Next{% endif %}</span>
+                <h2 class="ln-hub__title">{{ blog.next_article.title }}</h2>
+                <span class="ln-link">{% if is_fr %}Lire{% else %}Read{% endif %} <span aria-hidden="true">&rarr;</span></span>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </section>
+    {%- endif -%}
+  </article>
+
+  {% render 'learn-product-cta' %}
+</div>
