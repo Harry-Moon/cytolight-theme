@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+/*
+ * Les polices sont auto-hebergees : Instrument Sans et Instrument Serif sont
+ * declarees en @font-face dans layout/theme.liquid, servies depuis le CDN
+ * Shopify (sous-ensemble latin, 64 Ko).
+ *
+ * L'@import vers fonts.googleapis.com qui se trouvait ici ajoutait une feuille
+ * tierce bloquant le rendu et transmettait l'IP de chaque visiteur a Google
+ * sans consentement prealable. Ne pas le reintroduire.
+ */
 
 .cy-home {
   --cy-red: #d20d2f;

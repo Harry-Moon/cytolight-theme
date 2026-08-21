@@ -96,7 +96,7 @@
 .cl-mask-use__title{font-size:20px;font-weight:900;margin:0 0 6px;letter-spacing:-.01em;}
 .cl-mask-use__body{font-size:13px;line-height:1.6;margin:0;color:rgba(255,255,255,.82);}
 .cl-product-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:1400px;margin:0 auto;padding:48px 40px;align-items:start;}
-.cl-col-left{position:sticky;top:20px;padding-right:40px;}
+.cl-col-left{position:sticky;top:calc(var(--header-h, 0px) + 20px);padding-right:40px;}
 .cl-gallery{width:100%;border-radius:16px;overflow:hidden;background:#f4f4f4;aspect-ratio:1/1;position:relative;}
 .cl-media-slot{position:absolute;inset:0;display:none;}
 .cl-media-slot.is-active{display:flex;align-items:center;justify-content:center;}
@@ -143,7 +143,7 @@
 .cl-rating-num{font-size:14px;font-weight:800;color:#0d0d0d;}
 .cl-rating-count{font-size:13px;color:#888;}
 .cl-rating-sep{color:#ddd;}
-.cl-rating-verify{font-size:12px;color:#2d8c2d;font-weight:600;}
+.cl-rating-count a{color:inherit;text-decoration:underline;text-underline-offset:2px;}
 .cl-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;}
 .cl-price{font-size:34px;font-weight:900;color:#0d0d0d;letter-spacing:-.02em;}
 .cl-compare{font-size:20px;color:#bbb;text-decoration:line-through;}
@@ -261,17 +261,12 @@
   .cl-how-flow__num::before,.cl-how-flow__num::after{display:none!important;}
 }
 .cl-reviews{border:1px solid #eee;border-radius:14px;padding:18px 20px;}
+.cl-reviews:not(:empty){border:1px solid #eee;border-radius:14px;padding:18px 20px;}
+.cl-reviews:has(.cl-reviews__app:empty):not(:has(.cl-reviews__header)){border:0;padding:0;}
 .cl-reviews__header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .cl-reviews__title{font-size:13px;font-weight:800;color:#0d0d0d;}
 .cl-reviews__avg{display:flex;align-items:center;gap:6px;}
 .cl-reviews__big{font-size:28px;font-weight:900;color:#0d0d0d;}
-.cl-review-cards{display:flex;flex-direction:column;gap:10px;}
-.cl-review-card{background:#fafafa;border-radius:10px;padding:14px;}
-.cl-review-card__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.cl-review-card__author{font-size:12px;font-weight:800;color:#0d0d0d;}
-.cl-review-card__date{font-size:11px;color:#bbb;}
-.cl-review-card__stars{color:#f5a623;font-size:12px;margin-bottom:4px;}
-.cl-review-card__text{font-size:13px;color:#555;line-height:1.5;margin:0;}
 .cl-sticky-atc{position:fixed;left:50%;bottom:16px;transform:translate(-50%,18px);z-index:60;width:min(760px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(13,13,13,.96);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 14px 12px 18px;box-shadow:0 18px 50px rgba(0,0,0,.28);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;}
 .cl-sticky-atc.is-visible{opacity:1;pointer-events:auto;transform:translate(-50%,0);}
 .cl-sticky-atc__info{min-width:0;}
@@ -607,6 +602,28 @@
   {%- if product.handle == 'cytolight-sauna-dome' -%}
     {%- assign is_sauna_dome = true -%}
   {%- endif -%}
+
+  {%- comment -%}
+    Note moyenne et nombre d'avis, lus depuis les metafields standard Shopify
+    (reviews.rating / reviews.rating_count) qu'alimentent Judge.me, Loox, Yotpo
+    et Shopify Product Reviews. has_reviews reste faux tant qu'aucun avis reel
+    n'existe : rien n'est affiche dans ce cas.
+  {%- endcomment -%}
+  {%- assign review_rating = 0 -%}
+  {%- assign review_count = 0 -%}
+  {%- if product.metafields.reviews.rating_count -%}
+    {%- assign review_count = product.metafields.reviews.rating_count.value | plus: 0 -%}
+  {%- endif -%}
+  {%- if product.metafields.reviews.rating.value.rating -%}
+    {%- assign review_rating = product.metafields.reviews.rating.value.rating -%}
+  {%- endif -%}
+  {%- assign has_reviews = false -%}
+  {%- assign rating_rounded = 0 -%}
+  {%- if review_count > 0 and review_rating > 0 -%}
+    {%- assign has_reviews = true -%}
+    {%- assign rating_rounded = review_rating | round -%}
+  {%- endif -%}
+
   {%- assign foot_image_1 = product.media[0] -%}
   {%- assign foot_image_2 = product.media[1] -%}
   {%- assign foot_image_3 = product.media[2] -%}
@@ -905,14 +922,26 @@
     <div class='cl-col-right'>
       {% if product.vendor != blank %}<p class='cl-eyebrow'>{{ product.vendor }}</p>{% else %}<p class='cl-eyebrow'>CytoLight</p>{% endif %}
       <h1 class='cl-title'>{{ product.title }}</h1>
-      <div class='cl-rating-row'>
-        <span class='cl-stars'>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <span class='cl-rating-num'>4.9</span>
-        <span class='cl-rating-sep'>|</span>
-        <span class='cl-rating-count'>{{ product.metafields.reviews.rating_count | default: '128' }} {% if is_fr %}avis{% else %}reviews{% endif %}</span>
-        <span class='cl-rating-sep'>|</span>
-        <span class='cl-rating-verify'>&#10003; {% if is_fr %}V&eacute;rifi&eacute;{% else %}Verified{% endif %}</span>
-      </div>
+      {%- comment -%}
+        Note et avis : rendus uniquement si le metafield reviews.rating existe reellement
+        (aliment&eacute; par Judge.me, Loox, Yotpo ou Shopify Product Reviews). Aucune note
+        n'est ecrite en dur : publier une note ou un avis fictif est une pratique
+        commerciale trompeuse au sens de l'article L.121-4 11&deg; du Code de la consommation.
+      {%- endcomment -%}
+      {%- if has_reviews -%}
+        <div class='cl-rating-row'>
+          <span class='cl-stars' aria-hidden='true'>
+            {%- for i in (1..5) -%}
+              {%- if i <= rating_rounded %}&#9733;{% else %}&#9734;{% endif -%}
+            {%- endfor -%}
+          </span>
+          <span class='cl-rating-num'>{{ review_rating }}</span>
+          <span class='cl-rating-sep'>|</span>
+          <span class='cl-rating-count'>
+            <a href='#cl-reviews'>{{ review_count }} {% if is_fr %}avis{% else %}reviews{% endif %}</a>
+          </span>
+        </div>
+      {%- endif -%}
       <div class='cl-price-row'>
         <span class='cl-price'>{{ product.price | money }}</span>
         {%- if product.compare_at_price > product.price -%}
@@ -1007,12 +1036,27 @@
         <div class='cl-benefit'><div class='cl-benefit__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/></svg></div><span class='cl-benefit__label'>{% if is_cap %}{% if is_fr %}Cuir chevelu{% else %}Scalp Care{% endif %}{% elsif is_mask %}{% if is_fr %}Visage{% else %}Face Care{% endif %}{% elsif is_foot %}{% if is_fr %}Cheville{% else %}Ankle{% endif %}{% elsif is_knee %}{% if is_fr %}Articulation{% else %}Joint{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Chaleur{% else %}Heat{% endif %}{% else %}{% if is_fr %}Sommeil{% else %}Better Sleep{% endif %}{% endif %}</span><span class='cl-benefit__sub'>{% if is_cap %}{% if is_fr %}Routine cheveux{% else %}Hair routine{% endif %}{% elsif is_mask %}{% if is_fr %}Routine beaut&eacute;{% else %}Beauty routine{% endif %}{% elsif is_foot %}{% if is_fr %}Zone cibl&eacute;e{% else %}Targeted area{% endif %}{% elsif is_knee %}{% if is_fr %}Zone ciblée{% else %}Targeted area{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}3 zones, 25-90&deg;C{% else %}3 zones, 25-90&deg;C{% endif %}{% else %}{% if is_fr %}Rythme circadien{% else %}Circadian rhythm{% endif %}{% endif %}</span></div>
         <div class='cl-benefit'><div class='cl-benefit__icon'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/></svg></div><span class='cl-benefit__label'>{% if is_cap %}{% if is_fr %}Mains libres{% else %}Hands-Free{% endif %}{% elsif is_mask %}{% if is_fr %}Sans fil{% else %}Cordless{% endif %}{% elsif is_foot %}{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}{% elsif is_knee %}{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}PEMF{% else %}PEMF{% endif %}{% else %}{% if is_fr %}Peau{% else %}Skin Health{% endif %}{% endif %}</span><span class='cl-benefit__sub'>{% if is_cap %}{% if is_fr %}Simple &agrave; porter{% else %}Easy to wear{% endif %}{% elsif is_mask %}{% if is_fr %}1800 mAh{% else %}1800mAh{% endif %}{% elsif is_foot %}{% if is_fr %}Repos &agrave; domicile{% else %}At-home rest{% endif %}{% elsif is_knee %}{% if is_fr %}6000 mAh{% else %}6000mAh{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}4 bobines{% else %}4 coils{% endif %}{% else %}{% if is_fr %}Collag&egrave;ne et &eacute;clat{% else %}Collagen &amp; glow{% endif %}{% endif %}</span></div>
       </div>
-      <div class='cl-reviews'>
-        <div class='cl-reviews__header'><span class='cl-reviews__title'>{% if is_fr %}Avis clients{% else %}Customer Reviews{% endif %}</span><div class='cl-reviews__avg'><span class='cl-reviews__big'>4.9</span><span class='cl-stars' style='font-size:14px;'>&#9733;&#9733;&#9733;&#9733;&#9733;</span></div></div>
-        <div class='cl-review-cards'>
-          <div class='cl-review-card'><div class='cl-review-card__top'><span class='cl-review-card__author'>{% if is_foot %}Claire M.{% else %}Marcus T.{% endif %} &#10003;</span><span class='cl-review-card__date'>{% if is_fr %}Il y a 2 semaines{% else %}2 weeks ago{% endif %}</span></div><div class='cl-review-card__stars'>&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class='cl-review-card__text'>{% if is_foot %}{% if is_fr %}Je l'utilise le soir apr&egrave;s les journ&eacute;es debout. Le format est simple &agrave; enfiler et je garde enfin une vraie routine pour mes pieds.{% else %}I use it in the evening after long standing days. The format is easy to wear, and I finally keep a real foot routine.{% endif %}{% else %}{% if is_fr %}Tr&egrave;s utile apr&egrave;s le sport. Je r&eacute;cup&egrave;re mieux et le contr&ocirc;le via l'application est vraiment pratique.{% else %}Game-changer for post-workout recovery. My DOMS has dropped noticeably and my afternoon focus is way sharper. The app control is genuinely impressive.{% endif %}{% endif %}</p></div>
-          <div class='cl-review-card'><div class='cl-review-card__top'><span class='cl-review-card__author'>{% if is_foot %}Nadia L.{% else %}Sophie R.{% endif %} &#10003;</span><span class='cl-review-card__date'>{% if is_fr %}Il y a 1 mois{% else %}1 month ago{% endif %}</span></div><div class='cl-review-card__stars'>&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class='cl-review-card__text'>{% if is_foot %}{% if is_fr %}Parfait apr&egrave;s le sport et les voyages. J'aime pouvoir lancer une session sur le canap&eacute; sans tenir un appareil dans la main.{% else %}Perfect after training and travel. I like being able to start a session on the sofa without holding a device in my hand.{% endif %}{% else %}{% if is_fr %}J'&eacute;tais sceptique, mais apr&egrave;s quelques semaines ma peau est plus uniforme. L'appareil fait tr&egrave;s premium.{% else %}I was sceptical but the skin results after 6 weeks are undeniable &#8212; texture, tone, everything improved. Build quality is premium and setup was seamless.{% endif %}{% endif %}</p></div>
-        </div>
+      {%- comment -%}
+        Zone d'avis. Le contenu est fourni par l'application d'avis installee, qui
+        s'injecte dans #cl-reviews (Judge.me, Loox, Yotpo) ou via un app block.
+        Tant qu'aucun avis reel n'existe, la zone ne s'affiche pas : pas de faux
+        temoignage, pas de faux nom, pas de fausse mention "verifie".
+      {%- endcomment -%}
+      <div class='cl-reviews' id='cl-reviews'>
+        {%- if has_reviews -%}
+          <div class='cl-reviews__header'>
+            <span class='cl-reviews__title'>{% if is_fr %}Avis clients{% else %}Customer Reviews{% endif %}</span>
+            <div class='cl-reviews__avg'>
+              <span class='cl-reviews__big'>{{ review_rating }}</span>
+              <span class='cl-stars' style='font-size:14px;' aria-hidden='true'>
+                {%- for i in (1..5) -%}
+                  {%- if i <= rating_rounded %}&#9733;{% else %}&#9734;{% endif -%}
+                {%- endfor -%}
+              </span>
+            </div>
+          </div>
+        {%- endif -%}
+        <div class='cl-reviews__app' data-product-id='{{ product.id }}'></div>
       </div>
     </div>
 

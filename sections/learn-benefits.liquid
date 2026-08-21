@@ -1,0 +1,402 @@
+{%- comment -%}
+  Learn > Les bienfaits.
+
+  La page ou la tentation de surpromettre est la plus forte, donc celle qui
+  doit etre la plus disciplinee. Chaque zone du schema correspond a une
+  publication reelle, et chaque bienfait annonce ce qui a ete *mesure* plutot
+  qu'un ressenti promis. Le niveau de preuve est affiche a cote du resultat :
+  une meta-analyse sur 820 patients et un essai sur vingt athletes ne pesent
+  pas pareil, et le lecteur doit pouvoir faire la difference.
+
+  Ne jamais ajouter une zone au schema sans la fiche correspondante : ce
+  serait suggerer une preuve que la page ne fournit pas. Ne jamais retirer le
+  bloc "ce que nous n'affirmons pas" — sans lui la page devient une allegation
+  de sante non etayee sur les produits vendus, sanctionnee par l'article
+  L.121-2 du Code de la consommation et rejetee a la validation des comptes
+  publicitaires.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign science_url = pages['science'].url
+  if science_url == blank
+    assign science_url = locale_root | append: '/pages/science'
+  endif
+
+  assign how_url = pages['comment-ca-marche'].url
+  if how_url == blank
+    assign how_url = locale_root | append: '/pages/comment-ca-marche'
+  endif
+
+  assign values_url = pages['nos-valeurs'].url
+  if values_url == blank
+    assign values_url = locale_root | append: '/pages/nos-valeurs'
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Apprendre{% else %}Learn{% endif %}
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Les bienfaits{% else %}Benefits{% endif %}
+    </p>
+    <p class="ln-kicker">{% if is_fr %}Ce qui a &eacute;t&eacute; mesur&eacute;{% else %}What has been measured{% endif %}</p>
+    <h1 class="ln-title">
+      {%- if is_fr -%}
+        Neuf zones du corps. Neuf publications. Aucune promesse en plus.
+      {%- else -%}
+        Nine areas of the body. Nine papers. Not one promise beyond them.
+      {%- endif -%}
+    </h1>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        La plupart des pages &laquo; bienfaits &raquo; du secteur listent des effets sans jamais dire
+        qui les a mesur&eacute;s, ni sur combien de personnes. Celle-ci affiche le niveau de preuve
+        &agrave; c&ocirc;t&eacute; de chaque r&eacute;sultat, et s'arr&ecirc;te l&agrave; o&ugrave;
+        s'arr&ecirc;tent les &eacute;tudes.
+      {%- else -%}
+        Most benefit pages in this industry list effects without ever saying who measured them, or on how
+        many people. This one shows the level of evidence next to each result, and stops where the studies
+        stop.
+      {%- endif -%}
+    </p>
+
+    <div class="ln-hero__facts" aria-label="{% if is_fr %}Rep&egrave;res{% else %}Key figures{% endif %}">
+      <div class="ln-hero__fact">
+        <strong>4</strong>
+        <span>{% if is_fr %}m&eacute;ta-analyses, le niveau de preuve le plus &eacute;lev&eacute; cit&eacute; ici{% else %}meta-analyses, the highest level of evidence cited here{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>820</strong>
+        <span>{% if is_fr %}patients dans la plus large, publi&eacute;e par The Lancet{% else %}patients in the largest, published by The Lancet{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>20</strong>
+        <span>{% if is_fr %}athl&egrave;tes dans la plus petite &mdash; nous le signalons aussi{% else %}athletes in the smallest &mdash; we flag that too{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>0</strong>
+        <span>{% if is_fr %}de ces &eacute;tudes n'a &eacute;t&eacute; men&eacute;e sur un appareil CytoLight{% else %}of these studies were run on a CytoLight device{% endif %}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Schema corporel. Chaque repere est place sur la zone que l'essai a
+  effectivement mesuree — la nuque pour Chow, qui portait sur des cervicalgies,
+  le genou pour Ahmad, sur l'arthrose du genou. SVG inline plutot qu'une image :
+  il se traduit, se redimensionne sans perte, reste lisible aux lecteurs
+  d'ecran et n'ajoute aucun binaire au depot.
+{%- endcomment -%}
+<section class="ln-section ln-section--dark">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}O&ugrave; la recherche a regard&eacute;{% else %}Where the research looked{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Le corps, zone par zone.{%- else -%}The body, area by area.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Les zones absentes de ce sch&eacute;ma le sont parce que nous n'avons pas de publication
+            &agrave; y rattacher, pas parce que la lumi&egrave;re s'y arr&ecirc;te.
+          {%- else -%}
+            Areas missing from this diagram are missing because we have no paper to attach to them, not
+            because light stops there.
+          {%- endif -%}
+        </p>
+        <a class="ln-link" href="{{ science_url }}">
+          {% if is_fr %}La frise de la recherche{% else %}The research timeline{% endif %} <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="ln-bodymap ln-reveal">
+      <ol class="ln-bodymap__list ln-bodymap__list--left">
+        <li class="ln-bodymap__item"><span class="ln-bodymap__n">01</span><div>
+          <p class="ln-bodymap__zone">{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</p>
+          <p class="ln-bodymap__what">{% if is_fr %}Cheveux compt&eacute;s sur zone tatou&eacute;e, lecture en aveugle{% else %}Hairs counted on a tattooed area, scored blind{% endif %}</p></div></li>
+        <li class="ln-bodymap__item"><span class="ln-bodymap__n">02</span><div>
+          <p class="ln-bodymap__zone">{% if is_fr %}R&eacute;tine{% else %}Retina{% endif %}</p>
+          <p class="ln-bodymap__what">{% if is_fr %}Acuit&eacute; visuelle en essai randomis&eacute; contre placebo{% else %}Visual acuity in a randomised sham-controlled trial{% endif %}</p></div></li>
+        <li class="ln-bodymap__item"><span class="ln-bodymap__n">03</span><div>
+          <p class="ln-bodymap__zone">{% if is_fr %}Peau du visage{% else %}Facial skin{% endif %}</p>
+          <p class="ln-bodymap__what">{% if is_fr %}Densit&eacute; de collag&egrave;ne en &eacute;chographie, rugosit&eacute; en profilom&eacute;trie{% else %}Collagen density by ultrasound, roughness by profilometry{% endif %}</p></div></li>
+        <li class="ln-bodymap__item"><span class="ln-bodymap__n">04</span><div>
+          <p class="ln-bodymap__zone">{% if is_fr %}Nuque{% else %}Neck{% endif %}</p>
+          <p class="ln-bodymap__what">{% if is_fr %}Douleur sur &eacute;chelle visuelle, 820 patients{% else %}Pain on a visual scale, 820 patients{% endif %}</p></div></li>
+        <li class="ln-bodymap__item"><span class="ln-bodymap__n">05</span><div>
+          <p class="ln-bodymap__zone">{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</p>
+          <p class="ln-bodymap__what">{% if is_fr %}M&eacute;latonine s&eacute;rique et index de Pittsburgh{% else %}Serum melatonin and the Pittsburgh index{% endif %}</p></div></li>
+      </ol>
+
+      <div class="ln-bodymap__figure">
+        <svg viewBox="0 0 240 460" role="img" aria-labelledby="ln-bm-title ln-bm-desc">
+          <title id="ln-bm-title">{% if is_fr %}Zones du corps mesur&eacute;es par les neuf &eacute;tudes cit&eacute;es{% else %}Body areas measured by the nine studies cited{% endif %}</title>
+          <desc id="ln-bm-desc">{% if is_fr %}Silhouette humaine sch&eacute;matique portant neuf rep&egrave;res num&eacute;rot&eacute;s : cuir chevelu, r&eacute;tine, peau du visage, nuque, sommeil, muscle du bras, muscle de la cuisse, genou et m&eacute;canisme cellulaire. Chaque rep&egrave;re renvoie &agrave; une publication d&eacute;taill&eacute;e plus bas.{% else %}Schematic human figure carrying nine numbered markers: scalp, retina, facial skin, neck, sleep, arm muscle, thigh muscle, knee and cellular mechanism. Each marker corresponds to a paper detailed below.{% endif %}</desc>
+          <defs>
+            <radialGradient id="ln-bm-glow" cx="50%" cy="42%" r="55%">
+              <stop offset="0%" stop-color="#d20d2f" stop-opacity=".34"/>
+              <stop offset="60%" stop-color="#d20d2f" stop-opacity=".08"/>
+              <stop offset="100%" stop-color="#d20d2f" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <rect x="0" y="0" width="240" height="460" fill="url(#ln-bm-glow)"/>
+          <g class="ln-bodymap__body" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="120" cy="44" r="25"/>
+            <path d="M120 69v18"/>
+            <path d="M86 96q34-14 68 0l7 78q-41 12-82 0z"/>
+            <path d="M86 96 61 116l-14 84 13 5 17-74"/>
+            <path d="M154 96l25 20 14 84-13 5-17-74"/>
+            <path d="M92 174l-4 96 6 84h17l4-84"/>
+            <path d="M148 174l4 96-6 84h-17l-4-84"/>
+          </g>
+          <g class="ln-bodymap__pins">
+            <g class="ln-bodymap__pin"><circle cx="120" cy="22" r="11"/><text x="120" y="26">1</text></g>
+            <g class="ln-bodymap__pin"><circle cx="102" cy="44" r="11"/><text x="102" y="48">2</text></g>
+            <g class="ln-bodymap__pin"><circle cx="148" cy="54" r="11"/><text x="148" y="58">3</text></g>
+            <g class="ln-bodymap__pin"><circle cx="120" cy="80" r="11"/><text x="120" y="84">4</text></g>
+            <g class="ln-bodymap__pin"><circle cx="120" cy="122" r="11"/><text x="120" y="126">5</text></g>
+            <g class="ln-bodymap__pin"><circle cx="54" cy="150" r="11"/><text x="54" y="154">6</text></g>
+            <g class="ln-bodymap__pin"><circle cx="152" cy="222" r="11"/><text x="152" y="226">7</text></g>
+            <g class="ln-bodymap__pin"><circle cx="94" cy="272" r="11"/><text x="94" y="276">8</text></g>
+            <g class="ln-bodymap__pin"><circle cx="188" cy="150" r="11"/><text x="188" y="154">9</text></g>
+          </g>
+        </svg>
+      </div>
+
+      <ol class="ln-bodymap__list ln-bodymap__list--right" start="6">
+        <li class="ln-bodymap__item"><span class="ln-bodymap__n">06</span><div>
+          <p class="ln-bodymap__zone">{% if is_fr %}Muscle, avant l'effort{% else %}Muscle, before exercise{% endif %}</p>
+          <p class="ln-bodymap__what">{% if is_fr %}R&eacute;p&eacute;titions et temps avant &eacute;puisement, 13 essais{% else %}Repetitions and time to exhaustion, 13 trials{% endif %}</p></div></li>
+        <li class="ln-bodymap__item"><span class="ln-bodymap__n">07</span><div>
+          <p class="ln-bodymap__zone">{% if is_fr %}Muscle, apr&egrave;s l'effort{% else %}Muscle, after exercise{% endif %}</p>
+          <p class="ln-bodymap__what">{% if is_fr %}Cr&eacute;atine kinase, effet net en localis&eacute; seulement{% else %}Creatine kinase, clear effect for localised exercise only{% endif %}</p></div></li>
+        <li class="ln-bodymap__item"><span class="ln-bodymap__n">08</span><div>
+          <p class="ln-bodymap__zone">{% if is_fr %}Genou{% else %}Knee{% endif %}</p>
+          <p class="ln-bodymap__what">{% if is_fr %}Douleur, raideur et fonction, en compl&eacute;ment de l'exercice{% else %}Pain, stiffness and function, added to exercise{% endif %}</p></div></li>
+        <li class="ln-bodymap__item"><span class="ln-bodymap__n">09</span><div>
+          <p class="ln-bodymap__zone">{% if is_fr %}Mitochondrie{% else %}Mitochondrion{% endif %}</p>
+          <p class="ln-bodymap__what">{% if is_fr %}Cytochrome c oxydase, monoxyde d'azote, ATP{% else %}Cytochrome c oxidase, nitric oxide, ATP{% endif %}</p></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Fiches par zone. Le badge de niveau de preuve n'est pas decoratif : c'est ce
+  qui distingue une meta-analyse sur 820 patients d'un essai sur vingt
+  athletes, et le lecteur doit pouvoir en tenir compte.
+{%- endcomment -%}
+<section class="ln-section">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Neuf r&eacute;sultats{% else %}Nine results{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Ce qui a &eacute;t&eacute; mesur&eacute;, et &agrave; quel niveau de preuve.{%- else -%}What was measured, and at what level of evidence.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Une m&eacute;ta-analyse agr&egrave;ge plusieurs essais randomis&eacute;s : c'est le niveau le
+            plus solide cit&eacute; ici. Un essai isol&eacute; sur vingt personnes est un signal, pas une
+            preuve &mdash; et c'est &eacute;crit &agrave; c&ocirc;t&eacute; du r&eacute;sultat.
+          {%- else -%}
+            A meta-analysis pools several randomised trials: the strongest level cited here. A single trial
+            on twenty people is a signal, not a proof &mdash; and it says so next to the result.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-evidence">
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">01 &middot; {% if is_fr %}Cheveux{% else %}Hair{% endif %}</span>
+        <span class="ln-grade ln-grade--rct">{% if is_fr %}Essai randomis&eacute;{% else %}Randomised trial{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}+37 % de cheveux compt&eacute;s{% else %}+37 % counted hairs{% endif %}</h3>
+        <p class="ln-study__detail">
+          {% if is_fr %}42 femmes, 655 nm, 16 semaines, une s&eacute;ance un jour sur deux. Comptage photographique sur zone tatou&eacute;e, lu en aveugle. Aucun effet ind&eacute;sirable rapport&eacute;.{% else %}42 women, 655 nm, 16 weeks, one session every other day. Photographic count on a tattooed area, scored blind. No adverse events reported.{% endif %}
+        </p>
+        <p class="ln-study__ref">Lanzafame RJ et al. <cite>Lasers Surg Med</cite> 2014;46(8):601&ndash;607. <a href="https://doi.org/10.1002/lsm.22277" target="_blank" rel="noopener">DOI</a></p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">02 &middot; {% if is_fr %}Vision{% else %}Vision{% endif %}</span>
+        <span class="ln-grade ln-grade--rct">{% if is_fr %}Essai randomis&eacute;{% else %}Randomised trial{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Acuit&eacute; visuelle am&eacute;lior&eacute;e en DMLA s&egrave;che{% else %}Visual acuity improved in dry AMD{% endif %}</h3>
+        <p class="ln-study__detail">
+          {% if is_fr %}100 sujets, 590, 660 et 850 nm contre placebo, sur 13 mois. &Agrave; noter : l'essai portait sur un dispositif m&eacute;dical encadr&eacute;, pas sur un appareil domestique.{% else %}100 subjects, 590, 660 and 850 nm against sham, over 13 months. Note: the trial used a regulated medical device, not a home appliance.{% endif %}
+        </p>
+        <p class="ln-study__ref">Boyer D et al. <cite>Retina</cite> 2024;44(3):487&ndash;497. <a href="https://doi.org/10.1097/IAE.0000000000003980" target="_blank" rel="noopener">DOI</a></p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">03 &middot; {% if is_fr %}Peau{% else %}Skin{% endif %}</span>
+        <span class="ln-grade ln-grade--rct">{% if is_fr %}Essai randomis&eacute;{% else %}Randomised trial{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Rugosit&eacute; en baisse, collag&egrave;ne en hausse{% else %}Roughness down, collagen up{% endif %}</h3>
+        <p class="ln-study__detail">
+          {% if is_fr %}136 volontaires, 30 s&eacute;ances. Densit&eacute; de collag&egrave;ne en &eacute;chographie, rugosit&eacute; en profilom&eacute;trie, photos &eacute;valu&eacute;es en aveugle : les trois mesures s'am&eacute;liorent.{% else %}136 volunteers, 30 sessions. Collagen density by ultrasound, roughness by profilometry, photographs scored blind: all three measures improve.{% endif %}
+        </p>
+        <p class="ln-study__ref">Wunsch A, Matuschka K. <cite>Photomed Laser Surg</cite> 2014;32(2):93&ndash;100. <a href="https://doi.org/10.1089/pho.2013.3616" target="_blank" rel="noopener">DOI</a></p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">04 &middot; {% if is_fr %}Douleur{% else %}Pain{% endif %}</span>
+        <span class="ln-grade ln-grade--meta">{% if is_fr %}M&eacute;ta-analyse{% else %}Meta-analysis{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}20 mm de douleur en moins, jusqu'&agrave; 22 semaines{% else %}20 mm less pain, up to 22 weeks{% endif %}</h3>
+        <p class="ln-study__detail">
+          {% if is_fr %}16 essais randomis&eacute;s, 820 patients souffrant de cervicalgies. Effets ind&eacute;sirables non diff&eacute;rents du placebo. La plus large preuve cit&eacute;e sur ce site.{% else %}16 randomised trials, 820 patients with neck pain. Side effects no different from placebo. The largest body of evidence cited on this site.{% endif %}
+        </p>
+        <p class="ln-study__ref">Chow RT et al. <cite>The Lancet</cite> 2009;374(9705):1897&ndash;1908. <a href="https://doi.org/10.1016/S0140-6736(09)61522-1" target="_blank" rel="noopener">DOI</a></p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">05 &middot; {% if is_fr %}Sommeil{% else %}Sleep{% endif %}</span>
+        <span class="ln-grade ln-grade--signal">{% if is_fr %}Petit &eacute;chantillon{% else %}Small sample{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Score de sommeil et m&eacute;latonine en hausse{% else %}Sleep score and melatonin both up{% endif %}</h3>
+        <p class="ln-study__detail">
+          {% if is_fr %}20 athl&egrave;tes, 14 jours, 30 minutes par soir. &Eacute;chantillon petit : &agrave; consid&eacute;rer comme un signal, pas comme une preuve d&eacute;finitive.{% else %}20 athletes, 14 days, 30 minutes each evening. Small sample: treat it as a signal, not as definitive proof.{% endif %}
+        </p>
+        <p class="ln-study__ref">Zhao J et al. <cite>J Athl Train</cite> 2012;47(6):673&ndash;678. <a href="https://doi.org/10.4085/1062-6050-47.6.08" target="_blank" rel="noopener">DOI</a></p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">06 &middot; Performance</span>
+        <span class="ln-grade ln-grade--meta">{% if is_fr %}M&eacute;ta-analyse{% else %}Meta-analysis{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Plus de r&eacute;p&eacute;titions, si la lumi&egrave;re pr&eacute;c&egrave;de l'effort{% else %}More repetitions, if the light comes first{% endif %}</h3>
+        <p class="ln-study__detail">
+          {% if is_fr %}13 essais randomis&eacute;s. Gain moyen de 5,5 r&eacute;p&eacute;titions et 4,1 secondes avant &eacute;puisement, obtenu surtout en application <em>avant</em> l'exercice.{% else %}13 randomised trials. Mean gain of 5.5 repetitions and 4.1 seconds to exhaustion, obtained mainly by applying light <em>before</em> exercise.{% endif %}
+        </p>
+        <p class="ln-study__ref">Leal-Junior ECP et al. <cite>Lasers Med Sci</cite> 2015;30(2):925&ndash;939. <a href="https://doi.org/10.1007/s10103-013-1465-4" target="_blank" rel="noopener">DOI</a></p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">07 &middot; {% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</span>
+        <span class="ln-grade ln-grade--meta">{% if is_fr %}M&eacute;ta-analyse{% else %}Meta-analysis{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Cr&eacute;atine kinase mieux contenue apr&egrave;s l'effort{% else %}Creatine kinase better contained after exercise{% endif %}</h3>
+        <p class="ln-study__detail">
+          {% if is_fr %}14 &eacute;tudes sur le marqueur sanguin de dommage musculaire. Effet net sur l'exercice localis&eacute;, <strong>non concluant sur l'exercice g&eacute;n&eacute;ral</strong> &mdash; une nuance que la plupart des pages produit passent sous silence.{% else %}14 studies on the blood marker of muscle damage. Clear effect for localised exercise, <strong>inconclusive for general exercise</strong> &mdash; a nuance most product pages leave out.{% endif %}
+        </p>
+        <p class="ln-study__ref">Machado AF et al. <cite>Clin J Sport Med</cite> 2020;30(3):267&ndash;274. <a href="https://doi.org/10.1097/JSM.0000000000000606" target="_blank" rel="noopener">DOI</a></p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">08 &middot; {% if is_fr %}Articulations{% else %}Joints{% endif %}</span>
+        <span class="ln-grade ln-grade--meta">{% if is_fr %}M&eacute;ta-analyse{% else %}Meta-analysis{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Meilleur que l'exercice seul, en compl&eacute;ment{% else %}Better than exercise alone, as an adjunct{% endif %}</h3>
+        <p class="ln-study__detail">
+          {% if is_fr %}10 essais randomis&eacute;s sur l'arthrose du genou, tous de bon score PEDro. Le mot important est <em>en compl&eacute;ment</em> : la lumi&egrave;re s'ajoute au mouvement, elle ne le remplace pas.{% else %}10 randomised trials on knee osteoarthritis, all with good PEDro scores. The important words are <em>as an adjunct</em>: light adds to movement, it does not replace it.{% endif %}
+        </p>
+        <p class="ln-study__ref">Ahmad MA et al. <cite>Physiotherapy</cite> 2021;114:85&ndash;95. <a href="https://doi.org/10.1016/j.physio.2021.03.011" target="_blank" rel="noopener">DOI</a></p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">09 &middot; {% if is_fr %}M&eacute;canisme{% else %}Mechanism{% endif %}</span>
+        <span class="ln-grade ln-grade--mech">{% if is_fr %}Revue de m&eacute;canisme{% else %}Mechanism review{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Le photon, le monoxyde d'azote et l'ATP{% else %}The photon, nitric oxide and ATP{% endif %}</h3>
+        <p class="ln-study__detail">
+          {% if is_fr %}Revue du Wellman Center for Photomedicine (Harvard). Elle explique <em>comment</em> l'effet serait possible ; elle ne mesure aucun b&eacute;n&eacute;fice clinique. <a href="{{ how_url }}">Le d&eacute;tail est ici</a>.{% else %}Review from the Wellman Center for Photomedicine (Harvard). It explains <em>how</em> the effect could work; it measures no clinical benefit. <a href="{{ how_url }}">The detail is here</a>.{% endif %}
+        </p>
+        <p class="ln-study__ref">de Freitas LF, Hamblin MR. <cite>IEEE J Sel Top Quantum Electron</cite> 2016;22(3). <a href="https://doi.org/10.1109/JSTQE.2016.2561201" target="_blank" rel="noopener">DOI</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Bloc obligatoire. Sans lui, la page devient une allegation de sante non
+  etayee sur les produits vendus. Ne pas retirer.
+{%- endcomment -%}
+<section class="ln-section ln-section--soft ln-section--tight">
+  <div class="ln-shell">
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">
+        {%- if is_fr -%}Ce que nous n'affirmons pas{%- else -%}What we do not claim{%- endif -%}
+      </h2>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            <strong>Rien sur la testost&eacute;rone, la fertilit&eacute; ou la glande pin&eacute;ale.</strong>
+            Ces all&eacute;gations circulent beaucoup dans le secteur ; nous n'avons pas de preuve d'un
+            niveau suffisant pour les reprendre.
+          {%- else -%}
+            <strong>Nothing about testosterone, fertility or the pineal gland.</strong> These claims
+            circulate widely in this industry; we have no evidence of a sufficient standard to repeat them.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Rien sur les maladies auto-immunes, l'immunit&eacute; ou la long&eacute;vit&eacute;.</strong>
+            Affirmer qu'un appareil de bien-&ecirc;tre agit sur une maladie rel&egrave;verait de
+            l'all&eacute;gation th&eacute;rapeutique, que nous n'avons ni le droit ni les donn&eacute;es de
+            formuler.
+          {%- else -%}
+            <strong>Nothing about autoimmune disease, immunity or longevity.</strong> Claiming a wellness
+            device acts on a disease would be a therapeutic claim, which we have neither the right nor the
+            data to make.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucune de ces &eacute;tudes n'a &eacute;t&eacute; men&eacute;e sur un appareil
+            CytoLight.</strong> Elles portent sur la photobiomodulation en g&eacute;n&eacute;ral, avec des
+            dispositifs, des doses et des protocoles propres &agrave; chaque essai.
+          {%- else -%}
+            <strong>None of these studies was run on a CytoLight device.</strong> They concern
+            photobiomodulation in general, with devices, doses and protocols specific to each trial.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Les appareils CytoLight sont des produits de bien-&ecirc;tre. Ils ne diagnostiquent, ne traitent
+            et ne gu&eacute;rissent aucune maladie. En cas de sympt&ocirc;me, de traitement en cours ou de
+            grossesse, l'avis d'un professionnel de sant&eacute; pr&eacute;vaut sur cette page. Notre
+            m&eacute;thode est d&eacute;taill&eacute;e dans <a href="{{ values_url }}">nos valeurs</a>.
+          {%- else -%}
+            CytoLight devices are wellness products. They do not diagnose, treat or cure any disease. If you
+            have symptoms, an ongoing treatment or are pregnant, a healthcare professional's advice takes
+            precedence over this page. Our method is set out in <a href="{{ values_url }}">our values</a>.
+          {%- endif -%}
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{% render 'learn-product-cta',
+   handles: 'cytolight-desk,cytolight-knee,cytolight-mask',
+   heading_fr: 'Le bon appareil est celui qui couvre la zone que vous visez.',
+   heading_en: 'The right device is the one that covers the area you are aiming at.',
+   text_fr: 'Une genouill&egrave;re pour un genou, un masque pour le visage, un panneau pour le corps. La zone d&#39;abord, la fiche technique ensuite.',
+   text_en: 'A knee wrap for a knee, a mask for the face, a panel for the body. The area first, the spec sheet second.'
+%}
+
+{% schema %}
+{
+  "name": "Learn — Benefits",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Contenu editorial bilingue FR / EN ecrit en Liquid. Chaque zone du schema doit correspondre a une publication citee plus bas, et le badge de niveau de preuve doit refleter le type reel d'etude. Le bloc « ce que nous n'affirmons pas » ne doit jamais etre retire."
+    }
+  ]
+}
+{% endschema %}

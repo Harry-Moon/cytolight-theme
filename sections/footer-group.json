@@ -25,10 +25,10 @@
       "block_order": ["shop", "discover", "learn", "professionals", "support", "company", "legal"],
       "settings": {
         "tagline": "Science-backed wellness technologies to enhance sleep, recovery, and beauty.",
-        "instagram": "https://instagram.com/",
-        "facebook": "https://facebook.com/",
-        "tiktok": "https://tiktok.com/",
-        "youtube": "https://youtube.com/"
+        "instagram": "",
+        "facebook": "",
+        "tiktok": "",
+        "youtube": ""
       }
     }
   },

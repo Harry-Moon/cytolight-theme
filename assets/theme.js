@@ -10,6 +10,68 @@
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+    /*
+     * Publie la hauteur du header dans --header-h.
+     *
+     * Toute autre barre collante de la page — la sous-navigation de l'espace
+     * Learn — doit se caler dessous, sinon elle glisse derriere lui. La hauteur
+     * varie selon la largeur d'ecran et selon le retour a la ligne du bandeau
+     * de reassurance : elle est mesuree plutot qu'ecrite en dur.
+     *
+     * Le CSS garde une valeur de repli : sans ce script, rien ne bouge.
+     */
+    const publishHeaderHeight = () => {
+      const h = Math.round(header.getBoundingClientRect().height);
+      if (h > 0) document.documentElement.style.setProperty('--header-h', h + 'px');
+    };
+    publishHeaderHeight();
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(publishHeaderHeight).observe(header);
+    } else {
+      window.addEventListener('resize', publishHeaderHeight, { passive: true });
+    }
+
+    /*
+     * Masquage au defilement vers le bas, retour au defilement vers le haut.
+     *
+     * La classe est posee sur #shopify-section-header, l'enveloppe qui porte
+     * le collant — la translation doit s'appliquer au meme element, sinon elle
+     * deplace le contenu a l'interieur d'une barre restee en place.
+     *
+     * Deux garde-fous : rien ne se declenche dans les 120 premiers pixels, ou
+     * l'utilisateur est encore visuellement en haut de page, et un seuil de
+     * 6 px absorbe le tremblement du defilement par inertie, qui sinon fait
+     * clignoter le header.
+     *
+     * On ne masque jamais tant qu'un panneau de menu est ouvert : le CSS le
+     * retient au survol, et on evite ici de reposer la classe pour rien.
+     */
+    const wrapper = header.closest('#shopify-section-header') || header;
+    const REVEAL_AT = 120;
+    const THRESHOLD = 6;
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const updateHeaderVisibility = () => {
+      ticking = false;
+      const y = window.scrollY;
+      const delta = y - lastY;
+      if (Math.abs(delta) < THRESHOLD) return;
+      lastY = y;
+      if (y <= REVEAL_AT || delta < 0) {
+        wrapper.classList.remove('is-hidden');
+      } else if (!wrapper.querySelector('.site-header__nav-item.is-open')) {
+        wrapper.classList.add('is-hidden');
+      }
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateHeaderVisibility);
+      }
+    }, { passive: true });
   }
 
   // Quantity selectors
