@@ -539,6 +539,16 @@
   .cy-cinema__panel { margin: 0 auto; }
   .cy-cinema--cap .cy-cinema__panel { margin: 0 auto; }
   .cy-cinema--cap .cy-cinema__world img, .cy-cinema--cap .cy-cinema__world video { object-position: 34% center; }
+  .cy-cinema--cap .cy-cinema__world::after {
+    background:
+      radial-gradient(circle at 55% 29%, rgba(255, 20, 55, .44), transparent 24%),
+      radial-gradient(circle at 50% 40%, rgba(210, 13, 47, .28), transparent 28%);
+  }
+  .cy-cinema--cap .cy-cinema__glow {
+    background:
+      radial-gradient(circle at 55% 29%, rgba(210,13,47,calc(.22 + var(--cy-light-step, 0) * .24)), transparent 26%),
+      linear-gradient(90deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.14) 34%, rgba(0,0,0,.58) 66%, rgba(0,0,0,.78) 100%);
+  }
   .cy-cinema--pano .cy-cinema__panel { margin: 0 auto; }
   .cy-cinema--pano .cy-cinema__world img { object-position: center; }
   .cy-cap-points { grid-template-columns: 1fr; }
