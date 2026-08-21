@@ -195,12 +195,12 @@
 .cy-cinema--cap .cy-cinema__world::after {
   opacity: calc(var(--cy-light-step, 0) * .58);
   background:
-    radial-gradient(circle at 31% 45%, rgba(255, 20, 55, .44), transparent 24%),
-    radial-gradient(circle at 22% 63%, rgba(210, 13, 47, .28), transparent 28%);
+    radial-gradient(circle at 46% 42%, rgba(255, 20, 55, .44), transparent 24%),
+    radial-gradient(circle at 42% 55%, rgba(210, 13, 47, .28), transparent 28%);
 }
 .cy-cinema--cap .cy-cinema__glow {
   background:
-    radial-gradient(circle at 32% 45%, rgba(210,13,47,calc(.22 + var(--cy-light-step, 0) * .24)), transparent 26%),
+    radial-gradient(circle at 46% 42%, rgba(210,13,47,calc(.22 + var(--cy-light-step, 0) * .24)), transparent 26%),
     linear-gradient(90deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.14) 34%, rgba(0,0,0,.58) 66%, rgba(0,0,0,.78) 100%);
 }
 .cy-cinema--cap .cy-cinema__panel {
