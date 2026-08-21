@@ -14,9 +14,6 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "shop": { "type": "menu_column", "settings": { "heading": "Shop", "menu": "main-menu" } }
-      },
-      "block_order": ["shop"],
         "shop": { "type": "menu_column", "settings": { "heading": "Shop", "menu": "footer-shop" } },
         "discover": { "type": "menu_column", "settings": { "heading": "Discover", "menu": "footer-discover" } },
         "learn": { "type": "menu_column", "settings": { "heading": "Learn", "menu": "footer-learn" } },
