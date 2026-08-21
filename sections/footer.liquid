@@ -50,28 +50,12 @@
       {% endfor %}
 
       {%- comment -%}
-        Colonne legale generee depuis les politiques de la boutique. En France,
-        CGV, retours, livraison, confidentialite et mentions legales doivent etre
-        accessibles depuis toutes les pages ; c'est aussi une condition de
-        validation des comptes publicitaires Meta et TikTok. Chaque lien
-        n'apparait que si la politique correspondante est redigee dans l'admin.
+        La colonne legale generee depuis shop.policies a ete retiree : le menu
+        Shopify "footer-legal" la couvre desormais, et les deux affichaient les
+        memes politiques cote a cote. Les liens de ce menu doivent donc rester
+        alignes sur les politiques reellement redigees dans Settings > Policies
+        — rien ici ne le verifie plus automatiquement.
       {%- endcomment -%}
-      {%- capture policy_links -%}
-        {%- if shop.terms_of_service != blank %}<li><a href="{{ shop.terms_of_service.url }}">{{ shop.terms_of_service.title }}</a></li>{% endif -%}
-        {%- if shop.refund_policy != blank %}<li><a href="{{ shop.refund_policy.url }}">{{ shop.refund_policy.title }}</a></li>{% endif -%}
-        {%- if shop.shipping_policy != blank %}<li><a href="{{ shop.shipping_policy.url }}">{{ shop.shipping_policy.title }}</a></li>{% endif -%}
-        {%- if shop.privacy_policy != blank %}<li><a href="{{ shop.privacy_policy.url }}">{{ shop.privacy_policy.title }}</a></li>{% endif -%}
-        {%- if shop.subscription_policy != blank %}<li><a href="{{ shop.subscription_policy.url }}">{{ shop.subscription_policy.title }}</a></li>{% endif -%}
-      {%- endcapture -%}
-      {%- if policy_links != blank -%}
-        <div class="site-footer__col">
-          <h4>{% if is_fr %}Informations l&eacute;gales{% else %}Legal{% endif %}</h4>
-          <ul>
-            {{ policy_links }}
-            <li><a href="{{ routes.search_url }}">{% if is_fr %}Rechercher{% else %}Search{% endif %}</a></li>
-          </ul>
-        </div>
-      {%- endif -%}
     </div>
 
     {%- if shop.enabled_payment_types.size > 0 -%}
