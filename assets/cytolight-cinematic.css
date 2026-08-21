@@ -558,7 +558,7 @@
       linear-gradient(90deg, rgba(0,0,0,.08) 0%, rgba(0,0,0,.14) 34%, rgba(0,0,0,.58) 66%, rgba(0,0,0,.78) 100%);
   }
   .cy-cinema--pano .cy-cinema__panel { margin: 0 auto; }
-  .cy-cinema--pano .cy-cinema__world img { object-position: center; }
+  .cy-cinema--pano .cy-cinema__world img { object-position: 72% center; }
   .cy-cap-points { grid-template-columns: 1fr; }
   .cy-spectrum { grid-template-columns: repeat(4, 1fr); gap: 18px 4px; }
   .cy-rail__top { align-items: flex-start; flex-direction: column; }
