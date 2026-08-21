@@ -902,3 +902,26 @@
   .ln-bodymap__list--left { text-align: left; }
   .ln-bodymap__list--left .ln-bodymap__item { flex-direction: row; }
 }
+
+/* ---------- badge de niveau de preuve ---------- */
+
+/*
+ * Le badge n'est pas decoratif : il distingue une meta-analyse sur 820
+ * patients d'un essai isole sur vingt personnes. Les couleurs vont du plus
+ * solide au plus faible, sans jamais suggerer qu'un signal vaut une preuve.
+ */
+.ln-grade {
+  align-self: flex-start;
+  margin: -8px 0 14px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.ln-grade--meta { color: var(--ln-red-dark); background: var(--ln-red-soft); }
+.ln-grade--rct { color: #6d5010; background: rgba(201, 156, 44, .12); }
+.ln-grade--signal { color: var(--ln-muted); background: rgba(0, 0, 0, .05); }
+.ln-grade--mech { color: #2f5361; background: rgba(47, 83, 97, .1); }

@@ -6,7 +6,7 @@
   desormais l'entree Apprendre, et deux menus concurrents s'affichaient.
 
   Parametre :
-    current  'hub' | 'how' | 'wavelengths' | 'science' | 'howto' | 'faq'
+    current  'hub' | 'benefits' | 'how' | 'wavelengths' | 'science' | 'howto' | 'faq'
              | 'values' | 'blog'
 
   Trilingue FR / EN / PT, comme le header.
@@ -51,6 +51,11 @@
     assign how_url = locale_root | append: '/pages/comment-ca-marche'
   endif
 
+  assign benefits_url = pages['benefits'].url
+  if benefits_url == blank
+    assign benefits_url = locale_root | append: '/pages/benefits'
+  endif
+
   assign wl_url = pages['wavelengths'].url
   if wl_url == blank
     assign wl_url = locale_root | append: '/pages/wavelengths'
@@ -90,6 +95,7 @@
   endif
 
   if is_fr
+    assign label_benefits = 'Les bienfaits'
     assign label_how = 'Comment &ccedil;a marche'
     assign label_wl = "Longueurs d'onde"
     assign label_science = 'Science'
@@ -99,6 +105,7 @@
     assign label_blog = 'Blog'
     assign nav_label = 'Sections Apprendre'
   elsif is_pt
+    assign label_benefits = 'Os benef&iacute;cios'
     assign label_how = 'Como funciona'
     assign label_wl = 'Comprimentos de onda'
     assign label_science = 'Ci&ecirc;ncia'
@@ -108,6 +115,7 @@
     assign label_blog = 'Blog'
     assign nav_label = 'Sec&ccedil;&otilde;es Aprender'
   else
+    assign label_benefits = 'Benefits'
     assign label_how = 'How it works'
     assign label_wl = 'Wavelengths'
     assign label_science = 'Science'
@@ -122,6 +130,7 @@
 <nav class="ln-subnav" aria-label="{{ nav_label }}">
   <div class="ln-shell ln-subnav__inner">
     <a class="ln-subnav__home" href="{{ hub_url }}">{% if is_fr %}Apprendre{% elsif is_pt %}Aprender{% else %}Learn{% endif %}</a>
+    <a class="ln-subnav__link{% if current == 'benefits' %} is-current{% endif %}" href="{{ benefits_url }}"{% if current == 'benefits' %} aria-current="page"{% endif %}>{{ label_benefits }}</a>
     <a class="ln-subnav__link{% if current == 'how' %} is-current{% endif %}" href="{{ how_url }}"{% if current == 'how' %} aria-current="page"{% endif %}>{{ label_how }}</a>
     <a class="ln-subnav__link{% if current == 'wavelengths' %} is-current{% endif %}" href="{{ wl_url }}"{% if current == 'wavelengths' %} aria-current="page"{% endif %}>{{ label_wl }}</a>
     <a class="ln-subnav__link{% if current == 'science' %} is-current{% endif %}" href="{{ science_url }}"{% if current == 'science' %} aria-current="page"{% endif %}>{{ label_science }}</a>
