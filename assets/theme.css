@@ -94,14 +94,42 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   position: sticky;
   top: 0;
   z-index: 50;
+  /*
+   * Le header se retire au defilement vers le bas et revient des qu'on remonte.
+   * theme.js pose .is-hidden ; sans le script rien ne bouge et le header reste
+   * simplement collant, comme avant.
+   *
+   * On translate de sa propre hauteur plus la marge d'ombre, sinon le liseré
+   * de la box-shadow reste visible en haut de l'ecran.
+   */
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+}
+#shopify-section-header.is-hidden { transform: translateY(calc(-100% - 12px)); }
+/*
+ * Un panneau ouvert retient le header : on ne le derobe pas sous le curseur.
+ * Cible le survol d'un onglet et non du header entier — sinon le seul fait de
+ * passer la souris pres du haut de l'ecran empechait tout masquage.
+ * Si :has() n'est pas supporte la regle tombe, et le garde-fou de theme.js
+ * (qui refuse de masquer tant qu'un panneau porte .is-open) prend le relais.
+ */
+#shopify-section-header:has(.site-header__nav-item:hover),
+#shopify-section-header:focus-within { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  #shopify-section-header { transition: none; }
+  #shopify-section-header.is-hidden { transform: none; }
 }
 .site-header {
   /* Repere de positionnement des panneaux de mega-menu, qui s'etendent sur
      toute la largeur plutot que sous leur seul onglet. */
   position: relative;
-  background: rgba(255,255,255,.9);
+  /*
+   * Blanc opaque, et non translucide. Le logo est un JPEG a fond blanc : des
+   * que le header laissait transparaitre la page, le rectangle du fichier se
+   * detachait du reste de la barre. Un fond opaque fait disparaitre la
+   * demarcation sans avoir a detourer le logo.
+   */
+  background: #fff;
   border-bottom: 1px solid rgba(0,0,0,.08);
-  backdrop-filter: blur(18px);
   box-shadow: 0 18px 50px rgba(0,0,0,.05);
 }
 .site-header__proof {

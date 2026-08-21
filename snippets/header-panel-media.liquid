@@ -5,8 +5,8 @@
     product_handle  handle produit dont on prend l'image mise en avant
     image_file      nom de fichier Content > Files, si aucun produit ne convient
     label           titre affiche sous le visuel, identique dans les 3 langues
-    label_fr/_pt    variantes traduites du titre, si besoin
-    caption_fr/_pt  lien d'action sous le titre (caption = version anglaise)
+    label_fr        variante francaise du titre, si besoin
+    caption_fr      lien d'action sous le titre (caption = version anglaise)
     url             destination du visuel et du lien
 
   Le bloc entier est saute si aucune image n'est disponible : le panneau se
@@ -17,12 +17,8 @@
 
 {%- liquid
   assign is_fr = false
-  assign is_pt = false
   if request.locale.iso_code contains 'fr'
     assign is_fr = true
-  endif
-  if request.locale.iso_code contains 'pt'
-    assign is_pt = true
   endif
 
   assign panel_label = label
@@ -30,9 +26,6 @@
   if is_fr
     assign panel_label = label_fr | default: label
     assign panel_caption = caption_fr | default: caption
-  elsif is_pt
-    assign panel_label = label_pt | default: label
-    assign panel_caption = caption_pt | default: caption
   endif
 
   assign panel_image = nil
