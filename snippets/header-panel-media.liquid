@@ -1,0 +1,70 @@
+{%- comment -%}
+  Visuel d'ouverture d'un panneau de mega-menu.
+
+  Parametres :
+    product_handle  handle produit dont on prend l'image mise en avant
+    image_file      nom de fichier Content > Files, si aucun produit ne convient
+    label           titre affiche sous le visuel, identique dans les 3 langues
+    label_fr        variante francaise du titre, si besoin
+    caption_fr      lien d'action sous le titre (caption = version anglaise)
+    url             destination du visuel et du lien
+
+  Le bloc entier est saute si aucune image n'est disponible : le panneau se
+  rabat alors sur ses seules colonnes de liens, plutot que d'afficher un cadre
+  vide. Les images produit viennent de featured_image, donc aucune n'a besoin
+  d'etre televersee a la main.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign panel_label = label
+  assign panel_caption = caption
+  if is_fr
+    assign panel_label = label_fr | default: label
+    assign panel_caption = caption_fr | default: caption
+  endif
+
+  assign panel_image = nil
+  if product_handle != blank
+    assign panel_product = all_products[product_handle]
+    assign panel_image = panel_product.featured_image
+  endif
+-%}
+
+{%- if panel_image != blank -%}
+  <a class="site-header__panel-media" href="{{ url }}">
+    <span class="site-header__panel-thumb">
+      <img src="{{ panel_image | image_url: width: 520 }}"
+           srcset="{{ panel_image | image_url: width: 320 }} 320w,
+                   {{ panel_image | image_url: width: 520 }} 520w"
+           sizes="260px"
+           alt=""
+           width="520" height="{{ 520 | divided_by: panel_image.aspect_ratio | round }}"
+           loading="lazy" decoding="async">
+    </span>
+    <span class="site-header__panel-caption">{{ panel_label }}</span>
+    <span class="site-header__panel-cta">{{ panel_caption }}</span>
+  </a>
+{%- elsif image_file != blank -%}
+  {%- assign panel_file_url = image_file | file_url -%}
+  <a class="site-header__panel-media" href="{{ url }}">
+    <span class="site-header__panel-thumb">
+      {%- comment -%}
+        file_url ne passe pas par image_url, mais le CDN Shopify accepte le
+        parametre width sur les URL de Content > Files.
+      {%- endcomment -%}
+      <img src="{{ panel_file_url }}&width=520"
+           srcset="{{ panel_file_url }}&width=320 320w, {{ panel_file_url }}&width=520 520w"
+           sizes="260px"
+           alt=""
+           width="520" height="293"
+           loading="lazy" decoding="async">
+    </span>
+    <span class="site-header__panel-caption">{{ panel_label }}</span>
+    <span class="site-header__panel-cta">{{ panel_caption }}</span>
+  </a>
+{%- endif -%}
