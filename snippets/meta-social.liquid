@@ -1,0 +1,109 @@
+{%- comment -%}
+  Balises Open Graph et Twitter Card.
+
+  Shopify n'injecte via content_for_header qu'un og:image issu de l'image de
+  partage de la boutique : ni titre, ni description, ni type, ni URL. Sans ces
+  balises, un lien partage sur Instagram, TikTok, Facebook, WhatsApp ou
+  LinkedIn s'affiche sans vignette lisible.
+
+  Ce snippet doit etre rendu AVANT content_for_header : quand il produit son
+  propre og:image (fiche produit, article, collection), celui-ci apparait en
+  premier et prime sur celui de Shopify.
+
+  Usage : {% render 'meta-social' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign og_type = 'website'
+  assign og_url = canonical_url
+  assign og_image = blank
+  assign og_title = page_title
+  assign og_description = page_description
+
+  case request.page_type
+    when 'index'
+      if is_fr
+        assign og_title = 'CytoLight | Luminotherapie rouge intelligente'
+        assign og_description = 'Des systemes de luminotherapie rouge et proche infrarouge concus pour la recuperation, la peau, le sommeil et l energie.'
+      else
+        assign og_title = 'CytoLight | Intelligent Red Light Therapy'
+        assign og_description = 'Red and near-infrared light therapy systems designed for recovery, skin, sleep, and everyday energy.'
+      endif
+    when 'product'
+      assign og_type = 'product'
+      assign og_title = product.title
+      assign og_image = product.featured_media.preview_image
+      if product.description != blank
+        assign og_description = product.description | strip_html | strip_newlines | truncate: 280
+      endif
+    when 'collection'
+      assign og_title = collection.title
+      assign og_image = collection.featured_image
+      if collection.description != blank
+        assign og_description = collection.description | strip_html | strip_newlines | truncate: 280
+      endif
+    when 'article'
+      assign og_type = 'article'
+      assign og_title = article.title
+      assign og_image = article.image
+      assign og_description = article.excerpt_or_content | strip_html | strip_newlines | truncate: 280
+  endcase
+
+  if og_description == blank
+    if is_fr
+      assign og_description = 'CytoLight, luminotherapie rouge et proche infrarouge pour la recuperation, la peau, le sommeil et l energie.'
+    else
+      assign og_description = 'CytoLight red and near-infrared light therapy for recovery, skin, sleep, and everyday energy.'
+    endif
+  endif
+
+  if settings.social_share_image != blank and og_image == blank
+    assign og_image = settings.social_share_image
+  endif
+-%}
+
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:title" content="{{ og_title | strip_html | escape }}">
+<meta property="og:description" content="{{ og_description | escape }}">
+<meta property="og:url" content="{{ og_url }}">
+<meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' }}">
+{%- for language in localization.available_languages -%}
+  {%- unless language.iso_code == request.locale.iso_code -%}
+    <meta property="og:locale:alternate" content="{{ language.iso_code | replace: '-', '_' }}">
+  {%- endunless -%}
+{%- endfor -%}
+
+{%- if og_image != blank -%}
+  <meta property="og:image" content="{{ og_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="{{ og_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="{{ 1200 | divided_by: og_image.aspect_ratio | round }}">
+  <meta property="og:image:alt" content="{{ og_image.alt | default: og_title | strip_html | escape }}">
+{%- endif -%}
+
+{%- if request.page_type == 'product' -%}
+  <meta property="product:brand" content="{{ product.vendor | default: shop.name | escape }}">
+  <meta property="product:price:amount" content="{{ product.price | divided_by: 100.0 }}">
+  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+  <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+  {%- if product.selected_or_first_available_variant.sku != blank -%}
+    <meta property="product:retailer_item_id" content="{{ product.selected_or_first_available_variant.sku | escape }}">
+  {%- endif -%}
+{%- endif -%}
+
+<meta name="twitter:card" content="{% if og_image != blank %}summary_large_image{% else %}summary{% endif %}">
+<meta name="twitter:title" content="{{ og_title | strip_html | escape }}">
+<meta name="twitter:description" content="{{ og_description | escape }}">
+{%- if og_image != blank -%}
+  <meta name="twitter:image" content="{{ og_image | image_url: width: 1200 }}">
+  <meta name="twitter:image:alt" content="{{ og_image.alt | default: og_title | strip_html | escape }}">
+{%- endif -%}
+{%- if settings.social_x_handle != blank -%}
+  <meta name="twitter:site" content="{{ settings.social_x_handle | prepend: '@' | replace: '@@', '@' | escape }}">
+{%- endif -%}

@@ -1,9 +1,9 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Bon Vibe — Wellness Theme",
-    "theme_version": "1.0.0",
-    "theme_author": "Inspired by boncharge.com",
+    "theme_name": "CytoLight",
+    "theme_version": "2.0.0",
+    "theme_author": "CytoLight",
     "theme_documentation_url": "https://shopify.dev/docs/themes",
     "theme_support_url": "https://shopify.dev/docs/themes"
   },
@@ -35,6 +35,41 @@
     "settings": [
       { "type": "text", "id": "font_body", "label": "Body font family (Google Fonts name)", "default": "Instrument Sans" },
       { "type": "text", "id": "font_display", "label": "Display font family (Google Fonts name)", "default": "Instrument Serif" }
+    ]
+  },
+  {
+    "name": "Social profiles",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Used by the footer icons and by the Organization structured data Google reads to link the store to its social accounts. Leave a field empty to hide that icon."
+      },
+      { "type": "url", "id": "social_instagram_url", "label": "Instagram" },
+      { "type": "url", "id": "social_facebook_url", "label": "Facebook" },
+      { "type": "url", "id": "social_tiktok_url", "label": "TikTok" },
+      { "type": "url", "id": "social_youtube_url", "label": "YouTube" },
+      { "type": "url", "id": "social_pinterest_url", "label": "Pinterest" },
+      { "type": "url", "id": "social_linkedin_url", "label": "LinkedIn" },
+      { "type": "text", "id": "social_x_handle", "label": "X / Twitter handle", "info": "Without the @. Used for the Twitter Card attribution." },
+      {
+        "type": "image_picker",
+        "id": "social_share_image",
+        "label": "Default share image",
+        "info": "Shown when a page has no image of its own. 1200 x 630 px."
+      }
+    ]
+  },
+  {
+    "name": "Marketing pixels",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Only fill these in for a platform that has NO official Shopify channel app installed. The Facebook & Instagram, TikTok and Google & YouTube apps already place their pixel and cover the checkout, which a theme pixel never can — filling in an ID here on top of an app double-counts every event. All pixels here are gated behind the Customer Privacy API and load only after consent."
+      },
+      { "type": "text", "id": "pixel_ga4_id", "label": "Google Analytics 4 measurement ID", "info": "G-XXXXXXXXXX" },
+      { "type": "text", "id": "pixel_meta_id", "label": "Meta pixel ID" },
+      { "type": "text", "id": "pixel_tiktok_id", "label": "TikTok pixel ID" },
+      { "type": "text", "id": "pixel_pinterest_id", "label": "Pinterest tag ID" }
     ]
   }
 ]
