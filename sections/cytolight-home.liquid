@@ -258,13 +258,7 @@
         </a>
 
         <a class="cy-product cy-reveal" href="{{ knee_url }}">
-          <span class="cy-product__media">
-            {%- if knee_product.featured_image -%}
-              <img src="{{ knee_product.featured_image | image_url: width: 900 }}" alt="{{ knee_product.featured_image.alt | escape }}" width="900" height="1100" loading="lazy">
-            {%- else -%}
-              <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight Knee Therapy" width="900" height="1100" loading="lazy">
-            {%- endif -%}
-          </span>
+          <span class="cy-product__media"><video src="https://cdn.shopify.com/videos/c/o/v/f85a0fc3a2d343cda06f2adf6c64775a.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
           <span class="cy-product__content">
             <span class="cy-product__type">{% if is_fr %}Genou &middot; R&eacute;cup&eacute;ration{% else %}Knee &middot; Recovery{% endif %}</span>
             <h3>CytoLight Knee</h3>
