@@ -4,3 +4,14 @@
 *.log
 .DS_Store
 node_modules/
+
+# Outillage local de Claude Code : skills et reglages regeneres a l'install.
+.claude/
+
+# Spec Kit — scripts, templates et manifestes sont regeneres par la CLI.
+# .specify/memory/ fait exception : la constitution et le product-brief sont
+# les deux documents que CLAUDE.md designe comme lecture obligatoire, et la
+# constitution prime sur toute instruction ponctuelle. Les ignorer les
+# laisserait sur un seul poste, invisibles pour l'autre developpeur.
+.specify/*
+!.specify/memory/
