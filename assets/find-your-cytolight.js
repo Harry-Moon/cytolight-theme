@@ -24,6 +24,8 @@
 
   let current = 0;
   let scores = {};
+  let leaveTimer = null;
+  let glowTimer = null;
 
   const announce = () => {
     if (stepCount) {
@@ -32,7 +34,6 @@
   };
 
   const render = () => {
-    steps.forEach((step, i) => step.classList.toggle('is-active', i === current));
     dots.forEach((dot, i) => {
       dot.classList.toggle('is-active', i === current);
       dot.classList.toggle('is-done', i < current);
@@ -42,8 +43,23 @@
   };
 
   const goTo = (index) => {
-    current = Math.max(0, Math.min(steps.length - 1, index));
+    const next = Math.max(0, Math.min(steps.length - 1, index));
+    if (next === current) return;
+
+    const oldStep = steps[current];
+    oldStep.classList.remove('is-active');
+    oldStep.classList.add('is-leaving');
+    window.clearTimeout(leaveTimer);
+    leaveTimer = window.setTimeout(() => oldStep.classList.remove('is-leaving'), 360);
+
+    current = next;
     if (current === resultStepIndex) showResult();
+    steps[current].classList.add('is-active');
+
+    root.classList.add('is-transitioning');
+    window.clearTimeout(glowTimer);
+    glowTimer = window.setTimeout(() => root.classList.remove('is-transitioning'), 550);
+
     render();
   };
 
