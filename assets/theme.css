@@ -761,14 +761,28 @@ h1, h2, h3, h4,
     #080808;
   color: #fff;
 }
+.collection-banner__video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.collection-banner__video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: .55;
+}
 .collection-banner::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   pointer-events: none;
   background: linear-gradient(180deg, rgba(255,255,255,.05), transparent 38%, rgba(0,0,0,.42));
 }
-.collection-banner__inner { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 420px); gap: clamp(32px, 7vw, 96px); align-items: end; }
+.collection-banner__inner { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 420px); gap: clamp(32px, 7vw, 96px); align-items: end; }
 .collection-banner__copy { max-width: 940px; }
 .collection-banner .eyebrow { color: #ff3f58; }
 .collection-banner h1 {
