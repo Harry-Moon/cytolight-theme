@@ -94,34 +94,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   position: sticky;
   top: 0;
   z-index: 50;
-  /*
-   * Le header se retire au defilement vers le bas et revient des qu'on remonte.
-   * theme.js pose .is-hidden ; sans le script rien ne bouge et le header reste
-   * simplement collant, comme avant.
-   *
-   * On translate de sa propre hauteur plus la marge d'ombre, sinon le liseré
-   * de la box-shadow reste visible en haut de l'ecran.
-   */
-  transition: transform .3s cubic-bezier(.2, .8, .2, 1);
-}
-#shopify-section-header.is-hidden { transform: translateY(calc(-100% - 12px)); }
-/*
- * Un panneau ouvert retient le header : on ne le derobe pas sous le curseur.
- * Cible le survol d'un onglet et non du header entier — sinon le seul fait de
- * passer la souris pres du haut de l'ecran empechait tout masquage.
- * Le focus est cible sur les onglets, pas sur le header entier : sur
- * l'enveloppe, un simple focus dans le selecteur de langue ou le panier
- * figeait le header. Sur un onglet il est legitime — le panneau est ouvert, on
- * ne le derobe pas au clavier. C'est theme.js qui rend la main au defilement,
- * en refermant les panneaux et en relachant le focus.
- *
- * Si :has() n'est pas supporte la regle tombe et seul le JS agit.
- */
-#shopify-section-header:has(.site-header__nav-item:hover),
-#shopify-section-header:has(.site-header__nav-item:focus-within) { transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  #shopify-section-header { transition: none; }
-  #shopify-section-header.is-hidden { transform: none; }
 }
 .site-header {
   /* Repere de positionnement des panneaux de mega-menu, qui s'etendent sur
@@ -201,7 +173,54 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .site-header__logo { justify-self: center; }
 .site-header__logo img { display: block; max-height: 52px; width: auto; object-fit: contain; }
 
-.site-header__nav { border-top: 1px solid rgba(0,0,0,.07); }
+/*
+ * Seule cette rangee se retire au defilement vers le bas et revient des
+ * qu'on remonte — le bandeau de reassurance et la barre logo restent en
+ * place, sinon le repere de marque disparait avec le reste.
+ *
+ * theme.js pose .is-hidden sur .site-header__nav (et non plus sur
+ * #shopify-section-header) ; sans le script rien ne bouge et la rangee reste
+ * simplement affichee, comme avant. On tasse la hauteur plutot que de
+ * translater, sinon l'espace occupe resterait vide a la place de la rangee.
+ * 60px couvre confortablement la hauteur reelle (padding 15px + texte en une
+ * seule ligne, white-space: nowrap) sans decaler la fin visible de la
+ * transition.
+ */
+.site-header__nav {
+  border-top: 1px solid rgba(0,0,0,.07);
+  overflow: hidden;
+  max-height: 60px;
+  opacity: 1;
+  transition: max-height .3s cubic-bezier(.2, .8, .2, 1), opacity .22s ease, border-color .3s ease;
+}
+.site-header__nav.is-hidden {
+  max-height: 0;
+  opacity: 0;
+  border-top-color: transparent;
+  pointer-events: none;
+}
+/*
+ * Un panneau ouvert retient la rangee : on ne la derobe pas sous le curseur.
+ * Cible le survol d'un onglet et non de la rangee entiere — sinon le seul
+ * fait de passer la souris pres du haut de l'ecran empecherait tout
+ * masquage. C'est theme.js qui rend la main au defilement, en refermant les
+ * panneaux et en relachant le focus. Si :has() n'est pas supporte la regle
+ * tombe et seul le JS agit.
+ */
+.site-header__nav:has(.site-header__nav-item:hover),
+.site-header__nav:has(.site-header__nav-item:focus-within) {
+  max-height: 60px;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-header__nav { transition: none; }
+  .site-header__nav.is-hidden {
+    max-height: 60px;
+    opacity: 1;
+    border-top-color: rgba(0,0,0,.07);
+    pointer-events: auto;
+  }
+}
 .site-header__nav-row { display: flex; justify-content: center; gap: clamp(10px, 2.2vw, 40px); }
 .site-header__nav-item { position: static; }
 .site-header__nav-link {
@@ -961,3 +980,85 @@ h1, h2, h3, h4,
   .shopify-policy__title { margin-bottom: 30px; padding-bottom: 20px; }
   .shopify-policy__body h1, .shopify-policy__body h2, .shopify-policy__body h3 { margin: 36px 0 16px; }
 }
+
+/* ---------- Consentement cookies (bandeau natif Shopify) ---------- */
+/*
+ * Le HTML, le comportement et l'API de consentement restent ceux de Shopify
+ * (Customer Privacy API) : seul l'habillage visuel est repris ici pour coller
+ * a l'identite du theme. Selecteurs shopify-pc__* verifies en direct sur
+ * cytolight.myshopify.com (non documentes officiellement par Shopify) :
+ * a revalider si Shopify fait evoluer ce balisage.
+ */
+#shopify-pc__banner,
+#shopify-pc__prefs__dialog {
+  font-family: var(--font-body);
+  background-color: var(--color-background) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: 0 12px 40px rgba(23, 17, 16, .18) !important;
+}
+
+#shopify-pc__banner__body-title,
+.shopify-pc__prefs__dialog header h2,
+.shopify-pc__prefs__intro h3 {
+  font-family: var(--font-display) !important;
+  color: var(--color-foreground) !important;
+}
+
+.shopify-pc__banner__dialog p,
+.shopify-pc__prefs__intro p,
+.shopify-pc__prefs__option p {
+  color: var(--color-muted) !important;
+}
+
+#shopify-pc__banner__body-policy-link {
+  color: #d20d2f !important;
+}
+
+.shopify-pc__banner__dialog button,
+.shopify-pc__prefs__header-actions button {
+  font-family: var(--font-body);
+  border-radius: var(--radius-sm) !important;
+  font-weight: 700;
+  letter-spacing: .01em;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+
+#shopify-pc__banner__btn-accept,
+#shopify-pc__prefs__header-accept {
+  background: var(--color-foreground) !important;
+  border-color: var(--color-foreground) !important;
+  color: var(--color-background) !important;
+}
+#shopify-pc__banner__btn-accept:hover,
+#shopify-pc__prefs__header-accept:hover {
+  background: #d20d2f !important;
+  border-color: #d20d2f !important;
+}
+
+/* Refuser et Enregistrer mes choix : meme poids visuel que le bouton
+   d'acceptation, aucun des deux n'est estompe ou reduit (Art. 82 LIL). */
+#shopify-pc__banner__btn-decline,
+#shopify-pc__prefs__header-decline,
+#shopify-pc__prefs__header-save {
+  background: transparent !important;
+  border-color: var(--color-foreground) !important;
+  color: var(--color-foreground) !important;
+}
+#shopify-pc__banner__btn-decline:hover,
+#shopify-pc__prefs__header-decline:hover,
+#shopify-pc__prefs__header-save:hover {
+  background: var(--color-foreground) !important;
+  color: var(--color-background) !important;
+}
+
+#shopify-pc__banner__btn-manage-prefs {
+  color: var(--color-accent-deep) !important;
+}
+#shopify-pc__banner__btn-manage-prefs:hover { color: #d20d2f !important; }
+
+.shopify-pc__prefs__option:first-child { border-top-color: var(--color-accent-soft) !important; }
+.shopify-pc__prefs__option label { color: var(--color-foreground) !important; }
+.shopify-pc__prefs__option label span svg path { fill: var(--color-foreground) !important; }
+.shopify-pc__prefs__option label input[aria-readonly="true"] ~ span svg path { fill: var(--color-muted) !important; }
+
+#shopify-pc__prefs__header-close svg path { fill: var(--color-foreground) !important; }

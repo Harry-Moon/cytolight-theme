@@ -35,20 +35,20 @@
     /*
      * Masquage au defilement vers le bas, retour au defilement vers le haut.
      *
-     * La classe est posee sur #shopify-section-header, l'enveloppe qui porte
-     * le collant — la translation doit s'appliquer au meme element, sinon elle
-     * deplace le contenu a l'interieur d'une barre restee en place.
+     * La classe est posee sur .site-header__nav, la rangee de menu seule —
+     * le bandeau de reassurance et la barre logo restent affiches, sinon le
+     * repere de marque disparaitrait avec le reste au premier defilement.
      *
      * Deux garde-fous : rien ne se declenche dans les 120 premiers pixels, ou
      * l'utilisateur est encore visuellement en haut de page, et un seuil de
      * 6 px absorbe le tremblement du defilement par inertie, qui sinon fait
-     * clignoter le header.
+     * clignoter la rangee.
      *
-     * Le CSS retient le header tant qu'un onglet est survole ou qu'un panneau
+     * Le CSS retient la rangee tant qu'un onglet est survole ou qu'un panneau
      * a le focus clavier ; ici on referme les panneaux ouverts au clic avant
      * de masquer, plutot que de renoncer au masquage.
      */
-    const wrapper = header.closest('#shopify-section-header') || header;
+    const navRow = header.querySelector('.site-header__nav');
     const REVEAL_AT = 120;
     const THRESHOLD = 6;
     let lastY = window.scrollY;
@@ -61,38 +61,40 @@
       if (Math.abs(delta) < THRESHOLD) return;
       lastY = y;
       if (y <= REVEAL_AT || delta < 0) {
-        wrapper.classList.remove('is-hidden');
+        navRow.classList.remove('is-hidden');
         return;
       }
       /*
        * Un panneau ouvert au clic ne doit pas empecher le masquage : il
-       * suivrait le header hors de l'ecran, ou pire le retiendrait pour de bon.
+       * suivrait la rangee hors de l'ecran, ou pire la retiendrait pour de bon.
        * On le referme, puis on masque.
        */
-      wrapper.querySelectorAll('.site-header__nav-item.is-open').forEach((item) => {
+      navRow.querySelectorAll('.site-header__nav-item.is-open').forEach((item) => {
         item.classList.remove('is-open');
         const toggle = item.querySelector('[aria-expanded]');
         if (toggle) toggle.setAttribute('aria-expanded', 'false');
       });
       /*
-       * Cliquer un onglet lui laisse le focus, et le CSS retient le header tant
-       * qu'un onglet est focus. Sans ce blur, un seul clic figeait le header
-       * pour le reste de la visite. On ne relache que si le focus est dans le
-       * header : ailleurs, il appartient a la page.
+       * Cliquer un onglet lui laisse le focus, et le CSS retient la rangee tant
+       * qu'un onglet est focus. Sans ce blur, un seul clic figeait la rangee
+       * pour le reste de la visite. On ne relache que si le focus est dans la
+       * rangee : ailleurs, il appartient a la page.
        */
       const active = document.activeElement;
-      if (active && wrapper.contains(active) && typeof active.blur === 'function') {
+      if (active && navRow.contains(active) && typeof active.blur === 'function') {
         active.blur();
       }
-      wrapper.classList.add('is-hidden');
+      navRow.classList.add('is-hidden');
     };
 
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        ticking = true;
-        window.requestAnimationFrame(updateHeaderVisibility);
-      }
-    }, { passive: true });
+    if (navRow) {
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(updateHeaderVisibility);
+        }
+      }, { passive: true });
+    }
   }
 
   // Quantity selectors
