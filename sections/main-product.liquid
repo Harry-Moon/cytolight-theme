@@ -648,8 +648,6 @@
         <video src='https://cdn.shopify.com/videos/c/o/v/6e729ca4196441df8bb75480e0ddb070.mp4' autoplay loop muted playsinline aria-hidden='true'></video>
       {%- elsif is_cap -%}
         <video class='cl-video-zoomout' src='https://cdn.shopify.com/videos/c/o/v/6a9ef77bf5f84b87aa84e0f43685a21b.mp4' autoplay loop muted playsinline aria-hidden='true'></video>
-      {%- elsif is_sauna_dome -%}
-        <video src='https://cdn.shopify.com/videos/c/o/v/9d2bd3a6903d47e59681aa03932a88fa.mp4' autoplay loop muted playsinline aria-hidden='true'></video>
       {%- elsif product.featured_image -%}
         <img src='{{ product.featured_image | image_url: width: 2000 }}' alt='{{ product.featured_image.alt | escape }}' loading='eager'>
       {%- else -%}
