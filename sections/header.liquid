@@ -33,22 +33,6 @@
 
   <div class="container site-header__bar">
     <div class="site-header__utils site-header__utils--start">
-      {%- if localization.available_languages.size > 1 -%}
-        {% form 'localization', class: 'site-header__language-form' %}
-          <label class="visually-hidden" for="HeaderLanguageSelector">Language</label>
-          <select id="HeaderLanguageSelector" class="site-header__language-select" name="locale_code" onchange="this.form.submit()">
-            {%- for language in localization.available_languages -%}
-              <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
-                {{ language.iso_code | upcase }}
-              </option>
-            {%- endfor -%}
-          </select>
-        {% endform %}
-      {%- else -%}
-        <span class="site-header__language-static" aria-label="Current language">
-          {{ localization.language.iso_code | default: request.locale.iso_code | upcase }}
-        </span>
-      {%- endif -%}
       <a class="site-header__util-link" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}</a>
       <a class="site-header__util-link" href="/pages/contact">{% if is_fr %}Nous contacter{% else %}Contact us{% endif %}</a>
     </div>
@@ -71,9 +55,22 @@
     </a>
 
     <div class="site-header__utils site-header__utils--end">
-      <a class="site-header__icon" href="{{ routes.search_url }}" aria-label="{% if is_fr %}Rechercher{% else %}Search{% endif %}">
-        {% render 'icon', name: 'search' %}
-      </a>
+      {%- if localization.available_languages.size > 1 -%}
+        {% form 'localization', class: 'site-header__language-form' %}
+          <label class="visually-hidden" for="HeaderLanguageSelector">Language</label>
+          <select id="HeaderLanguageSelector" class="site-header__language-select" name="locale_code" onchange="this.form.submit()">
+            {%- for language in localization.available_languages -%}
+              <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                {{ language.iso_code | upcase }}
+              </option>
+            {%- endfor -%}
+          </select>
+        {% endform %}
+      {%- else -%}
+        <span class="site-header__language-static" aria-label="Current language">
+          {{ localization.language.iso_code | default: request.locale.iso_code | upcase }}
+        </span>
+      {%- endif -%}
       <a class="site-header__icon" href="{{ routes.account_url }}" aria-label="{% if is_fr %}Mon compte{% else %}Account{% endif %}">
         {% render 'icon', name: 'user' %}
       </a>
