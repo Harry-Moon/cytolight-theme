@@ -44,8 +44,9 @@
      * 6 px absorbe le tremblement du defilement par inertie, qui sinon fait
      * clignoter le header.
      *
-     * On ne masque jamais tant qu'un panneau de menu est ouvert : le CSS le
-     * retient au survol, et on evite ici de reposer la classe pour rien.
+     * Le CSS retient le header tant qu'un onglet est survole ou qu'un panneau
+     * a le focus clavier ; ici on referme les panneaux ouverts au clic avant
+     * de masquer, plutot que de renoncer au masquage.
      */
     const wrapper = header.closest('#shopify-section-header') || header;
     const REVEAL_AT = 120;
@@ -61,9 +62,29 @@
       lastY = y;
       if (y <= REVEAL_AT || delta < 0) {
         wrapper.classList.remove('is-hidden');
-      } else if (!wrapper.querySelector('.site-header__nav-item.is-open')) {
-        wrapper.classList.add('is-hidden');
+        return;
       }
+      /*
+       * Un panneau ouvert au clic ne doit pas empecher le masquage : il
+       * suivrait le header hors de l'ecran, ou pire le retiendrait pour de bon.
+       * On le referme, puis on masque.
+       */
+      wrapper.querySelectorAll('.site-header__nav-item.is-open').forEach((item) => {
+        item.classList.remove('is-open');
+        const toggle = item.querySelector('[aria-expanded]');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      });
+      /*
+       * Cliquer un onglet lui laisse le focus, et le CSS retient le header tant
+       * qu'un onglet est focus. Sans ce blur, un seul clic figeait le header
+       * pour le reste de la visite. On ne relache que si le focus est dans le
+       * header : ailleurs, il appartient a la page.
+       */
+      const active = document.activeElement;
+      if (active && wrapper.contains(active) && typeof active.blur === 'function') {
+        active.blur();
+      }
+      wrapper.classList.add('is-hidden');
     };
 
     window.addEventListener('scroll', () => {

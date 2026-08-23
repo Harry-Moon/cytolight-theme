@@ -109,11 +109,16 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  * Un panneau ouvert retient le header : on ne le derobe pas sous le curseur.
  * Cible le survol d'un onglet et non du header entier — sinon le seul fait de
  * passer la souris pres du haut de l'ecran empechait tout masquage.
- * Si :has() n'est pas supporte la regle tombe, et le garde-fou de theme.js
- * (qui refuse de masquer tant qu'un panneau porte .is-open) prend le relais.
+ * Le focus est cible sur les onglets, pas sur le header entier : sur
+ * l'enveloppe, un simple focus dans le selecteur de langue ou le panier
+ * figeait le header. Sur un onglet il est legitime — le panneau est ouvert, on
+ * ne le derobe pas au clavier. C'est theme.js qui rend la main au defilement,
+ * en refermant les panneaux et en relachant le focus.
+ *
+ * Si :has() n'est pas supporte la regle tombe et seul le JS agit.
  */
 #shopify-section-header:has(.site-header__nav-item:hover),
-#shopify-section-header:focus-within { transform: none; }
+#shopify-section-header:has(.site-header__nav-item:focus-within) { transform: none; }
 @media (prefers-reduced-motion: reduce) {
   #shopify-section-header { transition: none; }
   #shopify-section-header.is-hidden { transform: none; }

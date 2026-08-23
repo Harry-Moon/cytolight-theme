@@ -111,11 +111,10 @@ Les handles sont ceux réellement créés en boutique, d'où le mélange FR / EN
 titre **qu'à la création** : renommer le titre d'une page existante ne change jamais son URL, elle se
 corrige dans *Search engine listing → Edit → URL handle*.
 
-`snippets/learn-nav.liquid` est la **source unique** des URL et des libellés de la sous-navigation
-(trilingue FR / EN / PT). Il ne rend plus que la barre collante des pages Learn : les variantes
-`header` et `mobile` ont été retirées, le mega-menu de `header.liquid` porte l'entrée Apprendre et
-deux menus concurrents s'affichaient. Un handle qui change ne se corrige qu'à cet endroit — sauf dans
-`header.liquid`, où les liens du mega-menu sont écrits en dur comme le reste de la navigation.
+La sous-navigation qui coiffait les pages Learn a été retirée : le mega-menu du header porte
+l'entrée Apprendre avec ses huit liens, et les deux barres se superposaient. `sections/header.liquid`
+est désormais le **seul** endroit où vivent les URL de l'espace — un handle qui change se corrige là,
+et nulle part ailleurs.
 
 `assets/learn.css` et `learn.js` ne sont chargés que par ces gabarits. Le CSS ne masque **jamais**
 rien de lui-même : c'est `learn.js` qui pose `is-armed` sur ce qu'il va animer. Sans le script — bloqué,
@@ -124,10 +123,16 @@ réintroduire de règle du type `.ln-reveal { opacity: 0 }`, elle rendrait la pa
 incident. Même logique pour les états d'animation : la transition n'est déclarée que dans l'état
 révélé, sinon l'élément s'efface visiblement avant de revenir.
 
-`.site-header` porte `position: sticky` mais Shopify l'enveloppe dans `#shopify-section-header`, haut
-de 88 px : un élément collant ne peut pas sortir des limites de son parent, **le header ne colle donc
-pas**. La sous-navigation Learn est en `top: 0` pour cette raison, avec un `z-index` sous les 50 du
-header pour se glisser dessous si sa stickiness est un jour réparée.
+Le collant est posé sur **`#shopify-section-header`**, l'enveloppe que Shopify ajoute autour de la
+section — pas sur `.site-header`. Un élément collant ne peut pas sortir des limites de son parent :
+sur `.site-header`, ce parent était l'enveloppe de section, haute exactement de la hauteur du header,
+donc la course disponible était nulle et le header défilait avec la page malgré son `position: sticky`.
+Le symptôme est silencieux : la règle est bien appliquée, elle ne produit simplement aucun effet.
+
+`theme.js` mesure le header et publie sa hauteur dans `--header-h`, dont se servent la colonne galerie
+de la fiche produit et le récapitulatif du panier. Le même script pose `.is-hidden` sur l'enveloppe au
+défilement vers le bas et la retire au défilement vers le haut. Toujours garder une valeur de repli :
+sans le script, rien ne doit bouger.
 
 ### Répartition des contenus
 
