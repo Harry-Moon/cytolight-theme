@@ -14,15 +14,66 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "shop": { "type": "menu_column", "settings": { "heading": "Shop", "menu": "footer-shop" } },
-        "discover": { "type": "menu_column", "settings": { "heading": "Discover", "menu": "footer-discover" } },
-        "learn": { "type": "menu_column", "settings": { "heading": "Learn", "menu": "footer-learn" } },
-        "professionals": { "type": "menu_column", "settings": { "heading": "Professionals", "menu": "footer-professionals" } },
-        "support": { "type": "menu_column", "settings": { "heading": "Support", "menu": "footer-support" } },
-        "company": { "type": "menu_column", "settings": { "heading": "Company", "menu": "footer-company" } },
-        "legal": { "type": "menu_column", "settings": { "heading": "Legal", "menu": "footer-legal" } }
+        "shop": {
+          "type": "menu_column",
+          "disabled": true,
+          "settings": {
+            "heading": "Shop",
+            "menu": "footer-shop"
+          }
+        },
+        "discover": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Discover",
+            "menu": "footer-discover"
+          }
+        },
+        "learn": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Learn",
+            "menu": "footer-learn"
+          }
+        },
+        "professionals": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Professionals",
+            "menu": "footer-professionals"
+          }
+        },
+        "support": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Support",
+            "menu": "footer-support"
+          }
+        },
+        "company": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Company",
+            "menu": "footer-company"
+          }
+        },
+        "legal": {
+          "type": "menu_column",
+          "settings": {
+            "heading": "Legal",
+            "menu": "footer-legal"
+          }
+        }
       },
-      "block_order": ["shop", "discover", "learn", "professionals", "support", "company", "legal"],
+      "block_order": [
+        "shop",
+        "discover",
+        "learn",
+        "professionals",
+        "support",
+        "company",
+        "legal"
+      ],
       "settings": {
         "tagline": "Science-backed wellness technologies to enhance sleep, recovery, and beauty.",
         "instagram": "",
@@ -32,5 +83,7 @@
       }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }

@@ -103,6 +103,10 @@
       },
       "header": {
         "type": "header",
+        "custom_css": [
+          ".site-header__mobile-menu:not([open]) .site-header__mobile-panel {display: none !important; }",
+          ".site-header__accordion:not([open]) .site-header__accordion-body {display: none !important; }"
+        ],
         "settings": {
           "menu": "main-menu"
         }
