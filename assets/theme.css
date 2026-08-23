@@ -383,7 +383,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
     left: 20px;
     right: 20px;
     top: calc(100% + 8px);
-    display: grid;
     gap: 2px;
     padding: 10px;
     border: 1px solid rgba(0,0,0,.08);
@@ -393,6 +392,7 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
     max-height: calc(100vh - 110px);
     overflow-y: auto;
   }
+  .site-header__mobile-menu[open] .site-header__mobile-panel { display: grid; }
   .site-header__mobile-panel > a {
     padding: 13px 12px;
     border-radius: 10px;
@@ -428,10 +428,10 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   }
   .site-header__accordion[open] summary::after { transform: rotate(-135deg); }
   .site-header__accordion-body {
-    display: grid;
     gap: 1px;
     padding: 0 4px 10px 12px;
   }
+  .site-header__accordion[open] .site-header__accordion-body { display: grid; }
   .site-header__accordion-body a {
     padding: 10px 12px;
     border-radius: 9px;
