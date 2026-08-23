@@ -1,0 +1,97 @@
+/* Compact nav menu (<=1300px) — rebuilt independently of theme.css so it
+   can never be affected by a stale cached copy of that file. */
+
+.cl-navmenu { display: none; }
+
+@media (max-width: 1300px) {
+  .cl-navmenu {
+    display: block;
+  }
+
+  .cl-navmenu__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 0 13px;
+    border: 1px solid rgba(0, 0, 0, .14);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: .7rem;
+    font-weight: 900;
+    letter-spacing: .08em;
+    list-style: none;
+    text-transform: uppercase;
+  }
+  .cl-navmenu__toggle::-webkit-details-marker { display: none; }
+
+  .cl-navmenu__panel {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: calc(100% + 8px);
+    gap: 2px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, .97);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, .18);
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+    z-index: 70;
+  }
+  .cl-navmenu[open] .cl-navmenu__panel { display: grid; }
+
+  .cl-navmenu__toplink {
+    display: block;
+    padding: 13px 12px;
+    border-radius: 10px;
+    font-weight: 850;
+    font-size: .86rem;
+    letter-spacing: .03em;
+    color: var(--color-accent-deep, #a80a26);
+  }
+  .cl-navmenu__toplink:hover { background: rgba(210, 13, 47, .08); }
+
+  .cl-navmenu__group { border-top: 1px solid rgba(0, 0, 0, .07); }
+  .cl-navmenu__group-toggle {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 12px;
+    font-weight: 850;
+    font-size: .86rem;
+    letter-spacing: .03em;
+    cursor: pointer;
+  }
+  .cl-navmenu__group-toggle::-webkit-details-marker { display: none; }
+  .cl-navmenu__group-toggle::after {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform .18s ease;
+    opacity: .55;
+    flex-shrink: 0;
+  }
+  .cl-navmenu__group[open] .cl-navmenu__group-toggle::after { transform: rotate(-135deg); }
+
+  .cl-navmenu__group-body {
+    gap: 1px;
+    padding: 0 4px 10px 12px;
+  }
+  .cl-navmenu__group[open] .cl-navmenu__group-body { display: grid; }
+  .cl-navmenu__group-body a {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 9px;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+    color: var(--color-muted, #6b625c);
+  }
+  .cl-navmenu__group-body a:hover { background: rgba(210, 13, 47, .08); color: var(--color-accent-deep, #a80a26); }
+}
