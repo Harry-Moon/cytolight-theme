@@ -1,0 +1,215 @@
+{%- comment -%}
+  Find Your CytoLight — 60-second needs quiz.
+
+  4 questions (location, focus, experience, usage style) score against the 7
+  CytoLight devices client-side; the result step reveals the matching
+  product's real Shopify data (price/url via Liquid, never hardcoded).
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign desk_product = all_products['cytolight-desk']
+  assign cap_product = all_products['cytolight-cap']
+  assign mask_product = all_products['cytolight-mask']
+  assign foot_product = all_products['cytolight-foot']
+  assign knee_product = all_products['cytolight-knee']
+  assign sauna_dome_product = all_products['cytolight-sauna-dome']
+  assign pano_ultra_product = all_products['cytolight-pano-ultra']
+-%}
+
+{{ 'find-your-cytolight.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'find-your-cytolight.js' | asset_url }}" defer></script>
+
+<section class="fyc" data-fyc aria-label="{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}">
+  <div class="fyc-shell">
+    <div class="fyc-card">
+      <button type="button" class="fyc-back" data-fyc-back aria-label="{% if is_fr %}Retour{% else %}Back{% endif %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <p class="fyc-stepcount" data-fyc-stepcount aria-live="polite"></p>
+
+      <div class="fyc-stage" data-fyc-stage>
+
+        <div class="fyc-step is-active" data-fyc-step data-fyc-kind="welcome">
+          <p class="fyc-eyebrow">{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}</p>
+          <h1 class="fyc-heading">{% if is_fr %}Un guide de 60&nbsp;secondes vers le bon appareil.{% else %}A 60-second guide to the right device for you.{% endif %}</h1>
+          <p class="fyc-sub">{% if is_fr %}R&eacute;pondez &agrave; quatre questions rapides et nous vous proposerons le CytoLight adapt&eacute; &agrave; votre routine &mdash; &agrave; la maison, au bureau ou &agrave; la salle.{% else %}Answer four quick questions and we'll match you with the CytoLight built for your routine &mdash; at home, at the office, or at the gym.{% endif %}</p>
+          <button type="button" class="fyc-cta" data-fyc-start>{% if is_fr %}Commencer{% else %}Start{% endif %}</button>
+        </div>
+
+        <div class="fyc-step" data-fyc-step data-fyc-kind="question">
+          <p class="fyc-question">{% if is_fr %}O&ugrave; l'utiliserez-vous le plus souvent&nbsp;?{% else %}Where will you use it most?{% endif %}</p>
+          <div class="fyc-options" role="group">
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-sauna-dome":2,"cytolight-mask":1,"cytolight-cap":1,"cytolight-desk":1}'>{% if is_fr %}Maison{% else %}Home{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":3}'>{% if is_fr %}Bureau{% else %}Office{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-knee":2,"cytolight-foot":2,"cytolight-pano-ultra":1}'>{% if is_fr %}Salle de sport{% else %}Gym{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-cap":2,"cytolight-mask":1,"cytolight-foot":1}'>{% if is_fr %}En d&eacute;placement{% else %}On the go{% endif %}</button>
+          </div>
+        </div>
+
+        <div class="fyc-step" data-fyc-step data-fyc-kind="question">
+          <p class="fyc-question">{% if is_fr %}Quel est votre objectif principal&nbsp;?{% else %}What's your main focus?{% endif %}</p>
+          <div class="fyc-options" role="group">
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-knee":3,"cytolight-foot":3,"cytolight-pano-ultra":2,"cytolight-sauna-dome":1}'>{% if is_fr %}R&eacute;cup&eacute;ration &amp; muscles{% else %}Recovery &amp; muscles{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":2,"cytolight-sauna-dome":2,"cytolight-mask":1}'>{% if is_fr %}Sommeil &amp; d&eacute;tente{% else %}Sleep &amp; relaxation{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-mask":4}'>{% if is_fr %}Peau &amp; &eacute;clat{% else %}Skin &amp; glow{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-cap":4}'>{% if is_fr %}Cheveux &amp; cuir chevelu{% else %}Hair &amp; scalp{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-sauna-dome":4,"cytolight-pano-ultra":2}'>{% if is_fr %}R&eacute;initialisation corps entier{% else %}Full-body reset{% endif %}</button>
+          </div>
+        </div>
+
+        <div class="fyc-step" data-fyc-step data-fyc-kind="question">
+          <p class="fyc-question">{% if is_fr %}Quel est votre niveau avec la luminoth&eacute;rapie&nbsp;?{% else %}How familiar are you with light therapy?{% endif %}</p>
+          <div class="fyc-options" role="group">
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-cap":1,"cytolight-mask":1,"cytolight-foot":1,"cytolight-knee":1}'>{% if is_fr %}D&eacute;butant{% else %}New to it{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":1,"cytolight-cap":1,"cytolight-mask":1}'>{% if is_fr %}Je l'ai d&eacute;j&agrave; essay&eacute;e{% else %}I've tried it before{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":2,"cytolight-pano-ultra":1}'>{% if is_fr %}Je l'utilise r&eacute;guli&egrave;rement{% else %}I use it regularly{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-pano-ultra":3,"cytolight-sauna-dome":2,"cytolight-desk":1}'>{% if is_fr %}Utilisateur avanc&eacute; ou professionnel{% else %}Advanced or professional user{% endif %}</button>
+          </div>
+        </div>
+
+        <div class="fyc-step" data-fyc-step data-fyc-kind="question">
+          <p class="fyc-question">{% if is_fr %}Comment souhaitez-vous l'utiliser&nbsp;?{% else %}How do you want to use it?{% endif %}</p>
+          <div class="fyc-options" role="group">
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-cap":3,"cytolight-mask":2,"cytolight-foot":2,"cytolight-knee":2}'>{% if is_fr %}Mains libres, pendant une autre activit&eacute;{% else %}Hands-free, while I do something else{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":3,"cytolight-pano-ultra":2}'>{% if is_fr %}Assis, avec un panneau{% else %}Sit and unwind with a panel{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-sauna-dome":3,"cytolight-pano-ultra":2}'>{% if is_fr %}Une session immersive compl&egrave;te{% else %}A full immersive session{% endif %}</button>
+          </div>
+        </div>
+
+        <div class="fyc-step" data-fyc-step data-fyc-kind="result">
+          <p class="fyc-eyebrow">{% if is_fr %}Votre r&eacute;sultat{% else %}Your match{% endif %}</p>
+          <h2 class="fyc-heading fyc-heading--result">{% if is_fr %}Votre CytoLight id&eacute;al.{% else %}Your CytoLight match.{% endif %}</h2>
+          <p class="fyc-sub">{% if is_fr %}D'apr&egrave;s vos r&eacute;ponses, voici l'appareil fait pour votre routine.{% else %}Based on your answers, here's the device built for your routine.{% endif %}</p>
+
+          <div class="fyc-results" data-fyc-results>
+
+            <div class="fyc-result-card" data-fyc-product="cytolight-desk" hidden>
+              <span class="fyc-result-card__media"><img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight DESK" width="900" height="700" loading="lazy"></span>
+              <div class="fyc-result-card__body">
+                <span class="fyc-result-card__type">{% if is_fr %}Personnel &middot; Bureau{% else %}Personal &middot; Desktop{% endif %}</span>
+                <h3>CytoLight DESK</h3>
+                <p>{% if is_fr %}Le panneau compact &agrave; 7 spectres pour la r&eacute;cup&eacute;ration, la concentration, le sommeil et la peau au quotidien.{% else %}The compact 7-spectrum panel for daily recovery, focus, sleep, and skin.{% endif %}</p>
+                {%- if desk_product != blank -%}
+                  <span class="fyc-result-card__price">{{ desk_product.price | money }}</span>
+                  <a class="fyc-result-card__cta" href="{{ desk_product.url }}">{% if is_fr %}D&eacute;couvrir CytoLight DESK{% else %}Discover CytoLight DESK{% endif %}</a>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="fyc-result-card" data-fyc-product="cytolight-cap" hidden>
+              <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/6a9ef77bf5f84b87aa84e0f43685a21b.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
+              <div class="fyc-result-card__body">
+                <span class="fyc-result-card__type">{% if is_fr %}Cheveux &middot; Mains libres{% else %}Hair &middot; Hands-free{% endif %}</span>
+                <h3>CytoLight Redlight Cap</h3>
+                <p>{% if is_fr %}Une casquette de luminoth&eacute;rapie rouge et proche infrarouge pour une routine cuir chevelu simple et mains libres.{% else %}A wearable red and near-infrared cap for an easy, hands-free scalp routine.{% endif %}</p>
+                {%- if cap_product != blank -%}
+                  <span class="fyc-result-card__price">{{ cap_product.price | money }}</span>
+                  <a class="fyc-result-card__cta" href="{{ cap_product.url }}">{% if is_fr %}D&eacute;couvrir la casquette{% else %}Discover the cap{% endif %}</a>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="fyc-result-card" data-fyc-product="cytolight-mask" hidden>
+              <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/6e729ca4196441df8bb75480e0ddb070.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
+              <div class="fyc-result-card__body">
+                <span class="fyc-result-card__type">{% if is_fr %}Visage &middot; Beaut&eacute;{% else %}Face &middot; Beauty{% endif %}</span>
+                <h3>CytoLight Mask</h3>
+                <p>{% if is_fr %}Un masque LED souple pour une routine visage courte et sans fil.{% else %}A flexible LED mask for a short, cordless face routine.{% endif %}</p>
+                {%- if mask_product != blank -%}
+                  <span class="fyc-result-card__price">{{ mask_product.price | money }}</span>
+                  <a class="fyc-result-card__cta" href="{{ mask_product.url }}">{% if is_fr %}D&eacute;couvrir le masque{% else %}Discover the mask{% endif %}</a>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="fyc-result-card" data-fyc-product="cytolight-foot" hidden>
+              <span class="fyc-result-card__media">
+                {%- if foot_product.featured_image -%}
+                  <img src="{{ foot_product.featured_image | image_url: width: 900 }}" alt="{{ foot_product.featured_image.alt | escape }}" width="900" height="700" loading="lazy">
+                {%- else -%}
+                  <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight Foot" width="900" height="700" loading="lazy">
+                {%- endif -%}
+              </span>
+              <div class="fyc-result-card__body">
+                <span class="fyc-result-card__type">{% if is_fr %}Pieds &middot; R&eacute;cup&eacute;ration{% else %}Feet &middot; Recovery{% endif %}</span>
+                <h3>CytoLight Foot</h3>
+                <p>{% if is_fr %}Une botte enveloppante qui apporte la lumi&egrave;re rouge et proche infrarouge aux pieds fatigu&eacute;s.{% else %}A wraparound boot that brings red and near-infrared light to tired feet and ankles.{% endif %}</p>
+                {%- if foot_product != blank -%}
+                  <span class="fyc-result-card__price">{{ foot_product.price | money }}</span>
+                  <a class="fyc-result-card__cta" href="{{ foot_product.url }}">{% if is_fr %}D&eacute;couvrir CytoLight Foot{% else %}Discover CytoLight Foot{% endif %}</a>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="fyc-result-card" data-fyc-product="cytolight-knee" hidden>
+              <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/f85a0fc3a2d343cda06f2adf6c64775a.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
+              <div class="fyc-result-card__body">
+                <span class="fyc-result-card__type">{% if is_fr %}Genou &middot; R&eacute;cup&eacute;ration{% else %}Knee &middot; Recovery{% endif %}</span>
+                <h3>CytoLight Knee</h3>
+                <p>{% if is_fr %}Une genouill&egrave;re enveloppante pour l'articulation du genou, pens&eacute;e pour l'apr&egrave;s-sport.{% else %}A wraparound sleeve for the knee joint, built for post-training and at-home comfort.{% endif %}</p>
+                {%- if knee_product != blank -%}
+                  <span class="fyc-result-card__price">{{ knee_product.price | money }}</span>
+                  <a class="fyc-result-card__cta" href="{{ knee_product.url }}">{% if is_fr %}D&eacute;couvrir CytoLight Knee{% else %}Discover CytoLight Knee{% endif %}</a>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="fyc-result-card" data-fyc-product="cytolight-sauna-dome" hidden>
+              <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/9d2bd3a6903d47e59681aa03932a88fa.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
+              <div class="fyc-result-card__body">
+                <span class="fyc-result-card__type">{% if is_fr %}Corps entier &middot; R&eacute;cup&eacute;ration{% else %}Full Body &middot; Recovery{% endif %}</span>
+                <h3>CytoLight Sauna Dome</h3>
+                <p>{% if is_fr %}Un d&ocirc;me infrarouge complet combinant lumi&egrave;re, chaleur et PEMF en une seule session.{% else %}A full-body infrared dome combining light, heat, and PEMF into one complete session.{% endif %}</p>
+                {%- if sauna_dome_product != blank -%}
+                  <span class="fyc-result-card__price">{{ sauna_dome_product.price | money }}</span>
+                  <a class="fyc-result-card__cta" href="{{ sauna_dome_product.url }}">{% if is_fr %}D&eacute;couvrir CytoLight Sauna Dome{% else %}Discover CytoLight Sauna Dome{% endif %}</a>
+                {%- endif -%}
+              </div>
+            </div>
+
+            <div class="fyc-result-card" data-fyc-product="cytolight-pano-ultra" hidden>
+              <span class="fyc-result-card__media"><img src="{{ 'cytolight-pano-ultra-luxury.jpg' | file_url }}" alt="CytoLight PANO ULTRA" width="900" height="700" loading="lazy"></span>
+              <div class="fyc-result-card__body">
+                <span class="fyc-result-card__type">{% if is_fr %}Performance &middot; Professionnel{% else %}Performance &middot; Professional{% endif %}</span>
+                <h3>CytoLight PANO ULTRA</h3>
+                <p>{% if is_fr %}Un panneau grand format pour une couverture corps entier en studio ou salle de sport.{% else %}A large-format panel for full-body coverage in studios, gyms, and wellness rooms.{% endif %}</p>
+                {%- if pano_ultra_product != blank -%}
+                  <span class="fyc-result-card__price">{{ pano_ultra_product.price | money }}</span>
+                  <a class="fyc-result-card__cta" href="{{ pano_ultra_product.url }}">{% if is_fr %}D&eacute;couvrir PANO ULTRA{% else %}Discover PANO ULTRA{% endif %}</a>
+                {%- endif -%}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="fyc-result-actions">
+            <a class="fyc-compare" href="{{ routes.all_products_collection_url }}">{% if is_fr %}Comparer toute la gamme{% else %}Compare the full range{% endif %}</a>
+            <button type="button" class="fyc-retake" data-fyc-retake>{% if is_fr %}Recommencer le quiz{% else %}Retake the quiz{% endif %}</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="fyc-dots" data-fyc-dots aria-hidden="true">
+        {%- for i in (0..5) -%}
+          <span class="fyc-dot{% if i == 0 %} is-active{% endif %}" data-fyc-dot></span>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Find Your CytoLight",
+  "settings": [],
+  "presets": [
+    { "name": "Find Your CytoLight" }
+  ]
+}
+{% endschema %}
