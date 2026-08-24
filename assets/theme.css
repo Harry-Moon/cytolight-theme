@@ -90,10 +90,42 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  * avec la page malgre son position: sticky. Le symptome est silencieux — la
  * regle est bien appliquee, elle ne produit simplement aucun effet.
  */
+/*
+ * La marge basse rend au flux exactement la hauteur que la rangee de menu
+ * retire en se retractant. Sans elle, masquer la rangee raccourcit le
+ * document de 50px : l'ancrage de defilement du navigateur recule alors la
+ * page d'autant pour garder le contenu en place, theme.js relit ce recul
+ * comme un defilement vers le haut et ramene la rangee — masquage, saut,
+ * retour, en boucle au moindre petit scroll. C'etait le saut ressenti.
+ *
+ * La marge se place sur l'enveloppe et non sur le header : hors de sa boite,
+ * elle ne peint rien et ne capte aucun clic, le header retreci reste donc
+ * seul visible et cliquable. Sa transition doit rester rigoureusement celle
+ * du max-height de la rangee — meme duree, meme courbe — puisque c'est en
+ * s'annulant image par image que les deux laissent la page immobile.
+ */
 #shopify-section-header {
   position: sticky;
   top: 0;
   z-index: 50;
+  margin-bottom: 0;
+}
+#shopify-section-header.is-nav-hidden {
+  margin-bottom: var(--nav-row-h, 0px);
+}
+/*
+ * Les deux transitions n'existent qu'une fois --nav-row-h publiee, et le
+ * script pose .nav-collapse-ready dans la meme passe que la mesure. Declarees
+ * d'emblee, elles animeraient le passage du repli (61px) a la hauteur mesuree
+ * au chargement de la page : la rangee se retractait de dix pixels toute
+ * seule, une seconde apres l'affichage. Meme logique que le is-armed de
+ * learn.js — le CSS n'anime que ce que le script a arme.
+ */
+.nav-collapse-ready #shopify-section-header {
+  transition: margin-bottom .26s cubic-bezier(.2, .8, .2, 1);
+}
+.nav-collapse-ready .site-header__nav {
+  transition: max-height .26s cubic-bezier(.2, .8, .2, 1), opacity .2s ease, border-color .26s ease;
 }
 .site-header {
   /* Repere de positionnement des panneaux de mega-menu, qui s'etendent sur
@@ -178,44 +210,81 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  * qu'on remonte — le bandeau de reassurance et la barre logo restent en
  * place, sinon le repere de marque disparait avec le reste.
  *
- * theme.js pose .is-hidden sur .site-header__nav (et non plus sur
- * #shopify-section-header) ; sans le script rien ne bouge et la rangee reste
- * simplement affichee, comme avant. On tasse la hauteur plutot que de
- * translater, sinon l'espace occupe resterait vide a la place de la rangee.
- * 60px couvre confortablement la hauteur reelle (padding 15px + texte en une
- * seule ligne, white-space: nowrap) sans decaler la fin visible de la
- * transition.
+ * L'etat est binaire, pose par theme.js une fois un seuil de defilement
+ * franchi : entiere ou masquee, jamais une valeur intermediaire. Le suivi au
+ * pixel pres qui vivait ici (max-height inline, proportionnelle a la distance
+ * parcourue) laissait la rangee arretee a mi-course des qu'on defilait de
+ * quelques pixels, a demi transparente et suspendue sous le logo.
+ *
+ * Les seuls changements de hauteur viennent donc d'un changement d'etat : il
+ * n'y a plus de course a interrompre, et la transition vit dans la regle
+ * .nav-collapse-ready plus haut. On tasse la hauteur plutot que de translater,
+ * sinon l'espace occupe resterait vide a la place de la rangee. Sans le
+ * script, la valeur de repli ci-dessous s'applique et rien ne bouge.
  */
 .site-header__nav {
   border-top: 1px solid rgba(0,0,0,.07);
   overflow: hidden;
-  max-height: 60px;
+  /*
+   * --nav-row-h est la hauteur reellement mesuree par theme.js, pas un
+   * plafond arbitraire : la course du max-height doit valoir la hauteur
+   * rendue, sinon la premiere partie de l'animation ne deplace rien pendant
+   * que la marge de compensation, elle, avance deja — et la page tremble le
+   * temps du rattrapage. Sans le script, le repli de 60px s'applique et rien
+   * ne bouge de toute facon.
+   *
+   * Le +1px est la bordure ci-dessus : la feuille est en box-sizing:
+   * border-box, donc max-height borne la boite bordure comprise. Sans lui, la
+   * rangee est rognee d'un pixel une fois revelee, et surtout elle ne libere
+   * que 48px la ou la marge de compensation en rend 49 — le document changeait
+   * de taille d'un pixel a chaque bascule. Une fois masquee la boite ne
+   * descend pas sous cette meme bordure : la course vaut donc exactement
+   * --nav-row-h dans les deux sens.
+   */
+  max-height: calc(var(--nav-row-h, 60px) + 1px);
   opacity: 1;
-  transition: max-height .3s cubic-bezier(.2, .8, .2, 1), opacity .22s ease, border-color .3s ease;
 }
+/*
+ * 1px et non 0 : la bordure ci-dessus empeche de toute facon la boite de
+ * descendre plus bas, et une valeur cible que le rendu ne peut pas atteindre
+ * desynchronise les deux courses — le max-height continuerait de descendre
+ * vers zero pendant que la hauteur rendue, elle, ne bouge plus, et la marge
+ * de compensation prendrait de l'avance. En visant la bordure, la hauteur
+ * rendue suit le max-height a chaque instant et les deux s'annulent.
+ */
 .site-header__nav.is-hidden {
-  max-height: 0;
+  max-height: 1px;
   opacity: 0;
   border-top-color: transparent;
   pointer-events: none;
 }
 /*
- * Un panneau ouvert retient la rangee : on ne la derobe pas sous le curseur.
- * Cible le survol d'un onglet et non de la rangee entiere — sinon le seul
- * fait de passer la souris pres du haut de l'ecran empecherait tout
- * masquage. C'est theme.js qui rend la main au defilement, en refermant les
- * panneaux et en relachant le focus. Si :has() n'est pas supporte la regle
- * tombe et seul le JS agit.
+ * Filet pour le cas ou le script n'a pas encore tourne : un panneau ouvert
+ * garde sa rangee. Cible le survol d'un onglet et non de la rangee entiere —
+ * sinon le seul fait de passer la souris pres du haut de l'ecran empecherait
+ * tout masquage.
+ *
+ * Une fois le script en place, c'est lui qui arbitre, et il est plus fin que
+ * cette regle : il retient la rangee au survol et au focus clavier, mais pas
+ * sur le focus qu'un simple clic laisse derriere lui. Traite comme du focus
+ * clavier, ce focus-la epinglait la rangee pour de bon — apres un clic dans
+ * le menu, plus rien ne se masquait.
  */
 .site-header__nav:has(.site-header__nav-item:hover),
 .site-header__nav:has(.site-header__nav-item:focus-within) {
-  max-height: 60px;
+  max-height: calc(var(--nav-row-h, 60px) + 1px);
   opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
-  .site-header__nav { transition: none; }
+  .nav-collapse-ready #shopify-section-header,
+  .nav-collapse-ready .site-header__nav {
+    transition: none;
+  }
+  #shopify-section-header.is-nav-hidden {
+    margin-bottom: 0;
+  }
   .site-header__nav.is-hidden {
-    max-height: 60px;
+    max-height: calc(var(--nav-row-h, 60px) + 1px);
     opacity: 1;
     border-top-color: rgba(0,0,0,.07);
     pointer-events: auto;

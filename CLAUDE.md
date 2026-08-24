@@ -130,9 +130,42 @@ donc la course disponible était nulle et le header défilait avec la page malgr
 Le symptôme est silencieux : la règle est bien appliquée, elle ne produit simplement aucun effet.
 
 `theme.js` mesure le header et publie sa hauteur dans `--header-h`, dont se servent la colonne galerie
-de la fiche produit et le récapitulatif du panier. Le même script pose `.is-hidden` sur l'enveloppe au
-défilement vers le bas et la retire au défilement vers le haut. Toujours garder une valeur de repli :
-sans le script, rien ne doit bouger.
+de la fiche produit et le récapitulatif du panier. Le même script pose `.is-hidden` sur la rangée de
+menu — `.site-header__nav`, et elle seule : le bandeau de réassurance et la barre logo restent en
+place. Toujours garder une valeur de repli : sans le script, rien ne doit bouger.
+
+L'état est **binaire**, jamais intermédiaire : la rangée est entière ou masquée, et il faut franchir un
+seuil pour basculer (64 px cumulés vers le bas pour masquer, 24 px vers le haut pour revenir, chaque
+changement de direction remettant le compteur opposé à zéro). Une version antérieure suivait le
+défilement au pixel près, en posant une `max-height` inline proportionnelle à la distance parcourue :
+défiler de quelques pixels laissait la rangée arrêtée à mi-course, à demi transparente, suspendue sous
+le logo et immobile tant qu'on ne défilait pas davantage. Ne pas y revenir — l'animation appartient au
+CSS, le JS ne fait que poser la classe. La rangée n'existe qu'au-dessus de 1300 px de large
+(`display: none` en dessous) : tout test du masquage demande une fenêtre plus large.
+
+Trois pièges se cachent derrière ce masquage, tous vérifiés en conditions réelles :
+
+1. **Le header est dans le flux.** `position: sticky` n'extrait pas l'élément : rétracter la rangée
+   raccourcit le document d'autant, le navigateur recule alors le scroll pour compenser (*scroll
+   anchoring*), `theme.js` relit ce recul comme un défilement vers le haut et ramène la rangée —
+   masquage, saut, retour, en boucle au moindre petit scroll. D'où la marge basse posée sur
+   `#shopify-section-header` (`.is-nav-hidden`), qui rend au flux exactement la hauteur retirée, et la
+   resynchronisation du repère `lastY` après chaque bascule. Les deux transitions — `max-height` de la
+   rangée et `margin-bottom` de l'enveloppe — doivent garder **la même durée, la même courbe et la
+   même amplitude**, faute de quoi la page tremble en cours d'animation.
+2. **`max-height` borne la boîte bordure** (`box-sizing: border-box` global), et la boîte ne descend
+   jamais sous la bordure de 1 px. D'où le `calc(--nav-row-h + 1px)` révélé et le `1px` masqué : viser
+   `0` désynchronise les deux courses sur la fin.
+3. **Une transition part même si elle vient d'être déclarée.** Publier la mesure et armer l'animation
+   dans la même passe de style anime le passage de la valeur de repli à la mesure — la rangée se
+   rétractait de dix pixels toute seule au chargement. Le script lit donc la mise en page entre les
+   deux, puis pose `.nav-collapse-ready`.
+
+**Ce qui retient la rangée** : le survol, et le focus **clavier** (`:focus-visible`) — jamais le focus
+qu'un clic souris laisse derrière lui. La nuance n'est pas cosmétique : traité comme du focus clavier,
+ce focus-là épinglait la rangée pour de bon, et plus rien ne se masquait après un clic dans le menu.
+Un défilement referme donc le panneau ouvert au clic et relâche ce focus ; il ne touche jamais à un
+focus clavier.
 
 ### Répartition des contenus
 
