@@ -1,0 +1,28 @@
+{%- comment -%}
+  Renders a small circular flag SVG for a given ISO language/country code.
+  Usage: {% render 'flag-icon', code: 'fr' %}
+  Inline SVG only — no external requests.
+{%- endcomment -%}
+
+{%- case code -%}
+  {%- when 'fr' -%}
+    <svg viewBox="0 0 60 60" width="20" height="20" role="img" aria-hidden="true">
+      <clipPath id="flagclip-fr"><circle cx="30" cy="30" r="30"/></clipPath>
+      <g clip-path="url(#flagclip-fr)">
+        <rect x="0" y="0" width="20" height="60" fill="#0055A4"/>
+        <rect x="20" y="0" width="20" height="60" fill="#FFFFFF"/>
+        <rect x="40" y="0" width="20" height="60" fill="#EF4135"/>
+      </g>
+    </svg>
+  {%- else -%}
+    <svg viewBox="0 0 60 60" width="20" height="20" role="img" aria-hidden="true">
+      <clipPath id="flagclip-en"><circle cx="30" cy="30" r="30"/></clipPath>
+      <g clip-path="url(#flagclip-en)">
+        <rect width="60" height="60" fill="#012169"/>
+        <path d="M0,0 L60,60 M60,0 L0,60" stroke="#FFFFFF" stroke-width="12"/>
+        <path d="M0,0 L60,60 M60,0 L0,60" stroke="#C8102E" stroke-width="6"/>
+        <path d="M30,0 V60 M0,30 H60" stroke="#FFFFFF" stroke-width="18"/>
+        <path d="M30,0 V60 M0,30 H60" stroke="#C8102E" stroke-width="10"/>
+      </g>
+    </svg>
+{%- endcase -%}

@@ -1,0 +1,11 @@
+/* Highlight treatment for the "Find Your CytoLight" header link. */
+
+.site-header__util-link--highlight {
+  font-weight: 800;
+  color: var(--color-accent-deep, #a80a26);
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-accent, #d20d2f);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.site-header__util-link--highlight:hover { color: var(--color-accent, #d20d2f); }
