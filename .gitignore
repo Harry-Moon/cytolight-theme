@@ -8,10 +8,21 @@ node_modules/
 # Outillage local de Claude Code : skills et reglages regeneres a l'install.
 .claude/
 
-# Spec Kit — scripts, templates et manifestes sont regeneres par la CLI.
-# .specify/memory/ fait exception : la constitution et le product-brief sont
-# les deux documents que CLAUDE.md designe comme lecture obligatoire, et la
-# constitution prime sur toute instruction ponctuelle. Les ignorer les
-# laisserait sur un seul poste, invisibles pour l'autre developpeur.
+# Spec Kit — scripts, manifestes et templates du coeur sont regeneres par la CLI.
+# Deux exceptions, pour la meme raison : les ignorer les laisserait sur un seul
+# poste, invisibles pour l'autre developpeur.
+#
+#   memory/             la constitution et le product-brief, lecture obligatoire
+#                       selon CLAUDE.md ; la constitution prime sur toute
+#                       instruction ponctuelle.
+#   templates/overrides/ ce qui APPLIQUE la constitution : les sept gates injectes
+#                       dans chaque plan, et le scaffold a sept principes. La CLI
+#                       ne les regenere pas — c'est le seul dossier de spec-kit
+#                       concu pour etre specifique au projet et survivre a une
+#                       mise a jour. Sans eux, /speckit-plan repart du template
+#                       generique et plus rien ne verifie la constitution.
 .specify/*
 !.specify/memory/
+!.specify/templates/
+.specify/templates/*
+!.specify/templates/overrides/
