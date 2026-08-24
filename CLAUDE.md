@@ -3,6 +3,22 @@
 Thème sur mesure de la boutique CytoLight (luminothérapie rouge). Liquid, CSS et JS écrits à la main,
 sans framework ni build. Ce qui est dans le dépôt est ce qui est servi.
 
+## Avant de commencer — les deux documents à lire
+
+| Fichier | Contenu | Rythme |
+|---|---|---|
+| `.specify/memory/constitution.md` | Les sept principes non négociables : `main` = production, aucune allégation thérapeutique, rien d'inventé, pas d'outillage, `assets/` sans images, FR/EN à parité, accessible et rapide. | Évolue lentement, par amendement versionné |
+| `.specify/memory/product-brief.md` | La direction : marché, cible, gamme, positionnement prix, identité visuelle, objectifs, chantiers en cours. | Évolue à chaque décision |
+
+La constitution **prime sur toute instruction ponctuelle**. Un conflit se signale, il ne se
+contourne pas. Le brief porte des blocs `[À COMPLÉTER]` : ce sont des inconnues, pas des
+invitations à combler par une hypothèse plausible — poser la question.
+
+Une spec formelle est **obligatoire** pour : une nouvelle page ou section, un changement de
+direction artistique, un chantier d'internationalisation, une refonte de navigation, et tout ce
+qui touche aux allégations ou aux références scientifiques. Voir « Lancer une spec » plus bas.
+Les correctifs et ajustements visuels localisés passent directement en branche + PR.
+
 ## Déploiement — à lire avant toute modification
 
 `main` est synchronisée avec le **thème live** par l'intégration GitHub native de Shopify. Il n'y a ni
@@ -69,9 +85,16 @@ booléen depuis la locale, puis inline les langues :
 {% if is_fr %}Récupération{% else %}Recovery{% endif %}
 ```
 
-Le thème est **bilingue FR / EN partout, sauf `header.liquid`** qui gère en plus le portugais via un
-booléen `is_pt`. Tout texte ajouté doit couvrir les langues du fichier modifié — vérifier lesquelles
-avant d'écrire plutôt que de le supposer.
+Le thème est **bilingue FR / EN**, à parité stricte : tout texte ajouté couvre les deux langues
+dans le même commit, `aria-label` compris. Un `TODO: traduire` est un défaut, pas une étape.
+
+**Le portugais est en cours de retrait** (décision actée, constitution principe VI). Il subsiste
+dans `sections/header.liquid`, `snippets/learn-nav.liquid` et `snippets/header-panel-media.liquid`
+— soit une navigation trilingue au-dessus d'un site bilingue. Ne pas en ajouter. Son retour
+éventuel passerait par une spec couvrant l'intégralité du site, pas par un `elsif` de plus.
+
+> La parité vaut aussi pour les pages rédigées **dans l'admin**, qui échappent à ce mécanisme :
+> l'audit du 2026-08-21 en a trouvé 16 strictement identiques en FR et en EN. Voir le brief produit.
 
 Les accents sont écrits en entités HTML (`&eacute;`) dans les sections existantes. S'aligner sur le
 fichier modifié.
@@ -193,6 +216,61 @@ bidirectionnelle, une modification dans l'éditeur produit des commits sur `main
 n'ait poussé.
 
 Ne pas les éditer à la main sans intention explicite.
+
+## Lancer une spec
+
+Deux outils portent le même nom et ne font pas la même chose.
+
+| | Quoi | Quand |
+|---|---|---|
+| **CLI `specify`** | Installe et met à jour l'outillage : `specify check`, `specify init`. | Rarement — à l'installation, ou pour une mise à jour de spec-kit |
+| **Commandes `/speckit-*`** | Le workflow lui-même, dans Claude Code. | À chaque chantier structurant |
+
+La CLI ne lance **pas** de spec. Le workflow se déroule dans Claude Code :
+
+```
+/speckit-specify   Décrire le besoin en langage naturel → specs/NNN-nom/spec.md
+/speckit-clarify   Poser les questions qui manquent, réinjecter les réponses dans la spec
+/speckit-plan      Concevoir → plan.md, avec la porte « Constitution Check » à valider
+/speckit-tasks     Découper → tasks.md, ordonné par dépendances
+/speckit-implement Exécuter les tâches
+```
+
+`/speckit-analyze` contrôle la cohérence entre les trois documents ; `/speckit-checklist`
+génère une liste de vérification sur mesure ; `/speckit-converge` compare le code réel à la
+spec et ajoute les tâches manquantes.
+
+**spec-kit ne crée aucune branche git.** Il numérote un dossier `specs/001-nom/` et écrit un
+pointeur local dans `.specify/feature.json`. Le `BRANCH_NAME` qu'affichent ses scripts n'est
+qu'un identifiant de dossier. La convention de branches du dépôt (`feat/`, `fix/`, `perf/`,
+`refactor/`, `chore/`) reste seule en vigueur — créer la branche à la main, comme d'habitude.
+
+`specs/` **se commite** : c'est la trace des décisions. `.specify/feature.json` est ignoré,
+c'est un état par machine.
+
+### Personnalisations locales
+
+`.specify/templates/overrides/` a la priorité sur les templates du cœur et **survit à une mise
+à jour de spec-kit** — contrairement à `.specify/templates/`, réécrit à chaque `specify init`.
+Deux fichiers y vivent :
+
+- `plan-template.md` — les sept gates de la constitution en cases à cocher, plus le contexte
+  technique Shopify (fiches produit à vérifier, contenu hors dépôt à créer avant merge, budget
+  performance) à la place du contexte générique de spec-kit.
+- `constitution-template.md` — le scaffold à sept principes, pour qu'un futur amendement
+  préserve la structure adoptée au lieu de repartir du squelette générique.
+
+Toute personnalisation future va dans `overrides/`, jamais dans `.specify/templates/`.
+
+## Audit de la navigation
+
+```bash
+python3 scripts/audit-nav.py
+```
+
+Extrait les URL écrites en dur dans le thème, les teste en FR et en EN, et sépare trois
+défauts : lien cassé, ébauche (sous le seuil de mots), page non traduite (FR et EN identiques
+au mot près). Stdlib Python uniquement, aucune dépendance. `--base`, `--min-mots` pour ajuster.
 
 ## Workflow
 
