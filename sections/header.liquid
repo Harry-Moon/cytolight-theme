@@ -25,6 +25,7 @@
 
 {{ 'nav-menu-v2.css' | asset_url | stylesheet_tag }}
 {{ 'lang-flags.css' | asset_url | stylesheet_tag }}
+{{ 'header-highlight.css' | asset_url | stylesheet_tag }}
 
 <header class="site-header">
   <div class="site-header__proof" aria-label="Store benefits">
@@ -34,8 +35,7 @@
 
   <div class="container site-header__bar">
     <div class="site-header__utils site-header__utils--start">
-      <a class="site-header__util-link" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}</a>
-      <a class="site-header__util-link" href="/pages/contact">{% if is_fr %}Nous contacter{% else %}Contact us{% endif %}</a>
+      <a class="site-header__util-link site-header__util-link--highlight" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}</a>
     </div>
 
     <a class="site-header__logo" href="{{ routes.root_url }}">
@@ -73,6 +73,7 @@
           {% render 'flag-icon', code: current_lang_code %}
         </span>
       {%- endif -%}
+      <a class="site-header__util-link" href="/pages/contact">{% if is_fr %}Nous contacter{% else %}Contact us{% endif %}</a>
       <a class="site-header__icon" href="{{ routes.account_url }}" aria-label="{% if is_fr %}Mon compte{% else %}Account{% endif %}">
         {% render 'icon', name: 'user' %}
       </a>
