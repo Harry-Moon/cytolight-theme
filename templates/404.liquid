@@ -1,6 +1,27 @@
-<section class="container" style="padding: 100px 0; text-align:center;">
-  <span class="eyebrow">404</span>
-  <h1>{% if request.locale.iso_code contains 'fr' %}Page introuvable{% else %}Page not found{% endif %}</h1>
-  <p style="color: var(--color-muted); max-width: 480px; margin: 0 auto 24px;">{% if request.locale.iso_code contains 'fr' %}La page que vous cherchez n'existe pas. Revenons &agrave; l'accueil.{% else %}The page you're looking for was not found. Let's get you back on track.{% endif %}</p>
-  <a href="{{ routes.root_url }}" class="btn btn--primary">{% if request.locale.iso_code contains 'fr' %}Retour &agrave; l'accueil{% else %}Back to home{% endif %} &rarr;</a>
+{%- assign is_fr = false -%}
+{%- if request.locale.iso_code contains 'fr' -%}
+  {%- assign is_fr = true -%}
+{%- endif -%}
+
+{{ 'error-404.css' | asset_url | stylesheet_tag }}
+
+<section class="error-404">
+  <div class="error-404__video" aria-hidden="true">
+    <video src="https://cdn.shopify.com/videos/c/o/v/7c5e3e2ed7e04dd38d5a5e21485e9363.mp4" autoplay loop muted playsinline></video>
+  </div>
+  <div class="error-404__inner">
+    <p class="error-404__eyebrow">404</p>
+    <h1 class="error-404__title">{% if is_fr %}Cette lumi&egrave;re s'est &eacute;gar&eacute;e.{% else %}This light got lost.{% endif %}</h1>
+    <p class="error-404__body">
+      {% if is_fr %}
+        La page que vous cherchez n'existe pas ou a &eacute;t&eacute; d&eacute;plac&eacute;e. Revenons &agrave; l'essentiel.
+      {% else %}
+        The page you're looking for doesn't exist or has moved. Let's get you back on track.
+      {% endif %}
+    </p>
+    <div class="error-404__actions">
+      <a href="{{ routes.root_url }}" class="btn btn--primary">{% if is_fr %}Retour &agrave; l'accueil{% else %}Back to home{% endif %} &rarr;</a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn--ghost error-404__ghost">{% if is_fr %}Voir tous les produits{% else %}Shop all products{% endif %}</a>
+    </div>
+  </div>
 </section>
