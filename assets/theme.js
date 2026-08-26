@@ -265,6 +265,21 @@
     next?.addEventListener('click', () => track.scrollBy({ left: scrollBy(), behavior: 'smooth' }));
   });
 
+  // Mobile nav drawer — the <details>/<summary> toggle already works with no
+  // JS at all; this only adds the two things a plain disclosure can't do on
+  // its own: closing on a tap outside the panel, and closing on Escape.
+  const navDrawer = document.querySelector('[data-nav-drawer]');
+  if (navDrawer) {
+    const closeDrawer = () => { navDrawer.open = false; };
+    navDrawer.querySelector('[data-drawer-scrim]')?.addEventListener('click', closeDrawer);
+    navDrawer.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || !navDrawer.open) return;
+      e.stopPropagation();
+      closeDrawer();
+      navDrawer.querySelector('summary')?.focus();
+    });
+  }
+
   // Header nav submenu / mega-menu — click/tap toggle on top of hover
   document.querySelectorAll('[data-nav-submenu]').forEach((item) => {
     const toggle = item.querySelector('.site-header__nav-link');
