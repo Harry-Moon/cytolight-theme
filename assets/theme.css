@@ -614,7 +614,7 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   text-underline-offset: 8px;
 }
 
-/* CytoLight luxury typography pass */
+/* Antared luxury typography pass */
 body {
   font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-weight: 430;
