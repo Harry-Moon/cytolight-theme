@@ -1,72 +1,114 @@
-/* Compact nav menu (<=1300px) — rebuilt independently of theme.css so it
-   can never be affected by a stale cached copy of that file. */
+/* Mobile nav drawer (<=1300px) — rebuilt independently of theme.css so it
+   can never be affected by a stale cached copy of that file.
 
-.cl-navmenu { display: none; }
+   .site-header__drawer is a <details> element: the <summary> is the burger
+   button, kept in place top-left of the header bar; everything else is a
+   fixed-position scrim + panel that covers the viewport regardless of where
+   the <details> sits in the DOM (position: fixed escapes the grid cell it's
+   nested in). The browser's UA stylesheet would otherwise force the panel
+   to display: none while [open] is absent, which rules out a transition —
+   so panel and scrim get an explicit display here that wins over the UA
+   rule regardless of [open], and visibility is driven by transform/opacity
+   instead. That's what lets the panel slide in on open/close rather than
+   popping. */
+
+.site-header__drawer { display: none; }
+.site-header__burger { display: none; }
 
 @media (max-width: 1300px) {
-  .cl-navmenu {
-    display: block;
-  }
+  .site-header__drawer { display: block; }
 
-  .cl-navmenu__toggle {
+  .site-header__burger {
     display: inline-flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 36px;
-    padding: 0 13px;
+    gap: 4px;
+    width: 36px;
+    height: 36px;
     border: 1px solid rgba(0, 0, 0, .14);
     border-radius: 999px;
     cursor: pointer;
-    font-size: .7rem;
-    font-weight: 900;
-    letter-spacing: .08em;
     list-style: none;
-    text-transform: uppercase;
   }
-  .cl-navmenu__toggle::-webkit-details-marker { display: none; }
-
-  .cl-navmenu__panel {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    top: calc(100% + 8px);
-    gap: 2px;
-    padding: 10px;
-    border: 1px solid rgba(0, 0, 0, .08);
-    border-radius: 16px;
-    background: rgba(255, 255, 255, .97);
-    box-shadow: 0 22px 70px rgba(0, 0, 0, .18);
-    max-height: calc(100vh - 110px);
-    overflow-y: auto;
-    z-index: 70;
+  .site-header__burger::-webkit-details-marker { display: none; }
+  .site-header__burger-bar {
+    width: 16px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform .22s ease, opacity .18s ease;
   }
-  .cl-navmenu[open] .cl-navmenu__panel { display: grid; }
+  .site-header__drawer[open] .site-header__burger-bar:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .site-header__drawer[open] .site-header__burger-bar:nth-child(2) { opacity: 0; }
+  .site-header__drawer[open] .site-header__burger-bar:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
-  .cl-navmenu__toplink {
+  .site-header__drawer-scrim {
     display: block;
-    padding: 13px 12px;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, .45);
+    opacity: 0;
+    transition: opacity .28s ease;
+    pointer-events: none;
+  }
+  .site-header__drawer[open] .site-header__drawer-scrim {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* La largeur reste un bandeau partiel — pas plein ecran — pour garder le
+     contexte de la page visible derriere le tiroir. */
+  .site-header__drawer-panel {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 201;
+    width: min(84vw, 360px);
+    padding: 24px 6px 32px;
+    background: #fff;
+    box-shadow: 0 0 60px rgba(0, 0, 0, .25);
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform .32s cubic-bezier(.2, .8, .2, 1);
+  }
+  .site-header__drawer[open] .site-header__drawer-panel {
+    transform: translateX(0);
+  }
+
+  html:has(.site-header__drawer[open]) {
+    overflow: hidden;
+  }
+
+  .site-header__drawer-nav { display: grid; }
+
+  .site-header__drawer-toplink {
+    display: block;
+    padding: 13px 18px;
     border-radius: 10px;
     font-weight: 850;
     font-size: .86rem;
     letter-spacing: .03em;
     color: var(--color-accent-deep, #a80a26);
   }
-  .cl-navmenu__toplink:hover { background: rgba(210, 13, 47, .08); }
+  .site-header__drawer-toplink:hover { background: rgba(210, 13, 47, .08); }
 
-  .cl-navmenu__group { border-top: 1px solid rgba(0, 0, 0, .07); }
-  .cl-navmenu__group-toggle {
+  .site-header__drawer-group { border-top: 1px solid rgba(0, 0, 0, .07); }
+  .site-header__drawer-group-toggle {
     list-style: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 13px 12px;
+    padding: 13px 18px;
     font-weight: 850;
     font-size: .86rem;
     letter-spacing: .03em;
     cursor: pointer;
   }
-  .cl-navmenu__group-toggle::-webkit-details-marker { display: none; }
-  .cl-navmenu__group-toggle::after {
+  .site-header__drawer-group-toggle::-webkit-details-marker { display: none; }
+  .site-header__drawer-group-toggle::after {
     content: "";
     width: 9px;
     height: 9px;
@@ -77,14 +119,14 @@
     opacity: .55;
     flex-shrink: 0;
   }
-  .cl-navmenu__group[open] .cl-navmenu__group-toggle::after { transform: rotate(-135deg); }
+  .site-header__drawer-group[open] .site-header__drawer-group-toggle::after { transform: rotate(-135deg); }
 
-  .cl-navmenu__group-body {
+  .site-header__drawer-group-body {
+    display: grid;
     gap: 1px;
-    padding: 0 4px 10px 12px;
+    padding: 0 10px 10px 18px;
   }
-  .cl-navmenu__group[open] .cl-navmenu__group-body { display: grid; }
-  .cl-navmenu__group-body a {
+  .site-header__drawer-group-body a {
     display: block;
     padding: 10px 12px;
     border-radius: 9px;
@@ -93,5 +135,13 @@
     letter-spacing: .02em;
     color: var(--color-muted, #6b625c);
   }
-  .cl-navmenu__group-body a:hover { background: rgba(210, 13, 47, .08); color: var(--color-accent-deep, #a80a26); }
+  .site-header__drawer-group-body a:hover { background: rgba(210, 13, 47, .08); color: var(--color-accent-deep, #a80a26); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header__burger-bar,
+    .site-header__drawer-scrim,
+    .site-header__drawer-panel {
+      transition: none;
+    }
+  }
 }

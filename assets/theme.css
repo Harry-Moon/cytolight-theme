@@ -441,7 +441,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   margin-left: -8px;
   align-self: flex-start;
 }
-.site-header__mobile-menu { display: none; }
 @media (max-width: 1300px) {
   .site-header__nav { display: none; }
   .site-header__proof { overflow-x: auto; justify-content: flex-start; padding: 7px 20px; scrollbar-width: none; }
@@ -450,90 +449,10 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   .site-header__logo { justify-self: center; }
   .site-header__logo img { max-height: 38px; max-width: 138px; }
   .site-header__utils { gap: 6px; }
-  /* Les liens utilitaires en toutes lettres tombent en premier : le panneau
-     mobile les reprend tous les deux. */
+  /* Les liens utilitaires en toutes lettres tombent en premier : le tiroir
+     mobile les reprend. */
   .site-header__util-link { display: none; }
   .site-header__icon { width: 36px; height: 36px; }
-  .site-header__mobile-menu { display: block; grid-column: 1; grid-row: 1; }
-  .site-header__mobile-menu summary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 36px;
-    padding: 0 13px;
-    border: 1px solid rgba(0,0,0,.14);
-    border-radius: 999px;
-    cursor: pointer;
-    font-size: .7rem;
-    font-weight: 900;
-    letter-spacing: .08em;
-    list-style: none;
-    text-transform: uppercase;
-  }
-  .site-header__mobile-menu summary::-webkit-details-marker { display: none; }
-  .site-header__mobile-panel {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    top: calc(100% + 8px);
-    gap: 2px;
-    padding: 10px;
-    border: 1px solid rgba(0,0,0,.08);
-    border-radius: 16px;
-    background: rgba(255,255,255,.97);
-    box-shadow: 0 22px 70px rgba(0,0,0,.18);
-    max-height: calc(100vh - 110px);
-    overflow-y: auto;
-  }
-  .site-header__mobile-menu[open] .site-header__mobile-panel { display: grid; }
-  .site-header__mobile-panel > a {
-    padding: 13px 12px;
-    border-radius: 10px;
-    font-weight: 850;
-    font-size: .86rem;
-    letter-spacing: .03em;
-  }
-  .site-header__mobile-panel > a:hover { background: rgba(210,13,47,.08); color: var(--color-accent-deep); }
-  .site-header__mobile-toplink { color: var(--color-accent-deep); }
-  .site-header__accordion { border-top: 1px solid rgba(0,0,0,.07); }
-  .site-header__accordion summary {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 13px 12px;
-    font-weight: 850;
-    font-size: .86rem;
-    letter-spacing: .03em;
-    cursor: pointer;
-  }
-  .site-header__accordion summary::-webkit-details-marker { display: none; }
-  .site-header__accordion summary::after {
-    content: "";
-    width: 9px;
-    height: 9px;
-    border-right: 1.5px solid currentColor;
-    border-bottom: 1.5px solid currentColor;
-    transform: rotate(45deg);
-    transition: transform .18s ease;
-    opacity: .55;
-    flex-shrink: 0;
-  }
-  .site-header__accordion[open] summary::after { transform: rotate(-135deg); }
-  .site-header__accordion-body {
-    gap: 1px;
-    padding: 0 4px 10px 12px;
-  }
-  .site-header__accordion[open] .site-header__accordion-body { display: grid; }
-  .site-header__accordion-body a {
-    padding: 10px 12px;
-    border-radius: 9px;
-    font-size: .8rem;
-    font-weight: 700;
-    letter-spacing: .02em;
-    color: var(--color-muted);
-  }
-  .site-header__accordion-body a:hover { background: rgba(210,13,47,.08); color: var(--color-accent-deep); }
 }
 @media (max-width: 420px) {
   .site-header__proof { font-size: .62rem; }
