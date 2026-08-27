@@ -36,9 +36,9 @@
     </h2>
     <p class="ln-copy">
       {%- if is_fr -%}
-        {{ text_fr | default: "Chaque appareil CytoLight est con&ccedil;u pour une zone et un moment pr&eacute;cis. Trouvez celui qui s'ins&egrave;re dans votre semaine, pas celui qui a le plus de LED." }}
+        {{ text_fr | default: "Chaque appareil Antared est con&ccedil;u pour une zone et un moment pr&eacute;cis. Trouvez celui qui s'ins&egrave;re dans votre semaine, pas celui qui a le plus de LED." }}
       {%- else -%}
-        {{ text_en | default: 'Every CytoLight device is built around one area and one moment. Pick the one that fits your week, not the one with the most LEDs.' }}
+        {{ text_en | default: 'Every Antared device is built around one area and one moment. Pick the one that fits your week, not the one with the most LEDs.' }}
       {%- endif -%}
     </p>
 
@@ -90,7 +90,7 @@
             <p class="ln-pick__type">{% if is_fr %}{{ pick_type_fr }}{% else %}{{ pick_type_en }}{% endif %}</p>
             {%- comment -%}
               Certains titres du catalogue portent un suffixe descriptif apres
-              un tiret ("CytoLight DESK - Panneau de luminotherapie rouge a
+              un tiret ("Antared DESK - Panneau de luminotherapie rouge a
               7 spectres"), qui deborde sur quatre lignes dans une carte etroite
               et desequilibre la rangee. On ne garde que le nom du produit ; le
               descriptif est deja porte par la ligne en dessous.

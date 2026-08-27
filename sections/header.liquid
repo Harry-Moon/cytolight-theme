@@ -35,7 +35,7 @@
 
   <div class="container site-header__bar">
     <div class="site-header__utils site-header__utils--start">
-      <a class="site-header__util-link site-header__util-link--highlight" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}</a>
+      <a class="site-header__util-link site-header__util-link--highlight" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}</a>
     </div>
 
     <a class="site-header__logo" href="{{ routes.root_url }}">
@@ -47,11 +47,11 @@
       {%- if section.settings.logo != blank -%}
         <img src="{{ section.settings.logo | image_url: width: 340 }}"
              width="170" height="{{ 170 | divided_by: section.settings.logo.aspect_ratio | round }}"
-             alt="CytoLight" fetchpriority="high">
+             alt="Antared" fetchpriority="high">
       {%- else -%}
         <img src="{{ 'cytolight-logo.jpg' | file_url }}"
              width="170" height="62"
-             alt="CytoLight" fetchpriority="high">
+             alt="Antared" fetchpriority="high">
       {%- endif -%}
     </a>
 
@@ -98,7 +98,7 @@
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
                product_handle: 'cytolight-desk',
-               label: 'CytoLight DESK',
+               label: 'Antared DESK',
                caption: 'See the range', caption_fr: 'Voir la gamme',
                url: routes.all_products_collection_url %}
             <div class="site-header__panel-groups">
@@ -119,7 +119,7 @@
                 <p class="site-header__panel-heading">{% if is_fr %}Tout parcourir{% else %}Browse{% endif %}</p>
                 <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Tous les produits{% else %}All Products{% endif %}</a>
                 <a href="/pages/bundles">{% if is_fr %}Packs{% else %}Bundles{% endif %}</a>
-                <a href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}</a>
+                <a href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}</a>
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
                product_handle: 'cytolight-mask',
-               label: 'CytoLight Mask',
+               label: 'Antared Mask',
                caption: 'Skin &amp; Glow', caption_fr: 'Peau &amp; &Eacute;clat',
                url: '/collections/skin-amp-glow' %}
             <div class="site-header__panel-groups">
@@ -158,7 +158,7 @@
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
                product_handle: 'cytolight-knee',
-               label: 'CytoLight Knee',
+               label: 'Antared Knee',
                caption: 'All protocols', caption_fr: 'Tous les protocoles',
                url: '/pages/protocols' %}
             <div class="site-header__panel-groups">
@@ -190,7 +190,7 @@
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
                image_file: 'cytolight-desk-luxury.jpg',
-               label: 'CytoLight Academy', label_fr: 'Acad&eacute;mie CytoLight',
+               label: 'Antared Academy', label_fr: 'Acad&eacute;mie Antared',
                caption: 'Start here', caption_fr: 'Commencer ici',
                url: '/pages/academy' %}
             <div class="site-header__panel-groups">
@@ -210,7 +210,7 @@
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Notre position{% else %}Where we stand{% endif %}</p>
                 <a href="/pages/nos-valeurs">{% if is_fr %}Nos valeurs{% else %}Our values{% endif %}</a>
-                <a href="/pages/academy">{% if is_fr %}Acad&eacute;mie CytoLight{% else %}CytoLight Academy{% endif %}</a>
+                <a href="/pages/academy">{% if is_fr %}Acad&eacute;mie Antared{% else %}Antared Academy{% endif %}</a>
               </div>
             </div>
           </div>
@@ -218,12 +218,12 @@
       </div>
 
       <div class="site-header__nav-item" data-nav-submenu>
-        <button type="button" class="site-header__nav-link" aria-expanded="false">CytoLight Pro</button>
+        <button type="button" class="site-header__nav-link" aria-expanded="false">Antared Pro</button>
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
                product_handle: 'cytolight-pano-ultra',
-               label: 'CytoLight PANO ULTRA',
+               label: 'Antared PANO ULTRA',
                caption: 'Become a partner', caption_fr: 'Devenir partenaire',
                url: '/pages/become-a-dealer' %}
             <div class="site-header__panel-groups">
@@ -248,7 +248,7 @@
       </div>
 
       <div class="site-header__nav-item" data-nav-submenu>
-        <button type="button" class="site-header__nav-link" aria-expanded="false">{% if is_fr %}Pourquoi CytoLight{% else %}Why CytoLight{% endif %}</button>
+        <button type="button" class="site-header__nav-link" aria-expanded="false">{% if is_fr %}Pourquoi Antared{% else %}Why Antared{% endif %}</button>
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
@@ -280,7 +280,7 @@
     <summary class="cl-navmenu__toggle">{% if is_fr %}Menu{% else %}Menu{% endif %}</summary>
     <div class="cl-navmenu__panel">
       <a class="cl-navmenu__toplink" href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
-      <a class="cl-navmenu__toplink" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}</a>
+      <a class="cl-navmenu__toplink" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}</a>
 
       <details class="cl-navmenu__group" name="cl-mobile-nav">
         <summary class="cl-navmenu__group-toggle">{% if is_fr %}Boutique{% else %}Shop{% endif %}</summary>
@@ -324,7 +324,7 @@
       <details class="cl-navmenu__group" name="cl-mobile-nav">
         <summary class="cl-navmenu__group-toggle">{% if is_fr %}Apprendre{% else %}Learn{% endif %}</summary>
         <div class="cl-navmenu__group-body">
-          <a href="/pages/academy">{% if is_fr %}Acad&eacute;mie CytoLight{% else %}CytoLight Academy{% endif %}</a>
+          <a href="/pages/academy">{% if is_fr %}Acad&eacute;mie Antared{% else %}Antared Academy{% endif %}</a>
           <a href="/pages/benefits">{% if is_fr %}Les bienfaits{% else %}Benefits{% endif %}</a>
           <a href="/pages/comment-ca-marche">{% if is_fr %}Comment &ccedil;a marche{% else %}How It Works{% endif %}</a>
           <a href="/pages/wavelengths">{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}</a>
@@ -337,7 +337,7 @@
       </details>
 
       <details class="cl-navmenu__group" name="cl-mobile-nav">
-        <summary class="cl-navmenu__group-toggle">CytoLight Pro</summary>
+        <summary class="cl-navmenu__group-toggle">Antared Pro</summary>
         <div class="cl-navmenu__group-body">
           <a href="/pages/clinics">{% if is_fr %}Cliniques{% else %}Clinics{% endif %}</a>
           <a href="/pages/physios">{% if is_fr %}Kinésithérapeutes{% else %}Physios{% endif %}</a>
@@ -349,7 +349,7 @@
       </details>
 
       <details class="cl-navmenu__group" name="cl-mobile-nav">
-        <summary class="cl-navmenu__group-toggle">{% if is_fr %}Pourquoi CytoLight{% else %}Why CytoLight{% endif %}</summary>
+        <summary class="cl-navmenu__group-toggle">{% if is_fr %}Pourquoi Antared{% else %}Why Antared{% endif %}</summary>
         <div class="cl-navmenu__group-body">
           <a href="/pages/technology">{% if is_fr %}Technologie{% else %}Technology{% endif %}</a>
           <a href="/pages/quality">{% if is_fr %}Qualité{% else %}Quality{% endif %}</a>

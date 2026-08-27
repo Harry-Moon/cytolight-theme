@@ -11,13 +11,13 @@
     {%- endif -%}
 
     <title>
-      {%- assign brand_name = 'CytoLight' -%}
+      {%- assign brand_name = 'Antared' -%}
       {%- assign branded_page_title = page_title | replace: 'ParetoPhysio', brand_name | replace: 'Pareto Physio', brand_name -%}
       {%- if request.page_type == 'index' -%}
         {%- if request.locale.iso_code contains 'fr' -%}
-          CytoLight | Luminoth&eacute;rapie rouge intelligente
+          Antared | Luminoth&eacute;rapie rouge intelligente
         {%- else -%}
-          CytoLight | Intelligent Red Light Therapy
+          Antared | Intelligent Red Light Therapy
         {%- endif -%}
       {%- else -%}
         {{ branded_page_title }}{% if current_tags %}{%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless branded_page_title contains brand_name %} &ndash; {{ brand_name }}{% endunless %}
@@ -25,7 +25,7 @@
     </title>
 
     {%- if request.page_type == 'index' -%}
-      <meta name="description" content="{% if request.locale.iso_code contains 'fr' %}D&eacute;couvrez CytoLight, des syst&egrave;mes intelligents de luminoth&eacute;rapie rouge et proche infrarouge pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l'&eacute;nergie.{% else %}Discover CytoLight intelligent red and near-infrared light therapy systems for recovery, skin, sleep, and everyday energy.{% endif %}">
+      <meta name="description" content="{% if request.locale.iso_code contains 'fr' %}D&eacute;couvrez Antared, des syst&egrave;mes intelligents de luminoth&eacute;rapie rouge et proche infrarouge pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l'&eacute;nergie.{% else %}Discover Antared intelligent red and near-infrared light therapy systems for recovery, skin, sleep, and everyday energy.{% endif %}">
     {%- elsif page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
