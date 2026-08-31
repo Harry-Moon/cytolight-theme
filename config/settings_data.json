@@ -9,8 +9,8 @@
  */
 {
   "current": {
-    "favicon": "shopify://shop_images/cytolight-logo_copie.jpg",
-    "logo": "shopify://shop_images/cytolight-logo.jpg",
+    "favicon": "shopify://shop_images/antared_redlight_favicon.png",
+    "logo": "shopify://shop_images/LOGO_ANTARED.jpg",
     "color_background": "#f5eee7",
     "color_background_soft": "#faede3",
     "color_foreground": "#171110",
@@ -104,8 +104,8 @@
       "header": {
         "type": "header",
         "custom_css": [
-          ".site-header__mobile-menu:not([open]) .site-header__mobile-panel {display: none !important; }",
-          ".site-header__accordion:not([open]) .site-header__accordion-body {display: none !important; }"
+          ".site-header__mobile-menu:not([open]) .site-header__mobile-panel {display: none !important;}",
+          ".site-header__accordion:not([open]) .site-header__accordion-body {display: none !important;}"
         ],
         "settings": {
           "menu": "main-menu"
