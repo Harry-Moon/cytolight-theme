@@ -15,13 +15,34 @@
   assign youtube_url = section.settings.youtube | default: settings.social_youtube_url
   assign pinterest_url = settings.social_pinterest_url
   assign linkedin_url = settings.social_linkedin_url
+
+  comment
+    Le logo du pied de page reprend celui des reglages du theme (Theme
+    settings > Logo, aujourd'hui LOGO_ANTARED.jpg) ; le reglage de section
+    ci-dessous ne sert qu'a le surcharger.
+
+    Le fichier est un JPEG a fond blanc : pose tel quel sur le fond sombre du
+    pied de page il afficherait un rectangle blanc. Il est donc rendu dans une
+    pastille claire (.site-footer__logo), qui reste correcte si une version
+    transparente est televersee plus tard. Ne pas tenter de le detourer avec
+    un filter: invert() — le rouge de la marque virerait au cyan.
+  endcomment
+  assign footer_logo = section.settings.logo | default: settings.logo
 -%}
 
 <footer class="site-footer">
   <div class="container">
     <div class="site-footer__top">
       <div class="site-footer__brand">
-        <h3>ANTARED</h3>
+        {%- if footer_logo != blank -%}
+          <a class="site-footer__logo" href="{{ routes.root_url }}" aria-label="Antared">
+            <img src="{{ footer_logo | image_url: width: 360 }}"
+                 width="180" height="{{ 180 | divided_by: footer_logo.aspect_ratio | round }}"
+                 alt="Antared" loading="lazy">
+          </a>
+        {%- else -%}
+          <h3>ANTARED</h3>
+        {%- endif -%}
         <p>{% if is_fr %}Technologies bien-&ecirc;tre inspir&eacute;es par la science pour accompagner le sommeil, la r&eacute;cup&eacute;ration et l'&eacute;clat de la peau.{% else %}{{ section.settings.tagline | default: "Science-backed wellness technologies to enhance sleep, recovery, and beauty." }}{% endif %}</p>
         <div class="site-footer__socials">
           {% if instagram_url != blank %}<a href="{{ instagram_url }}" rel="me noopener" target="_blank" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>{% endif %}
@@ -77,6 +98,7 @@
 {
   "name": "Footer",
   "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Footer logo (overrides Theme settings > Logo)" },
     { "type": "textarea", "id": "tagline", "label": "Tagline" },
     {
       "type": "paragraph",
