@@ -1,0 +1,158 @@
+{%- comment -%}
+  Gabarit Contact.
+
+  A assigner dans l'admin Shopify a la page de handle `contact`
+  (Content > Pages > Contact > Theme template : page.contact).
+
+  Le formulaire fonctionne sans JavaScript : `{% form 'contact' %}` poste vers
+  Shopify, qui renvoie sur la page avec `form.posted_successfully?`. Aucun
+  script n'est necessaire pour envoyer un message, et `learn.js` ne sert qu'aux
+  animations au defilement.
+
+  Les styles du formulaire sont inlines ici plutot qu'ajoutes a `learn.css` :
+  ils ne servent qu'a cette page, et le dossier `assets/` ne recoit pas de
+  fichier pour un usage unique.
+{%- endcomment -%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+-%}
+
+<style>
+  .ln-form { display: grid; gap: 22px; margin-top: 40px; }
+  .ln-field { display: grid; gap: 8px; }
+  .ln-field__label { font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ln-muted); }
+  .ln-field__hint { font-size: 13px; color: var(--ln-muted); }
+  .ln-field input,
+  .ln-field textarea {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 16px;
+    border: 1px solid var(--ln-line);
+    border-radius: var(--ln-radius);
+    background: var(--ln-surface);
+    color: var(--ln-ink);
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .ln-field textarea { min-height: 180px; resize: vertical; }
+  .ln-field input:hover,
+  .ln-field textarea:hover { border-color: var(--ln-muted); }
+  .ln-form .ln-button { justify-self: start; cursor: pointer; }
+  .ln-formnote {
+    padding: 18px 20px;
+    border-radius: var(--ln-radius);
+    border: 1px solid var(--ln-line);
+    background: var(--ln-soft);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .ln-formnote--ok { border-color: var(--ln-line); background: var(--ln-soft); }
+  .ln-formnote--error { border-color: var(--ln-red); background: var(--ln-red-soft); }
+  .ln-formnote ul { margin: 8px 0 0; padding-left: 20px; }
+</style>
+
+<div class="ln-page" data-learn>
+  {% render 'editorial-hero',
+     crumb_fr: 'Contact',
+     crumb_en: 'Contact',
+     kicker_fr: 'Une &eacute;quipe, pas un formulaire perdu',
+     kicker_en: 'A team, not a form into the void',
+     title_fr: 'Posez votre question. Nous r&eacute;pondons.',
+     title_en: 'Ask your question. We answer.' %}
+
+  {%- if page.content != blank -%}
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-prose">{{ page.content }}</div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <section class="ln-section ln-section--tight" aria-labelledby="ln-form-title">
+    <div class="ln-shell ln-shell--narrow">
+      <h2 class="ln-subtitle" id="ln-form-title">
+        {%- if is_fr -%}&Eacute;crivez-nous{%- else -%}Write to us{%- endif -%}
+      </h2>
+
+      {% form 'contact', id: 'ln-contact-form' %}
+        {%- if form.posted_successfully? -%}
+          <p class="ln-formnote ln-formnote--ok" role="status">
+            {%- if is_fr -%}
+              Merci, votre message est parti. Nous r&eacute;pondons sous deux jours ouvr&eacute;s.
+            {%- else -%}
+              Thank you, your message is on its way. We reply within two working days.
+            {%- endif -%}
+          </p>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="ln-formnote ln-formnote--error" role="alert">
+            {%- if is_fr -%}
+              Le message n'a pas pu &ecirc;tre envoy&eacute;&#160;:
+            {%- else -%}
+              The message could not be sent:
+            {%- endif -%}
+            <ul>
+              {%- for field in form.errors -%}
+                <li>{{ form.errors.messages[field] }}</li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="ln-form">
+          <div class="ln-field">
+            <label class="ln-field__label" for="ln-contact-name">
+              {%- if is_fr -%}Votre nom{%- else -%}Your name{%- endif -%}
+            </label>
+            <input type="text" id="ln-contact-name" name="contact[name]" autocomplete="name"
+                   value="{{ form.name }}" required>
+          </div>
+
+          <div class="ln-field">
+            <label class="ln-field__label" for="ln-contact-email">
+              {%- if is_fr -%}Votre e-mail{%- else -%}Your email{%- endif -%}
+            </label>
+            <input type="email" id="ln-contact-email" name="contact[email]" autocomplete="email"
+                   value="{{ form.email }}" required aria-describedby="ln-contact-email-hint">
+            <p class="ln-field__hint" id="ln-contact-email-hint">
+              {%- if is_fr -%}
+                C'est l&agrave; que part notre r&eacute;ponse.
+              {%- else -%}
+                This is where our reply goes.
+              {%- endif -%}
+            </p>
+          </div>
+
+          <div class="ln-field">
+            <label class="ln-field__label" for="ln-contact-body">
+              {%- if is_fr -%}Votre message{%- else -%}Your message{%- endif -%}
+            </label>
+            <textarea id="ln-contact-body" name="contact[body]" required
+                      aria-describedby="ln-contact-body-hint">{{ form.body }}</textarea>
+            <p class="ln-field__hint" id="ln-contact-body-hint">
+              {%- if is_fr -%}
+                Le mod&egrave;le concern&eacute; et votre num&eacute;ro de commande, s'il y en a un, nous
+                font gagner un aller-retour.
+              {%- else -%}
+                The model involved and your order number, if you have one, save us a round trip.
+              {%- endif -%}
+            </p>
+          </div>
+
+          <button type="submit" class="ln-button">
+            {%- if is_fr -%}Envoyer le message{%- else -%}Send the message{%- endif -%}
+          </button>
+        </div>
+      {% endform %}
+    </div>
+  </section>
+</div>
