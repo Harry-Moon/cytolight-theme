@@ -10,7 +10,7 @@
 {
   "current": {
     "favicon": "shopify://shop_images/antared_redlight_favicon.png",
-    "logo": "shopify://shop_images/LOGO_ANTARED.jpg",
+    "logo": "shopify://shop_images/LOGO_ANTARED_REDLIGHT_THERAPY_WHITE.webp",
     "color_background": "#f5eee7",
     "color_background_soft": "#faede3",
     "color_foreground": "#171110",
@@ -108,6 +108,7 @@
           ".site-header__accordion:not([open]) .site-header__accordion-body {display: none !important;}"
         ],
         "settings": {
+          "logo": "shopify://shop_images/LOGO_ANTARED_REDLIGHT_THERAPY_WHITE.webp",
           "menu": "main-menu"
         }
       }
