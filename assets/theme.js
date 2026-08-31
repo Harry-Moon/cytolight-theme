@@ -266,12 +266,21 @@
   });
 
   // Mobile nav drawer — the <details>/<summary> toggle already works with no
-  // JS at all; this only adds the two things a plain disclosure can't do on
-  // its own: closing on a tap outside the panel, and closing on Escape.
+  // JS at all; this only adds the three things a plain disclosure can't do on
+  // its own: closing on a tap outside the panel, closing on Escape, and
+  // closing from the panel's own X. A <details> only closes from its own
+  // <summary>, and that summary — the burger — sits under the open panel.
   const navDrawer = document.querySelector('[data-nav-drawer]');
   if (navDrawer) {
     const closeDrawer = () => { navDrawer.open = false; };
     navDrawer.querySelector('[data-drawer-scrim]')?.addEventListener('click', closeDrawer);
+    navDrawer.querySelector('[data-drawer-close]')?.addEventListener('click', () => {
+      closeDrawer();
+      // Le focus vivait dans le panneau qui vient de disparaitre : sans ce
+      // renvoi il retomberait sur <body> et la navigation clavier repartirait
+      // du haut du document.
+      navDrawer.querySelector('summary')?.focus();
+    });
     navDrawer.addEventListener('keydown', (e) => {
       if (e.key !== 'Escape' || !navDrawer.open) return;
       e.stopPropagation();
