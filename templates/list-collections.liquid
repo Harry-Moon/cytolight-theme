@@ -1,0 +1,67 @@
+{%- comment -%}
+  Redirection de /collections et /products vers le catalogue.
+
+  Ces deux chemins tombent sur le gabarit `list-collections`. Le theme n'en
+  portait aucun : Shopify servait alors sa page par defaut, sans en-tete, sans
+  pied de page et sans style — une page nue au milieu de la boutique.
+
+  Le catalogue vit sur `routes.all_products_collection_url` (/collections/all),
+  qui porte le prefixe de langue. Ce gabarit y renvoie.
+
+  {% layout none %} est un choix : la redirection doit partir du <head>, ce que
+  l'enveloppe globale ne permet pas puisqu'un gabarit s'y insere dans le <body>.
+  Trois filets, dans cet ordre : le script (immediat, sans entree dans
+  l'historique), la balise meta (si le script est bloque), et un lien visible et
+  style (si les deux echouent). Personne ne reste bloque ici.
+
+  Ceci reste une redirection cote client, donc invisible pour les moteurs. La
+  redirection propre est un 301 dans Online Store > Navigation > URL Redirects,
+  qui ne peut pas se creer depuis le depot. Le `noindex` ci-dessous evite au
+  moins que cette page ne soit indexee a la place du catalogue.
+{%- endcomment -%}
+{% layout none %}
+{%- assign cible = routes.all_products_collection_url -%}
+{%- assign is_fr = false -%}
+{%- if request.locale.iso_code contains 'fr' -%}
+  {%- assign is_fr = true -%}
+{%- endif -%}
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="{{ shop.url }}{{ cible }}">
+    <meta http-equiv="refresh" content="0; url={{ cible }}">
+    <title>{% if is_fr %}Catalogue Antared{% else %}Antared catalogue{% endif %}</title>
+    <script>window.location.replace({{ cible | json }});</script>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        gap: 18px;
+        background: {{ settings.color_background | default: '#f5eee7' }};
+        color: {{ settings.color_foreground | default: '#171110' }};
+        font-family: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+        text-align: center;
+        padding: 24px;
+      }
+      a {
+        display: inline-block;
+        padding: 14px 28px;
+        border-radius: 999px;
+        background: {{ settings.color_foreground | default: '#171110' }};
+        color: {{ settings.color_background | default: '#f5eee7' }};
+        text-decoration: none;
+        font-weight: 650;
+        letter-spacing: .04em;
+      }
+    </style>
+  </head>
+  <body>
+    <p>{% if is_fr %}Redirection vers le catalogue&hellip;{% else %}Redirecting to the catalogue&hellip;{% endif %}</p>
+    <a href="{{ cible }}">{% if is_fr %}Voir la gamme{% else %}Shop the range{% endif %}</a>
+  </body>
+</html>

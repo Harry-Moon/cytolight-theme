@@ -43,8 +43,8 @@ Conséquences pratiques :
 | Dossier | Contenu |
 |---|---|
 | `sections/` | Sections de page. `main-product.liquid` (~2 000 lignes) et `cytolight-home.liquid` portent l'essentiel du contenu éditorial. |
-| `snippets/` | Fragments réutilisables (`product-card`, `icon`, `cytolight-device-card`, `editorial-hero`). |
-| `templates/` | Points d'entrée. `index.liquid` appelle `cytolight-home` ; `product.json`, `collection.json` et `cart.json` référencent les sections `main-*`. |
+| `snippets/` | Fragments réutilisables (`product-card`, `icon`, `nav-hub-card`, `editorial-hero`). |
+| `templates/` | Points d'entrée. `index.liquid` appelle `cytolight-home` ; `product.json`, `collection.json` et `cart.json` référencent les sections `main-*` ; `list-collections.liquid` redirige `/collections` et `/products` vers le catalogue. |
 | `layout/` | `theme.liquid` (enveloppe globale) et `password.liquid`. |
 | `assets/` | **CSS et JS uniquement** — voir la convention ci-dessous. |
 | `config/` | `settings_schema.json` (définitions) et `settings_data.json` (valeurs, auto-généré). |
@@ -96,10 +96,23 @@ booléen depuis la locale, puis inline les langues :
 Le thème est **bilingue FR / EN**, à parité stricte : tout texte ajouté couvre les deux langues
 dans le même commit, `aria-label` compris. Un `TODO: traduire` est un défaut, pas une étape.
 
-**Le portugais est en cours de retrait** (décision actée, constitution principe VI). Il subsiste
-dans `sections/header.liquid` et `snippets/header-panel-media.liquid` — soit une navigation
-trilingue au-dessus d'un site bilingue. Ne pas en ajouter. Son retour éventuel passerait par une
-spec couvrant l'intégralité du site, pas par un `elsif` de plus.
+**Le portugais est retiré**, y compris de `sections/header.liquid` et de
+`snippets/header-panel-media.liquid` que citaient les versions précédentes de ce document. Ne
+pas en ajouter. Son retour éventuel passerait par une spec couvrant l'intégralité du site, pas
+par un `elsif` de plus.
+
+**Tout lien interne écrit en dur porte `locale_root`.** Shopify Markets attache la langue
+principale au *domaine* : sur `antared.care` le français est à la racine et l'anglais sous
+`/en`, sur `cytolight.myshopify.com` c'est l'inverse. Un `href="/pages/science"` renvoie donc
+toujours à la langue racine du domaine, quelle que soit celle du visiteur. Le 2026-09-01, les
+soixante-neuf liens du mega-menu et du tiroir mobile étaient dans ce cas : un visiteur
+francophone perdait le français au premier clic dans le menu, sur chaque page du site.
+
+La forme correcte est `href="{{ locale_root }}/pages/science"`, où `locale_root` vaut `''` sur la
+langue racine et `/fr` (ou `/en`) ailleurs. Mieux encore : passer par `pages[handle].url`,
+`collections[handle].url` ou `product.url`, qui portent déjà le préfixe — `locale_root` ne sert
+alors qu'au repli, tant que la page n'existe pas dans l'admin. Le symptôme est silencieux : la
+page répond 200, elle répond simplement dans l'autre langue.
 
 > `snippets/learn-nav.liquid`, que citaient les versions précédentes de ce document et de la
 > constitution, **n'existe plus** : la sous-navigation Learn a été retirée avec lui.
@@ -122,6 +135,39 @@ Le seuil de livraison offerte se dérive au même endroit (`free_shipping_cents`
 franchissent déjà le seuil.
 
 Une modification dans ce fichier doit être vérifiée sur **chaque** variante, pas seulement celle en cours.
+
+> Le fichier commençait par la chaîne littérale `&#65279;` — un BOM échappé. Ce n'est pas un blanc :
+> il ouvrait une ligne anonyme haute d'une interligne entre le header et la page, soit une bande vide
+> couleur du fond global en tête des huit fiches. Aucun outil ne le signalait. Un caractère invisible
+> en tête de section se voit à l'écran, pas dans le diff.
+
+## `/collections` et `/products`
+
+Ces deux chemins tombent sur le gabarit `list-collections`. Le thème n'en portait aucun : Shopify
+servait sa page par défaut — sans en-tête, sans pied de page, sans style — au milieu de la boutique.
+`templates/list-collections.liquid` y répond désormais et renvoie vers
+`routes.all_products_collection_url`, avec le préfixe de langue.
+
+C'est une redirection **côté client** : `{% layout none %}` pour pouvoir écrire dans le `<head>`,
+puis trois filets — script, `<meta http-equiv="refresh">`, lien visible — et un `noindex`. La
+redirection propre reste un **301 dans Online Store → Navigation → URL Redirects**, qui ne peut pas
+se créer depuis le dépôt. Tant qu'il n'existe pas, les moteurs ne suivent pas la redirection.
+
+## Pied de page
+
+Les colonnes de liens s'alignent par le **bas**, sur la ligne de base du bloc de marque. Cet
+alignement n'a de sens que si toutes les colonnes tiennent sur une seule rangée : au-delà, chaque
+rangée s'aligne sur sa propre hauteur et creuse des trous entre les deux. Il est donc borné à
+`min-width: 1180px`, seuil auquel les sept colonnes possibles tiennent en ligne (`flex-wrap: nowrap`
+plus `flex: 1 1 0` les y maintiennent quel que soit leur nombre). En dessous, la grille s'enroule et
+les colonnes s'alignent par le haut.
+
+L'inscription newsletter passe par `{% form 'customer' %}` avec le tag `newsletter`, qui distingue
+un contact marketing d'un compte ouvert au checkout. Elle fonctionne **sans JavaScript** : succès et
+erreurs viennent du POST. Le halo rouge et le balayage néon sont en CSS pur, déclenchés par
+`:has(input:valid:not(:placeholder-shown))` — `:valid` seul serait vrai dès le chargement sur un
+champ vide. Le balayage est déclaré au repos, hors cadre, et l'animation ne fait que le faire
+glisser ; il est enfermé dans `prefers-reduced-motion: no-preference`.
 
 ## Espace Learn
 
@@ -282,7 +328,7 @@ le clic, comme s'il était encore survolé.
 |---|---|---|---|
 | Boutique | `routes.all_products_collection_url` | — (collection) | — |
 | Par objectif | `/pages/goals` | `page.goals.liquid` | `goals-hub` |
-| Protocoles | `/pages/protocols` | `page.protocols.liquid` | `protocols-hub` |
+| Protocoles | `/pages/protocols` | `page.protocols.liquid` | `protocol-page` |
 | Apprendre | `/pages/academy` | `page.academy.liquid` | `learn-hub` |
 | Antared Pro | `/pages/antared-pro` | `page.antared-pro.liquid` | `pro-hub` |
 | Pourquoi Antared | `/pages/why-antared` | `page.why-antared.liquid` | `why-hub` |
@@ -296,6 +342,10 @@ langue — avec repli sur le chemin écrit en dur tant que la page n'existe pas 
 **Ces pages doivent être créées dans l'admin, gabarit assigné, avant le merge** (constitution,
 principe I). Le sélecteur « Theme template » ne liste que les gabarits du thème *publié* : créer
 la page d'abord, assigner le gabarit après le merge.
+
+> `sections/protocols-hub.liquid`, que citaient les versions précédentes de ce document,
+> **n'existe plus** : deux branches avaient créé chacune leur index Protocoles, et
+> `page.protocols.liquid` rendait déjà `protocol-page`. Le doublon n'était rendu nulle part.
 
 Les quatre sections d'atterrissage réutilisent `assets/learn.css` et `learn.js` — mêmes classes
 `ln-*`, mêmes révélations au scroll, aucune feuille de style supplémentaire. Les cartes passent
@@ -415,9 +465,13 @@ principe IV. Ils testent une boutique **servie**, pas le dépôt : `--base` vise
 python3 scripts/audit-nav.py
 ```
 
-La navigation. Extrait les URL écrites en dur dans le thème, les teste en FR et en EN, et
-sépare trois défauts : lien cassé, ébauche (sous le seuil de mots), page non traduite (FR et
-EN identiques au mot près). `--base`, `--min-mots` pour ajuster.
+La navigation. Extrait les URL écrites en dur dans le thème, les teste dans les deux langues,
+et sépare trois défauts : lien cassé, ébauche (sous le seuil de mots), page non traduite (les
+deux langues identiques au mot près). `--base`, `--min-mots` pour ajuster.
+
+Il reconnaît les trois formes de lien du thème : `href="/pages/x"`, `href="{{ locale_root }}/pages/x"`
+et `append: '/pages/x'`. Ajouter une quatrième forme sans l'apprendre à l'extracteur rend l'audit
+vert sur des URL qu'il n'a pas testées.
 
 ```bash
 python3 scripts/audit-parcours.py
@@ -430,6 +484,14 @@ formulaire `/cart/add` complet (action, variante, quantité), aucune image cass�
 affiche aussi les fiches saines, `--panier` ajoute réellement au panier puis le vide — c'est
 la seule requête de ces deux scripts qui modifie un état, elle reste locale à la session et
 ne s'active que sur ce drapeau.
+
+**Les préfixes de langue ne sont pas écrits en dur** : les deux scripts lisent la langue racine
+dans `<html lang>` puis les autres dans le sélecteur du header, et vérifient chaque préfixe avant
+de le retenir. Ils supposaient FR à la racine et EN sous `/en` — vrai sur `antared.care`, faux sur
+`cytolight.myshopify.com`, qui est pourtant leur `--base` par défaut. Conséquence relevée le
+2026-09-01 : `audit-parcours` déclarait les huit fiches en HTTP 404, et le contrôle de parité de
+`audit-nav` comparait chaque page à une URL en 404, donc ne se déclenchait jamais. Un audit qui
+échoue partout ne se lit plus, et un audit qui réussit sans rien tester est pire.
 
 Son septième contrôle, **les promesses commerciales**, est celui qui a manqué le plus cher :
 il relève la durée d'essai, la durée de garantie et le seuil de livraison offerte sur toutes
@@ -468,9 +530,11 @@ l'autre développeur.
 shopify theme check
 ```
 
-Le dépôt part avec **19 infractions préexistantes, dont 6 erreurs** (relevé sur `origin/main` le
-2026-08-31 ; les versions précédentes de ce document annonçaient 28, valeur devenue fausse).
-C'est un plafond : comparer au résultat sur `origin/main` et n'en introduire aucune nouvelle.
+Le dépôt est à **zéro infraction** depuis le 2026-09-01 (il en portait 19, dont 6 erreurs).
+Les six erreurs vivaient toutes dans des sections que plus aucun gabarit ne rendait —
+`vg-homepage`, `hero-video`, `image-with-text`, `featured-collection`, `newsletter` — supprimées
+avec les trois snippets devenus orphelins. Zéro est le nouveau plafond : `theme check` doit
+rester vert, il n'y a plus de dette à comparer.
 
 ```bash
 shopify theme dev --store cytolight.myshopify.com

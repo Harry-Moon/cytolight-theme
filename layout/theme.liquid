@@ -45,11 +45,11 @@
       tierce bloquant le rendu, plus deux preconnexions, et surtout la
       transmission de l'IP de chaque visiteur a Google sans consentement
       prealable, ce que la CNIL et la jurisprudence europeenne sanctionnent.
-      Sous-ensemble latin uniquement (64 Ko) : il couvre le francais, l'anglais
-      et le portugais.
+      Sous-ensemble latin uniquement (64 Ko) : il couvre le francais et
+      l'anglais, les deux seules langues du theme.
     {%- endcomment -%}
-    <link rel="preload" as="font" type="font/woff2" href="{{ 'instrument-sans-latin.woff2' | asset_url }}" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="{{ 'instrument-serif-latin.woff2' | asset_url }}" crossorigin>
+    {{ 'instrument-sans-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {{ 'instrument-serif-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
 
     {{ content_for_header }}
 
@@ -95,8 +95,15 @@
         --color-accent-deep: {{ settings.color_accent_deep }};
         --color-promo: {{ settings.color_promo }};
         --color-rating: #FFC247;
-        --font-body: '{{ settings.font_body }}', system-ui, -apple-system, sans-serif;
-        --font-display: '{{ settings.font_display }}', Georgia, serif;
+        {%- comment -%}
+          Les deux familles auto-hebergees restent dans la pile derriere le reglage.
+          Ce reglage est un champ texte libre : une valeur saisie dans l'editeur qui
+          ne correspond a aucune @font-face ci-dessus (Poppins, en aout 2026) faisait
+          tomber tout le site sur system-ui, et les trois woff2 preacharges n'etaient
+          plus jamais utilises.
+        {%- endcomment -%}
+        --font-body: '{{ settings.font_body }}'{% unless settings.font_body == 'Instrument Sans' %}, 'Instrument Sans'{% endunless %}, system-ui, -apple-system, sans-serif;
+        --font-display: '{{ settings.font_display }}'{% unless settings.font_display == 'Instrument Serif' %}, 'Instrument Serif'{% endunless %}, Georgia, serif;
         --radius-sm: 6px;
         --radius-md: 12px;
         --radius-lg: 20px;

@@ -489,19 +489,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   .site-header__lang-code { display: none; }
 }
 
-/* ---------- Hero ---------- */
-.hero { position: relative; overflow: hidden; border-radius: var(--radius-lg); margin: 16px; background: #171110; color: #fff; min-height: 540px; }
-.hero__media { position: absolute; inset: 0; }
-.hero__media img, .hero__media video { width: 100%; height: 100%; object-fit: cover; }
-.hero__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 60%, transparent 100%); }
-.hero__content { position: relative; z-index: 1; padding: clamp(32px, 6vw, 80px); max-width: 720px; }
-.hero__title { font-size: clamp(2.5rem, 5.5vw, 4.5rem); margin-bottom: .4em; }
-.hero__subtitle { font-size: clamp(1rem, 1.6vw, 1.2rem); opacity: .92; margin-bottom: 1.5em; max-width: 520px; }
-.hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-.hero__proof { display: flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; font-size: .85rem; opacity: .9; }
-.hero__proof strong { font-weight: 600; }
-.hero__stars { color: var(--color-rating); }
-
 /* ---------- Trust stripe ---------- */
 .trust-stripe { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; padding: 24px 0; border-top: 1px solid rgba(0,0,0,.06); border-bottom: 1px solid rgba(0,0,0,.06); }
 .trust-stripe__item { text-align: center; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; color: var(--color-muted); }
@@ -540,16 +527,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   .carousel__track { grid-auto-columns: minmax(260px, 1fr); }
 }
 
-/* ---------- Image with text ---------- */
-.iwt { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 64px); align-items: center; }
-.iwt--reverse .iwt__media { order: 2; }
-.iwt__media img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: var(--radius-md); }
-.iwt__body p { color: var(--color-muted); margin: 0 0 1em; }
-@media (max-width: 800px) {
-  .iwt { grid-template-columns: 1fr; }
-  .iwt--reverse .iwt__media { order: 0; }
-}
-
 /* ---------- Collection grid (homepage shop-by) ---------- */
 .collection-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
 .collection-tile { position: relative; aspect-ratio: 4/5; border-radius: var(--radius-md); overflow: hidden; background: var(--color-background-soft); }
@@ -576,13 +553,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .article-card__media img { width: 100%; height: 100%; object-fit: cover; }
 .article-card__title { font-family: var(--font-display); font-size: 1.4rem; margin-bottom: 6px; }
 .article-card__excerpt { color: var(--color-muted); font-size: .9rem; }
-
-/* ---------- Newsletter ---------- */
-.newsletter { background: var(--color-foreground); color: var(--color-background); border-radius: var(--radius-md); padding: clamp(32px, 6vw, 64px); text-align: center; }
-.newsletter h2 { color: inherit; }
-.newsletter form { display: flex; gap: 8px; max-width: 480px; margin: 16px auto 0; flex-wrap: wrap; }
-.newsletter input[type="email"] { flex: 1; min-width: 200px; padding: 14px 18px; border-radius: 999px; border: 0; font-size: 1rem; background: var(--color-background); color: var(--color-foreground); }
-.newsletter button { background: var(--color-accent); color: #fff; }
 
 /* ---------- Footer ---------- */
 /*
@@ -625,8 +595,40 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 }
 .site-footer a { color: inherit; opacity: .82; }
 .site-footer a:hover { opacity: 1; color: var(--color-accent); }
+/* Les colonnes de liens s'alignent sur le bas du bloc de marque, qui est le
+   plus haut de la rangee. En `stretch` (le defaut), chaque liste demarrait sous
+   son titre en haut de la rangee et laissait sous elle une hauteur de vide
+   inegale d'une colonne a l'autre. `flex-end` pose leur derniere ligne sur la
+   meme ligne de base. Sous 800px la rangee passe sur plusieurs lignes et
+   l'alignement bas n'a plus de sens : il est relache dans la requete media. */
 .site-footer__top { display: flex; flex-wrap: wrap; gap: 40px; margin-bottom: 48px; }
-.site-footer__brand { flex: 1 1 240px; max-width: 320px; margin-right: 20px; }
+.site-footer__brand { flex: 1 1 260px; max-width: 340px; }
+/* En dessous du desktop large, les colonnes s'enroulent sur plusieurs rangees.
+   Les aligner par le bas la-dedans aligne chaque rangee sur sa propre hauteur et
+   creuse des trous entre les deux : elles restent donc alignees par le haut. */
+.site-footer__cols {
+  flex: 1 1 520px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  align-items: start;
+  gap: 28px 26px;
+}
+/* Le seuil est celui a partir duquel les sept colonnes possibles tiennent sur
+   une seule ligne. Au-dela, `nowrap` + `flex: 1 1 0` garantit qu'elles y restent
+   quel que soit leur nombre, et l'alignement par le bas pose la derniere ligne
+   de chaque liste sur la meme ligne de base, elle-meme calee sur le bas du bloc
+   de marque. */
+@media (min-width: 1180px) {
+  .site-footer__top { flex-wrap: nowrap; align-items: flex-end; }
+  .site-footer__brand { flex: 0 1 340px; }
+  .site-footer__cols {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    gap: 26px;
+  }
+  .site-footer__col { flex: 1 1 0; }
+}
 .site-footer__brand h3 { font-family: var(--font-body); font-weight: 700; letter-spacing: .25em; font-size: 1.2rem; margin-bottom: 12px; }
 /*
  * Le logo est la version a fond transparent, dessinee pour un fond sombre :
@@ -643,7 +645,7 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 }
 .site-footer .site-footer__logo img { display: block; width: 160px; height: auto; }
 .site-footer__brand p { opacity: .7; max-width: 320px; font-size: .9rem; }
-.site-footer__col { flex: 1 1 130px; min-width: 130px; }
+.site-footer__col { min-width: 0; }
 .site-footer__col h4 {
   display: inline-block;
   font-family: var(--font-body);
@@ -676,7 +678,6 @@ body {
   font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 h1, h2, h3, h4,
-.hero__title,
 .section__title,
 .collection-tile__label,
 .bundle-card__title,
@@ -703,12 +704,26 @@ h1, h2, h3, h4,
 .product-card__price {
   font-weight: 650;
 }
+/* La fiche produit suit les polices du theme, elle n'en redeclare aucune.
+   Les familles etaient ecrites en dur ici : quand le reglage de police du theme
+   ne correspondait a aucune @font-face, le corps du site tombait sur la police
+   systeme pendant que la fiche produit — prix compris — restait en Instrument
+   Sans. Le prix ressortait alors dans une police que rien n'annoncait. */
 .cl-page,
 .cl-page button,
 .cl-page input,
 .cl-page select,
 .cl-page textarea {
-  font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-family: var(--font-body) !important;
+}
+/* Le prix est du texte courant, pas un titre : meme police que le corps. */
+.cl-price,
+.cl-price-row,
+.cl-price-note,
+.cl-sticky-atc__meta,
+.cl-payment-note {
+  font-family: var(--font-body) !important;
+  font-variant-numeric: tabular-nums;
 }
 .cl-launch-hero__title,
 .cl-feature-tile__title,
@@ -722,7 +737,7 @@ h1, h2, h3, h4,
 .cl-faq-title,
 .cl-faq-header__title,
 .cl-final-title {
-  font-family: "Instrument Serif", Georgia, serif !important;
+  font-family: var(--font-display) !important;
   font-weight: 400 !important;
   letter-spacing: -.018em !important;
   line-height: 1.03 !important;
@@ -763,23 +778,163 @@ h1, h2, h3, h4,
 .site-footer__socials a { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: inline-flex; align-items: center; justify-content: center; }
 .site-footer__payments { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-bottom: 24px; }
 .site-footer__payment-icon { width: 38px; height: 24px; border-radius: 4px; background: #fff; padding: 1px; }
-/*
- * Les colonnes du pied de page restent sur DEUX rangs jusqu'en bas de
- * gamme : sept menus empiles en une seule colonne donnaient un pied de page
- * de plusieurs ecrans de haut sur mobile. `flex-basis` est calcule sur la
- * gouttiere de .site-footer__top (24px sous 800px) pour que deux colonnes
- * tiennent exactement, et `flex-grow: 0` empeche une colonne orpheline de
- * s'etaler sur toute la largeur.
- */
+
+/* ---------- Footer : inscription newsletter ---------- */
+.site-footer__news { margin: 22px 0 26px; max-width: 340px; }
+.site-footer__news-title {
+  font-family: var(--font-display);
+  font-size: 1.24rem;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  color: #fff;
+  margin: 0 0 8px;
+}
+.site-footer__news-text { font-size: .82rem; line-height: 1.5; opacity: .66; margin: 0 0 14px; }
+
+.site-footer__news-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 5px 5px 16px;
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .04);
+  overflow: hidden;
+  transition: border-color .35s ease, box-shadow .35s ease, background-color .35s ease;
+}
+.site-footer__news-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: #f5eee7;
+  font: inherit;
+  font-size: .86rem;
+  padding: 9px 0;
+}
+.site-footer__news-input::placeholder { color: rgba(245, 238, 231, .38); }
+.site-footer__news-input:focus { outline: none; }
+
+.site-footer__news-button {
+  position: relative;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 18px;
+  background: #d20d2f;
+  color: #fff;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 650;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.site-footer__news-button span { position: relative; z-index: 1; }
+.site-footer__news-button:hover { background: #e8153a; box-shadow: 0 0 18px rgba(210, 13, 47, .55); }
+.site-footer__news-button:focus-visible { outline: 2px solid #ff4663; outline-offset: 3px; }
+
+/* Le neon : une bande lumineuse qui traverse le champ. Elle est posee ici, au
+   repos, hors cadre — l'animation ne fait que la faire glisser. Declarer la
+   transition seulement dans l'etat anime ferait sauter l'element au premier
+   rendu, comme sur les pages Learn. */
+.site-footer__news-field::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 45%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-120%) skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 70, 99, .18) 32%,
+    rgba(255, 120, 140, .62) 50%,
+    rgba(255, 70, 99, .18) 68%,
+    transparent
+  );
+}
+
+/* Le champ s'allume quand l'adresse saisie est valide : `:valid` seul serait
+   vrai des le chargement sur un champ vide, d'ou `:not(:placeholder-shown)`. */
+.site-footer__news-field:focus-within {
+  border-color: rgba(255, 70, 99, .45);
+  background: rgba(255, 255, 255, .06);
+}
+.site-footer__news-field:has(.site-footer__news-input:valid:not(:placeholder-shown)) {
+  border-color: rgba(255, 70, 99, .85);
+  box-shadow:
+    0 0 0 1px rgba(255, 70, 99, .35),
+    0 0 22px rgba(210, 13, 47, .45),
+    inset 0 0 18px rgba(210, 13, 47, .18);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-footer__news-field:has(.site-footer__news-input:valid:not(:placeholder-shown))::after {
+    animation: antared-neon-sweep 1.15s cubic-bezier(.22, .61, .36, 1) forwards;
+  }
+  .site-footer__news-field:has(.site-footer__news-input:valid:not(:placeholder-shown)) .site-footer__news-button {
+    box-shadow: 0 0 20px rgba(210, 13, 47, .6);
+    transform: translateZ(0) scale(1.02);
+  }
+  .site-footer__news-button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .45), transparent);
+    transform: translateX(-110%);
+    opacity: 0;
+  }
+  .site-footer__news-button:hover::after,
+  .site-footer__news-button:focus-visible::after {
+    animation: antared-neon-sweep .85s ease forwards;
+  }
+}
+
+@keyframes antared-neon-sweep {
+  0%   { opacity: 0;   transform: translateX(-120%) skewX(-18deg); }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { opacity: 0;   transform: translateX(320%) skewX(-18deg); }
+}
+
+.site-footer__news-ok {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-size: .84rem;
+  color: #fff;
+  border: 1px solid rgba(255, 70, 99, .7);
+  background: rgba(210, 13, 47, .14);
+  box-shadow: 0 0 22px rgba(210, 13, 47, .4);
+}
+.site-footer__news-error { margin: 10px 0 0; font-size: .78rem; color: #ff8c9e; }
+
 @media (max-width: 800px) {
+  /*
+   * Les colonnes du pied de page restent sur DEUX rangs jusqu'en bas de
+   * gamme : sept menus empiles en une seule colonne donnaient un pied de page
+   * de plusieurs ecrans de haut sur mobile. Depuis que les colonnes vivent
+   * dans une grille, c'est `grid-template-columns` qui porte cette regle et
+   * non plus le `flex-basis` de chaque colonne.
+   */
   .site-footer__top { gap: 34px 24px; }
-  .site-footer__brand { flex: 1 1 100%; max-width: none; margin-right: 0; }
-  .site-footer__col { flex: 0 1 calc(50% - 12px); min-width: 0; }
+  .site-footer__brand { flex: 1 1 100%; max-width: none; }
+  .site-footer__news { max-width: none; }
+  .site-footer__cols { flex: 1 1 100%; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px; }
   .site-footer__col h4 { margin-bottom: 14px; }
 }
 @media (max-width: 480px) {
   .site-footer .site-footer__logo img { width: 140px; }
   .site-footer__col ul li { margin-bottom: 6px; }
+  .site-footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .site-footer__news-field { flex-wrap: wrap; border-radius: 22px; padding: 6px; }
+  .site-footer__news-input { padding: 10px 12px; flex: 1 1 100%; }
+  .site-footer__news-button { flex: 1 1 100%; }
 }
 
 /* ---------- Product page ---------- */

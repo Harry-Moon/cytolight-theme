@@ -23,7 +23,6 @@
     assign desk_url = desk_product.url
   endif
 
-  assign product_collection = section.settings.product_collection
 
   assign cap_product = all_products['cytolight-cap']
   assign cap_url = locale_root | append: '/products/cytolight-cap'
@@ -53,6 +52,11 @@
   assign knee_url = locale_root | append: '/products/cytolight-knee'
   if knee_product != blank
     assign knee_url = knee_product.url
+  endif
+
+  assign academy_url = pages['academy'].url
+  if academy_url == blank
+    assign academy_url = locale_root | append: '/pages/academy'
   endif
 
   assign sauna_dome_product = all_products['cytolight-sauna-dome']
@@ -193,7 +197,7 @@
       </div>
       <div class="cy-intro__aside">
         <p>{% if is_fr %}Antared r&eacute;unit puissance, contr&ocirc;le spectral et design pour faire de la luminoth&eacute;rapie un rituel que vous avez vraiment envie de garder.{% else %}Antared brings together power, spectral control, and considered design to make light therapy a ritual you will actually keep.{% endif %}</p>
-        <a class="cy-link" href="{{ locale_root }}/pages/academy">{% if is_fr %}Comprendre la technologie{% else %}Understand the technology{% endif %} <span aria-hidden="true">&rarr;</span></a>
+        <a class="cy-link" href="{{ academy_url }}">{% if is_fr %}Comprendre la technologie{% else %}Understand the technology{% endif %} <span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </section>
@@ -488,8 +492,6 @@
   "name": "Antared Cinematic Home",
   "settings": [
     { "type": "product", "id": "featured_product", "label": "Featured product" },
-    { "type": "collection", "id": "product_collection", "label": "Product rail collection" },
-    { "type": "range", "id": "product_limit", "label": "Products to show", "min": 1, "max": 12, "step": 1, "default": 6 },
     { "type": "url", "id": "hero_video_url", "label": "Hero video URL" },
     { "type": "image_picker", "id": "desk_image", "label": "Antared DESK fallback image" },
     { "type": "image_picker", "id": "pano_image", "label": "Antared PANO PLUS image" },
