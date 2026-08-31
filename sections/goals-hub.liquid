@@ -1,0 +1,284 @@
+{%- comment -%}
+  Par objectif — page d'atterrissage de l'onglet du meme nom.
+
+  L'onglet « Par objectif » du header pointe ici. La page ne fait pas double
+  emploi avec les collections : elle explique le decoupage, puis redistribue
+  vers les cinq collections qui le portent (recovery, performance,
+  skin-amp-glow, longevity, work-amp-focus). C'est l'axe d'entree dans la
+  gamme — on entre par un resultat recherche, pas par un appareil.
+
+  Les intitules et les URL des collections sont resolus par handle, avec un
+  repli sur le chemin ecrit en dur : une collection renommee dans l'admin ne
+  laisse donc pas la page vide, elle laisse un lien a corriger.
+
+  Aucune formulation de cette page ne decrit un effet sur une pathologie :
+  les objectifs sont des moments d'usage et des zones du corps, pas des
+  indications (constitution, principe II).
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign url_recovery = collections['recovery'].url | default: '/collections/recovery'
+  assign url_performance = collections['performance'].url | default: '/collections/performance'
+  assign url_skin = collections['skin-amp-glow'].url | default: '/collections/skin-amp-glow'
+  assign url_longevity = collections['longevity'].url | default: '/collections/longevity'
+  assign url_focus = collections['work-amp-focus'].url | default: '/collections/work-amp-focus'
+
+  assign url_quiz = pages['find-your-cytolight'].url
+  if url_quiz == blank
+    assign url_quiz = locale_root | append: '/pages/find-your-cytolight'
+  endif
+
+  assign url_science = pages['science'].url
+  if url_science == blank
+    assign url_science = locale_root | append: '/pages/science'
+  endif
+
+  assign url_values = pages['nos-valeurs'].url
+  if url_values == blank
+    assign url_values = locale_root | append: '/pages/nos-valeurs'
+  endif
+
+  assign url_protocols = pages['protocols'].url
+  if url_protocols == blank
+    assign url_protocols = locale_root | append: '/pages/protocols'
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Par objectif{% else %}By Goal{% endif %}
+    </p>
+    <p class="ln-kicker">{% if is_fr %}Par objectif{% else %}By Goal{% endif %}</p>
+    <h1 class="ln-title">
+      {%- if is_fr -%}
+        Commencez par le moment de votre journ&eacute;e, pas par la fiche technique.
+      {%- else -%}
+        Start from the moment in your day, not from the spec sheet.
+      {%- endif -%}
+    </h1>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Cinq entr&eacute;es dans la gamme, class&eacute;es par zone du corps et par moment d'usage. Elles
+        ne d&eacute;crivent pas un r&eacute;sultat garanti&nbsp;: elles d&eacute;crivent la routine &agrave; laquelle
+        chaque appareil est destin&eacute;, et ce qu'il faut pouvoir tenir pour qu'elle serve &agrave;
+        quelque chose.
+      {%- else -%}
+        Five ways into the range, sorted by area of the body and by moment of use. They do not
+        describe a guaranteed outcome: they describe the routine each device is built around,
+        and what you need to be able to keep up for it to be worth anything.
+      {%- endif -%}
+    </p>
+
+    <div class="ln-actions">
+      <a class="ln-button ln-button--light" href="{{ url_quiz }}">
+        {% if is_fr %}Trouvez votre Antared{% else %}Find your Antared{% endif %}
+      </a>
+      <a class="ln-button ln-button--line" href="{{ routes.all_products_collection_url }}">
+        {% if is_fr %}Voir toute la gamme{% else %}See the full range{% endif %}
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Cinq objectifs{% else %}Five goals{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Qu'est-ce que vous cherchez &agrave; installer dans votre semaine&nbsp;?{%- else -%}What are you trying to fit into your week?{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Un m&ecirc;me appareil apparait souvent dans deux objectifs&nbsp;: le d&eacute;coupage sert &agrave;
+            entrer dans la gamme, pas &agrave; ranger les produits dans des cases &eacute;tanches.
+          {%- else -%}
+            The same device often shows up under two goals: the split is a way into the range,
+            not a set of watertight boxes.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-hub">
+      {% render 'nav-hub-card',
+         index: '01',
+         url: url_recovery,
+         title_fr: 'R&eacute;cup&eacute;ration',
+         title_en: 'Recovery',
+         text_fr: 'Apr&egrave;s l&#39;effort, sur les zones qui ont travaill&eacute;&nbsp;: genou, pied, cheville, dos. Les formats souples se posent l&agrave; o&ugrave; il faut et lib&egrave;rent les mains pendant la s&eacute;ance.',
+         text_en: 'After training, on the areas that did the work: knee, foot, ankle, back. The soft formats sit where they are needed and leave your hands free during the session.',
+         cta_fr: 'Voir la collection', cta_en: 'See the collection' %}
+
+      {% render 'nav-hub-card',
+         index: '02',
+         url: url_performance,
+         title_fr: 'Performance',
+         title_en: 'Performance',
+         text_fr: 'Autour de l&#39;entra&icirc;nement, avant comme apr&egrave;s. Les grands formats couvrent plusieurs groupes musculaires en une seule pose, ce qui est la seule fa&ccedil;on de tenir une routine quotidienne.',
+         text_en: 'Around training, before as well as after. Large formats cover several muscle groups in a single session, which is the only way a daily routine survives contact with a real week.',
+         cta_fr: 'Voir la collection', cta_en: 'See the collection' %}
+
+      {% render 'nav-hub-card',
+         index: '03',
+         url: url_skin,
+         title_fr: 'Peau &amp; &Eacute;clat',
+         title_en: 'Skin &amp; Glow',
+         text_fr: 'Visage et cuir chevelu, en rouge visible. Le masque et la casquette existent parce qu&#39;une routine du soir ne tient que si elle demande dix minutes et aucun effort.',
+         text_en: 'Face and scalp, in visible red. The mask and the cap exist because an evening routine only survives if it takes ten minutes and no effort.',
+         cta_fr: 'Voir la collection', cta_en: 'See the collection' %}
+
+      {% render 'nav-hub-card',
+         index: '04',
+         url: url_longevity,
+         title_fr: 'Long&eacute;vit&eacute;',
+         title_en: 'Longevity',
+         text_fr: 'Pour qui lit les publications avant d&#39;acheter&nbsp;: les appareils dont les param&egrave;tres sont pilotables un par un &mdash; longueur d&#39;onde, intensit&eacute;, pulsation &mdash; plut&ocirc;t qu&#39;un bouton unique.',
+         text_en: 'For anyone who reads the papers before buying: the devices whose parameters are controlled one by one &mdash; wavelength, intensity, pulse &mdash; rather than behind a single button.',
+         cta_fr: 'Voir la collection', cta_en: 'See the collection' %}
+
+      {% render 'nav-hub-card',
+         index: '05',
+         url: url_focus,
+         title_fr: 'Travail &amp; Concentration',
+         title_en: 'Work &amp; Focus',
+         text_fr: 'Le moment du bureau. Le DESK est con&ccedil;u pour &ecirc;tre pos&eacute; en face de soi pendant qu&#39;on travaille, ce qui r&eacute;sout le seul vrai probl&egrave;me&nbsp;: trouver le temps.',
+         text_en: 'The desk moment. The DESK is built to sit in front of you while you work, which solves the only real problem: finding the time.',
+         cta_fr: 'Voir la collection', cta_en: 'See the collection' %}
+    </div>
+  </div>
+</section>
+
+<section class="ln-section ln-section--soft">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Choisir{% else %}Choosing{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Trois questions suffisent.{%- else -%}Three questions are enough.{%- endif -%}
+        </h2>
+      </div>
+    </div>
+
+    <div class="ln-steps">
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Quelle zone&nbsp;?{% else %}Which area?{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Une zone pr&eacute;cise appelle un format cibl&eacute;&nbsp;: masque, genouill&egrave;re, botte, casquette.
+            Plusieurs zones, ou une zone large, appellent un panneau.
+          {%- else -%}
+            One precise area calls for a targeted format: mask, knee wrap, boot, cap. Several
+            areas, or one large area, call for a panel.
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Quel moment&nbsp;?{% else %}Which moment?{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Le soir devant un &eacute;cran, apr&egrave;s la salle, ou pendant une matin&eacute;e de travail.
+            C'est ce moment qui d&eacute;cide du format, pas l'inverse.
+          {%- else -%}
+            Evening in front of a screen, after the gym, or during a working morning. That moment
+            decides the format, not the other way round.
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Quelle r&eacute;gularit&eacute;&nbsp;?{% else %}How regular?{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Un appareil utilis&eacute; trois fois par semaine pendant six mois vaut mieux qu'un
+            appareil plus puissant utilis&eacute; deux semaines. Les protocoles d&eacute;taillent les dur&eacute;es.
+          {%- else -%}
+            A device used three times a week for six months beats a more powerful one used for a
+            fortnight. The protocols spell out the durations.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-note ln-reveal">
+      <p class="ln-note__title">
+        {%- if is_fr -%}Un objectif n'est pas une indication{%- else -%}A goal is not a medical indication{%- endif -%}
+      </p>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            Les appareils Antared sont des produits de bien-&ecirc;tre, sans marquage CE de dispositif
+            m&eacute;dical. Ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie.
+          {%- else -%}
+            Antared devices are wellness products, without CE medical-device marking. They do not
+            diagnose, treat, or cure any disease.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Les cinq objectifs ci-dessus d&eacute;crivent des zones et des moments d'usage. Ils ne
+            promettent aucun r&eacute;sultat individuel.
+          {%- else -%}
+            The five goals above describe areas and moments of use. They promise no individual
+            outcome.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Ce que dit &mdash; et ne dit pas &mdash; la litt&eacute;rature scientifique est expos&eacute; sur
+            <a href="{{ url_science }}">la page Science</a>, et nos r&egrave;gles d'&eacute;criture sur
+            <a href="{{ url_values }}">Nos valeurs</a>.
+          {%- else -%}
+            What the scientific literature does &mdash; and does not &mdash; say is set out on
+            <a href="{{ url_science }}">the Science page</a>, and our writing rules on
+            <a href="{{ url_values }}">Our values</a>.
+          {%- endif -%}
+        </li>
+      </ul>
+    </div>
+
+    <div class="ln-actions">
+      <a class="ln-button" href="{{ url_protocols }}">
+        {% if is_fr %}Voir les protocoles{% else %}See the protocols{% endif %}
+      </a>
+      <a class="ln-button ln-button--ink" href="{{ url_quiz }}">
+        {% if is_fr %}Trouvez votre Antared{% else %}Find your Antared{% endif %}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% render 'learn-product-cta',
+   handles: 'cytolight-desk,cytolight-mask,cytolight-knee',
+   heading_fr: 'Un objectif se choisit une fois. L&#39;appareil, on le garde des ann&eacute;es.',
+   heading_en: 'You pick a goal once. You keep the device for years.',
+   text_fr: 'Si deux collections vous conviennent, prenez le format qui s&#39;ins&egrave;re le plus facilement dans votre semaine&nbsp;: c&#39;est celui que vous utiliserez encore dans trois mois.',
+   text_en: 'If two collections fit, take the format that slots most easily into your week: that is the one you will still be using in three months.'
+%}
+
+{% schema %}
+{
+  "name": "Par objectif — Hub",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Page d'atterrissage de l'onglet « Par objectif » du header. A assigner a une page de handle `goals`. Les cinq cartes pointent vers les collections recovery, performance, skin-amp-glow, longevity et work-amp-focus : renommer une collection dans l'admin casse le lien correspondant."
+    }
+  ]
+}
+{% endschema %}

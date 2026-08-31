@@ -326,6 +326,14 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .site-header__nav-item:focus-within .site-header__nav-link::after,
 .site-header__nav-item.is-open .site-header__nav-link::after { transform: scaleX(1); }
 
+/* Onglet de la page courante : le meme trait, mais attenue, pour qu'il se lise
+   comme un reperage et non comme un survol. Le survol le ramene a plein. */
+.site-header__nav-link[aria-current="page"] { color: var(--color-accent-deep); }
+.site-header__nav-link[aria-current="page"]::after { transform: scaleX(1); opacity: .4; }
+.site-header__nav-item:hover .site-header__nav-link[aria-current="page"]::after,
+.site-header__nav-item:focus-within .site-header__nav-link[aria-current="page"]::after,
+.site-header__nav-item.is-open .site-header__nav-link[aria-current="page"]::after { opacity: 1; }
+
 .site-header__panel {
   position: absolute;
   left: 0;
@@ -445,7 +453,18 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   .site-header__nav { display: none; }
   .site-header__proof { overflow-x: auto; justify-content: flex-start; padding: 7px 20px; scrollbar-width: none; }
   .site-header__proof::-webkit-scrollbar { display: none; }
-  .site-header__bar { position: relative; grid-template-columns: auto 1fr auto; gap: 12px; padding: 11px 0; }
+  /*
+   * La barre garde ses trois colonnes `1fr auto 1fr`. En passant a
+   * `auto 1fr auto`, le logo etait centre dans la place qui restait entre le
+   * burger et les utilitaires de droite — donc decale vers la gauche, d'autant
+   * que ce cote pese plus lourd. Avec deux gouttieres egales, il est centre
+   * dans la fenetre quoi qu'on ajoute de part et d'autre.
+   *
+   * Le padding horizontal est reecrit, pas supprime : `.container` en pose 20,
+   * et une valeur `11px 0` les annulait — le burger et le panier se
+   * retrouvaient colles aux bords de l'ecran.
+   */
+  .site-header__bar { position: relative; grid-template-columns: 1fr auto 1fr; gap: 12px; padding: 11px 16px; }
   .site-header__logo { justify-self: center; }
   .site-header__logo img { max-height: 38px; max-width: 138px; }
   .site-header__utils { gap: 6px; }
@@ -454,8 +473,20 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   .site-header__util-link { display: none; }
   .site-header__icon { width: 36px; height: 36px; }
 }
+@media (max-width: 800px) {
+  /*
+   * Le bandeau de reassurance disparait sur mobile. Il n'y tenait pas sur une
+   * ligne : il devenait une bande noire a defilement horizontal, dont le
+   * second argument restait hors champ. Un argument qu'on ne lit pas ne
+   * rassure personne, et il coutait une hauteur de barre sur l'ecran le plus
+   * etroit. Les memes engagements sont repris dans le tiroir, sur la fiche
+   * produit et dans le panier.
+   */
+  .site-header__proof { display: none; }
+}
 @media (max-width: 420px) {
   .site-header__proof { font-size: .62rem; }
+  .site-header__lang-code { display: none; }
 }
 
 /* ---------- Hero ---------- */

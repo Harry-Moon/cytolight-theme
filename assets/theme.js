@@ -280,8 +280,38 @@
     });
   }
 
-  // Header nav submenu / mega-menu — click/tap toggle on top of hover
-  document.querySelectorAll('[data-nav-submenu]').forEach((item) => {
+  // Selecteur de langue — le <details> s'ouvre et se ferme tout seul ; on
+  // n'ajoute que ce qu'une liste deroulante native ne fait pas : se refermer
+  // sur un clic exterieur et sur Echap.
+  const langMenu = document.querySelector('[data-lang-menu]');
+  if (langMenu) {
+    document.addEventListener('click', (e) => {
+      if (langMenu.open && !langMenu.contains(e.target)) langMenu.open = false;
+    });
+    langMenu.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape' || !langMenu.open) return;
+      e.stopPropagation();
+      langMenu.open = false;
+      langMenu.querySelector('summary')?.focus();
+    });
+  }
+
+  /*
+   * Mega-menu du header.
+   *
+   * L'onglet est un lien vers la page d'atterrissage de sa rubrique, et le
+   * panneau s'ouvre au survol : sur un pointeur fin, le clic n'a donc rien a
+   * intercepter, il navigue. C'etait le defaut de la version precedente — un
+   * <button> qui ne menait nulle part et gardait, apres le clic, l'onglet
+   * souligne comme s'il etait survole.
+   *
+   * Reste le tactile, ou le survol n'existe pas : la premiere touche ouvre le
+   * panneau (le lien est retenu), la seconde le suit. On teste le pointeur au
+   * moment du clic plutot qu'au chargement — une tablette avec clavier-souris
+   * bascule d'un mode a l'autre sans recharger la page.
+   */
+  const navItems = Array.from(document.querySelectorAll('[data-nav-submenu]'));
+  navItems.forEach((item) => {
     const toggle = item.querySelector('.site-header__nav-link');
     if (!toggle) return;
     const close = () => {
@@ -290,8 +320,18 @@
     };
     toggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = item.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', String(isOpen));
+      const coarse = window.matchMedia('(hover: none)').matches;
+      // Pointeur fin, ou panneau deja ouvert par une premiere touche : le lien
+      // fait son travail, on ne touche a rien.
+      if (!coarse || item.classList.contains('is-open')) return;
+      e.preventDefault();
+      navItems.forEach((other) => {
+        if (other === item) return;
+        other.classList.remove('is-open');
+        other.querySelector('[aria-expanded]')?.setAttribute('aria-expanded', 'false');
+      });
+      item.classList.add('is-open');
+      toggle.setAttribute('aria-expanded', 'true');
     });
     item.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') close();

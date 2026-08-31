@@ -1,0 +1,363 @@
+{%- comment -%}
+  Pourquoi Antared — page d'atterrissage de l'onglet du meme nom.
+
+  C'est la page d'arguments de vente. Contrainte : chaque argument doit etre
+  verifiable sur le site lui-meme ou dans le droit applicable. Rien de ce qui
+  suit n'est une promesse de resultat, un chiffre de notoriete, une reference
+  client ou une comparaison nominative avec un concurrent — le brief produit
+  liste des axes de differenciation qui ne sont pas encore etablis (stock UE,
+  SAV francais, positionnement prix), ils n'ont donc pas leur place ici tant
+  qu'ils ne sont pas documentes (constitution, principe III).
+
+  Les longueurs d'onde ne sont pas re-listees appareil par appareil : cette
+  table vit sur `learn-wavelengths`, et n'a pas a etre maintenue deux fois.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign url_tech = pages['technology'].url
+  assign url_quality = pages['quality'].url
+  assign url_story = pages['our-story'].url
+  assign url_approach = pages['our-approach'].url
+
+  assign url_values = pages['nos-valeurs'].url
+  if url_values == blank
+    assign url_values = locale_root | append: '/pages/nos-valeurs'
+  endif
+
+  assign url_science = pages['science'].url
+  if url_science == blank
+    assign url_science = locale_root | append: '/pages/science'
+  endif
+
+  assign url_wavelengths = pages['wavelengths'].url
+  if url_wavelengths == blank
+    assign url_wavelengths = locale_root | append: '/pages/wavelengths'
+  endif
+
+  assign url_faq = pages['faq'].url
+  if url_faq == blank
+    assign url_faq = locale_root | append: '/pages/faq'
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}Pourquoi Antared{% else %}Why Antared{% endif %}
+    </p>
+    <p class="ln-kicker">{% if is_fr %}Pourquoi Antared{% else %}Why Antared{% endif %}</p>
+    <h1 class="ln-title">
+      {%- if is_fr -%}
+        Trois raisons v&eacute;rifiables. Aucune promesse inv&eacute;rifiable.
+      {%- else -%}
+        Three verifiable reasons. No unverifiable promise.
+      {%- endif -%}
+    </h1>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Ce que vous lisez ici, vous pouvez le contr&ocirc;ler ailleurs sur ce site&nbsp;: le d&eacute;tail
+        du spectre, les publications cit&eacute;es avec leur identifiant, et les r&egrave;gles que nous
+        nous imposons en &eacute;crivant. Une marque de bien-&ecirc;tre se juge autant sur ce qu'elle
+        refuse d'&eacute;crire que sur ce qu'elle vend.
+      {%- else -%}
+        Everything here can be checked elsewhere on this site: the detail of the spectrum, the papers
+        we cite with their identifiers, and the rules we hold ourselves to when writing. A wellness
+        brand is judged as much on what it refuses to write as on what it sells.
+      {%- endif -%}
+    </p>
+
+    <div class="ln-actions">
+      <a class="ln-button ln-button--light" href="{{ url_wavelengths }}">
+        {% if is_fr %}Voir le spectre{% else %}See the spectrum{% endif %}
+      </a>
+      <a class="ln-button ln-button--line" href="{{ routes.all_products_collection_url }}">
+        {% if is_fr %}Voir la gamme{% else %}See the range{% endif %}
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}01 &mdash; La technique{% else %}01 &mdash; The hardware{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Sept longueurs d'onde, pilotables une par une.{%- else -%}Seven wavelengths, controlled one by one.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            La plupart des panneaux du march&eacute; proposent deux longueurs d'onde fixes, allum&eacute;es
+            ensemble. Nos panneaux en portent sept, r&eacute;glables s&eacute;par&eacute;ment.
+          {%- else -%}
+            Most panels on the market offer two fixed wavelengths, switched on together. Our panels
+            carry seven, adjustable separately.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-steps">
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}590 &agrave; 940 nm{% else %}590 to 940 nm{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Ambre 590 nm, rouge 630 et 660 nm, proche infrarouge 810, 830, 850 et 940 nm. La
+            correspondance longueur d'onde / appareil est publi&eacute;e sur
+            <a href="{{ url_wavelengths }}">la page Longueurs d'onde</a>&nbsp;: tous les formats ne
+            portent pas les sept.
+          {%- else -%}
+            590 nm amber, 630 and 660 nm red, 810, 830, 850, and 940 nm near-infrared. The
+            wavelength-to-device mapping is published on
+            <a href="{{ url_wavelengths }}">the Wavelengths page</a>: not every format carries all seven.
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Intensit&eacute; et pulsation{% else %}Intensity and pulse{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Chaque canal se r&egrave;gle en intensit&eacute;, et la pulsation se pilote de 1 &agrave; 40 Hz.
+            C'est ce qui permet de reproduire les param&egrave;tres d'un protocole publi&eacute; plut&ocirc;t
+            que d'appuyer sur un bouton unique.
+          {%- else -%}
+            Every channel is adjustable in intensity, and the pulse runs from 1 to 40 Hz. That is what
+            lets you reproduce the parameters of a published protocol instead of pressing one button.
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}&Eacute;cran tactile ou Bluetooth{% else %}Touchscreen or Bluetooth{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Les r&eacute;glages se font sur l'appareil ou depuis l'application. Aucune fonction n'est
+            r&eacute;serv&eacute;e &agrave; un abonnement&nbsp;: l'appareil que vous achetez fait tout ce
+            qu'il sait faire, hors ligne.
+          {%- else -%}
+            Settings are made on the device or from the app. No function is locked behind a
+            subscription: the device you buy does everything it can do, offline.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section ln-section--soft">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}02 &mdash; L'&eacute;criture{% else %}02 &mdash; The writing{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Ce que nous n'&eacute;crirons pas, m&ecirc;me si &ccedil;a se vend mieux.{%- else -%}What we will not write, even when it sells better.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Trois r&egrave;gles parmi celles que nous nous imposons. La liste compl&egrave;te, avec ce
+            qu'elle nous co&ucirc;te, est sur <a href="{{ url_values }}">Nos valeurs</a>.
+          {%- else -%}
+            Three of the rules we hold ourselves to. The full list, and what it costs us, is on
+            <a href="{{ url_values }}">Our values</a>.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-pledge ln-reveal">
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Aucune all&eacute;gation th&eacute;rapeutique{% else %}No therapeutic claim{% endif %}</p>
+          <p class="ln-pledge__text">
+            {%- if is_fr -%}
+              Nos appareils sont des produits de bien-&ecirc;tre, sans marquage CE de dispositif
+              m&eacute;dical. Ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie, et
+              nous n'&eacute;crirons jamais le contraire pour vendre.
+            {%- else -%}
+              Our devices are wellness products, without CE medical-device marking. They do not
+              diagnose, treat, or cure any disease, and we will never write otherwise to make a sale.
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Aucun avis ni aucune note fabriqu&eacute;s{% else %}No fabricated reviews or ratings{% endif %}</p>
+          <p class="ln-pledge__text">
+            {%- if is_fr -%}
+              Tant qu'il n'y a pas d'avis clients v&eacute;rifi&eacute;s, il n'y a pas d'&eacute;toiles sur ce
+              site &mdash; y compris sur une fiche neuve, o&ugrave; l'absence de note est la r&eacute;ponse
+              honn&ecirc;te.
+            {%- else -%}
+              Until there are verified customer reviews, there are no stars on this site &mdash; including on
+              a brand-new product page, where showing no rating is the honest answer.
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark" aria-hidden="true">&#10003;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Chaque &eacute;tude avec son identifiant{% else %}Every study with its identifier{% endif %}</p>
+          <p class="ln-pledge__text">
+            {%- if is_fr -%}
+              Les publications cit&eacute;es sur <a href="{{ url_science }}">la page Science</a> ouvrent
+              toutes leur article d'origine, et la page porte un bloc entier sur ce que ces travaux ne
+              prouvent pas &mdash; aucun n'a port&eacute; sur un appareil Antared.
+            {%- else -%}
+              Every paper cited on <a href="{{ url_science }}">the Science page</a> links to its original
+              publication, and the page carries a whole block on what that work does not prove &mdash; none of
+              it was run on an Antared device.
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}03 &mdash; L'achat{% else %}03 &mdash; The purchase{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Vos droits, rappel&eacute;s plut&ocirc;t que dissimul&eacute;s.{%- else -%}Your rights, spelled out rather than buried.{%- endif -%}
+        </h2>
+      </div>
+    </div>
+
+    <div class="ln-steps">
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}14 jours pour changer d'avis{% else %}14 days to change your mind{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Le droit de r&eacute;tractation s'applique &agrave; toute vente &agrave; distance dans l'Union
+            europ&eacute;enne, sans avoir &agrave; se justifier. Les modalit&eacute;s exactes figurent dans nos
+            conditions et dans <a href="{{ url_faq }}">la FAQ</a>.
+          {%- else -%}
+            The right of withdrawal applies to any distance sale in the European Union, with no
+            justification needed. The exact terms are in our policies and in
+            <a href="{{ url_faq }}">the FAQ</a>.
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Garantie l&eacute;gale de conformit&eacute;{% else %}Legal guarantee of conformity{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Deux ans en France, ind&eacute;pendamment de toute garantie commerciale. Ce n'est pas une
+            faveur, c'est la loi&nbsp;: nous pr&eacute;f&eacute;rons l'&eacute;crire plut&ocirc;t que la laisser
+            deviner.
+          {%- else -%}
+            Two years in France, independently of any commercial warranty. This is not a favour, it is
+            the law: we would rather write it down than let you guess.
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Un site bilingue, &agrave; parit&eacute;{% else %}A bilingual site, at parity{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Fran&ccedil;ais et anglais partout, y compris dans les pages techniques et les mentions
+            l&eacute;gales. Aucune page n'est laiss&eacute;e dans une langue que vous ne lisez pas.
+          {%- else -%}
+            French and English throughout, including the technical pages and the legal notices. No page
+            is left in a language you do not read.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section ln-section--soft">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Aller plus loin{% else %}Go further{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Le produit, et les gens derri&egrave;re.{%- else -%}The product, and the people behind it.{%- endif -%}
+        </h2>
+      </div>
+    </div>
+
+    <div class="ln-hub">
+      {% render 'nav-hub-card',
+         index: '01',
+         url: url_tech,
+         title_fr: 'Technologie',
+         title_en: 'Technology',
+         text_fr: 'Ce qu&#39;il y a dans un panneau&nbsp;: les LED, les canaux, la dissipation thermique et ce que la fiche technique veut dire une fois traduite.',
+         text_en: 'What is inside a panel: the LEDs, the channels, the thermal design, and what the spec sheet actually means once translated.',
+         cta_fr: 'Lire', cta_en: 'Read' %}
+
+      {% render 'nav-hub-card',
+         index: '02',
+         url: url_quality,
+         title_fr: 'Qualit&eacute;',
+         title_en: 'Quality',
+         text_fr: 'Comment un appareil entre dans la gamme, ce que nous mesurons avant de le vendre, et ce qui suffit &agrave; l&#39;&eacute;carter.',
+         text_en: 'How a device enters the range, what we measure before selling it, and what is enough to rule it out.',
+         cta_fr: 'Lire', cta_en: 'Read' %}
+
+      {% render 'nav-hub-card',
+         index: '03',
+         url: url_approach,
+         title_fr: 'Notre approche',
+         title_en: 'Our approach',
+         text_fr: 'Pourquoi nous vendons un r&eacute;sultat recherch&eacute; plut&ocirc;t qu&#39;une fiche technique, et pourquoi l&#39;espace Apprendre existe avant la boutique.',
+         text_en: 'Why we sell a sought-after outcome rather than a spec sheet, and why the Learn space exists ahead of the shop.',
+         cta_fr: 'Lire', cta_en: 'Read' %}
+
+      {% render 'nav-hub-card',
+         index: '04',
+         url: url_story,
+         title_fr: 'Notre histoire',
+         title_en: 'Our story',
+         text_fr: 'D&#39;o&ugrave; vient la marque, et pourquoi elle a choisi de s&#39;adresser d&#39;abord au march&eacute; francophone.',
+         text_en: 'Where the brand comes from, and why it chose to speak to the French-speaking market first.',
+         cta_fr: 'Lire', cta_en: 'Read' %}
+    </div>
+  </div>
+</section>
+
+{% render 'learn-product-cta',
+   handles: 'cytolight-desk,cytolight-pano-ultra,cytolight-mask',
+   heading_fr: 'Le meilleur argument reste l&#39;appareil que vous utilisez encore dans six mois.',
+   heading_en: 'The best argument is still the device you are using six months from now.',
+   text_fr: 'Comparez les spectres, lisez les protocoles, et prenez le format qui s&#39;ins&egrave;re dans votre semaine. Nous n&#39;avons rien &agrave; ajouter &agrave; &ccedil;a.',
+   text_en: 'Compare the spectra, read the protocols, and take the format that fits your week. We have nothing to add to that.'
+%}
+
+{% schema %}
+{
+  "name": "Pourquoi Antared — Hub",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Page d'atterrissage de l'onglet « Pourquoi Antared » du header. A assigner a une page de handle `why-antared`. Chaque argument doit rester verifiable ailleurs sur le site ou dans le droit applicable : ne pas y ajouter de chiffre de notoriete, de reference client ou de comparaison nominative."
+    }
+  ]
+}
+{% endschema %}
