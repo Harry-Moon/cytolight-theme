@@ -190,6 +190,41 @@ ce focus-là épinglait la rangée pour de bon, et plus rien ne se masquait apr�
 Un défilement referme donc le panneau ouvert au clic et relâche ce focus ; il ne touche jamais à un
 focus clavier.
 
+## Pages Protocoles
+
+Sept pages d'usage, servies par **une seule section** — `sections/protocol-page.liquid` — qui
+dérive le protocole depuis `page.handle`, exactement comme `main-product.liquid` le fait depuis
+`product.handle`. Sept gabarits d'une ligne, une seule mise en page à maintenir.
+
+| Handle | Gabarit | Sujet |
+|---|---|---|
+| `protocols` | `page.protocols.liquid` | index, ne décrit aucune séance |
+| `pre-workout` | `page.pre-workout.liquid` | avant l'effort |
+| `post-workout` | `page.post-workout.liquid` | après l'effort |
+| `daily-recovery` | `page.daily-recovery.liquid` | récupération quotidienne |
+| `skin-routine` | `page.skin-routine.liquid` | routine peau |
+| `full-body-routine` | `page.full-body-routine.liquid` | séance corps entier |
+| `workday-routine` | `page.workday-routine.liquid` | journée de travail |
+
+Trois règles tiennent ces pages, et elles ne se contournent pas :
+
+1. **Les quatre paramètres de séance** — moment, durée, distance, fréquence — sont présents et
+   chiffrés dans les deux langues. Trois sur quatre est un défaut.
+2. **Le bloc « ce que cette séance ne fait pas »** figure sur chaque page. C'est lui qui tient
+   la page du bon côté du principe II : décrire un usage est autorisé, promettre un effet sur
+   une pathologie ne l'est pas. Le retirer transforme la page en allégation.
+3. **Aucun chiffre de dose n'est écrit ici en premier.** Durée, fréquence et distance viennent
+   de `learn-how-it-works` ; les longueurs d'onde de `learn-wavelengths`. Ces deux pages font
+   foi. Une valeur changée ici sans l'être là-bas crée une contradiction qu'aucun script ne
+   voit — elle ne se verra qu'en clientèle.
+
+Faute de tableaux d'objets en Liquid, les listes répétées (étapes, erreurs, limites) passent par
+une chaîne à deux séparateurs : `|` sépare les éléments, `~` sépare le titre du texte. Aucun
+texte ne doit contenir ces deux caractères.
+
+Comme pour l'espace Learn, **les gabarits s'assignent à la main dans Content → Pages après le
+merge** : le sélecteur ne liste que les gabarits du thème publié.
+
 ### Répartition des contenus
 
 `learn-how-it-works` traite le mécanisme, la dose et la sécurité ; le spectre détaillé vit sur
