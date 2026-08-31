@@ -40,6 +40,11 @@ RE_NOISE = re.compile(r"<(script|style|svg)[^>]*>.*?</\1>", re.S)
 RE_TAG = re.compile(r"<[^>]+>")
 
 
+RE_MOT_DE_PASSE = re.compile(
+    r"<title>\s*(?:Please Log In|Mot de passe|Password)\s*</title>"
+    r"|name=[\"']password[\"'][^>]*type=[\"']password[\"']", re.I)
+
+
 def collecter_urls() -> list[str]:
     """Toutes les URL internes ecrites en dur dans le theme."""
     urls = set()
@@ -105,6 +110,22 @@ def main() -> int:
                          help="Seuil en dessous duquel une page est une ebauche")
     args = parseur.parse_args()
     base = args.base.rstrip("/")
+
+    # Une vitrine protegee repond 200 en servant la page de mot de passe. Sans ce
+    # garde-fou, l'audit decrit cette page et conclut que tout le site fait 31 mots
+    # et n'est pas traduit.
+    try:
+        with urllib.request.urlopen(
+                urllib.request.Request(base + "/", headers={"User-Agent": UA}),
+                timeout=30) as reponse:
+            if RE_MOT_DE_PASSE.search(reponse.read().decode("utf-8", "replace")):
+                print("La vitrine est protegee par mot de passe : l'audit decrirait\n"
+                      "cette page et pas la boutique. Levez la protection dans\n"
+                      "Online Store > Preferences, ou visez un theme de developpement\n"
+                      "avec --base http://127.0.0.1:9292")
+                return 2
+    except Exception:
+        pass  # injoignable : les controles habituels le diront page par page
 
     chemins = collecter_urls()
     print(f"{len(chemins)} URL extraites du theme — test sur {base}\n")
