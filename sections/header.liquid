@@ -89,6 +89,27 @@
         <div class="site-header__drawer-scrim" data-drawer-scrim></div>
 
         <div class="site-header__drawer-panel">
+          {%- comment -%}
+            Le burger se change bien en croix a l'ouverture, mais il se trouve
+            en haut a gauche de la barre — soit exactement sous le panneau, qui
+            part du bord gauche et passe au-dessus (z-index 201 contre 50 pour
+            l'enveloppe du header). Il est donc invisible et incliquable des que
+            le tiroir est ouvert, d'ou cette croix a l'interieur du panneau.
+
+            Comme le voile, elle demande theme.js : un <details> ne se referme
+            nativement que depuis son propre <summary>. Echap et le clic
+            exterieur reposent deja sur le meme script.
+          {%- endcomment -%}
+          <div class="site-header__drawer-head">
+            <button class="site-header__drawer-close"
+                    type="button"
+                    data-drawer-close
+                    aria-label="{% if is_fr %}Fermer le menu{% else %}Close menu{% endif %}">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+
           <nav class="site-header__drawer-nav" aria-label="{% if is_fr %}Navigation mobile{% else %}Mobile navigation{% endif %}">
             <a class="site-header__drawer-toplink" href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
             <a class="site-header__drawer-toplink" href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}</a>

@@ -629,25 +629,19 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .site-footer__brand { flex: 1 1 240px; max-width: 320px; margin-right: 20px; }
 .site-footer__brand h3 { font-family: var(--font-body); font-weight: 700; letter-spacing: .25em; font-size: 1.2rem; margin-bottom: 12px; }
 /*
- * Pastille claire sous le logo : le fichier de marque est un JPEG a fond
- * blanc (voir le commentaire de sections/footer.liquid). Sans elle, un
- * rectangle blanc brut se detacherait du fond #171110.
+ * Le logo est la version a fond transparent, dessinee pour un fond sombre :
+ * il se pose directement sur le #171110, sans pastille ni cadre.
  *
  * Selecteur a deux classes, et non `.site-footer__logo` seul : `.site-footer a`
  * pose opacity: .82 sur tous les liens du pied de page — plus specifique — et
- * lavait la pastille en gris.
+ * ternirait le lettrage.
  */
 .site-footer .site-footer__logo {
   display: inline-block;
   margin-bottom: 18px;
-  padding: 10px;
-  border-radius: 14px;
-  /* Blanc pur, comme le fond du fichier : une pastille cremee laisserait
-     voir le carre blanc du JPEG a l'interieur. */
-  background: #fff;
   opacity: 1;
 }
-.site-footer .site-footer__logo img { display: block; width: 96px; height: auto; }
+.site-footer .site-footer__logo img { display: block; width: 160px; height: auto; }
 .site-footer__brand p { opacity: .7; max-width: 320px; font-size: .9rem; }
 .site-footer__col { flex: 1 1 130px; min-width: 130px; }
 .site-footer__col h4 {
@@ -784,7 +778,7 @@ h1, h2, h3, h4,
   .site-footer__col h4 { margin-bottom: 14px; }
 }
 @media (max-width: 480px) {
-  .site-footer .site-footer__logo img { width: 84px; }
+  .site-footer .site-footer__logo img { width: 140px; }
   .site-footer__col ul li { margin-bottom: 6px; }
 }
 

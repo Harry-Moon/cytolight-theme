@@ -17,32 +17,41 @@
   assign linkedin_url = settings.social_linkedin_url
 
   comment
-    Le logo du pied de page reprend celui des reglages du theme (Theme
-    settings > Logo, aujourd'hui LOGO_ANTARED.jpg) ; le reglage de section
-    ci-dessous ne sert qu'a le surcharger.
+    Le logo du pied de page est la version a fond transparent de la marque —
+    lettrage blanc et accents rouges, dessinee pour un fond sombre. Elle vit
+    dans Content > Files sous le nom LOGO_ANTARED_transparent.png et DOIT y
+    etre presente avant le merge : rien ici ne peut verifier l'existence d'un
+    fichier, un nom absent sort en 404 et laisse une image cassee sur toutes
+    les pages.
 
-    Le fichier est un JPEG a fond blanc : pose tel quel sur le fond sombre du
-    pied de page il afficherait un rectangle blanc. Il est donc rendu dans une
-    pastille claire (.site-footer__logo), qui reste correcte si une version
-    transparente est televersee plus tard. Ne pas tenter de le detourer avec
-    un filter: invert() — le rouge de la marque virerait au cyan.
+    Shopify suffixe les doublons (photo.png -> photo_1.png) : si le fichier a
+    ete televerse deux fois, relever le nom REELLEMENT retourné par l'admin et
+    le reporter ici, ou passer par le reglage image_picker ci-dessous, qui
+    pointe la ressource sans dependre de son nom.
+
+    Ne pas revenir a LOGO_ANTARED.jpg (le logo global du theme) : c'est un
+    JPEG a fond blanc, il afficherait un rectangle blanc sur le #171110 du
+    pied de page. Ne pas tenter non plus de le detourer avec filter: invert(),
+    le rouge de la marque virerait au cyan.
   endcomment
-  assign footer_logo = section.settings.logo | default: settings.logo
+  assign footer_logo = section.settings.logo
 -%}
 
 <footer class="site-footer">
   <div class="container">
     <div class="site-footer__top">
       <div class="site-footer__brand">
-        {%- if footer_logo != blank -%}
-          <a class="site-footer__logo" href="{{ routes.root_url }}" aria-label="Antared">
-            <img src="{{ footer_logo | image_url: width: 360 }}"
-                 width="180" height="{{ 180 | divided_by: footer_logo.aspect_ratio | round }}"
+        <a class="site-footer__logo" href="{{ routes.root_url }}" aria-label="Antared">
+          {%- if footer_logo != blank -%}
+            <img src="{{ footer_logo | image_url: width: 440 }}"
+                 width="220" height="{{ 220 | divided_by: footer_logo.aspect_ratio | round }}"
                  alt="Antared" loading="lazy">
-          </a>
-        {%- else -%}
-          <h3>ANTARED</h3>
-        {%- endif -%}
+          {%- else -%}
+            <img src="{{ 'LOGO_ANTARED_transparent.png' | file_url }}"
+                 width="220" height="220"
+                 alt="Antared" loading="lazy">
+          {%- endif -%}
+        </a>
         <p>{% if is_fr %}Technologies bien-&ecirc;tre inspir&eacute;es par la science pour accompagner le sommeil, la r&eacute;cup&eacute;ration et l'&eacute;clat de la peau.{% else %}{{ section.settings.tagline | default: "Science-backed wellness technologies to enhance sleep, recovery, and beauty." }}{% endif %}</p>
         <div class="site-footer__socials">
           {% if instagram_url != blank %}<a href="{{ instagram_url }}" rel="me noopener" target="_blank" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>{% endif %}
@@ -98,7 +107,11 @@
 {
   "name": "Footer",
   "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Footer logo (overrides Theme settings > Logo)" },
+    { "type": "image_picker", "id": "logo", "label": "Footer logo \u2014 transparent background" },
+    {
+      "type": "paragraph",
+      "content": "Leave empty to use LOGO_ANTARED_transparent.png from Content > Files. Upload a version with a transparent background: the footer is dark, and the white-background LOGO_ANTARED.jpg would show as a white rectangle."
+    },
     { "type": "textarea", "id": "tagline", "label": "Tagline" },
     {
       "type": "paragraph",
