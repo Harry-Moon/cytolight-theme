@@ -3,6 +3,21 @@
   {%- assign is_fr = true -%}
 {%- endif -%}
 
+{%- comment -%}
+  La fiche DESK est visee par son objet produit plutot que par un chemin ecrit
+  en dur : product.url porte le prefixe de langue, un chemin nu ramene le
+  visiteur anglophone sur la version francaise.
+{%- endcomment -%}
+{%- assign desk_product = all_products['cytolight-desk'] -%}
+{%- assign locale_root = routes.root_url -%}
+{%- if locale_root == '/' -%}
+  {%- assign locale_root = '' -%}
+{%- endif -%}
+{%- assign desk_url = locale_root | append: '/products/cytolight-desk' -%}
+{%- if desk_product != blank -%}
+  {%- assign desk_url = desk_product.url -%}
+{%- endif -%}
+
 {%- if collection.handle == 'all' -%}
   {{ 'collection-banner-video.css' | asset_url | stylesheet_tag }}
 {%- endif -%}
@@ -28,7 +43,7 @@
       </p>
       <div class="collection-banner__actions">
         <a class="btn btn--primary" href="#collection-products">{% if is_fr %}Voir les produits{% else %}View products{% endif %}</a>
-        <a class="btn btn--ghost collection-banner__ghost" href="/products/cytolight-desk">{% if is_fr %}Commencer par DESK{% else %}Start with DESK{% endif %}</a>
+        <a class="btn btn--ghost collection-banner__ghost" href="{{ desk_url }}">{% if is_fr %}Commencer par DESK{% else %}Start with DESK{% endif %}</a>
       </div>
     </div>
     <div class="collection-banner__tease" aria-label="{% if is_fr %}Points forts{% else %}Highlights{% endif %}">

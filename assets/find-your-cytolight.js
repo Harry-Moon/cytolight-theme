@@ -4,6 +4,7 @@
   const root = document.querySelector('[data-fyc]');
   if (!root) return;
 
+  const stage = root.querySelector('[data-fyc-stage]');
   const steps = Array.from(root.querySelectorAll('[data-fyc-step]'));
   const dots = Array.from(root.querySelectorAll('[data-fyc-dot]'));
   const backBtn = root.querySelector('[data-fyc-back]');
@@ -50,7 +51,17 @@
     oldStep.classList.remove('is-active');
     oldStep.classList.add('is-leaving');
     window.clearTimeout(leaveTimer);
-    leaveTimer = window.setTimeout(() => oldStep.classList.remove('is-leaving'), 360);
+    leaveTimer = window.setTimeout(() => oldStep.classList.remove('is-leaving'), 320);
+
+    // Le sens de la glissade, et le fait qu'une sortie precede desormais
+    // l'entree : le CSS s'en sert pour choisir ses images cles et pour
+    // retarder l'entree. `is-swapped` est pose une fois et jamais retire —
+    // au chargement il n'y a rien a attendre, ensuite il y a toujours une
+    // etape a faire sortir.
+    if (stage) {
+      stage.classList.add('is-swapped');
+      stage.classList.toggle('is-back', next < current);
+    }
 
     current = next;
     if (current === resultStepIndex) showResult();
@@ -58,7 +69,7 @@
 
     root.classList.add('is-transitioning');
     window.clearTimeout(glowTimer);
-    glowTimer = window.setTimeout(() => root.classList.remove('is-transitioning'), 550);
+    glowTimer = window.setTimeout(() => root.classList.remove('is-transitioning'), 750);
 
     render();
   };

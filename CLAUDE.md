@@ -159,6 +159,14 @@ l'entrée Apprendre avec ses huit liens, et les deux barres se superposaient. `s
 est désormais le **seul** endroit où vivent les URL de l'espace — un handle qui change se corrige là,
 et nulle part ailleurs.
 
+> **Tout chemin écrit en dur porte `{{ locale_root }}`.** Un `href="/pages/faq"` nu renvoie à la
+> locale principale : le visiteur anglophone repart sur la version française, même quand la page
+> anglaise existe — c'est ce qui ramenait « Find Your Antared » sur le questionnaire français.
+> `locale_root` vaut `''` sur la locale principale et `/en` ailleurs ; il est dérivé en tête de
+> chaque section qui écrit des chemins (`header`, `cytolight-home`, `main-collection-banner`).
+> Quand un objet Shopify est disponible — `product.url`, `collection.url`, `pages[handle].url` —
+> il est préféré : il porte déjà le préfixe.
+
 `assets/learn.css` et `learn.js` ne sont chargés que par ces gabarits. Le CSS ne masque **jamais**
 rien de lui-même : c'est `learn.js` qui pose `is-armed` sur ce qu'il va animer. Sans le script — bloqué,
 404 sur le CDN, mouvement réduit — rien n'est armé et la page s'affiche entièrement. Ne pas
@@ -484,7 +492,9 @@ Ne pas annoncer qu'une modification fonctionne sans l'avoir vérifiée ainsi.
 | Thème live, connecté à `main` | `cytolight-theme/main` |
 | Thème conservé pour rollback | `CytoLight Theme v4` (non publié) |
 | Taille du thème | ~500 Ko, plafond 50 Mo |
-| Logo | `LOGO_ANTARED.jpg` dans Content → Files, porté par le réglage global `settings.logo` |
+| Logo du header | `LOGO_ANTARED_REDLIGHT_THERAPY_WHITE.webp` dans Content → Files, écrit dans `sections/header.liquid` (le réglage de section l'emporte) |
+| Logo du pied de page | `LOGO_ANTARED_transparent.png` dans Content → Files |
+| `settings.logo` (global) | `LOGO_ANTARED.jpg` — ne sert plus qu'aux données structurées |
 
 La vitrine est actuellement **protégée par mot de passe** : elle répond 200 en servant la page de
 mot de passe, ce qui fausse silencieusement tout audit lancé dessus.
