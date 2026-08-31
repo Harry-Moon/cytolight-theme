@@ -7,8 +7,13 @@
   onglet, c'est que le panneau dispose de toute la largeur : on y met un visuel
   et des liens regroupes par intitule, au lieu d'une seule colonne.
 
-  Le panneau s'ouvre au survol et au focus clavier ; theme.js ajoute en plus une
-  bascule au clic sur les elements portant data-nav-submenu, pour le tactile.
+  Chaque onglet est un LIEN, pas un bouton : il mene a la page d'atterrissage de
+  sa rubrique. Le panneau, lui, s'ouvre au survol et au focus clavier — le clic
+  n'a donc plus a l'ouvrir sur un pointeur fin. Sur un pointeur grossier
+  (tactile), ou le survol n'existe pas, theme.js intercepte la premiere touche
+  pour ouvrir le panneau ; la seconde suit le lien. Sans JavaScript, l'onglet
+  reste un lien qui mene quelque part, ce qui est le comportement de repli
+  correct : un <button> sans script ne menait nulle part.
 
   La navigation est ecrite en dur, comme le reste du theme — elle ne lit pas de
   menu Shopify. Depuis le retrait de la sous-navigation des pages Learn, ce
@@ -21,6 +26,43 @@
   if request.locale.iso_code contains 'fr'
     assign is_fr = true
   endif
+
+  # Racine localisee : routes.root_url vaut '/' sur la locale principale et
+  # '/en' (ou '/fr') sur les autres. Concatener directement donnerait '//pages'.
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  # Page d'atterrissage de chaque onglet. pages[handle].url est prefere au
+  # chemin ecrit en dur parce qu'il porte le prefixe de langue ; le repli sert
+  # tant que la page n'a pas ete creee dans l'admin.
+  assign url_shop = routes.all_products_collection_url
+
+  assign url_goals = pages['goals'].url
+  if url_goals == blank
+    assign url_goals = locale_root | append: '/pages/goals'
+  endif
+
+  assign url_protocols = pages['protocols'].url
+  if url_protocols == blank
+    assign url_protocols = locale_root | append: '/pages/protocols'
+  endif
+
+  assign url_learn = pages['academy'].url
+  if url_learn == blank
+    assign url_learn = locale_root | append: '/pages/academy'
+  endif
+
+  assign url_pro = pages['antared-pro'].url
+  if url_pro == blank
+    assign url_pro = locale_root | append: '/pages/antared-pro'
+  endif
+
+  assign url_why = pages['why-antared'].url
+  if url_why == blank
+    assign url_why = locale_root | append: '/pages/why-antared'
+  endif
 -%}
 
 {{ 'nav-menu-v2.css' | asset_url | stylesheet_tag }}
@@ -30,7 +72,7 @@
 <header class="site-header">
   <div class="site-header__proof" aria-label="Store benefits">
     <span>{% if is_fr %}Essai 14 j{% else %}14-day trial{% endif %}</span>
-    <span>{% if is_fr %}Garantie 1 an{% else %}1-year warranty{% endif %}</span>
+    <span>{% if is_fr %}Garantie 2 ans{% else %}2-year warranty{% endif %}</span>
   </div>
 
   <div class="container site-header__bar">
@@ -55,7 +97,7 @@
             <details class="site-header__drawer-group" name="cl-mobile-nav">
               <summary class="site-header__drawer-group-toggle">{% if is_fr %}Boutique{% else %}Shop{% endif %}</summary>
               <div class="site-header__drawer-group-body">
-                <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Tous les produits{% else %}All Products{% endif %}</a>
+                <a class="site-header__drawer-all" href="{{ url_shop }}">{% if is_fr %}Tous les produits{% else %}All Products{% endif %}</a>
                 <a href="/products/cytolight-mask">{% if is_fr %}Masque{% else %}Mask{% endif %}</a>
                 <a href="/products/cytolight-knee">{% if is_fr %}Genou{% else %}Knee{% endif %}</a>
                 <a href="/products/cytolight-desk">Desk</a>
@@ -70,6 +112,7 @@
             <details class="site-header__drawer-group" name="cl-mobile-nav">
               <summary class="site-header__drawer-group-toggle">{% if is_fr %}Par objectif{% else %}By Goal{% endif %}</summary>
               <div class="site-header__drawer-group-body">
+                <a class="site-header__drawer-all" href="{{ url_goals }}">{% if is_fr %}Tous les objectifs{% else %}All Goals{% endif %}</a>
                 <a href="{{ collections['recovery'].url }}">{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</a>
                 <a href="{{ collections['performance'].url }}">Performance</a>
                 <a href="{{ collections['skin-amp-glow'].url }}">{% if is_fr %}Peau &amp; &Eacute;clat{% else %}Skin &amp; Glow{% endif %}</a>
@@ -81,7 +124,7 @@
             <details class="site-header__drawer-group" name="cl-mobile-nav">
               <summary class="site-header__drawer-group-toggle">{% if is_fr %}Protocoles{% else %}Protocols{% endif %}</summary>
               <div class="site-header__drawer-group-body">
-                <a href="/pages/protocols">{% if is_fr %}Tous les protocoles{% else %}All Protocols{% endif %}</a>
+                <a class="site-header__drawer-all" href="{{ url_protocols }}">{% if is_fr %}Tous les protocoles{% else %}All Protocols{% endif %}</a>
                 <a href="/pages/pre-workout">{% if is_fr %}Avant l'entra&icirc;nement{% else %}Pre-Workout{% endif %}</a>
                 <a href="/pages/post-workout">{% if is_fr %}Apr&egrave;s l'entra&icirc;nement{% else %}Post-Workout{% endif %}</a>
                 <a href="/pages/daily-recovery">{% if is_fr %}R&eacute;cup&eacute;ration quotidienne{% else %}Daily Recovery{% endif %}</a>
@@ -94,7 +137,7 @@
             <details class="site-header__drawer-group" name="cl-mobile-nav">
               <summary class="site-header__drawer-group-toggle">{% if is_fr %}Apprendre{% else %}Learn{% endif %}</summary>
               <div class="site-header__drawer-group-body">
-                <a href="/pages/academy">{% if is_fr %}Acad&eacute;mie Antared{% else %}Antared Academy{% endif %}</a>
+                <a class="site-header__drawer-all" href="{{ url_learn }}">{% if is_fr %}Acad&eacute;mie Antared{% else %}Antared Academy{% endif %}</a>
                 <a href="/pages/benefits">{% if is_fr %}Les bienfaits{% else %}Benefits{% endif %}</a>
                 <a href="/pages/comment-ca-marche">{% if is_fr %}Comment &ccedil;a marche{% else %}How It Works{% endif %}</a>
                 <a href="/pages/wavelengths">{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}</a>
@@ -109,6 +152,7 @@
             <details class="site-header__drawer-group" name="cl-mobile-nav">
               <summary class="site-header__drawer-group-toggle">Antared Pro</summary>
               <div class="site-header__drawer-group-body">
+                <a class="site-header__drawer-all" href="{{ url_pro }}">{% if is_fr %}Antared pour les pros{% else %}Antared for professionals{% endif %}</a>
                 <a href="/pages/clinics">{% if is_fr %}Cliniques{% else %}Clinics{% endif %}</a>
                 <a href="/pages/physios">{% if is_fr %}Kin&eacute;sith&eacute;rapeutes{% else %}Physios{% endif %}</a>
                 <a href="/pages/gyms">{% if is_fr %}Salles de sport{% else %}Gyms{% endif %}</a>
@@ -121,6 +165,7 @@
             <details class="site-header__drawer-group" name="cl-mobile-nav">
               <summary class="site-header__drawer-group-toggle">{% if is_fr %}Pourquoi Antared{% else %}Why Antared{% endif %}</summary>
               <div class="site-header__drawer-group-body">
+                <a class="site-header__drawer-all" href="{{ url_why }}">{% if is_fr %}Pourquoi Antared{% else %}Why Antared{% endif %}</a>
                 <a href="/pages/technology">{% if is_fr %}Technologie{% else %}Technology{% endif %}</a>
                 <a href="/pages/quality">{% if is_fr %}Qualit&eacute;{% else %}Quality{% endif %}</a>
                 <a href="/pages/our-approach">{% if is_fr %}Notre approche{% else %}Our Approach{% endif %}</a>
@@ -150,19 +195,50 @@
     </a>
 
     <div class="site-header__utils site-header__utils--end">
+      {%- comment -%}
+        Selecteur de langue.
+
+        Une rangee de drapeaux cote a cote ne tient qu'a deux langues : la
+        troisieme deborde la barre sur mobile, et il n'y a plus de place pour
+        dire laquelle est active. Le selecteur est donc un <details> — il
+        s'ouvre et se ferme sans JavaScript, exactement comme le tiroir mobile,
+        et la liste s'allonge sans toucher a la mise en page de la barre.
+        theme.js n'ajoute que ce qu'une liste deroulante native ne sait pas
+        faire seule : se refermer sur un clic exterieur ou sur Echap.
+      {%- endcomment -%}
+      {%- assign current_lang_code = localization.language.iso_code | default: request.locale.iso_code -%}
       {%- if localization.available_languages.size > 1 -%}
-        {% form 'localization', class: 'site-header__lang-flags' %}
-          {%- for language in localization.available_languages -%}
-            <button type="submit" name="locale_code" value="{{ language.iso_code }}"
-              class="site-header__lang-flag{% if language.iso_code == localization.language.iso_code %} is-active{% endif %}"
-              aria-label="{{ language.endonym_name | capitalize }}"
-              aria-current="{% if language.iso_code == localization.language.iso_code %}true{% else %}false{% endif %}">
-              {% render 'flag-icon', code: language.iso_code %}
-            </button>
-          {%- endfor -%}
-        {% endform %}
+        <details class="site-header__lang" data-lang-menu>
+          {%- comment -%}
+            Le nom accessible doit contenir le texte visible — ici le code de
+            langue — sinon la commande vocale « cliquer sur FR » ne trouve pas
+            la cible (WCAG 2.5.3).
+          {%- endcomment -%}
+          <summary class="site-header__lang-toggle"
+                   aria-label="{% if is_fr %}Langue&nbsp;: {{ current_lang_code | upcase }}, changer{% else %}Language: {{ current_lang_code | upcase }}, change{% endif %}">
+            <span class="site-header__lang-flag is-active">{% render 'flag-icon', code: current_lang_code %}</span>
+            <span class="site-header__lang-code">{{ current_lang_code | upcase }}</span>
+            <span class="site-header__lang-caret" aria-hidden="true"></span>
+          </summary>
+
+          <div class="site-header__lang-menu">
+            {% form 'localization' %}
+              {%- for language in localization.available_languages -%}
+                {%- assign is_current = false -%}
+                {%- if language.iso_code == localization.language.iso_code -%}
+                  {%- assign is_current = true -%}
+                {%- endif -%}
+                <button type="submit" name="locale_code" value="{{ language.iso_code }}"
+                  class="site-header__lang-option{% if is_current %} is-active{% endif %}"
+                  {% if is_current %}aria-current="true"{% endif %}>
+                  <span class="site-header__lang-flag{% if is_current %} is-active{% endif %}">{% render 'flag-icon', code: language.iso_code %}</span>
+                  <span>{{ language.endonym_name | capitalize }}</span>
+                </button>
+              {%- endfor -%}
+            {% endform %}
+          </div>
+        </details>
       {%- else -%}
-        {%- assign current_lang_code = localization.language.iso_code | default: request.locale.iso_code -%}
         <span class="site-header__lang-flag is-active" aria-label="{{ localization.language.endonym_name | capitalize }}">
           {% render 'flag-icon', code: current_lang_code %}
         </span>
@@ -187,7 +263,7 @@
     <div class="site-header__nav-row">
 
       <div class="site-header__nav-item" data-nav-submenu>
-        <button type="button" class="site-header__nav-link" aria-expanded="false">{% if is_fr %}Boutique{% else %}Shop{% endif %}</button>
+        <a class="site-header__nav-link" href="{{ url_shop }}" aria-expanded="false"{% if request.path == url_shop %} aria-current="page"{% endif %}>{% if is_fr %}Boutique{% else %}Shop{% endif %}</a>
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
@@ -211,7 +287,7 @@
               </div>
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Tout parcourir{% else %}Browse{% endif %}</p>
-                <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Tous les produits{% else %}All Products{% endif %}</a>
+                <a href="{{ url_shop }}">{% if is_fr %}Tous les produits{% else %}All Products{% endif %}</a>
                 <a href="/pages/bundles">{% if is_fr %}Packs{% else %}Bundles{% endif %}</a>
                 <a href="/pages/find-your-cytolight">{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}</a>
               </div>
@@ -221,7 +297,7 @@
       </div>
 
       <div class="site-header__nav-item" data-nav-submenu>
-        <button type="button" class="site-header__nav-link" aria-expanded="false">{% if is_fr %}Par objectif{% else %}By Goal{% endif %}</button>
+        <a class="site-header__nav-link" href="{{ url_goals }}" aria-expanded="false"{% if request.path == url_goals %} aria-current="page"{% endif %}>{% if is_fr %}Par objectif{% else %}By Goal{% endif %}</a>
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
@@ -247,14 +323,14 @@
       </div>
 
       <div class="site-header__nav-item" data-nav-submenu>
-        <button type="button" class="site-header__nav-link" aria-expanded="false">{% if is_fr %}Protocoles{% else %}Protocols{% endif %}</button>
+        <a class="site-header__nav-link" href="{{ url_protocols }}" aria-expanded="false"{% if request.path == url_protocols %} aria-current="page"{% endif %}>{% if is_fr %}Protocoles{% else %}Protocols{% endif %}</a>
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
                product_handle: 'cytolight-knee',
                label: 'Antared Knee',
                caption: 'All protocols', caption_fr: 'Tous les protocoles',
-               url: '/pages/protocols' %}
+               url: url_protocols %}
             <div class="site-header__panel-groups">
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Autour de l'effort{% else %}Around training{% endif %}</p>
@@ -270,7 +346,7 @@
               </div>
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Tout voir{% else %}Browse{% endif %}</p>
-                <a href="/pages/protocols">{% if is_fr %}Tous les protocoles{% else %}All Protocols{% endif %}</a>
+                <a href="{{ url_protocols }}">{% if is_fr %}Tous les protocoles{% else %}All Protocols{% endif %}</a>
                 <a href="/pages/how-to-use">{% if is_fr %}Mode d'emploi{% else %}How to Use{% endif %}</a>
               </div>
             </div>
@@ -279,14 +355,14 @@
       </div>
 
       <div class="site-header__nav-item" data-nav-submenu>
-        <button type="button" class="site-header__nav-link" aria-expanded="false">{% if is_fr %}Apprendre{% else %}Learn{% endif %}</button>
+        <a class="site-header__nav-link" href="{{ url_learn }}" aria-expanded="false"{% if request.path == url_learn %} aria-current="page"{% endif %}>{% if is_fr %}Apprendre{% else %}Learn{% endif %}</a>
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
                image_file: 'cytolight-desk-luxury.jpg',
                label: 'Antared Academy', label_fr: 'Acad&eacute;mie Antared',
                caption: 'Start here', caption_fr: 'Commencer ici',
-               url: '/pages/academy' %}
+               url: url_learn %}
             <div class="site-header__panel-groups">
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Comprendre{% else %}Understand{% endif %}</p>
@@ -304,7 +380,7 @@
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Notre position{% else %}Where we stand{% endif %}</p>
                 <a href="/pages/nos-valeurs">{% if is_fr %}Nos valeurs{% else %}Our values{% endif %}</a>
-                <a href="/pages/academy">{% if is_fr %}Acad&eacute;mie Antared{% else %}Antared Academy{% endif %}</a>
+                <a href="{{ url_learn }}">{% if is_fr %}Acad&eacute;mie Antared{% else %}Antared Academy{% endif %}</a>
               </div>
             </div>
           </div>
@@ -312,14 +388,14 @@
       </div>
 
       <div class="site-header__nav-item" data-nav-submenu>
-        <button type="button" class="site-header__nav-link" aria-expanded="false">Antared Pro</button>
+        <a class="site-header__nav-link" href="{{ url_pro }}" aria-expanded="false"{% if request.path == url_pro %} aria-current="page"{% endif %}>Antared Pro</a>
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
                product_handle: 'cytolight-pano-ultra',
                label: 'Antared PANO ULTRA',
-               caption: 'Become a partner', caption_fr: 'Devenir partenaire',
-               url: '/pages/become-a-dealer' %}
+               caption: 'Antared for professionals', caption_fr: 'Antared pour les pros',
+               url: url_pro %}
             <div class="site-header__panel-groups">
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Sant&eacute;{% else %}Health{% endif %}</p>
@@ -342,14 +418,14 @@
       </div>
 
       <div class="site-header__nav-item" data-nav-submenu>
-        <button type="button" class="site-header__nav-link" aria-expanded="false">{% if is_fr %}Pourquoi Antared{% else %}Why Antared{% endif %}</button>
+        <a class="site-header__nav-link" href="{{ url_why }}" aria-expanded="false"{% if request.path == url_why %} aria-current="page"{% endif %}>{% if is_fr %}Pourquoi Antared{% else %}Why Antared{% endif %}</a>
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
                product_handle: 'cytolight-cap',
                label: 'Our approach', label_fr: 'Notre approche',
                caption: 'What we refuse to do', caption_fr: 'Ce que nous refusons de faire',
-               url: '/pages/nos-valeurs' %}
+               url: url_why %}
             <div class="site-header__panel-groups">
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}La marque{% else %}The brand{% endif %}</p>

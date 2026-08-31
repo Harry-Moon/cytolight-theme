@@ -1,0 +1,52 @@
+{%- comment -%}
+  Carte d'une page de destination de menu.
+
+  Les quatre pages d'atterrissage du header (Par objectif, Protocoles, Antared
+  Pro, Pourquoi Antared) redistribuent toutes vers la meme forme de sous-pages :
+  cette carte evite d'en reecrire le balisage quatre fois, et garantit qu'elles
+  se ressemblent.
+
+  Parametres :
+    index     numero affiche ('01', '02', ...)
+    title_fr / title_en   intitule
+    text_fr  / text_en    phrase de description
+    url       destination — SI ELLE EST VIDE, la carte est rendue en <div>
+              plutot qu'en lien mort. C'est ce qui permet d'annoncer une
+              rubrique dont la page n'existe pas encore dans l'admin sans
+              publier un lien vers une 404.
+    cta_fr / cta_en       libelle du lien (defaut : Decouvrir / Discover)
+
+  La carte reprend .ln-hub__card de learn.css : aucune feuille de style
+  supplementaire, et le meme rendu que le hub de l'espace Learn.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign card_title = title_en
+  assign card_text = text_en
+  assign card_cta = cta_en | default: 'Discover'
+  if is_fr
+    assign card_title = title_fr | default: title_en
+    assign card_text = text_fr | default: text_en
+    assign card_cta = cta_fr | default: 'D&eacute;couvrir'
+  endif
+-%}
+
+{%- if url != blank -%}
+  <a class="ln-hub__card ln-reveal" href="{{ url }}">
+    <span class="ln-hub__num">{{ index }}</span>
+    <h3 class="ln-hub__title">{{ card_title }}</h3>
+    <p class="ln-hub__text">{{ card_text }}</p>
+    <span class="ln-link">{{ card_cta }} <span aria-hidden="true">&rarr;</span></span>
+  </a>
+{%- else -%}
+  <div class="ln-hub__card ln-reveal">
+    <span class="ln-hub__num">{{ index }}</span>
+    <h3 class="ln-hub__title">{{ card_title }}</h3>
+    <p class="ln-hub__text">{{ card_text }}</p>
+  </div>
+{%- endif -%}

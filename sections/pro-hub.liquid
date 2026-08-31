@@ -1,0 +1,313 @@
+{%- comment -%}
+  Antared Pro — page d'atterrissage de l'onglet B2B.
+
+  Le brief produit note que l'axe professionnel etait deja cable dans la
+  navigation alors qu'aucune des six pages de segment n'existait : un menu qui
+  ne menait nulle part. Cette page est le point d'arrivee manquant. Elle tient
+  seule, sans dependre de ces six pages : chaque carte est resolue par handle
+  et se rend sans lien tant que la page correspondante n'a pas ete creee dans
+  l'admin (voir snippets/nav-hub-card.liquid).
+
+  Aucun chiffre, aucun tarif, aucun effectif client ne figure ici tant qu'il
+  n'y en a pas de reel a publier (constitution, principe III). Toutes les
+  cartes convergent vers la page de contact, qui est le seul engagement que
+  nous pouvons tenir aujourd'hui.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign url_clinics = pages['clinics'].url
+  assign url_physios = pages['physios'].url
+  assign url_gyms = pages['gyms'].url
+  assign url_hotels = pages['hotels-spas'].url
+  assign url_corporate = pages['corporate-wellness'].url
+  assign url_dealer = pages['become-a-dealer'].url
+
+  assign url_contact = pages['contact'].url
+  if url_contact == blank
+    assign url_contact = locale_root | append: '/pages/contact'
+  endif
+
+  assign url_science = pages['science'].url
+  if url_science == blank
+    assign url_science = locale_root | append: '/pages/science'
+  endif
+
+  assign url_values = pages['nos-valeurs'].url
+  if url_values == blank
+    assign url_values = locale_root | append: '/pages/nos-valeurs'
+  endif
+
+  assign url_wavelengths = pages['wavelengths'].url
+  if url_wavelengths == blank
+    assign url_wavelengths = locale_root | append: '/pages/wavelengths'
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      Antared Pro
+    </p>
+    <p class="ln-kicker">Antared Pro</p>
+    <h1 class="ln-title">
+      {%- if is_fr -%}
+        &Eacute;quiper un lieu, ce n'est pas acheter six fois le m&ecirc;me appareil.
+      {%- else -%}
+        Equipping a space is not buying the same device six times over.
+      {%- endif -%}
+    </h1>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Antared Pro est notre offre pour les lieux qui re&ccedil;oivent du public&nbsp;: cabinets,
+        salles, spas, entreprises, et revendeurs. Les questions n'y sont pas les m&ecirc;mes qu'en
+        vente directe &mdash; surface &agrave; couvrir, rotation, encombrement, maintenance, et ce qu'on a
+        le droit d'&eacute;crire sur une affiche.
+      {%- else -%}
+        Antared Pro is our offer for spaces that welcome people: practices, gyms, spas, workplaces,
+        and resellers. The questions are not the ones consumers ask &mdash; surface to cover, turnover,
+        footprint, maintenance, and what you are allowed to write on a poster.
+      {%- endif -%}
+    </p>
+
+    <div class="ln-actions">
+      <a class="ln-button ln-button--light" href="{{ url_contact }}">
+        {% if is_fr %}Nous &eacute;crire{% else %}Get in touch{% endif %}
+      </a>
+      <a class="ln-button ln-button--line" href="{{ routes.all_products_collection_url }}">
+        {% if is_fr %}Voir les appareils{% else %}See the devices{% endif %}
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="ln-section">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Six contextes{% else %}Six contexts{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Dites-nous o&ugrave; l'appareil sera install&eacute;.{%- else -%}Tell us where the device will live.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Le lieu commande tout&nbsp;: le format, la puissance utile, la dur&eacute;e d'une s&eacute;ance,
+            et le discours que vous pourrez tenir &agrave; vos clients sans sortir du cadre l&eacute;gal.
+          {%- else -%}
+            The space decides everything: the format, the useful output, the length of a session,
+            and what you can tell your clients without stepping outside the legal frame.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-hub">
+      {% render 'nav-hub-card',
+         index: '01',
+         url: url_clinics,
+         title_fr: 'Cliniques et cabinets',
+         title_en: 'Clinics and practices',
+         text_fr: 'Un espace d&eacute;di&eacute;, plusieurs passages par jour, et un cadre r&eacute;glementaire strict sur ce qui peut &ecirc;tre annonc&eacute; au patient. Nos appareils sont des produits de bien-&ecirc;tre, jamais pr&eacute;sent&eacute;s autrement.',
+         text_en: 'A dedicated room, several sessions a day, and a strict frame on what may be announced to a patient. Our devices are wellness products, and are never presented as anything else.',
+         cta_fr: 'En savoir plus', cta_en: 'Learn more' %}
+
+      {% render 'nav-hub-card',
+         index: '02',
+         url: url_physios,
+         title_fr: 'Kin&eacute;sith&eacute;rapeutes',
+         title_en: 'Physiotherapists',
+         text_fr: 'Des formats souples qui se posent sur une zone pendant que vous travaillez ailleurs, et se nettoient entre deux patients sans immobiliser la salle.',
+         text_en: 'Soft formats that sit on one area while you work elsewhere, and clean down between two patients without taking the room out of service.',
+         cta_fr: 'En savoir plus', cta_en: 'Learn more' %}
+
+      {% render 'nav-hub-card',
+         index: '03',
+         url: url_gyms,
+         title_fr: 'Salles de sport',
+         title_en: 'Gyms',
+         text_fr: 'Un coin r&eacute;cup&eacute;ration, avec le d&eacute;bit de passage d&#39;un vestiaire&nbsp;: grands formats, s&eacute;ances courtes, mat&eacute;riel qui supporte d&#39;&ecirc;tre allum&eacute; toute la journ&eacute;e.',
+         text_en: 'A recovery corner, running at changing-room throughput: large formats, short sessions, hardware that tolerates being on all day.',
+         cta_fr: 'En savoir plus', cta_en: 'Learn more' %}
+
+      {% render 'nav-hub-card',
+         index: '04',
+         url: url_hotels,
+         title_fr: 'H&ocirc;tels et spas',
+         title_en: 'Hotels and spas',
+         text_fr: 'Le format compte autant que la technique&nbsp;: l&#39;appareil est vu par le client avant d&#39;&ecirc;tre utilis&eacute; par lui. Finitions, encombrement, int&eacute;gration &agrave; une cabine existante.',
+         text_en: 'Here the object matters as much as the optics: guests see the device before they use it. Finish, footprint, and how it fits an existing treatment room.',
+         cta_fr: 'En savoir plus', cta_en: 'Learn more' %}
+
+      {% render 'nav-hub-card',
+         index: '05',
+         url: url_corporate,
+         title_fr: 'Bien-&ecirc;tre en entreprise',
+         title_en: 'Corporate wellness',
+         text_fr: 'Une salle de pause, un cr&eacute;neau de dix minutes, et des utilisateurs qui n&#39;ont re&ccedil;u aucune formation. La simplicit&eacute; d&#39;usage prime sur le nombre de r&eacute;glages.',
+         text_en: 'A break room, a ten-minute slot, and users who have had no training at all. Simplicity of use beats the number of settings.',
+         cta_fr: 'En savoir plus', cta_en: 'Learn more' %}
+
+      {% render 'nav-hub-card',
+         index: '06',
+         url: url_dealer,
+         title_fr: 'Devenir revendeur',
+         title_en: 'Become a dealer',
+         text_fr: 'Distribuer Antared sur votre march&eacute;. Nous fournissons les fiches techniques, les mesures d&#39;irradiance avec leur distance, et les textes bilingues FR / EN.',
+         text_en: 'Distributing Antared on your market. We supply the technical sheets, the irradiance measurements with their distance, and the bilingual FR / EN copy.',
+         cta_fr: 'En savoir plus', cta_en: 'Learn more' %}
+    </div>
+  </div>
+</section>
+
+<section class="ln-section ln-section--soft">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Ce que nous fournissons{% else %}What we supply{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Le mat&eacute;riel, et de quoi en parler sans se tromper.{%- else -%}The hardware, and what you need to talk about it correctly.{%- endif -%}
+        </h2>
+      </div>
+    </div>
+
+    <div class="ln-steps">
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Les chiffres, avec leur distance{% else %}The numbers, with their distance{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Une irradiance sans distance de mesure ne veut rien dire. Les n&ocirc;tres sont publi&eacute;es
+            sous la forme mW/cm&sup2; &agrave; X cm, sur le site comme dans les documents que nous
+            transmettons.
+          {%- else -%}
+            Irradiance without a measurement distance means nothing. Ours are published as
+            mW/cm&sup2; at X cm, on the site and in the documents we send you.
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Le spectre, canal par canal{% else %}The spectrum, channel by channel{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            Quelles longueurs d'onde, sur quel appareil, et lesquelles sont pilotables
+            s&eacute;par&eacute;ment. La correspondance compl&egrave;te est publique sur
+            <a href="{{ url_wavelengths }}">la page Longueurs d'onde</a>.
+          {%- else -%}
+            Which wavelengths, on which device, and which of them are controlled separately. The
+            full mapping is public on <a href="{{ url_wavelengths }}">the Wavelengths page</a>.
+          {%- endif -%}
+        </p>
+      </div>
+      <div class="ln-step ln-reveal">
+        <h3 class="ln-step__title">{% if is_fr %}Des textes utilisables tels quels{% else %}Copy you can use as it stands{% endif %}</h3>
+        <p class="ln-step__text">
+          {%- if is_fr -%}
+            En fran&ccedil;ais et en anglais, &eacute;crits dans le cadre l&eacute;gal du produit de
+            bien-&ecirc;tre. Vous n'aurez pas &agrave; r&eacute;&eacute;crire une affiche parce qu'elle
+            promet un traitement.
+          {%- else -%}
+            In French and English, written inside the legal frame of a wellness product. You will
+            not have to rewrite a poster because it promises a treatment.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-note ln-reveal">
+      <p class="ln-note__title">
+        {%- if is_fr -%}Le cadre, dit une bonne fois{%- else -%}The frame, stated once and for all{%- endif -%}
+      </p>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            Les appareils Antared sont des <strong>produits de bien-&ecirc;tre</strong>, sans marquage
+            CE de dispositif m&eacute;dical. Un professionnel de sant&eacute; qui les propose le fait en
+            compl&eacute;ment de sa pratique, sans all&eacute;gation de traitement, de gu&eacute;rison ou de
+            soulagement d'une pathologie.
+          {%- else -%}
+            Antared devices are <strong>wellness products</strong>, without CE medical-device marking.
+            A health professional offering them does so alongside their practice, with no claim of
+            treating, curing, or relieving any condition.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Nous ne fournissons ni protocole th&eacute;rapeutique, ni support marketing promettant un
+            r&eacute;sultat clinique. Ce que dit la litt&eacute;rature &mdash; et ce qu'elle ne dit pas &mdash; est
+            expos&eacute; sur <a href="{{ url_science }}">la page Science</a>.
+          {%- else -%}
+            We supply neither therapeutic protocols nor marketing material promising a clinical
+            outcome. What the literature does &mdash; and does not &mdash; say is set out on
+            <a href="{{ url_science }}">the Science page</a>.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Les m&ecirc;mes r&egrave;gles d'&eacute;criture s'appliquent &agrave; nos partenaires qu'&agrave;
+            nous&nbsp;: elles sont publiques sur <a href="{{ url_values }}">Nos valeurs</a>.
+          {%- else -%}
+            The same writing rules apply to our partners as to us: they are public on
+            <a href="{{ url_values }}">Our values</a>.
+          {%- endif -%}
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="ln-cta">
+  <div class="ln-shell">
+    <p class="ln-kicker">{% if is_fr %}Parler &agrave; quelqu'un{% else %}Talk to someone{% endif %}</p>
+    <h2 class="ln-title ln-cta__title">
+      {%- if is_fr -%}
+        &Eacute;crivez-nous ce que vous voulez &eacute;quiper.
+      {%- else -%}
+        Tell us what you want to equip.
+      {%- endif -%}
+    </h2>
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Le lieu, la surface &agrave; couvrir, le nombre de passages par jour et votre calendrier
+        suffisent pour une premi&egrave;re r&eacute;ponse utile. Nous r&eacute;pondons en fran&ccedil;ais
+        comme en anglais.
+      {%- else -%}
+        The space, the surface to cover, how many sessions a day, and your timeline are enough for
+        a first useful answer. We reply in French and in English.
+      {%- endif -%}
+    </p>
+
+    <div class="ln-actions">
+      <a class="ln-button" href="{{ url_contact }}">
+        {% if is_fr %}Nous &eacute;crire{% else %}Get in touch{% endif %}
+      </a>
+      <a class="ln-button ln-button--line" href="{{ routes.all_products_collection_url }}">
+        {% if is_fr %}Voir les appareils{% else %}See the devices{% endif %}
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Antared Pro — Hub",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Page d'atterrissage de l'onglet « Antared Pro » du header. A assigner a une page de handle `antared-pro`. Les six cartes de segment sont resolues par handle (clinics, physios, gyms, hotels-spas, corporate-wellness, become-a-dealer) : tant qu'une page n'existe pas dans l'admin, sa carte s'affiche sans lien. Ne pas ajouter de tarif, de reference client ou de certification qui n'existe pas."
+    }
+  ]
+}
+{% endschema %}

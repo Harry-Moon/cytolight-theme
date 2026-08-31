@@ -117,12 +117,31 @@
   transition: background .2s var(--ln-ease), transform .2s var(--ln-ease);
 }
 .ln-button:hover { background: var(--ln-red-dark); transform: translateY(-1px); }
+
+/* Contrat des variantes, a respecter en posant le bouton : `--light` et
+   `--line` sont dessines pour un FOND SOMBRE (hero, .ln-section--dark,
+   .ln-cta), `--ink` pour un FOND CLAIR. Le rouge plein, lui, va partout.
+   Un `--line` pose sur une section claire ecrit en blanc sur creme. */
 .ln-button--light { background: #fff; color: #111; }
 .ln-button--light:hover { background: #f0f0f0; }
 .ln-button--line { border-color: rgba(255, 255, 255, .55); background: transparent; color: #fff; }
 .ln-button--line:hover { background: rgba(255, 255, 255, .1); }
 .ln-button--ink { background: transparent; border-color: rgba(0, 0, 0, .22); color: var(--ln-ink); }
 .ln-button--ink:hover { background: var(--ln-ink); color: #fff; }
+
+/* `.ln-page a { color: inherit }` (0,1,1) est plus specifique que
+   `.ln-button--light` (0,1,0) : sans ce rappel, un bouton clair pose dans un
+   hero sombre herite du blanc ambiant et son libelle disparait sur son propre
+   fond blanc. Le meme piege inverse un bouton rouge pose dans une section
+   claire, dont le texte devient sombre. On reaffirme donc chaque couleur avec
+   la specificite qu'il faut, plutot que d'elargir `.ln-page a` — cette regle
+   sert a neutraliser le soulignement des liens de prose, pas a teindre les
+   boutons. */
+.ln-page a.ln-button { color: #fff; }
+.ln-page a.ln-button--light { color: #111; }
+.ln-page a.ln-button--line { color: #fff; }
+.ln-page a.ln-button--ink { color: var(--ln-ink); }
+.ln-page a.ln-button--ink:hover { color: #fff; }
 .ln-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 
 .ln-section { padding: clamp(72px, 9vw, 124px) 0; }
