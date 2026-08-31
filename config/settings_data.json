@@ -9,8 +9,8 @@
  */
 {
   "current": {
-    "favicon": "shopify://shop_images/cytolight-logo_copie.jpg",
-    "logo": "shopify://shop_images/cytolight-logo.jpg",
+    "favicon": "shopify://shop_images/antared_redlight_favicon.png",
+    "logo": "shopify://shop_images/LOGO_ANTARED.jpg",
     "color_background": "#f5eee7",
     "color_background_soft": "#faede3",
     "color_foreground": "#171110",
@@ -33,8 +33,8 @@
           "hero_heading_fr": "La lumi&egrave;re qui transforme votre quotidien.",
           "hero_text_en": "Intelligent red light therapy systems designed for recovery, skin, sleep, and energy.",
           "hero_text_fr": "Des syst&egrave;mes de luminoth&eacute;rapie rouge intelligents, con&ccedil;us pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l'&eacute;nergie.",
-          "primary_cta_en": "Discover CytoLight DESK",
-          "primary_cta_fr": "D&eacute;couvrir CytoLight DESK",
+          "primary_cta_en": "Discover Antared DESK",
+          "primary_cta_fr": "D&eacute;couvrir Antared DESK",
           "primary_cta_url": "",
           "secondary_cta_en": "Explore the range",
           "secondary_cta_fr": "Voir la gamme",
@@ -59,8 +59,8 @@
           "products_title": "The Most Advanced Wellness Technology",
           "prod1_badge": "9th Gen",
           "prod1_series_label": "The Proven Leader",
-          "prod1_name": "CytoLight DESK",
-          "prod1_desc": "Desk-ready red light therapy, clinically precise. The CytoLight Office delivers 7 independent therapeutic wavelengths — 590, 630, 660, 810, 830, 850 & 940nm — each individually adjustable for brightness and pulse intensity via a full-colour touch screen or Bluetooth app. Higher irradiance output means deeper cellular penetration in less time, while smart modes including a customisable scene library, built-in timer, alarm clock, and adjustable pulsing let you dial in the perfect protocol for focus, recovery, or sleep preparation — all from your desk.",
+          "prod1_name": "Antared DESK",
+          "prod1_desc": "Desk-ready red light therapy, clinically precise. The Antared Office delivers 7 independent therapeutic wavelengths — 590, 630, 660, 810, 830, 850 & 940nm — each individually adjustable for brightness and pulse intensity via a full-colour touch screen or Bluetooth app. Higher irradiance output means deeper cellular penetration in less time, while smart modes including a customisable scene library, built-in timer, alarm clock, and adjustable pulsing let you dial in the perfect protocol for focus, recovery, or sleep preparation — all from your desk.",
           "prod1_feat1": "7-Wave full-spectrum output",
           "prod1_feat2": "Ultra-high irradiance power",
           "prod1_feat3": "Touchscreen control",
@@ -70,8 +70,8 @@
           "prod1_image": "shopify://shop_images/CityLight_Desk_84a3d2aa-a9c4-42a6-9b94-c6d8325dd749.png",
           "prod2_badge": "New",
           "prod2_series_label": "Meet the All New",
-          "prod2_name": "CytoLight  PANO",
-          "prod2_desc": "The CytoLight PANO is a premium full-spectrum red light therapy panel designed for bedrooms, spas, recovery rooms, and luxury wellness spaces. Featuring 7 independently controlled therapeutic wavelengths — 590, 630, 660, 810, 830, 850 & 940nm — it delivers immersive, high-irradiance light therapy with precise control over brightness and pulse intensity.\nControlled via a full-colour touchscreen or Bluetooth app, the CytoLight PANO includes customizable therapy scenes, adjustable pulsing modes, timers, and smart wellness presets designed to support recovery, relaxation, skin wellness, and sleep preparation — all within a sleek panoramic design made to integrate beautifully into modern interiors.",
+          "prod2_name": "Antared  PANO",
+          "prod2_desc": "The Antared PANO is a premium full-spectrum red light therapy panel designed for bedrooms, spas, recovery rooms, and luxury wellness spaces. Featuring 7 independently controlled therapeutic wavelengths — 590, 630, 660, 810, 830, 850 & 940nm — it delivers immersive, high-irradiance light therapy with precise control over brightness and pulse intensity.\nControlled via a full-colour touchscreen or Bluetooth app, the Antared PANO includes customizable therapy scenes, adjustable pulsing modes, timers, and smart wellness presets designed to support recovery, relaxation, skin wellness, and sleep preparation — all within a sleek panoramic design made to integrate beautifully into modern interiors.",
           "prod2_feat1": "Individual wavelength control",
           "prod2_feat2": "Customizable pulse output",
           "prod2_feat3": "Zero-gap modular design",
@@ -104,8 +104,8 @@
       "header": {
         "type": "header",
         "custom_css": [
-          ".site-header__mobile-menu:not([open]) .site-header__mobile-panel {display: none !important; }",
-          ".site-header__accordion:not([open]) .site-header__accordion-body {display: none !important; }"
+          ".site-header__mobile-menu:not([open]) .site-header__mobile-panel {display: none !important;}",
+          ".site-header__accordion:not([open]) .site-header__accordion-body {display: none !important;}"
         ],
         "settings": {
           "menu": "main-menu"

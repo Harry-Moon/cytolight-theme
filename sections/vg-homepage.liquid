@@ -306,8 +306,8 @@
           </div>
           <div class="vg-product-body">
             <div class="vg-product-series">{% if is_fr %}La r&eacute;f&eacute;rence de bureau{% else %}{{ section.settings.prod1_series_label | default: 'The Proven Leader' }}{% endif %}</div>
-            <h3>{{ section.settings.prod1_name | default: 'CytoLight Original' }}</h3>
-            <p>{% if is_fr %}La luminoth&eacute;rapie rouge de bureau, pr&eacute;cise et &eacute;l&eacute;gante. CytoLight DESK combine 7 longueurs d'onde ind&eacute;pendantes avec contr&ocirc;le tactile et application pour adapter chaque s&eacute;ance &agrave; la r&eacute;cup&eacute;ration, &agrave; la concentration ou au sommeil.{% else %}{{ section.settings.prod1_desc | default: 'Advanced multi-spectrum output with superior power density. Digital control system. Delivers clinical-grade results with simplified daily operation.' }}{% endif %}</p>
+            <h3>{{ section.settings.prod1_name | default: 'Antared Original' }}</h3>
+            <p>{% if is_fr %}La luminoth&eacute;rapie rouge de bureau, pr&eacute;cise et &eacute;l&eacute;gante. Antared DESK combine 7 longueurs d'onde ind&eacute;pendantes avec contr&ocirc;le tactile et application pour adapter chaque s&eacute;ance &agrave; la r&eacute;cup&eacute;ration, &agrave; la concentration ou au sommeil.{% else %}{{ section.settings.prod1_desc | default: 'Advanced multi-spectrum output with superior power density. Digital control system. Delivers clinical-grade results with simplified daily operation.' }}{% endif %}</p>
             <ul class="vg-features">
               <li>{% if is_fr %}Spectre complet &agrave; 7 longueurs d'onde{% else %}{{ section.settings.prod1_feat1 | default: '7-Wave full-spectrum output' }}{% endif %}</li>
               <li>{% if is_fr %}Irradiance haute puissance{% else %}{{ section.settings.prod1_feat2 | default: 'Ultra-high irradiance power' }}{% endif %}</li>
@@ -332,7 +332,7 @@
           </div>
           <div class="vg-product-body">
             <div class="vg-product-series">{% if is_fr %}D&eacute;couvrez le nouveau{% else %}{{ section.settings.prod2_series_label | default: 'Meet the All New' }}{% endif %}</div>
-            <h3>{{ section.settings.prod2_name | default: 'CytoLight PRO' }}</h3>
+            <h3>{{ section.settings.prod2_name | default: 'Antared PRO' }}</h3>
             <p>{% if is_fr %}Panneau panoramique premium con&ccedil;u pour les chambres, spas et espaces bien-&ecirc;tre. Il offre une th&eacute;rapie immersive &agrave; 7 longueurs d'onde avec contr&ocirc;le pr&eacute;cis de la luminosit&eacute;, des pulsations et des programmes.{% else %}{{ section.settings.prod2_desc | default: '50% more output energy. Precision wavelength control. Six intelligent preset modes. Faster sessions, focused results.' }}{% endif %}</p>
             <ul class="vg-features">
               <li>{% if is_fr %}Contr&ocirc;le par longueur d'onde{% else %}{{ section.settings.prod2_feat1 | default: 'Individual wavelength control' }}{% endif %}</li>
@@ -388,7 +388,7 @@
 
   <section class="vg-section vg-section--alt2">
     <div class="vg-inner--md vg-center">
-      <div class="vg-label">{% if is_fr %}Pourquoi CytoLight{% else %}{{ section.settings.diff_label | default: 'Why Us' }}{% endif %}</div>
+      <div class="vg-label">{% if is_fr %}Pourquoi Antared{% else %}{{ section.settings.diff_label | default: 'Why Us' }}{% endif %}</div>
       <h2 class="vg-title">{% if is_fr %}Une approche <em>clinique</em><br/>du bien-&ecirc;tre &agrave; domicile{% else %}We Are the <em>Clinical Standard</em><br/>in Wellness Technology{% endif %}</h2>
       <p class="vg-subtitle">{% if is_fr %}Des appareils puissants, faciles &agrave; utiliser et pens&eacute;s pour des routines r&eacute;guli&egrave;res, &agrave; la maison comme au bureau.{% else %}{{ section.settings.diff_subtitle | default: 'For 10+ years, pioneering ultra-high-performance wellness devices trusted by professionals worldwide.' }}{% endif %}</p>
     </div>
@@ -449,7 +449,7 @@
           {%- endfor -%}
         {%- else -%}
           <div class="vg-fit-card"><div class="vg-fit-img"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="18" y2="12"/><rect x="1" y="10" width="4" height="4" rx="1"/><rect x="19" y="10" width="4" height="4" rx="1"/><rect x="5" y="8" width="3" height="8" rx="1"/><rect x="16" y="8" width="3" height="8" rx="1"/></svg></div><div class="vg-fit-body"><h4>{% if is_fr %}<em>Syst&egrave;mes</em> corps entier{% else %}<em>Full-Body</em> Systems{% endif %}</h4><p>{% if is_fr %}Couverture large pour une routine compl&egrave;te.{% else %}Whole-body coverage for maximum daily results.{% endif %}</p><a href="/collections/all" class="vg-fit-link">{% if is_fr %}Acheter &rarr;{% else %}Shop Now &rarr;{% endif %}</a></div></div>
-          <div class="vg-fit-card"><div class="vg-fit-img"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="vg-fit-body"><h4>{% if is_fr %}<em>Gamme</em> essentielle{% else %}<em>Essential</em> Range{% endif %}</h4><p>{% if is_fr %}La technologie CytoLight dans un format accessible.{% else %}The original proven technology at an accessible price.{% endif %}</p><a href="/collections/all" class="vg-fit-link">{% if is_fr %}Acheter &rarr;{% else %}Shop Now &rarr;{% endif %}</a></div></div>
+          <div class="vg-fit-card"><div class="vg-fit-img"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="vg-fit-body"><h4>{% if is_fr %}<em>Gamme</em> essentielle{% else %}<em>Essential</em> Range{% endif %}</h4><p>{% if is_fr %}La technologie Antared dans un format accessible.{% else %}The original proven technology at an accessible price.{% endif %}</p><a href="/collections/all" class="vg-fit-link">{% if is_fr %}Acheter &rarr;{% else %}Shop Now &rarr;{% endif %}</a></div></div>
           <div class="vg-fit-card"><div class="vg-fit-img"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="vg-fit-body"><h4>{% if is_fr %}<em>Appareils</em> r&eacute;cup&eacute;ration{% else %}<em>Recovery</em> Devices{% endif %}</h4><p>{% if is_fr %}Pens&eacute;s pour les rituels de r&eacute;cup&eacute;ration et de bien-&ecirc;tre.{% else %}Purpose-built for deep recovery and daily wellness rituals.{% endif %}</p><a href="/collections/all" class="vg-fit-link">{% if is_fr %}Acheter &rarr;{% else %}Shop Now &rarr;{% endif %}</a></div></div>
           <div class="vg-fit-card"><div class="vg-fit-img"><svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><div class="vg-fit-body"><h4>{% if is_fr %}<em>Supports</em> et fixations{% else %}<em>Stands</em> &amp; Mounts{% endif %}</h4><p>{% if is_fr %}Placez votre appareil au bon angle, sans effort.{% else %}Position your device at the perfect angle for full effect.{% endif %}</p><a href="/collections/all" class="vg-fit-link">{% if is_fr %}Acheter &rarr;{% else %}Shop Now &rarr;{% endif %}</a></div></div>
         {%- endif -%}
@@ -556,7 +556,7 @@
 
 {% schema %}
 {
-  "name": "CytoLight Homepage",
+  "name": "Antared Homepage",
   "tag": "section",
   "class": "vg-homepage",
   "settings": [
@@ -577,7 +577,7 @@
     { "type": "text", "id": "products_title", "label": "Section title", "default": "The Most Advanced Wellness Technology" },
     { "type": "text", "id": "prod1_badge", "label": "Product 1 badge", "default": "9th Gen" },
     { "type": "text", "id": "prod1_series_label", "label": "Product 1 series label", "default": "The Proven Leader" },
-    { "type": "text", "id": "prod1_name", "label": "Product 1 name", "default": "CytoLight Original" },
+    { "type": "text", "id": "prod1_name", "label": "Product 1 name", "default": "Antared Original" },
     { "type": "textarea", "id": "prod1_desc", "label": "Product 1 description" },
     { "type": "text", "id": "prod1_feat1", "label": "Product 1 feature 1", "default": "7-Wave full-spectrum output" },
     { "type": "text", "id": "prod1_feat2", "label": "Product 1 feature 2", "default": "Ultra-high irradiance power" },
@@ -588,7 +588,7 @@
     { "type": "image_picker", "id": "prod1_image", "label": "Product 1 image" },
     { "type": "text", "id": "prod2_badge", "label": "Product 2 badge", "default": "New" },
     { "type": "text", "id": "prod2_series_label", "label": "Product 2 series label", "default": "Meet the All New" },
-    { "type": "text", "id": "prod2_name", "label": "Product 2 name", "default": "CytoLight PRO" },
+    { "type": "text", "id": "prod2_name", "label": "Product 2 name", "default": "Antared PRO" },
     { "type": "textarea", "id": "prod2_desc", "label": "Product 2 description" },
     { "type": "text", "id": "prod2_feat1", "label": "Product 2 feature 1", "default": "Individual wavelength control" },
     { "type": "text", "id": "prod2_feat2", "label": "Product 2 feature 2", "default": "Customizable pulse output" },
@@ -643,7 +643,7 @@
     }
   ],
   "presets": [
-    { "name": "CytoLight Homepage" }
+    { "name": "Antared Homepage" }
   ]
 }
 {% endschema %}

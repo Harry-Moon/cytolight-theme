@@ -21,7 +21,7 @@
   <div class="container">
     <div class="site-footer__top">
       <div class="site-footer__brand">
-        <h3>CYTOLIGHT</h3>
+        <h3>ANTARED</h3>
         <p>{% if is_fr %}Technologies bien-&ecirc;tre inspir&eacute;es par la science pour accompagner le sommeil, la r&eacute;cup&eacute;ration et l'&eacute;clat de la peau.{% else %}{{ section.settings.tagline | default: "Science-backed wellness technologies to enhance sleep, recovery, and beauty." }}{% endif %}</p>
         <div class="site-footer__socials">
           {% if instagram_url != blank %}<a href="{{ instagram_url }}" rel="me noopener" target="_blank" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>{% endif %}
@@ -67,7 +67,7 @@
     {%- endif -%}
 
     <div class="site-footer__bottom">
-      <span>&copy; {{ 'now' | date: "%Y" }} CytoLight. {% if is_fr %}Tous droits r&eacute;serv&eacute;s.{% else %}All rights reserved.{% endif %}</span>
+      <span>&copy; {{ 'now' | date: "%Y" }} Antared. {% if is_fr %}Tous droits r&eacute;serv&eacute;s.{% else %}All rights reserved.{% endif %}</span>
       <span>{{ shop.address.country }} &middot; {{ cart.currency.iso_code }}</span>
     </div>
   </div>

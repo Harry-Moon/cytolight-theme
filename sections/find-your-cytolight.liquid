@@ -1,8 +1,8 @@
 {%- comment -%}
-  Find Your CytoLight — 60-second needs quiz.
+  Find Your Antared — 60-second needs quiz.
 
   4 questions (location, focus, experience, usage style) score against the 7
-  CytoLight devices client-side; the result step reveals the matching
+  Antared devices client-side; the result step reveals the matching
   product's real Shopify data (price/url via Liquid, never hardcoded).
 {%- endcomment -%}
 
@@ -24,7 +24,7 @@
 {{ 'find-your-cytolight.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'find-your-cytolight.js' | asset_url }}" defer></script>
 
-<section class="fyc" data-fyc aria-label="{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}">
+<section class="fyc" data-fyc aria-label="{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}">
   <div class="fyc-shell">
     <div class="fyc-card">
       <button type="button" class="fyc-back" data-fyc-back aria-label="{% if is_fr %}Retour{% else %}Back{% endif %}">
@@ -35,9 +35,9 @@
       <div class="fyc-stage" data-fyc-stage>
 
         <div class="fyc-step is-active" data-fyc-step data-fyc-kind="welcome">
-          <p class="fyc-eyebrow">{% if is_fr %}Trouvez votre CytoLight{% else %}Find Your CytoLight{% endif %}</p>
+          <p class="fyc-eyebrow">{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}</p>
           <h1 class="fyc-heading">{% if is_fr %}Un guide de 60&nbsp;secondes vers le bon appareil.{% else %}A 60-second guide to the right device for you.{% endif %}</h1>
-          <p class="fyc-sub">{% if is_fr %}R&eacute;pondez &agrave; quatre questions rapides et nous vous proposerons le CytoLight adapt&eacute; &agrave; votre routine &mdash; &agrave; la maison, au bureau ou &agrave; la salle.{% else %}Answer four quick questions and we'll match you with the CytoLight built for your routine &mdash; at home, at the office, or at the gym.{% endif %}</p>
+          <p class="fyc-sub">{% if is_fr %}R&eacute;pondez &agrave; quatre questions rapides et nous vous proposerons le Antared adapt&eacute; &agrave; votre routine &mdash; &agrave; la maison, au bureau ou &agrave; la salle.{% else %}Answer four quick questions and we'll match you with the Antared built for your routine &mdash; at home, at the office, or at the gym.{% endif %}</p>
           <button type="button" class="fyc-cta" data-fyc-start>{% if is_fr %}Commencer{% else %}Start{% endif %}</button>
         </div>
 
@@ -83,20 +83,20 @@
 
         <div class="fyc-step" data-fyc-step data-fyc-kind="result">
           <p class="fyc-eyebrow">{% if is_fr %}Votre r&eacute;sultat{% else %}Your match{% endif %}</p>
-          <h2 class="fyc-heading fyc-heading--result">{% if is_fr %}Votre CytoLight id&eacute;al.{% else %}Your CytoLight match.{% endif %}</h2>
+          <h2 class="fyc-heading fyc-heading--result">{% if is_fr %}Votre Antared id&eacute;al.{% else %}Your Antared match.{% endif %}</h2>
           <p class="fyc-sub">{% if is_fr %}D'apr&egrave;s vos r&eacute;ponses, voici l'appareil fait pour votre routine.{% else %}Based on your answers, here's the device built for your routine.{% endif %}</p>
 
           <div class="fyc-results" data-fyc-results>
 
             <div class="fyc-result-card" data-fyc-product="cytolight-desk" hidden>
-              <span class="fyc-result-card__media"><img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight DESK" width="900" height="700" loading="lazy"></span>
+              <span class="fyc-result-card__media"><img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="Antared DESK" width="900" height="700" loading="lazy"></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Personnel &middot; Bureau{% else %}Personal &middot; Desktop{% endif %}</span>
-                <h3>CytoLight DESK</h3>
+                <h3>Antared DESK</h3>
                 <p>{% if is_fr %}Le panneau compact &agrave; 7 spectres pour la r&eacute;cup&eacute;ration, la concentration, le sommeil et la peau au quotidien.{% else %}The compact 7-spectrum panel for daily recovery, focus, sleep, and skin.{% endif %}</p>
                 {%- if desk_product != blank -%}
                   <span class="fyc-result-card__price">{{ desk_product.price | money }}</span>
-                  <a class="fyc-result-card__cta" href="{{ desk_product.url }}">{% if is_fr %}D&eacute;couvrir CytoLight DESK{% else %}Discover CytoLight DESK{% endif %}</a>
+                  <a class="fyc-result-card__cta" href="{{ desk_product.url }}">{% if is_fr %}D&eacute;couvrir Antared DESK{% else %}Discover Antared DESK{% endif %}</a>
                 {%- endif -%}
               </div>
             </div>
@@ -105,7 +105,7 @@
               <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/6a9ef77bf5f84b87aa84e0f43685a21b.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Cheveux &middot; Mains libres{% else %}Hair &middot; Hands-free{% endif %}</span>
-                <h3>CytoLight Redlight Cap</h3>
+                <h3>Antared Redlight Cap</h3>
                 <p>{% if is_fr %}Une casquette de luminoth&eacute;rapie rouge et proche infrarouge pour une routine cuir chevelu simple et mains libres.{% else %}A wearable red and near-infrared cap for an easy, hands-free scalp routine.{% endif %}</p>
                 {%- if cap_product != blank -%}
                   <span class="fyc-result-card__price">{{ cap_product.price | money }}</span>
@@ -118,7 +118,7 @@
               <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/6e729ca4196441df8bb75480e0ddb070.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Visage &middot; Beaut&eacute;{% else %}Face &middot; Beauty{% endif %}</span>
-                <h3>CytoLight Mask</h3>
+                <h3>Antared Mask</h3>
                 <p>{% if is_fr %}Un masque LED souple pour une routine visage courte et sans fil.{% else %}A flexible LED mask for a short, cordless face routine.{% endif %}</p>
                 {%- if mask_product != blank -%}
                   <span class="fyc-result-card__price">{{ mask_product.price | money }}</span>
@@ -132,16 +132,16 @@
                 {%- if foot_product.featured_image -%}
                   <img src="{{ foot_product.featured_image | image_url: width: 900 }}" alt="{{ foot_product.featured_image.alt | escape }}" width="900" height="700" loading="lazy">
                 {%- else -%}
-                  <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="CytoLight Foot" width="900" height="700" loading="lazy">
+                  <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="Antared Foot" width="900" height="700" loading="lazy">
                 {%- endif -%}
               </span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Pieds &middot; R&eacute;cup&eacute;ration{% else %}Feet &middot; Recovery{% endif %}</span>
-                <h3>CytoLight Foot</h3>
+                <h3>Antared Foot</h3>
                 <p>{% if is_fr %}Une botte enveloppante qui apporte la lumi&egrave;re rouge et proche infrarouge aux pieds fatigu&eacute;s.{% else %}A wraparound boot that brings red and near-infrared light to tired feet and ankles.{% endif %}</p>
                 {%- if foot_product != blank -%}
                   <span class="fyc-result-card__price">{{ foot_product.price | money }}</span>
-                  <a class="fyc-result-card__cta" href="{{ foot_product.url }}">{% if is_fr %}D&eacute;couvrir CytoLight Foot{% else %}Discover CytoLight Foot{% endif %}</a>
+                  <a class="fyc-result-card__cta" href="{{ foot_product.url }}">{% if is_fr %}D&eacute;couvrir Antared Foot{% else %}Discover Antared Foot{% endif %}</a>
                 {%- endif -%}
               </div>
             </div>
@@ -150,11 +150,11 @@
               <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/f85a0fc3a2d343cda06f2adf6c64775a.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Genou &middot; R&eacute;cup&eacute;ration{% else %}Knee &middot; Recovery{% endif %}</span>
-                <h3>CytoLight Knee</h3>
+                <h3>Antared Knee</h3>
                 <p>{% if is_fr %}Une genouill&egrave;re enveloppante pour l'articulation du genou, pens&eacute;e pour l'apr&egrave;s-sport.{% else %}A wraparound sleeve for the knee joint, built for post-training and at-home comfort.{% endif %}</p>
                 {%- if knee_product != blank -%}
                   <span class="fyc-result-card__price">{{ knee_product.price | money }}</span>
-                  <a class="fyc-result-card__cta" href="{{ knee_product.url }}">{% if is_fr %}D&eacute;couvrir CytoLight Knee{% else %}Discover CytoLight Knee{% endif %}</a>
+                  <a class="fyc-result-card__cta" href="{{ knee_product.url }}">{% if is_fr %}D&eacute;couvrir Antared Knee{% else %}Discover Antared Knee{% endif %}</a>
                 {%- endif -%}
               </div>
             </div>
@@ -163,20 +163,20 @@
               <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/9d2bd3a6903d47e59681aa03932a88fa.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Corps entier &middot; R&eacute;cup&eacute;ration{% else %}Full Body &middot; Recovery{% endif %}</span>
-                <h3>CytoLight Sauna Dome</h3>
+                <h3>Antared Sauna Dome</h3>
                 <p>{% if is_fr %}Un d&ocirc;me infrarouge complet combinant lumi&egrave;re, chaleur et PEMF en une seule session.{% else %}A full-body infrared dome combining light, heat, and PEMF into one complete session.{% endif %}</p>
                 {%- if sauna_dome_product != blank -%}
                   <span class="fyc-result-card__price">{{ sauna_dome_product.price | money }}</span>
-                  <a class="fyc-result-card__cta" href="{{ sauna_dome_product.url }}">{% if is_fr %}D&eacute;couvrir CytoLight Sauna Dome{% else %}Discover CytoLight Sauna Dome{% endif %}</a>
+                  <a class="fyc-result-card__cta" href="{{ sauna_dome_product.url }}">{% if is_fr %}D&eacute;couvrir Antared Sauna Dome{% else %}Discover Antared Sauna Dome{% endif %}</a>
                 {%- endif -%}
               </div>
             </div>
 
             <div class="fyc-result-card" data-fyc-product="cytolight-pano-ultra" hidden>
-              <span class="fyc-result-card__media"><img src="{{ 'cytolight-pano-ultra-luxury.jpg' | file_url }}" alt="CytoLight PANO ULTRA" width="900" height="700" loading="lazy"></span>
+              <span class="fyc-result-card__media"><img src="{{ 'cytolight-pano-ultra-luxury.jpg' | file_url }}" alt="Antared PANO ULTRA" width="900" height="700" loading="lazy"></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Performance &middot; Professionnel{% else %}Performance &middot; Professional{% endif %}</span>
-                <h3>CytoLight PANO ULTRA</h3>
+                <h3>Antared PANO ULTRA</h3>
                 <p>{% if is_fr %}Un panneau grand format pour une couverture corps entier en studio ou salle de sport.{% else %}A large-format panel for full-body coverage in studios, gyms, and wellness rooms.{% endif %}</p>
                 {%- if pano_ultra_product != blank -%}
                   <span class="fyc-result-card__price">{{ pano_ultra_product.price | money }}</span>
@@ -206,10 +206,10 @@
 
 {% schema %}
 {
-  "name": "Find Your CytoLight",
+  "name": "Find Your Antared",
   "settings": [],
   "presets": [
-    { "name": "Find Your CytoLight" }
+    { "name": "Find Your Antared" }
   ]
 }
 {% endschema %}

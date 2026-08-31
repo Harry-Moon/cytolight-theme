@@ -28,10 +28,10 @@
   case request.page_type
     when 'index'
       if is_fr
-        assign og_title = 'CytoLight | Luminotherapie rouge intelligente'
+        assign og_title = 'Antared | Luminotherapie rouge intelligente'
         assign og_description = 'Des systemes de luminotherapie rouge et proche infrarouge concus pour la recuperation, la peau, le sommeil et l energie.'
       else
-        assign og_title = 'CytoLight | Intelligent Red Light Therapy'
+        assign og_title = 'Antared | Intelligent Red Light Therapy'
         assign og_description = 'Red and near-infrared light therapy systems designed for recovery, skin, sleep, and everyday energy.'
       endif
     when 'product'
@@ -56,9 +56,9 @@
 
   if og_description == blank
     if is_fr
-      assign og_description = 'CytoLight, luminotherapie rouge et proche infrarouge pour la recuperation, la peau, le sommeil et l energie.'
+      assign og_description = 'Antared, luminotherapie rouge et proche infrarouge pour la recuperation, la peau, le sommeil et l energie.'
     else
-      assign og_description = 'CytoLight red and near-infrared light therapy for recovery, skin, sleep, and everyday energy.'
+      assign og_description = 'Antared red and near-infrared light therapy for recovery, skin, sleep, and everyday energy.'
     endif
   endif
 

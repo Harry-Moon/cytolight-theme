@@ -43,10 +43,18 @@
       return smoothstep(t);
     }
 
+    function viewportHeight() {
+      // window.innerHeight shifts as mobile browser chrome (address bar)
+      // collapses/expands mid-scroll, which desyncs the progress calc from
+      // the CSS 100svh the sections are actually laid out with and shows up
+      // as a visible jump. visualViewport tracks the real visible height.
+      return window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    }
+
     function measureCinema(scene) {
       if (!scene || !scene.el || reduceMotion) return;
       var rect = scene.el.getBoundingClientRect();
-      var travel = Math.max(1, rect.height - window.innerHeight);
+      var travel = Math.max(1, rect.height - viewportHeight());
       scene.targetProgress = clamp((0 - rect.top) / travel, 0, 1);
     }
 
@@ -85,6 +93,9 @@
     if (cinemas.length && !reduceMotion) {
       window.addEventListener('scroll', requestFrame, { passive: true });
       window.addEventListener('resize', requestFrame, { passive: true });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', requestFrame, { passive: true });
+      }
       requestFrame();
     }
 
