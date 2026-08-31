@@ -100,7 +100,7 @@
             <div class="cy-hero__fact"><strong>7</strong><span>{% if is_fr %}longueurs d'onde cibl&eacute;es{% else %}targeted wavelengths{% endif %}</span></div>
             <div class="cy-hero__fact"><strong>590-940</strong><span>{% if is_fr %}nm, de l'ambre au NIR profond{% else %}nm, amber to deep NIR{% endif %}</span></div>
             <div class="cy-hero__fact"><strong>1-40 Hz</strong><span>{% if is_fr %}pulsations configurables{% else %}configurable pulsing{% endif %}</span></div>
-            <div class="cy-hero__fact"><strong>30 {% if is_fr %}jours{% else %}days{% endif %}</strong><span>{% if is_fr %}pour l'essayer chez vous{% else %}to try it at home{% endif %}</span></div>
+            <div class="cy-hero__fact"><strong>14 {% if is_fr %}jours{% else %}days{% endif %}</strong><span>{% if is_fr %}pour l'essayer chez vous{% else %}to try it at home{% endif %}</span></div>
           {%- endif -%}
         </div>
       </div>
@@ -364,8 +364,8 @@
           {%- endfor -%}
         {%- else -%}
           <div class="cy-proof__stat cy-reveal" style="transition-delay:0ms"><strong><span class="cy-proof__stat-num" data-count-to="4000" data-suffix="+">0</span></strong><span>{% if is_fr %}&eacute;tudes publi&eacute;es sur la photobiomodulation{% else %}published photobiomodulation studies{% endif %}</span></div>
-          <div class="cy-proof__stat cy-reveal" style="transition-delay:90ms"><strong><span class="cy-proof__stat-num" data-count-to="2" data-suffix=" {% if is_fr %}ans{% else %}years{% endif %}">0</span></strong><span>{% if is_fr %}de garantie mat&eacute;rielle incluse{% else %}included hardware warranty{% endif %}</span></div>
-          <div class="cy-proof__stat cy-reveal" style="transition-delay:180ms"><strong><span class="cy-proof__stat-num" data-count-to="30" data-suffix=" {% if is_fr %}jours{% else %}days{% endif %}">0</span></strong><span>{% if is_fr %}d'essai satisfait ou rembours&eacute;{% else %}money-back home trial{% endif %}</span></div>
+          <div class="cy-proof__stat cy-reveal" style="transition-delay:90ms"><strong><span class="cy-proof__stat-num" data-count-to="1" data-suffix=" {% if is_fr %}an{% else %}year{% endif %}">0</span></strong><span>{% if is_fr %}de garantie mat&eacute;rielle incluse{% else %}included hardware warranty{% endif %}</span></div>
+          <div class="cy-proof__stat cy-reveal" style="transition-delay:180ms"><strong><span class="cy-proof__stat-num" data-count-to="14" data-suffix=" {% if is_fr %}jours{% else %}days{% endif %}">0</span></strong><span>{% if is_fr %}d'essai satisfait ou rembours&eacute;{% else %}money-back home trial{% endif %}</span></div>
         {%- endif -%}
       </div>
       <div class="cy-proof__certs cy-proof__certs--photo cy-reveal" style="background-image:url({{ 'cytolight-goal-skin-red-halo.jpg' | file_url }});">
@@ -448,8 +448,8 @@
   <section class="cy-reassure" aria-label="{% if is_fr %}Services{% else %}Services{% endif %}">
     <div class="cy-shell cy-reassure__grid">
       <div class="cy-reassure__item"><strong>{% if is_fr %}Livraison rapide{% else %}Fast delivery{% endif %}</strong><span>{% if is_fr %}Exp&eacute;dition suivie et prot&eacute;g&eacute;e{% else %}Tracked and protected shipping{% endif %}</span></div>
-      <div class="cy-reassure__item"><strong>{% if is_fr %}Essai 30 jours{% else %}30-day trial{% endif %}</strong><span>{% if is_fr %}Testez-le dans votre vraie routine{% else %}Test it in your real routine{% endif %}</span></div>
-      <div class="cy-reassure__item"><strong>{% if is_fr %}Garantie 2 ans{% else %}2-year warranty{% endif %}</strong><span>{% if is_fr %}Protection mat&eacute;rielle incluse{% else %}Hardware protection included{% endif %}</span></div>
+      <div class="cy-reassure__item"><strong>{% if is_fr %}Essai 14 jours{% else %}14-day trial{% endif %}</strong><span>{% if is_fr %}Testez-le dans votre vraie routine{% else %}Test it in your real routine{% endif %}</span></div>
+      <div class="cy-reassure__item"><strong>{% if is_fr %}Garantie 1 an{% else %}1-year warranty{% endif %}</strong><span>{% if is_fr %}Protection mat&eacute;rielle incluse{% else %}Hardware protection included{% endif %}</span></div>
       <div class="cy-reassure__item"><strong>{% if is_fr %}Support sp&eacute;cialis&eacute;{% else %}Specialist support{% endif %}</strong><span>{% if is_fr %}Avant et apr&egrave;s votre achat{% else %}Before and after purchase{% endif %}</span></div>
     </div>
   </section>
@@ -518,7 +518,7 @@
       "type": "trust_point",
       "name": "Trust point",
       "settings": [
-        { "type": "text", "id": "value", "label": "Value", "default": "30 days" },
+        { "type": "text", "id": "value", "label": "Value", "default": "14 days" },
         { "type": "text", "id": "label_en", "label": "Label EN", "default": "money-back home trial" },
         { "type": "text", "id": "label_fr", "label": "Label FR", "default": "d'essai satisfait ou rembours&eacute;" }
       ]
@@ -541,7 +541,7 @@
         { "type": "technical_fact", "settings": { "value": "7", "label_en": "targeted wavelengths", "label_fr": "longueurs d'onde cibl&eacute;es" } },
         { "type": "technical_fact", "settings": { "value": "590-940", "label_en": "nm, amber to deep NIR", "label_fr": "nm, de l'ambre au NIR profond" } },
         { "type": "technical_fact", "settings": { "value": "1-40 Hz", "label_en": "configurable pulsing", "label_fr": "pulsations configurables" } },
-        { "type": "technical_fact", "settings": { "value": "30 days", "label_en": "to try it at home", "label_fr": "pour l'essayer chez vous" } },
+        { "type": "technical_fact", "settings": { "value": "14 days", "label_en": "to try it at home", "label_fr": "pour l'essayer chez vous" } },
         { "type": "goal", "settings": { "title_en": "Recovery", "title_fr": "R&eacute;cup&eacute;ration" } },
         { "type": "goal", "settings": { "title_en": "Skin", "title_fr": "Peau", "text_en": "For tone, texture, and visible radiance.", "text_fr": "Pour le teint, la texture et l'&eacute;clat visible." } },
         { "type": "goal", "settings": { "title_en": "Focus", "title_fr": "Focus", "text_en": "For a short ritual around deep work.", "text_fr": "Pour un rituel court autour du travail profond." } },
