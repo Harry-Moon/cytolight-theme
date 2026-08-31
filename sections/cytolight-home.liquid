@@ -130,9 +130,12 @@
   <section class="cy-cinema cy-cinema--cap" data-cy-cinema id="cy-cap-ritual">
     <div class="cy-cinema__stage">
       <div class="cy-cinema__world">
-        <img src="https://cdn.shopify.com/s/files/1/1050/6738/1078/files/cytolight-cap-editorial-consistency.jpg?v=1786544769" alt="Antared Redlight Cap" width="1600" height="900" loading="lazy">
-        <span class="cy-cinema__glow" aria-hidden="true"></span>
+        <img src="{{ 'ANTARED_Redlight_CAP_2.png' | file_url }}" alt="" width="1600" height="900" loading="lazy">
       </div>
+      <div class="cy-cinema__foreground" aria-hidden="true">
+        <img src="{{ 'ANTARED_Redlight_CAP_1.png' | file_url }}" alt="Antared Redlight Cap" width="1600" height="900" loading="lazy">
+      </div>
+      <span class="cy-cinema__glow" aria-hidden="true"></span>
       <div class="cy-cinema__panel">
         <div class="cy-cinema__lead">
           <p class="cy-kicker cy-cinema__title-a">{% if is_fr %}Antared Redlight Cap{% else %}Antared Redlight Cap{% endif %}</p>
