@@ -1,4 +1,24 @@
 <!--
+Sync Impact Report — 2026-08-31
+Version: 1.0.0 → 1.0.1 (PATCH)
+
+Amendement de correction. Aucun principe n'est ajouté, retiré ni redéfini ; seuls
+des faits périmés et le nom de la marque sont mis à jour.
+
+  - Marque : CytoLight → Antared dans tout le texte. Les identifiants techniques
+    (domaine `cytolight.myshopify.com`, handles produit, noms de fichiers) gardent
+    l'ancien nom : les renommer casserait des URL et ferait renvoyer 404 des images.
+  - Principe VI : la règle citait `snippets/learn-nav.liquid` comme source unique des
+    URL de la sous-navigation Learn. Ce fichier n'existe plus et cette sous-navigation
+    a été retirée. `sections/header.liquid` est désormais le seul endroit concerné.
+  - Contraintes techniques : le plafond de dette passe de 28 à 19 infractions, dont 6
+    erreurs. Ce n'est pas un assouplissement mais l'application de la règle existante
+    — « ce nombre est un plafond, il ne remonte pas » — au relevé réel sur `origin/main`.
+  - Contraintes techniques : les booléens produit passent de trois cités à six réels.
+
+Fichiers dépendants alignés dans le même commit :
+  - `CLAUDE.md` → marque, plafond de dette, booléens produit, learn-nav, repères ✅
+
 Sync Impact Report — 2026-08-21
 Version: template non renseigné → 1.0.0 (ratification initiale)
 
@@ -29,10 +49,13 @@ TODO différés (à combler par le porteur du projet) :
     principe II applique par défaut le régime le plus strict (produit bien-être).
 -->
 
-# Constitution CytoLight
+# Constitution Antared
 
-CytoLight vend des appareils de luminothérapie rouge et proche infrarouge en Europe, en
-direct au consommateur, via une boutique Shopify dont ce dépôt est le thème. Ce document
+Antared — la marque s'appelait CytoLight jusqu'au 2026-08-31 — vend des appareils de
+luminothérapie rouge et proche infrarouge en Europe, en direct au consommateur, via une
+boutique Shopify dont ce dépôt est le thème. Le renommage ne touche que le texte visible :
+le domaine `cytolight.myshopify.com`, les handles produit et les noms de fichiers gardent
+l'ancien nom, parce que les renommer casserait des URL et des références d'images. Ce document
 énonce ce qui ne se négocie pas. Il prime sur toute habitude, toute préférence esthétique
 et toute urgence commerciale.
 
@@ -60,7 +83,7 @@ L'intégration GitHub native de Shopify synchronise `main` avec le thème live. 
 
 ### II. Aucune allégation thérapeutique (NON NÉGOCIABLE)
 
-Les appareils CytoLight sont des **produits de bien-être, sans marquage CE de dispositif
+Les appareils Antared sont des **produits de bien-être, sans marquage CE de dispositif
 médical**. En droit européen, cela interdit toute allégation de traitement, de guérison ou
 de soulagement d'une pathologie — quelle que soit la solidité de la littérature citée.
 
@@ -71,7 +94,7 @@ de soulagement d'une pathologie — quelle que soit la solidité de la littérat
   le ressenti, le bien-être, la récupération perçue — au conditionnel quand il s'agit d'un
   effet, à l'indicatif quand il s'agit d'une caractéristique physique de l'appareil.
 - Toute page citant de la littérature scientifique DOIT porter un encadré explicitant ce que
-  ces travaux ne disent pas, et rappeler qu'aucune étude n'a porté sur un appareil CytoLight.
+  ces travaux ne disent pas, et rappeler qu'aucune étude n'a porté sur un appareil Antared.
   Le bloc « Ce que ces études ne disent pas » de `sections/learn-science.liquid` est le modèle
   de référence. Le retirer est une régression, jamais une simplification.
 - Chaque affirmation scientifique DOIT être rattachée à un identifiant vérifiable (DOI, PMID).
@@ -154,9 +177,10 @@ seule langue.
   site, pas par un `elsif` de plus.
 - Les accents s'écrivent en entités HTML (`&eacute;`) dans les fichiers Liquid, en accents
   réels dans les fichiers Markdown. S'aligner sur le fichier modifié.
-- `snippets/learn-nav.liquid` est la source unique des URL et libellés de la sous-navigation
-  Learn. `sections/header.liquid` porte sa navigation en dur. Un handle qui change se corrige
-  aux deux endroits.
+- `sections/header.liquid` est la **source unique** des URL et libellés de l'espace Learn : il
+  porte sa navigation en dur, et un handle qui change se corrige là, nulle part ailleurs. La
+  sous-navigation qui coiffait ces pages a été retirée avec `snippets/learn-nav.liquid`, que
+  citaient les versions antérieures de ce document.
 
 *Raison* : la cible est européenne. Une langue traitée en second produit des pages orphelines,
 un SEO dilué et une expérience qui trahit la taille réelle de l'équipe.
@@ -194,9 +218,9 @@ styles globaux et la palette ; `cytolight-cinematic.css` / `.js` les animations 
 d'accueil ; `learn.css` / `learn.js` ne sont chargés que par les gabarits de l'espace Learn.
 
 **Contenu conditionné au produit.** `sections/main-product.liquid` sert les huit fiches et
-bascule son contenu éditorial selon le handle, via des booléens dérivés en début de section :
-`is_cap`, `is_mask`, `is_knee`, `is_foot`, `is_sauna_dome`, `is_pano_ultra`. Les autres handles
-retombent sur la branche par défaut. **Une modification dans ce fichier DOIT être vérifiée sur
+bascule son contenu éditorial selon le handle, via six booléens dérivés en début de section :
+`is_cap`, `is_mask`, `is_knee`, `is_foot`, `is_sauna_dome`, `is_pano_ultra`. Les deux handles
+restants — `cytolight-desk` et `cytolight-pano-plus` — retombent sur la branche par défaut. **Une modification dans ce fichier DOIT être vérifiée sur
 chaque variante**, pas seulement celle en cours.
 
 **Fichiers auto-générés.** `config/settings_data.json`, `templates/cart.json`,
@@ -210,9 +234,9 @@ un élément collant ne peut pas sortir des limites de son parent, et l'envelopp
 ajoutée par Shopify a exactement la hauteur du header. La sous-navigation Learn est en
 `top: 0` avec un `z-index` inférieur à 50 pour se glisser dessous.
 
-**Dette connue et plafonnée.** `shopify theme check` relève 28 infractions préexistantes (dont
-14 `ImgWidthAndHeight`). Ce nombre est un plafond : il ne remonte pas. Comparer au résultat sur
-`origin/main` avant de proposer un merge.
+**Dette connue et plafonnée.** `shopify theme check` relève **19 infractions préexistantes,
+dont 6 erreurs** (relevé sur `origin/main` le 2026-08-31). Ce nombre est un plafond : il ne
+remonte pas. Comparer au résultat sur `origin/main` avant de proposer un merge.
 
 ## Workflow et portes de qualité
 
@@ -279,4 +303,4 @@ et l'alternative écartée — jamais implicitement.
 `.specify/memory/product-brief.md` porte la direction produit et de marque. Les deux se lisent
 en complément de ce document ; aucun des deux ne peut le contredire.
 
-**Version** : 1.0.0 | **Ratifiée** : 2026-08-21 | **Dernier amendement** : 2026-08-21
+**Version** : 1.0.1 | **Ratifiée** : 2026-08-21 | **Dernier amendement** : 2026-08-31

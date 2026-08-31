@@ -1,4 +1,4 @@
-# Brief produit CytoLight
+# Brief produit Antared
 
 Ce document porte la **direction** : vision, marché, cible, gamme, identité, objectifs.
 Il évolue à chaque décision. Les règles qui ne se négocient pas vivent dans
@@ -32,7 +32,7 @@ le site.
 
 **Modèle prioritaire (12 mois)** : B2C.
 
-**Axe B2B — CytoLight Pro** : déjà câblé dans la navigation (cliniques, kinésithérapeutes,
+**Axe B2B — Antared Pro** : déjà câblé dans la navigation (cliniques, kinésithérapeutes,
 salles de sport, hôtels & spas, bien-être en entreprise, revendeurs), **mais aucune de ces
 six pages n'existe**. C'est un actif dormant : la demande professionnelle sur ce marché a un
 panier bien supérieur au B2C et un cycle de vente plus long. À arbitrer explicitement — soit
@@ -224,9 +224,9 @@ identiques en FR et en EN : c'est la totalité des pages de l'admin, sans une ex
 
 | Groupe | Non traduites | Volume |
 |---|---|---|
-| **CytoLight Pro** | 6 / 6 — become-a-dealer, clinics, corporate-wellness, gyms, hotels-spas, physios | 75 – 116 mots |
+| **Antared Pro** | 6 / 6 — become-a-dealer, clinics, corporate-wellness, gyms, hotels-spas, physios | 75 – 116 mots |
 | **Protocoles** | 7 / 7 — daily-recovery, full-body-routine, post-workout, pre-workout, protocols, skin-routine, workday-routine | 72 – 118 mots |
-| **Pourquoi CytoLight** | 4 / 4 — our-approach, our-story, quality, technology | 86 – 124 mots |
+| **Pourquoi Antared** | 4 / 4 — our-approach, our-story, quality, technology | 86 – 124 mots |
 | **Divers** | 4 — bundles (43), contact (**1 mot**), faq (175), how-to-use (166) | 1 – 175 mots |
 
 `/pages/contact` et `/pages/bundles` sont liées depuis le header : la barre utilitaire pour
@@ -242,7 +242,7 @@ autre chantier : leurs descriptions portent l'entrée par objectif dans la gamme
 dans l'onglet du navigateur et dans les résultats Google. Correction dans l'admin, sans toucher au
 thème, et sans risque de déploiement.
 
-**Deux arbitrages en découlent.** Le menu **CytoLight Pro** expose six ébauches d'une centaine de
+**Deux arbitrages en découlent.** Le menu **Antared Pro** expose six ébauches d'une centaine de
 mots : les écrire ou retirer l'entrée. Les **7 pages Protocoles** portent une promesse de conseil
 d'usage que 90 mots ne tiennent pas — et c'est précisément le contenu qui ferait revenir un
 acheteur après l'achat.
