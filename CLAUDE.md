@@ -1,7 +1,15 @@
-# CytoLight — thème Shopify
+# Antared — thème Shopify
 
-Thème sur mesure de la boutique CytoLight (luminothérapie rouge). Liquid, CSS et JS écrits à la main,
+Thème sur mesure de la boutique Antared (luminothérapie rouge). Liquid, CSS et JS écrits à la main,
 sans framework ni build. Ce qui est dans le dépôt est ce qui est servi.
+
+> **La marque s'appelait CytoLight.** Le renommage en Antared ne touche que le texte visible.
+> Les identifiants techniques gardent l'ancien nom et **ne se renomment pas** : le domaine
+> `cytolight.myshopify.com`, les handles produit (`cytolight-cap`, `cytolight-desk`…), les
+> noms de fichiers CSS et de snippets (`cytolight-cinematic.css`, `cytolight-why-cards`), et
+> les fichiers images déjà dans Content → Files (`CytoLight_Mask_*.png`). Renommer un handle
+> casse une URL ; renommer un fichier image le fait renvoyer 404. Le domaine public est
+> `antared.care`.
 
 ## Avant de commencer — les deux documents à lire
 
@@ -34,8 +42,8 @@ Conséquences pratiques :
 
 | Dossier | Contenu |
 |---|---|
-| `sections/` | Sections de page. `main-product.liquid` (1500 lignes) et `cytolight-home.liquid` portent l'essentiel du contenu éditorial. |
-| `snippets/` | Fragments réutilisables (`product-card`, `icon`, `cytolight-device-card`). |
+| `sections/` | Sections de page. `main-product.liquid` (~2 000 lignes) et `cytolight-home.liquid` portent l'essentiel du contenu éditorial. |
+| `snippets/` | Fragments réutilisables (`product-card`, `icon`, `cytolight-device-card`, `editorial-hero`). |
 | `templates/` | Points d'entrée. `index.liquid` appelle `cytolight-home` ; `product.json`, `collection.json` et `cart.json` référencent les sections `main-*`. |
 | `layout/` | `theme.liquid` (enveloppe globale) et `password.liquid`. |
 | `assets/` | **CSS et JS uniquement** — voir la convention ci-dessous. |
@@ -89,9 +97,12 @@ Le thème est **bilingue FR / EN**, à parité stricte : tout texte ajouté couv
 dans le même commit, `aria-label` compris. Un `TODO: traduire` est un défaut, pas une étape.
 
 **Le portugais est en cours de retrait** (décision actée, constitution principe VI). Il subsiste
-dans `sections/header.liquid`, `snippets/learn-nav.liquid` et `snippets/header-panel-media.liquid`
-— soit une navigation trilingue au-dessus d'un site bilingue. Ne pas en ajouter. Son retour
-éventuel passerait par une spec couvrant l'intégralité du site, pas par un `elsif` de plus.
+dans `sections/header.liquid` et `snippets/header-panel-media.liquid` — soit une navigation
+trilingue au-dessus d'un site bilingue. Ne pas en ajouter. Son retour éventuel passerait par une
+spec couvrant l'intégralité du site, pas par un `elsif` de plus.
+
+> `snippets/learn-nav.liquid`, que citaient les versions précédentes de ce document et de la
+> constitution, **n'existe plus** : la sous-navigation Learn a été retirée avec lui.
 
 > La parité vaut aussi pour les pages rédigées **dans l'admin**, qui échappent à ce mécanisme :
 > l'audit du 2026-08-21 en a trouvé 16 strictement identiques en FR et en EN. Voir le brief produit.
@@ -101,10 +112,14 @@ fichier modifié.
 
 ## Contenu conditionné au produit
 
-`main-product.liquid` sert toutes les fiches produit et bascule son contenu éditorial selon le handle,
-via des booléens dérivés en début de section : `is_cap` (`cytolight-cap`), `is_pano_ultra`
-(`cytolight-pano-ultra`) et `is_foot` (`cytolight-foot`). Les autres handles — `cytolight-desk`,
-`cytolight-pano-plus` — retombent sur la branche par défaut.
+`main-product.liquid` sert les huit fiches produit et bascule son contenu éditorial selon le handle,
+via **six** booléens dérivés en début de section : `is_cap`, `is_mask`, `is_foot`, `is_knee`,
+`is_sauna_dome` et `is_pano_ultra`, chacun sur le handle `cytolight-` correspondant. Les deux
+autres — `cytolight-desk` et `cytolight-pano-plus` — retombent sur la branche par défaut.
+
+Le seuil de livraison offerte se dérive au même endroit (`free_shipping_cents`, aligné sur
+`sections/main-cart.liquid`) : la mention « Livraison offerte dès 125 € » disparaît des fiches qui
+franchissent déjà le seuil.
 
 Une modification dans ce fichier doit être vérifiée sur **chaque** variante, pas seulement celle en cours.
 
@@ -124,6 +139,11 @@ L'espace fusionne deux lots de contenu : les pages rédigées dans l'admin (`wav
 | `faq` | `page.faq.liquid` | — (contenu admin) | l'admin |
 | `nos-valeurs` | `page.nos-valeurs.liquid` | `learn-values` | le thème |
 | blog | `blog.liquid`, `article.liquid` | — | l'admin |
+
+Trois gabarits vivent hors de ce tableau : `page.contact.liquid` (formulaire bilingue,
+fonctionnel sans JavaScript), `page.benefits.liquid` et `page.find-your-cytolight.liquid`.
+Le premier rend `snippets/editorial-hero.liquid`, le fragment de hero paramétré — fil d'Ariane,
+kicker et titre en FR et EN — destiné à toutes les coquilles de pages rédigées dans l'admin.
 
 **Les gabarits doivent être assignés à la main dans Content → Pages, après le merge.** Le sélecteur
 « Theme template » de l'admin ne liste que les gabarits du thème **publié** : tant que la PR n'est pas
@@ -201,7 +221,7 @@ appareil qui était saisie dans l'admin — elle doit rester alignée sur les fi
 ### Références scientifiques
 
 `learn-science.liquid` cite quinze jalons et huit publications, chacun lié à son DOI. Aucune de ces
-études n'a été menée sur un appareil CytoLight, et la section le dit explicitement dans son bloc
+études n'a été menée sur un appareil Antared, et la section le dit explicitement dans son bloc
 « Ce que ces études ne disent pas ». Ce bloc n'est pas décoratif : sans lui la page devient une
 allégation de santé non étayée sur les produits vendus, sanctionnée par l'article L.121-2 du Code de
 la consommation et rejetée à la validation des comptes publicitaires.
@@ -299,8 +319,9 @@ l'autre développeur.
 shopify theme check
 ```
 
-Le dépôt part avec 28 infractions préexistantes (dont 14 `ImgWidthAndHeight`). Comparer au résultat sur
-`origin/main` et n'en introduire aucune nouvelle.
+Le dépôt part avec **19 infractions préexistantes, dont 6 erreurs** (relevé sur `origin/main` le
+2026-08-31 ; les versions précédentes de ce document annonçaient 28, valeur devenue fausse).
+C'est un plafond : comparer au résultat sur `origin/main` et n'en introduire aucune nouvelle.
 
 ```bash
 shopify theme dev --store cytolight.myshopify.com
@@ -316,9 +337,15 @@ Ne pas annoncer qu'une modification fonctionne sans l'avoir vérifiée ainsi.
 
 | | |
 |---|---|
-| Boutique | `cytolight.myshopify.com` |
+| Marque | Antared (anciennement CytoLight) |
+| Domaine public | `antared.care` |
+| Boutique | `cytolight.myshopify.com` — identifiant technique, il ne se renomme pas |
 | Thème live, connecté à `main` | `cytolight-theme/main` |
 | Thème conservé pour rollback | `CytoLight Theme v4` (non publié) |
 | Taille du thème | ~500 Ko, plafond 50 Mo |
+| Logo | `LOGO_ANTARED.jpg` dans Content → Files, porté par le réglage global `settings.logo` |
+
+La vitrine est actuellement **protégée par mot de passe** : elle répond 200 en servant la page de
+mot de passe, ce qui fausse silencieusement tout audit lancé dessus.
 
 Le travail local avec le Shopify CLI demande un `shopify auth login` préalable. Voir `.env.example`.

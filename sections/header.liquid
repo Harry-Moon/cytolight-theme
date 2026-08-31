@@ -138,13 +138,30 @@
         l'ignore, ne connait plus le ratio et decale la mise en page a l'arrivee
         de l'image. La hauteur est calculee depuis le ratio reel du fichier.
       {%- endcomment -%}
-      {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 340 }}"
-             width="170" height="{{ 170 | divided_by: section.settings.logo.aspect_ratio | round }}"
+      {%- comment -%}
+        Trois niveaux, du plus modifiable au plus sûr. Le réglage de section
+        d'abord, le logo global de la boutique ensuite — c'est lui qui porte
+        aujourd'hui `LOGO_ANTARED.jpg` et qui alimente déjà les données
+        structurées — et le nom de fichier en dernier recours.
+
+        Le repli précédent visait `cytolight-logo.jpg`, retiré de Content → Files
+        lors du changement de marque : aucun réglage de logo n'étant renseigné
+        sur la section header, c'est ce repli qui était servi, et il renvoyait
+        404. Un repli ne vaut que si son fichier existe.
+      {%- endcomment -%}
+      {%- liquid
+        assign header_logo = section.settings.logo
+        if header_logo == blank
+          assign header_logo = settings.logo
+        endif
+      -%}
+      {%- if header_logo != blank -%}
+        <img src="{{ header_logo | image_url: width: 340 }}"
+             width="170" height="{{ 170 | divided_by: header_logo.aspect_ratio | round }}"
              alt="Antared" fetchpriority="high">
       {%- else -%}
-        <img src="{{ 'cytolight-logo.jpg' | file_url }}"
-             width="170" height="62"
+        <img src="{{ 'LOGO_ANTARED.jpg' | file_url }}"
+             width="170" height="154"
              alt="Antared" fetchpriority="high">
       {%- endif -%}
     </a>
