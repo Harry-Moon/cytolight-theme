@@ -1,0 +1,553 @@
+{%- comment -%}
+  Les sept pages Protocoles, servies par une seule section.
+
+  Meme mecanique que `main-product.liquid` : la section derive le sujet depuis le
+  handle de la page, puis rend une ossature identique pour toutes. Sept pages,
+  une seule mise en page a maintenir. Ajouter un protocole = un `when` de plus et
+  un gabarit d'une ligne.
+
+  | Handle              | Sujet                          |
+  |---------------------|--------------------------------|
+  | protocols           | index, ne decrit aucune seance |
+  | pre-workout         | avant l'effort                 |
+  | post-workout        | apres l'effort                 |
+  | daily-recovery      | recuperation quotidienne       |
+  | skin-routine        | routine peau                   |
+  | full-body-routine   | seance corps entier            |
+  | workday-routine     | journee de travail             |
+
+  CONTRAT EDITORIAL — il ne se contourne pas :
+
+  1. Les quatre parametres de seance (moment, duree, distance, frequence) sont
+     presents et chiffres, dans les deux langues. Trois sur quatre est un echec.
+  2. Chaque page porte son bloc « ce que cette seance ne fait pas ». C'est lui qui
+     tient la page du bon cote du principe II de la constitution : decrire un
+     usage est autorise, promettre un effet sur une pathologie ne l'est pas.
+  3. Aucun chiffre de dose n'est invente ici. Duree, frequence et distance sont
+     repris de `sections/learn-how-it-works.liquid`, qui fait foi ; les longueurs
+     d'onde de `sections/learn-wavelengths.liquid`, qui fait foi. Modifier une
+     valeur ici sans la modifier la-bas cree une contradiction que
+     `scripts/audit-parcours.py` ne voit pas — elle ne se verra qu'en clientele.
+
+  Les listes repetees passent par une chaine a deux separateurs, faute de tableaux
+  d'objets en Liquid : `|` separe les elements, `~` separe le titre du texte.
+  Aucun texte ne doit contenir ces deux caracteres.
+
+  Aucune regle de CSS ajoutee : `assets/learn.css` porte deja tous les composants
+  utilises ici (.ln-hero, .ln-section, .ln-steps, .ln-waves, .ln-note, .ln-pledge,
+  .ln-hub, .ln-actions).
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign how_url = pages['comment-ca-marche'].url
+  if how_url == blank
+    assign how_url = locale_root | append: '/pages/comment-ca-marche'
+  endif
+  assign waves_url = pages['wavelengths'].url
+  if waves_url == blank
+    assign waves_url = locale_root | append: '/pages/wavelengths'
+  endif
+  assign index_url = pages['protocols'].url
+  if index_url == blank
+    assign index_url = locale_root | append: '/pages/protocols'
+  endif
+
+  assign handle = page.handle
+  assign est_index = false
+  assign ondes_set = 'mixte'
+-%}
+
+{%- case handle -%}
+
+{%- when 'pre-workout' -%}
+  {%- liquid
+    assign est_index = false
+    assign ondes_set = 'profond'
+    assign produits = 'cytolight-pano-ultra,cytolight-desk,cytolight-knee'
+
+    assign crumb_fr = 'Avant l&apos;effort'
+    assign crumb_en = 'Pre-workout'
+    assign kicker_fr = 'Protocole &mdash; avant l&apos;effort'
+    assign kicker_en = 'Protocol &mdash; before training'
+    assign titre_fr = 'Dix minutes avant de commencer, pas dix de plus &agrave; la fin.'
+    assign titre_en = 'Ten minutes before you start, not ten more at the end.'
+    assign intro_fr = 'La s&eacute;ance d&apos;avant-effort se place sur les groupes musculaires que votre entra&icirc;nement va solliciter, juste avant de commencer. Elle ne remplace pas l&apos;&eacute;chauffement et ne le raccourcit pas : elle s&apos;ajoute au moment o&ugrave; vous vous pr&eacute;parez d&eacute;j&agrave;, sans rien co&ucirc;ter de plus &agrave; votre emploi du temps.'
+    assign intro_en = 'The pre-training session goes on the muscle groups your workout is about to load, right before you start. It does not replace your warm-up and it does not shorten it: it slots into the moment you are already getting ready, without costing your schedule anything extra.'
+    assign pour_qui_fr = 'Pour qui s&apos;entra&icirc;ne trois fois par semaine ou plus et cherche &agrave; installer un geste r&eacute;p&eacute;table avant la s&eacute;ance.'
+    assign pour_qui_en = 'For anyone training three times a week or more, looking for a repeatable gesture before the session.'
+
+    assign moment_fr = '10 &agrave; 30 minutes avant l&apos;effort'
+    assign moment_en = '10 to 30 minutes before training'
+    assign duree_fr = '10 minutes par zone'
+    assign duree_en = '10 minutes per area'
+    assign distance_fr = '15 &agrave; 50 cm pour un panneau, au contact pour un appareil port&eacute;'
+    assign distance_en = '15 to 50 cm for a panel, in contact for a worn device'
+    assign frequence_fr = 'Les jours d&apos;entra&icirc;nement, soit 3 &agrave; 5 fois par semaine'
+    assign frequence_en = 'On training days, so 3 to 5 times a week'
+
+    assign etapes_fr = 'Choisissez la zone~Celle que la s&eacute;ance va charger : cuisses avant des squats, &eacute;paules avant du tirage. Une seule zone par passage.|D&eacute;couvrez la peau~La lumi&egrave;re ne traverse pas un v&ecirc;tement sans perdre l&apos;essentiel de la dose. Peau nue, sans cr&egrave;me.|Lancez dix minutes~Le minuteur de l&apos;appareil suffit. Restez immobile, la distance compte plus que la dur&eacute;e.|Encha&icirc;nez l&apos;&eacute;chauffement~La s&eacute;ance se termine, l&apos;&eacute;chauffement commence. Elle ne le remplace jamais.'
+    assign etapes_en = 'Pick the area~The one the session will load: quads before squats, shoulders before pulls. One area per pass.|Expose the skin~Light does not cross fabric without losing most of the dose. Bare skin, no cream.|Run ten minutes~The device timer is enough. Stay still; distance matters more than duration.|Then warm up~The session ends, the warm-up begins. It never replaces it.'
+
+    assign erreurs_fr = 'Rallonger la s&eacute;ance en pensant faire mieux. Au-del&agrave; de vingt minutes par zone, la litt&eacute;rature ne montre pas de gain, et parfois l&apos;inverse.|La faire &agrave; travers un legging ou un t-shirt technique. Le tissu absorbe et disperse : la dose re&ccedil;ue n&apos;a plus rien &agrave; voir avec celle annonc&eacute;e.|Sauter l&apos;&eacute;chauffement parce qu&apos;on a fait la s&eacute;ance. Ce sont deux choses sans rapport.|Changer de zone chaque jour. La r&eacute;gularit&eacute; sur une m&ecirc;me zone est ce qui se mesure dans les &eacute;tudes.'
+    assign erreurs_en = 'Stretching the session out, assuming more is better. Beyond twenty minutes per area the literature shows no gain, and sometimes the opposite.|Running it through leggings or a technical tee. Fabric absorbs and scatters: the dose you receive no longer resembles the one advertised.|Skipping the warm-up because you did the session. They are unrelated.|Switching areas every day. Consistency on one area is what the studies actually measure.'
+
+    assign limites_fr = 'Ce n&apos;est pas un &eacute;chauffement~Elle n&apos;&eacute;l&egrave;ve pas la temp&eacute;rature musculaire ni la fr&eacute;quence cardiaque. L&apos;&eacute;chauffement reste enti&egrave;rement &agrave; faire.|Elle ne traite aucune blessure~Une douleur qui dure, qui r&eacute;veille la nuit ou qui limite un mouvement rel&egrave;ve d&apos;un m&eacute;decin, pas d&apos;une lampe.|Elle ne remplace ni le sommeil ni l&apos;alimentation~Ce sont les deux variables qui d&eacute;terminent la r&eacute;cup&eacute;ration. Aucune s&eacute;ance de lumi&egrave;re ne les compense.|Elle ne produit rien en une fois~Ce qui se mesure, ce sont des semaines de s&eacute;ances r&eacute;guli&egrave;res, pas une s&eacute;ance isol&eacute;e.'
+    assign limites_en = 'It is not a warm-up~It does not raise muscle temperature or heart rate. The warm-up is still entirely ahead of you.|It treats no injury~Pain that lasts, wakes you at night, or limits a movement is a doctor&apos;s business, not a lamp&apos;s.|It replaces neither sleep nor food~Those are the two variables that decide recovery. No light session compensates for them.|It does nothing in one go~What gets measured is weeks of regular sessions, not one isolated session.'
+  -%}
+
+{%- when 'post-workout' -%}
+  {%- liquid
+    assign ondes_set = 'profond'
+    assign produits = 'cytolight-pano-ultra,cytolight-knee,cytolight-foot'
+
+    assign crumb_fr = 'Apr&egrave;s l&apos;effort'
+    assign crumb_en = 'Post-workout'
+    assign kicker_fr = 'Protocole &mdash; apr&egrave;s l&apos;effort'
+    assign kicker_en = 'Protocol &mdash; after training'
+    assign titre_fr = 'La fen&ecirc;tre qui compte se ferme dans l&apos;heure.'
+    assign titre_en = 'The window that matters closes within the hour.'
+    assign intro_fr = 'La s&eacute;ance d&apos;apr&egrave;s-effort se place dans l&apos;heure qui suit l&apos;entra&icirc;nement, sur les zones que vous venez de solliciter. C&apos;est le protocole le plus simple &agrave; tenir, parce qu&apos;il s&apos;installe dans un moment o&ugrave; vous &ecirc;tes d&eacute;j&agrave; assis, d&eacute;j&agrave; d&eacute;shabill&eacute;, d&eacute;j&agrave; en train de r&eacute;cup&eacute;rer.'
+    assign intro_en = 'The post-training session goes in the hour after your workout, on the areas you just loaded. It is the easiest protocol to keep, because it lands in a moment when you are already sitting down, already undressed, already recovering.'
+    assign pour_qui_fr = 'Pour qui encha&icirc;ne les s&eacute;ances et veut un rituel court entre l&apos;entra&icirc;nement et la douche.'
+    assign pour_qui_en = 'For anyone stacking sessions who wants a short ritual between training and the shower.'
+
+    assign moment_fr = 'Dans l&apos;heure qui suit l&apos;effort'
+    assign moment_en = 'Within the hour after training'
+    assign duree_fr = '10 &agrave; 20 minutes par zone'
+    assign duree_en = '10 to 20 minutes per area'
+    assign distance_fr = '15 &agrave; 50 cm pour un panneau, au contact pour une genouill&egrave;re ou une botte'
+    assign distance_en = '15 to 50 cm for a panel, in contact for a knee sleeve or boot'
+    assign frequence_fr = '3 &agrave; 5 s&eacute;ances par semaine, tenues sur plusieurs semaines'
+    assign frequence_en = '3 to 5 sessions a week, sustained over weeks'
+
+    assign etapes_fr = 'Ne repoussez pas~Plus la s&eacute;ance s&apos;&eacute;loigne de l&apos;effort, moins le moment est celui d&eacute;crit par les protocoles. L&apos;heure qui suit est la r&egrave;gle simple.|Ciblez ce qui a travaill&eacute;~Les jambes apr&egrave;s une sortie, le genou apr&egrave;s un match, les pieds apr&egrave;s une longue course. Une zone &agrave; la fois.|Dix &agrave; vingt minutes~Vingt pour une grande zone, dix pour une articulation. Le minuteur fait le travail.|Gardez la m&ecirc;me zone~Trois &agrave; cinq fois par semaine sur la m&ecirc;me zone vaut mieux que sept zones une fois chacune.'
+    assign etapes_en = 'Do not postpone~The further the session drifts from the effort, the less it matches the protocols. Within the hour is the simple rule.|Target what worked~Legs after a ride, the knee after a match, the feet after a long run. One area at a time.|Ten to twenty minutes~Twenty for a large area, ten for a joint. The timer does the work.|Keep the same area~Three to five times a week on one area beats seven areas once each.'
+
+    assign erreurs_fr = 'Encha&icirc;ner cinq zones dans la m&ecirc;me s&eacute;ance. La dur&eacute;e totale explose et la r&eacute;gularit&eacute; s&apos;effondre d&egrave;s la semaine suivante.|Confondre chaleur et dose. Le proche infrarouge chauffe l&eacute;g&egrave;rement &agrave; courte distance ; la sensation de chaleur ne mesure rien.|Attendre le lendemain. Ce n&apos;est plus le m&ecirc;me protocole.|Arr&ecirc;ter au bout de dix jours. Les &eacute;tudes de r&eacute;f&eacute;rence mesurent sur des semaines.'
+    assign erreurs_en = 'Doing five areas in one session. Total duration explodes and consistency collapses by the following week.|Confusing warmth with dose. Near-infrared warms slightly at close range; the sensation measures nothing.|Waiting until tomorrow. That is a different protocol.|Stopping after ten days. The reference studies measure over weeks.'
+
+    assign limites_fr = 'Elle ne soigne pas une blessure~Une douleur qui persiste au-del&agrave; de quelques jours, ou qui limite un mouvement, se montre &agrave; un professionnel de sant&eacute;.|Elle ne remplace pas l&apos;&eacute;tirement ni le repos~Ce sont d&apos;autres leviers, ind&eacute;pendants, et la s&eacute;ance ne les rend pas facultatifs.|Elle n&apos;acc&eacute;l&egrave;re rien de garanti~Ce que d&eacute;crivent les travaux publi&eacute;s, ce sont des tendances mesur&eacute;es en laboratoire, pas une promesse individuelle.|Elle ne compense pas une charge trop lourde~Si l&apos;entra&icirc;nement d&eacute;passe ce que le corps encaisse, c&apos;est la charge qu&apos;il faut revoir.'
+    assign limites_en = 'It does not heal an injury~Pain lasting beyond a few days, or limiting a movement, goes to a health professional.|It replaces neither stretching nor rest~Those are separate levers, and the session does not make them optional.|It guarantees no acceleration~What the published work describes are trends measured in a lab, not an individual promise.|It does not offset an excessive load~If training exceeds what the body absorbs, the load is what needs revisiting.'
+  -%}
+
+{%- when 'daily-recovery' -%}
+  {%- liquid
+    assign ondes_set = 'mixte'
+    assign produits = 'cytolight-desk,cytolight-pano-ultra,cytolight-foot'
+
+    assign crumb_fr = 'R&eacute;cup&eacute;ration quotidienne'
+    assign crumb_en = 'Daily recovery'
+    assign kicker_fr = 'Protocole &mdash; tous les jours'
+    assign kicker_en = 'Protocol &mdash; every day'
+    assign titre_fr = 'Le protocole qui marche est celui que vous tenez en mars.'
+    assign titre_en = 'The protocol that works is the one you still keep in March.'
+    assign intro_fr = 'Celui-ci ne d&eacute;pend d&apos;aucun entra&icirc;nement. C&apos;est un cr&eacute;neau fixe, le m&ecirc;me chaque jour, accroch&eacute; &agrave; une habitude qui existe d&eacute;j&agrave; : la fin de journ&eacute;e, la lecture du soir, le moment o&ugrave; vous vous asseyez enfin. La r&eacute;gularit&eacute; est la seule variable qui d&eacute;pende enti&egrave;rement de vous, et c&apos;est la plus d&eacute;terminante.'
+    assign intro_en = 'This one depends on no workout. It is a fixed slot, the same each day, hooked onto a habit that already exists: the end of the day, the evening read, the moment you finally sit down. Consistency is the only variable entirely under your control, and it is the one that decides the most.'
+    assign pour_qui_fr = 'Pour qui ne s&apos;entra&icirc;ne pas forc&eacute;ment, mais veut un rituel court et tenable dans la dur&eacute;e.'
+    assign pour_qui_en = 'For anyone who does not necessarily train, but wants a short ritual that survives the months.'
+
+    assign moment_fr = 'Un cr&eacute;neau fixe, souvent en fin de journ&eacute;e'
+    assign moment_en = 'A fixed slot, often at the end of the day'
+    assign duree_fr = '10 &agrave; 20 minutes'
+    assign duree_en = '10 to 20 minutes'
+    assign distance_fr = '15 &agrave; 50 cm selon l&apos;irradiance de l&apos;appareil'
+    assign distance_en = '15 to 50 cm depending on the device&apos;s irradiance'
+    assign frequence_fr = '3 &agrave; 5 s&eacute;ances par semaine, sur plusieurs semaines'
+    assign frequence_en = '3 to 5 sessions a week, over several weeks'
+
+    assign etapes_fr = 'Accrochez-la &agrave; une habitude~Apr&egrave;s la douche, avant la lecture, pendant le podcast. Un rituel sans ancrage ne tient pas trois semaines.|Gardez le m&ecirc;me cr&eacute;neau~Le m&ecirc;me moment chaque jour co&ucirc;te moins d&apos;effort mental qu&apos;un moment &agrave; d&eacute;cider.|Dix &agrave; vingt minutes~Le minuteur, puis vous n&apos;y pensez plus. Doubler la dur&eacute;e ne double pas le r&eacute;sultat.|Notez la date de d&eacute;part~Vous jugerez dans plusieurs semaines, pas dans trois jours. Sans date, on juge de m&eacute;moire.'
+    assign etapes_en = 'Hook it to a habit~After the shower, before reading, during the podcast. A ritual without an anchor does not survive three weeks.|Keep the same slot~The same moment every day costs less mental effort than a moment to decide.|Ten to twenty minutes~Set the timer, then stop thinking about it. Doubling the duration does not double the result.|Write down the start date~You will judge in weeks, not in three days. Without a date, you judge from memory.'
+
+    assign erreurs_fr = 'Changer d&apos;horaire chaque jour. C&apos;est la premi&egrave;re cause d&apos;abandon, avant toute consid&eacute;ration technique.|Attendre un r&eacute;sultat visible en une semaine. Sur la peau et les cheveux, les essais de r&eacute;f&eacute;rence mesurent &agrave; seize semaines.|Multiplier les zones pour aller plus vite. La dur&eacute;e totale devient un obstacle.|Arr&ecirc;ter puis reprendre. Une s&eacute;rie interrompue ne se rattrape pas en doublant les s&eacute;ances suivantes.'
+    assign erreurs_en = 'Moving the slot every day. That is the first cause of giving up, ahead of any technical consideration.|Expecting a visible result in a week. On skin and hair, the reference trials measure at sixteen weeks.|Adding areas to go faster. Total duration becomes the obstacle.|Stopping then restarting. An interrupted run is not recovered by doubling the next sessions.'
+
+    assign limites_fr = 'Elle ne traite aucune pathologie~C&apos;est un appareil de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. Une pathologie rel&egrave;ve d&apos;un m&eacute;decin.|Elle ne remplace pas le sommeil~Aucune dose de lumi&egrave;re ne compense une dette de sommeil. C&apos;est l&apos;inverse : le sommeil d&eacute;termine ce que vous ressentez.|Elle ne garantit aucun ressenti~Certaines personnes rapportent un changement, d&apos;autres non. Nous ne le promettons pas.|Elle ne se mesure pas &agrave; la chaleur~La sensation de chaleur vient du proche infrarouge &agrave; courte distance. Elle n&apos;indique ni la dose ni l&apos;efficacit&eacute;.'
+    assign limites_en = 'It treats no condition~This is a wellness device, without medical-device CE marking. A medical condition is a doctor&apos;s business.|It does not replace sleep~No dose of light offsets a sleep debt. It works the other way round: sleep decides what you feel.|It guarantees no sensation~Some people report a change, others do not. We do not promise it.|It is not measured by warmth~The warmth comes from near-infrared at close range. It indicates neither dose nor effect.'
+  -%}
+
+{%- when 'skin-routine' -%}
+  {%- liquid
+    assign ondes_set = 'surface'
+    assign produits = 'cytolight-mask,cytolight-desk,cytolight-pano-ultra'
+
+    assign crumb_fr = 'Routine peau'
+    assign crumb_en = 'Skin routine'
+    assign kicker_fr = 'Protocole &mdash; peau'
+    assign kicker_en = 'Protocol &mdash; skin'
+    assign titre_fr = 'Seize semaines. C&apos;est l&apos;horizon des essais, pas sept jours.'
+    assign titre_en = 'Sixteen weeks. That is the horizon of the trials, not seven days.'
+    assign intro_fr = 'La routine peau est celle o&ugrave; l&apos;&eacute;cart entre la promesse marketing habituelle et la litt&eacute;rature est le plus large. Les essais qui documentent le rouge sur la peau mesurent &agrave; seize semaines de s&eacute;ances r&eacute;guli&egrave;res. Une marque qui annonce un r&eacute;sultat visible en une semaine ne d&eacute;crit pas ces essais.'
+    assign intro_en = 'The skin routine is where the gap between the usual marketing promise and the literature is widest. The trials documenting red light on skin measure at sixteen weeks of regular sessions. A brand announcing a visible result in a week is not describing those trials.'
+    assign pour_qui_fr = 'Pour qui veut une routine visage r&eacute;guli&egrave;re et accepte de juger sur plusieurs mois.'
+    assign pour_qui_en = 'For anyone wanting a regular facial routine and willing to judge over months.'
+
+    assign moment_fr = 'Sur peau nue et propre, avant les soins'
+    assign moment_en = 'On clean bare skin, before skincare'
+    assign duree_fr = '10 minutes'
+    assign duree_en = '10 minutes'
+    assign distance_fr = '15 &agrave; 30 cm pour un panneau, au contact pour un masque'
+    assign distance_en = '15 to 30 cm for a panel, in contact for a mask'
+    assign frequence_fr = '3 &agrave; 5 s&eacute;ances par semaine, jug&eacute;es &agrave; seize semaines'
+    assign frequence_en = '3 to 5 sessions a week, judged at sixteen weeks'
+
+    assign etapes_fr = 'Nettoyez d&apos;abord~Un fond de teint, une cr&egrave;me solaire ou un s&eacute;rum opaque filtrent la lumi&egrave;re avant qu&apos;elle n&apos;atteigne la peau.|Rien entre la lumi&egrave;re et vous~Peau nue, sans soin appliqu&eacute;. Les soins viennent apr&egrave;s la s&eacute;ance, pas avant.|Dix minutes, yeux prot&eacute;g&eacute;s~Les lunettes fournies servent &agrave; &ccedil;a. On ne fixe jamais une LED, m&ecirc;me br&egrave;vement.|Puis votre routine habituelle~S&eacute;rum et cr&egrave;me s&apos;appliquent apr&egrave;s. La s&eacute;ance ne les remplace pas.'
+    assign etapes_en = 'Cleanse first~Foundation, sunscreen, or an opaque serum filters the light before it reaches the skin.|Nothing between the light and you~Bare skin, no product applied. Skincare comes after the session, not before.|Ten minutes, eyes protected~That is what the supplied goggles are for. Never stare at an LED, even briefly.|Then your usual routine~Serum and cream go on afterwards. The session does not replace them.'
+
+    assign erreurs_fr = 'Juger &agrave; deux semaines. Les essais de r&eacute;f&eacute;rence mesurent &agrave; seize.|Faire la s&eacute;ance par-dessus un soin. Le produit filtre la lumi&egrave;re et vous mesurez autre chose que ce que vous croyez.|Augmenter la dur&eacute;e faute de r&eacute;sultat. Ce n&apos;est pas le levier ; la r&eacute;gularit&eacute; l&apos;est.|Abandonner la cr&egrave;me solaire. La lumi&egrave;re rouge ne prot&egrave;ge de rien, et le soleil reste le premier facteur de vieillissement cutan&eacute;.'
+    assign erreurs_en = 'Judging at two weeks. The reference trials measure at sixteen.|Running the session over skincare. The product filters the light and you measure something other than what you think.|Increasing duration for lack of a result. That is not the lever; consistency is.|Dropping sunscreen. Red light protects from nothing, and the sun remains the first driver of skin ageing.'
+
+    assign limites_fr = 'Ce n&apos;est pas un traitement dermatologique~Acn&eacute;, rosac&eacute;e, ecz&eacute;ma, l&eacute;sion qui change d&apos;aspect : c&apos;est un dermatologue, et lui seul.|Elle ne remplace pas la protection solaire~Elle ne prot&egrave;ge pas des UV et ne compense pas une exposition.|Aucun r&eacute;sultat n&apos;est garanti~Ce qui existe, ce sont des essais publi&eacute;s sur des groupes, pas une promesse sur votre visage.|Aucune &eacute;tude n&apos;a port&eacute; sur un appareil Antared~Les travaux cit&eacute;s dans notre espace Learn portent sur des dispositifs de recherche, avec leurs propres param&egrave;tres.'
+    assign limites_en = 'This is not a dermatological treatment~Acne, rosacea, eczema, a lesion changing appearance: that is a dermatologist, and only a dermatologist.|It does not replace sun protection~It does not protect against UV and does not offset exposure.|No result is guaranteed~What exists are published trials on groups, not a promise about your face.|No study has been run on an Antared device~The work cited in our Learn space involves research devices with their own parameters.'
+  -%}
+
+{%- when 'full-body-routine' -%}
+  {%- liquid
+    assign ondes_set = 'mixte'
+    assign produits = 'cytolight-pano-ultra,cytolight-sauna-dome,cytolight-pano-plus'
+
+    assign crumb_fr = 'S&eacute;ance corps entier'
+    assign crumb_en = 'Full-body session'
+    assign kicker_fr = 'Protocole &mdash; corps entier'
+    assign kicker_en = 'Protocol &mdash; full body'
+    assign titre_fr = 'Deux faces, vingt minutes, et rien &agrave; d&eacute;cider.'
+    assign titre_en = 'Two sides, twenty minutes, nothing to decide.'
+    assign intro_fr = 'La s&eacute;ance corps entier remplace le choix de la zone par le choix du cr&eacute;neau : au lieu de cibler, on expose l&apos;avant puis l&apos;arri&egrave;re. Elle demande un grand panneau ou un d&ocirc;me, et vingt minutes devant soi. En &eacute;change, elle supprime la question qui fait abandonner les autres protocoles : quelle zone aujourd&apos;hui ?'
+    assign intro_en = 'The full-body session swaps choosing an area for choosing a slot: instead of targeting, you expose the front, then the back. It needs a large panel or a dome, and twenty minutes ahead of you. In exchange it removes the question that makes people abandon the other protocols: which area today?'
+    assign pour_qui_fr = 'Pour qui poss&egrave;de un grand format et pr&eacute;f&egrave;re une s&eacute;ance unique &agrave; plusieurs passages cibl&eacute;s.'
+    assign pour_qui_en = 'For anyone with a large-format device who prefers one session to several targeted passes.'
+
+    assign moment_fr = 'Quand vous avez vingt minutes sans interruption'
+    assign moment_en = 'When you have twenty uninterrupted minutes'
+    assign duree_fr = '10 minutes par face, soit 20 minutes au total'
+    assign duree_en = '10 minutes per side, so 20 minutes in total'
+    assign distance_fr = '30 &agrave; 50 cm du panneau, debout ou assis'
+    assign distance_en = '30 to 50 cm from the panel, standing or seated'
+    assign frequence_fr = '3 &agrave; 4 s&eacute;ances par semaine'
+    assign frequence_en = '3 to 4 sessions a week'
+
+    assign etapes_fr = 'Reculez-vous~Trente &agrave; cinquante centim&egrave;tres : &agrave; grand format, la distance sert la couverture autant que la dose.|Dix minutes de face~Le minuteur de l&apos;appareil, les lunettes en place. On ne regarde pas le panneau.|Dix minutes de dos~M&ecirc;me dur&eacute;e, m&ecirc;me distance. Une face oubli&eacute;e, c&apos;est la moiti&eacute; de la s&eacute;ance.|Toujours le m&ecirc;me ordre~Face puis dos, chaque fois. Un ordre fixe &eacute;vite de se demander o&ugrave; on en &eacute;tait.'
+    assign etapes_en = 'Step back~Thirty to fifty centimetres: at large format, distance serves coverage as much as dose.|Ten minutes facing~Device timer on, goggles in place. Do not look at the panel.|Ten minutes with your back~Same duration, same distance. A forgotten side is half the session.|Always the same order~Front then back, every time. A fixed order stops you wondering where you were.'
+
+    assign erreurs_fr = 'Coller au panneau pour aller plus vite. La couverture se d&eacute;grade et rien ne s&apos;acc&eacute;l&egrave;re.|Faire quarante minutes une fois par semaine. Quatre s&eacute;ances de vingt valent mieux qu&apos;une de quatre-vingts.|Oublier les lunettes parce que c&apos;est du corps entier. Un grand panneau est plus lumineux, pas moins.|Confondre chaleur et intensit&eacute;. Un d&ocirc;me chauffe par conception ; la chaleur ne dit rien de la dose lumineuse.'
+    assign erreurs_en = 'Standing right against the panel to go faster. Coverage degrades and nothing accelerates.|Doing forty minutes once a week. Four twenty-minute sessions beat one eighty-minute session.|Skipping goggles because it is full body. A large panel is brighter, not less.|Confusing heat with intensity. A dome heats by design; heat says nothing about the light dose.'
+
+    assign limites_fr = 'Ce n&apos;est pas un sauna m&eacute;dical~Un d&ocirc;me chauffe, et la chaleur a ses propres contre-indications. En cas de doute, demandez &agrave; un m&eacute;decin.|Elle ne remplace aucune s&eacute;ance cibl&eacute;e~Exposer tout le corps r&eacute;partit la dose ; cela ne concentre rien sur une articulation pr&eacute;cise.|Elle ne traite rien~Ni douleur, ni inflammation, ni pathologie. Ce n&apos;est pas ce que l&apos;appareil fait ni ce qu&apos;il a le droit d&apos;annoncer.|Elle ne dispense pas de bouger~La r&eacute;cup&eacute;ration repose d&apos;abord sur le sommeil, l&apos;alimentation et la charge d&apos;entra&icirc;nement.'
+    assign limites_en = 'This is not a medical sauna~A dome heats, and heat has its own contraindications. When in doubt, ask a doctor.|It replaces no targeted session~Exposing the whole body spreads the dose; it concentrates nothing on a specific joint.|It treats nothing~Not pain, not inflammation, not any condition. That is neither what the device does nor what it may claim.|It is no substitute for moving~Recovery rests first on sleep, food, and training load.'
+  -%}
+
+{%- when 'workday-routine' -%}
+  {%- liquid
+    assign ondes_set = 'mixte'
+    assign produits = 'cytolight-desk,cytolight-cap,cytolight-pano-plus'
+
+    assign crumb_fr = 'Journ&eacute;e de travail'
+    assign crumb_en = 'Workday'
+    assign kicker_fr = 'Protocole &mdash; au bureau'
+    assign kicker_en = 'Protocol &mdash; at the desk'
+    assign titre_fr = 'Dix minutes pos&eacute;es dans une journ&eacute;e qui n&apos;en a pas.'
+    assign titre_en = 'Ten minutes fitted into a day that has none.'
+    assign intro_fr = 'Le protocole de bureau r&eacute;sout un probl&egrave;me d&apos;emploi du temps avant tout : la s&eacute;ance se fait pendant que vous travaillez, &agrave; un poste que vous n&apos;avez pas &agrave; quitter. C&apos;est le seul protocole qui ne demande aucun cr&eacute;neau suppl&eacute;mentaire, et c&apos;est pour cette raison qu&apos;il tient sur la dur&eacute;e.'
+    assign intro_en = 'The desk protocol solves a scheduling problem above all: the session runs while you work, at a desk you never leave. It is the only protocol that asks for no extra slot, and that is exactly why it lasts.'
+    assign pour_qui_fr = 'Pour qui passe ses journ&eacute;es assis et n&apos;ajoutera pas un rituel de plus &agrave; son agenda.'
+    assign pour_qui_en = 'For anyone sitting all day who will not add one more ritual to the calendar.'
+
+    assign moment_fr = 'En d&eacute;but de journ&eacute;e ou au creux de l&apos;apr&egrave;s-midi'
+    assign moment_en = 'Early in the day or in the afternoon dip'
+    assign duree_fr = '10 minutes'
+    assign duree_en = '10 minutes'
+    assign distance_fr = '40 &agrave; 50 cm, soit la distance normale &agrave; un &eacute;cran'
+    assign distance_en = '40 to 50 cm, the normal distance to a screen'
+    assign frequence_fr = 'Les jours travaill&eacute;s, soit 4 &agrave; 5 fois par semaine'
+    assign frequence_en = 'On working days, so 4 to 5 times a week'
+
+    assign etapes_fr = 'Placez le panneau de c&ocirc;t&eacute;~De biais plut&ocirc;t qu&apos;en face : la lumi&egrave;re atteint la peau sans se trouver dans votre champ de vision.|Peau d&eacute;couverte~Avant-bras, nuque, visage selon l&apos;orientation. Une manche longue annule la s&eacute;ance.|Dix minutes, minuteur lanc&eacute;~Vous continuez de travailler. C&apos;est tout l&apos;int&eacute;r&ecirc;t du format bureau.|Le m&ecirc;me moment chaque jour~Au caf&eacute; du matin ou au creux de quinze heures. L&apos;ancrage vaut mieux que l&apos;intention.'
+    assign etapes_en = 'Place the panel to one side~Angled rather than facing you: the light reaches skin without sitting in your field of view.|Skin uncovered~Forearms, neck, face depending on orientation. A long sleeve cancels the session.|Ten minutes, timer running~You keep working. That is the whole point of the desk format.|The same moment each day~With the morning coffee or in the three o&apos;clock dip. An anchor beats an intention.'
+
+    assign erreurs_fr = 'Regarder le panneau. Il n&apos;est pas fait pour &ecirc;tre fix&eacute; ; placez-le de biais.|Le laisser allum&eacute; toute la journ&eacute;e. Au-del&agrave; de vingt minutes par zone, la litt&eacute;rature ne montre pas de gain.|Le faire &agrave; travers une chemise. Le tissu absorbe l&apos;essentiel de la dose.|Le placer derri&egrave;re l&apos;&eacute;cran. Le panneau &eacute;claire alors l&apos;&eacute;cran, pas vous.'
+    assign erreurs_en = 'Looking at the panel. It is not made to be stared at; angle it to the side.|Leaving it on all day. Beyond twenty minutes per area the literature shows no gain.|Running it through a shirt. Fabric absorbs most of the dose.|Putting it behind the screen. The panel then lights the screen, not you.'
+
+    assign limites_fr = 'Ce n&apos;est pas une lampe de luminoth&eacute;rapie saisonni&egrave;re~Les lampes destin&eacute;es &agrave; la lumi&egrave;re du jour fonctionnent sur un autre spectre et &agrave; une autre intensit&eacute;.|Elle ne remplace pas une pause~Se lever, marcher et regarder au loin rel&egrave;vent d&apos;autres besoins, que la lumi&egrave;re ne couvre pas.|Elle ne traite ni la fatigue ni un trouble du sommeil~Une fatigue persistante se montre &agrave; un m&eacute;decin.|Elle ne corrige pas une mauvaise posture~Le si&egrave;ge, la hauteur d&apos;&eacute;cran et les pauses restent le sujet.'
+    assign limites_en = 'This is not a seasonal light-therapy lamp~Daylight lamps work on a different spectrum and a different intensity.|It does not replace a break~Standing up, walking, and looking into the distance meet other needs that light does not cover.|It treats neither fatigue nor a sleep disorder~Persistent fatigue goes to a doctor.|It does not fix bad posture~The chair, the screen height, and the breaks remain the subject.'
+  -%}
+
+{%- else -%}
+  {%- liquid
+    assign est_index = true
+    assign produits = 'cytolight-desk,cytolight-mask,cytolight-pano-ultra'
+    assign crumb_fr = 'Protocoles'
+    assign crumb_en = 'Protocols'
+    assign kicker_fr = 'Six moments, une m&ecirc;me m&eacute;thode'
+    assign kicker_en = 'Six moments, one method'
+    assign titre_fr = 'Un protocole, c&apos;est quatre chiffres et une habitude.'
+    assign titre_en = 'A protocol is four numbers and one habit.'
+    assign intro_fr = 'Un protocole utile tient en quatre param&egrave;tres : quand, combien de temps, &agrave; quelle distance, &agrave; quelle fr&eacute;quence. Tout le reste est du commentaire. Les six pages ci-dessous donnent ces quatre chiffres pour six moments de la semaine, avec &agrave; chaque fois ce que la s&eacute;ance ne fait pas &mdash; parce qu&apos;une consigne d&apos;usage sans ses limites n&apos;est pas une consigne, c&apos;est une promesse.'
+    assign intro_en = 'A useful protocol comes down to four parameters: when, how long, at what distance, how often. Everything else is commentary. The six pages below give those four numbers for six moments of the week, each with what the session does not do &mdash; because usage guidance without its limits is not guidance, it is a promise.'
+    assign pour_qui_fr = 'Commencez par le moment qui existe d&eacute;j&agrave; dans votre semaine. C&apos;est celui que vous tiendrez.'
+    assign pour_qui_en = 'Start with the moment that already exists in your week. That is the one you will keep.'
+  -%}
+
+{%- endcase -%}
+
+<section class="ln-page-protocol">
+  {% render 'editorial-hero',
+     crumb_fr: crumb_fr, crumb_en: crumb_en,
+     kicker_fr: kicker_fr, kicker_en: kicker_en,
+     title_fr: titre_fr, title_en: titre_en %}
+
+  <section class="ln-section ln-section--tight">
+    <div class="ln-shell ln-shell--narrow">
+      <p class="ln-copy">{% if is_fr %}{{ intro_fr }}{% else %}{{ intro_en }}{% endif %}</p>
+      <p class="ln-copy"><strong>{% if is_fr %}{{ pour_qui_fr }}{% else %}{{ pour_qui_en }}{% endif %}</strong></p>
+    </div>
+  </section>
+
+  {%- if est_index -%}
+
+    {%- comment -%}
+      La page d'index oriente et ne decrit aucune seance : decrire ici obligerait
+      a maintenir les memes chiffres a deux endroits, et ils divergeraient.
+    {%- endcomment -%}
+    <section class="ln-section ln-section--soft">
+      <div class="ln-shell">
+        <h2 class="ln-subtitle">{% if is_fr %}Les six protocoles{% else %}The six protocols{% endif %}</h2>
+        <div class="ln-hub">
+          {%- assign index_handles = 'pre-workout,post-workout,daily-recovery,skin-routine,full-body-routine,workday-routine' | split: ',' -%}
+          {%- assign index_numeros = '01,02,03,04,05,06' | split: ',' -%}
+          {%- assign index_titres_fr = 'Avant l&apos;effort|Apr&egrave;s l&apos;effort|R&eacute;cup&eacute;ration quotidienne|Routine peau|S&eacute;ance corps entier|Journ&eacute;e de travail' | split: '|' -%}
+          {%- assign index_titres_en = 'Before training|After training|Daily recovery|Skin routine|Full-body session|Workday' | split: '|' -%}
+          {%- assign index_textes_fr = 'Dix minutes sur les groupes que la s&eacute;ance va charger, juste avant de commencer.|Dans l&apos;heure qui suit, sur ce qui vient de travailler. Le plus simple &agrave; tenir.|Un cr&eacute;neau fixe, sans d&eacute;pendre d&apos;un entra&icirc;nement. Celui qui survit aux mois.|Sur peau nue et propre, jug&eacute; &agrave; seize semaines et pas &agrave; sept jours.|Dix minutes de face, dix de dos. Plus rien &agrave; d&eacute;cider.|Pendant que vous travaillez, sans quitter votre poste.' | split: '|' -%}
+          {%- assign index_textes_en = 'Ten minutes on the groups the session will load, right before you start.|Within the hour, on what just worked. The easiest one to keep.|A fixed slot, independent of any workout. The one that survives the months.|On clean bare skin, judged at sixteen weeks and not seven days.|Ten minutes facing, ten with your back. Nothing left to decide.|While you work, without leaving your desk.' | split: '|' -%}
+
+          {%- for h in index_handles -%}
+            {%- assign lien = pages[h].url -%}
+            {%- if lien == blank -%}
+              {%- assign lien = locale_root | append: '/pages/' | append: h -%}
+            {%- endif -%}
+            <article class="ln-hub__card">
+              <span class="ln-hub__num">{{ index_numeros[forloop.index0] }}</span>
+              <h3 class="ln-hub__title">{% if is_fr %}{{ index_titres_fr[forloop.index0] }}{% else %}{{ index_titres_en[forloop.index0] }}{% endif %}</h3>
+              <p class="ln-hub__text">{% if is_fr %}{{ index_textes_fr[forloop.index0] }}{% else %}{{ index_textes_en[forloop.index0] }}{% endif %}</p>
+              <a class="ln-link" href="{{ lien }}">{% if is_fr %}Lire le protocole{% else %}Read the protocol{% endif %}</a>
+            </article>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+
+  {%- else -%}
+
+    <section class="ln-section ln-section--soft">
+      <div class="ln-shell">
+        <div class="ln-head">
+          <div>
+            <p class="ln-kicker">{% if is_fr %}La s&eacute;ance{% else %}The session{% endif %}</p>
+            <h2 class="ln-subtitle">{% if is_fr %}Quatre chiffres, et rien &agrave; deviner{% else %}Four numbers, nothing left to guess{% endif %}</h2>
+          </div>
+          <div class="ln-head__aside">
+            <p>
+              {%- if is_fr -%}
+                Ces valeurs sont celles de notre page <a class="ln-link" href="{{ how_url }}">Comment &ccedil;a marche</a>. Elles ne sont pas propres &agrave; ce protocole : elles valent pour tous, et c&apos;est le moment qui change.
+              {%- else -%}
+                These values come from our <a class="ln-link" href="{{ how_url }}">How it works</a> page. They are not specific to this protocol: they hold for all of them, and it is the moment that changes.
+              {%- endif -%}
+            </p>
+          </div>
+        </div>
+
+        <div class="ln-steps">
+          <div class="ln-step">
+            <h3 class="ln-step__title">{% if is_fr %}Moment{% else %}When{% endif %}</h3>
+            <p class="ln-step__text">{% if is_fr %}{{ moment_fr }}{% else %}{{ moment_en }}{% endif %}</p>
+          </div>
+          <div class="ln-step">
+            <h3 class="ln-step__title">{% if is_fr %}Dur&eacute;e{% else %}Duration{% endif %}</h3>
+            <p class="ln-step__text">{% if is_fr %}{{ duree_fr }}{% else %}{{ duree_en }}{% endif %}</p>
+          </div>
+          <div class="ln-step">
+            <h3 class="ln-step__title">Distance</h3>
+            <p class="ln-step__text">{% if is_fr %}{{ distance_fr }}{% else %}{{ distance_en }}{% endif %}</p>
+          </div>
+          <div class="ln-step">
+            <h3 class="ln-step__title">{% if is_fr %}Fr&eacute;quence{% else %}Frequency{% endif %}</h3>
+            <p class="ln-step__text">{% if is_fr %}{{ frequence_fr }}{% else %}{{ frequence_en }}{% endif %}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell">
+        <p class="ln-kicker">{% if is_fr %}Comment s&apos;y prendre{% else %}How to run it{% endif %}</p>
+        <h2 class="ln-subtitle">{% if is_fr %}La s&eacute;ance, dans l&apos;ordre{% else %}The session, in order{% endif %}</h2>
+        <div class="ln-steps">
+          {%- if is_fr -%}
+            {%- assign etapes = etapes_fr | split: '|' -%}
+          {%- else -%}
+            {%- assign etapes = etapes_en | split: '|' -%}
+          {%- endif -%}
+          {%- for etape in etapes -%}
+            {%- assign paire = etape | split: '~' -%}
+            <div class="ln-step">
+              <h3 class="ln-step__title">{{ paire[0] }}</h3>
+              <p class="ln-step__text">{{ paire[1] }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+
+    <section class="ln-section ln-section--dark">
+      <div class="ln-shell">
+        <p class="ln-kicker">{% if is_fr %}Le spectre concern&eacute;{% else %}The spectrum involved{% endif %}</p>
+        <h2 class="ln-subtitle">{% if is_fr %}Ce que ces longueurs d&apos;onde font, et o&ugrave;{% else %}What these wavelengths do, and where{% endif %}</h2>
+        <div class="ln-waves">
+          {%- if ondes_set == 'surface' -%}
+            <article class="ln-wave">
+              <p class="ln-wave__nm">590 <i>nm</i></p>
+              <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ffb547, #ff9a3c);" aria-hidden="true"></span>
+              <p class="ln-wave__label">{% if is_fr %}Ambre &mdash; surface{% else %}Amber &mdash; surface{% endif %}</p>
+              <p class="ln-wave__text">{% if is_fr %}Absorb&eacute; d&egrave;s l&apos;&eacute;piderme. Utilis&eacute; pour le teint et le confort cutan&eacute;, pas pour atteindre un muscle.{% else %}Absorbed within the epidermis. Used for complexion and skin comfort, not to reach a muscle.{% endif %}</p>
+            </article>
+            <article class="ln-wave">
+              <p class="ln-wave__nm">630 <i>nm</i></p>
+              <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ff5f3a, #ea1f36);" aria-hidden="true"></span>
+              <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; peau{% else %}Red &mdash; skin{% endif %}</p>
+              <p class="ln-wave__text">{% if is_fr %}&Eacute;piderme et derme superficiel. C&apos;est le canal rouge du masque Antared, celui que documentent les essais sur le collag&egrave;ne.{% else %}Epidermis and superficial dermis. This is the red channel of the Antared mask, the one collagen trials document.{% endif %}</p>
+            </article>
+            <article class="ln-wave">
+              <p class="ln-wave__nm">660 <i>nm</i></p>
+              <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #e01a30, #a30d1e);" aria-hidden="true"></span>
+              <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; derme{% else %}Red &mdash; dermis{% endif %}</p>
+              <p class="ln-wave__text">{% if is_fr %}La longueur d&apos;onde rouge la plus &eacute;tudi&eacute;e du domaine, pr&eacute;sente sur la quasi-totalit&eacute; de la gamme.{% else %}The most studied red wavelength in the field, present across almost the entire range.{% endif %}</p>
+            </article>
+          {%- elsif ondes_set == 'profond' -%}
+            <article class="ln-wave">
+              <p class="ln-wave__nm">660 <i>nm</i></p>
+              <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #e01a30, #a30d1e);" aria-hidden="true"></span>
+              <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; derme{% else %}Red &mdash; dermis{% endif %}</p>
+              <p class="ln-wave__text">{% if is_fr %}La longueur d&apos;onde rouge la plus &eacute;tudi&eacute;e du domaine. Pr&eacute;sente sur la genouill&egrave;re Antared avec le 850 nm.{% else %}The most studied red wavelength in the field. Present on the Antared knee sleeve alongside 850 nm.{% endif %}</p>
+            </article>
+            <article class="ln-wave">
+              <p class="ln-wave__nm">810 <i>nm</i></p>
+              <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #7b4fa6, #4a2570);" aria-hidden="true"></span>
+              <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; profond{% else %}Near-infrared &mdash; deep{% endif %}</p>
+              <p class="ln-wave__text">{% if is_fr %}Invisible &agrave; l&apos;&oelig;il : une LED 810 nm peut &ecirc;tre allum&eacute;e sans en avoir l&apos;air. C&apos;est le spectre le plus utilis&eacute; en recherche sur les tissus profonds.{% else %}Invisible to the eye: an 810 nm LED can be on without looking like it. This is the spectrum most used in deep-tissue research.{% endif %}</p>
+            </article>
+            <article class="ln-wave">
+              <p class="ln-wave__nm">850 <i>nm</i></p>
+              <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #5b2d8e, #2a1250);" aria-hidden="true"></span>
+              <p class="ln-wave__label">{% if is_fr %}Proche infrarouge{% else %}Near-infrared{% endif %}</p>
+              <p class="ln-wave__text">{% if is_fr %}Le proche infrarouge le plus r&eacute;pandu de la gamme. C&apos;est lui qui produit la sensation de chaleur douce &agrave; courte distance.{% else %}The most widespread near-infrared across the range. It is the one producing the mild warmth at close range.{% endif %}</p>
+            </article>
+          {%- else -%}
+            <article class="ln-wave">
+              <p class="ln-wave__nm">630 <i>nm</i></p>
+              <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ff5f3a, #ea1f36);" aria-hidden="true"></span>
+              <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; peau{% else %}Red &mdash; skin{% endif %}</p>
+              <p class="ln-wave__text">{% if is_fr %}&Eacute;piderme et derme superficiel. La part du spectre qui agit le plus pr&egrave;s de la surface.{% else %}Epidermis and superficial dermis. The part of the spectrum acting closest to the surface.{% endif %}</p>
+            </article>
+            <article class="ln-wave">
+              <p class="ln-wave__nm">660 <i>nm</i></p>
+              <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #e01a30, #a30d1e);" aria-hidden="true"></span>
+              <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; derme{% else %}Red &mdash; dermis{% endif %}</p>
+              <p class="ln-wave__text">{% if is_fr %}La longueur d&apos;onde rouge la plus &eacute;tudi&eacute;e du domaine, pr&eacute;sente sur la quasi-totalit&eacute; de la gamme.{% else %}The most studied red wavelength in the field, present across almost the entire range.{% endif %}</p>
+            </article>
+            <article class="ln-wave">
+              <p class="ln-wave__nm">850 <i>nm</i></p>
+              <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #5b2d8e, #2a1250);" aria-hidden="true"></span>
+              <p class="ln-wave__label">{% if is_fr %}Proche infrarouge{% else %}Near-infrared{% endif %}</p>
+              <p class="ln-wave__text">{% if is_fr %}Le proche infrarouge le plus r&eacute;pandu de la gamme. C&apos;est lui qui produit la sensation de chaleur douce &agrave; courte distance.{% else %}The most widespread near-infrared across the range. It is the one producing the mild warmth at close range.{% endif %}</p>
+            </article>
+          {%- endif -%}
+        </div>
+        <div class="ln-actions">
+          <a class="ln-button ln-button--line" href="{{ waves_url }}">{% if is_fr %}Les sept longueurs d&apos;onde en d&eacute;tail{% else %}All seven wavelengths in detail{% endif %}</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-note">
+          <h2 class="ln-note__title">{% if is_fr %}Les erreurs qui co&ucirc;tent le plus{% else %}The mistakes that cost the most{% endif %}</h2>
+          <ul>
+            {%- if is_fr -%}
+              {%- assign erreurs = erreurs_fr | split: '|' -%}
+            {%- else -%}
+              {%- assign erreurs = erreurs_en | split: '|' -%}
+            {%- endif -%}
+            {%- for erreur in erreurs -%}
+              <li>{{ erreur }}</li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <p class="ln-kicker">{% if is_fr %}Cadrage{% else %}Framing{% endif %}</p>
+        <h2 class="ln-subtitle">{% if is_fr %}Ce que cette s&eacute;ance ne fait pas{% else %}What this session does not do{% endif %}</h2>
+        <p class="ln-copy">
+          {%- if is_fr -%}
+            Les appareils Antared sont des produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. Ce qui suit n&apos;est pas une pr&eacute;caution de style : c&apos;est la limite exacte de ce qu&apos;un protocole d&apos;usage peut annoncer.
+          {%- else -%}
+            Antared devices are wellness products, without medical-device CE marking. What follows is not stylistic caution: it is the exact boundary of what a usage protocol may state.
+          {%- endif -%}
+        </p>
+        <div class="ln-pledge">
+          {%- if is_fr -%}
+            {%- assign limites = limites_fr | split: '|' -%}
+          {%- else -%}
+            {%- assign limites = limites_en | split: '|' -%}
+          {%- endif -%}
+          {%- for limite in limites -%}
+            {%- assign paire = limite | split: '~' -%}
+            <div class="ln-pledge__row">
+              <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+              <div>
+                <p class="ln-pledge__title">{{ paire[0] }}</p>
+                <p class="ln-pledge__text">{{ paire[1] }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+        <div class="ln-actions">
+          <a class="ln-button ln-button--ink" href="{{ how_url }}">{% if is_fr %}Dose, s&eacute;curit&eacute; et m&eacute;canisme{% else %}Dose, safety and mechanism{% endif %}</a>
+          <a class="ln-button ln-button--ink" href="{{ index_url }}">{% if is_fr %}Les six protocoles{% else %}The six protocols{% endif %}</a>
+        </div>
+      </div>
+    </section>
+
+  {%- endif -%}
+
+  {% render 'learn-product-cta',
+     handles: produits,
+     heading_fr: 'Un protocole ne vaut que par l&apos;appareil qui le rend tenable.',
+     heading_en: 'A protocol is only worth the device that makes it sustainable.',
+     text_fr: 'Choisissez celui qui s&apos;installe dans le moment que vous avez d&eacute;j&agrave;, pas celui qui affiche le plus de LED.',
+     text_en: 'Pick the one that fits the moment you already have, not the one with the highest LED count.' %}
+</section>
+
+{% schema %}
+{
+  "name": "Protocoles",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Section unique des sept pages Protocoles. Le sujet est derive du handle de la page : protocols (index), pre-workout, post-workout, daily-recovery, skin-routine, full-body-routine, workday-routine. Les chiffres de dose viennent de learn-how-it-works et les longueurs d'onde de learn-wavelengths : ces deux pages font foi, ne pas les contredire ici. Le bloc « ce que cette seance ne fait pas » est obligatoire sur chaque page."
+    }
+  ]
+}
+{% endschema %}
