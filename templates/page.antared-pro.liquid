@@ -1,0 +1,25 @@
+{%- comment -%}
+  Gabarit Antared Pro.
+
+  A assigner dans l'admin Shopify a une page de handle `antared-pro`
+  (Content > Pages > ... > Theme template : page.antared-pro).
+
+  Le corps de la page reste vide : le contenu editorial vit dans la section,
+  comme partout ailleurs dans ce theme. Si quelqu'un saisit malgre tout du
+  texte dans l'editeur, il est rendu en bas plutot que perdu sans trace.
+{%- endcomment -%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% section 'pro-hub' %}
+
+  {%- if page.content != blank -%}
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-prose">{{ page.content }}</div>
+      </div>
+    </section>
+  {%- endif -%}
+</div>

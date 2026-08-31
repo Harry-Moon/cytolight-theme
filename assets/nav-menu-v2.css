@@ -137,6 +137,16 @@
   }
   .site-header__drawer-group-body a:hover { background: rgba(210, 13, 47, .08); color: var(--color-accent-deep, #a80a26); }
 
+  /* Tete de groupe : le <summary> ne peut pas etre un lien, l'entree
+     d'atterrissage de la rubrique est donc le premier lien du corps. Elle se
+     distingue des sous-liens pour qu'on la lise comme « la page de l'onglet »
+     et non comme un element de la liste. */
+  .site-header__drawer-group-body a.site-header__drawer-all {
+    margin-bottom: 4px;
+    font-weight: 850;
+    color: var(--color-accent-deep, #a80a26);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .site-header__burger-bar,
     .site-header__drawer-scrim,

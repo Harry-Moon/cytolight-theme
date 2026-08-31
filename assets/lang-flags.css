@@ -1,29 +1,111 @@
-/* Rounded flag language switcher in the header. */
+/* Selecteur de langue du header.
 
-.site-header__lang-flags {
+   Le composant est un <details> : le <summary> porte le drapeau courant et son
+   code, le panneau liste les langues disponibles. Deux raisons de preferer la
+   liste deroulante a la rangee de drapeaux qui vivait ici :
+
+     - elle ne grandit pas avec le nombre de langues. Une rangee tenait a deux,
+       debordait la barre a trois, et n'avait plus de place pour marquer la
+       langue active ;
+     - elle nomme les langues. Un drapeau n'est pas une langue : il designe un
+       pays, ce qui est faux des qu'une langue est parlee dans plusieurs.
+
+   La feuille de style de l'UA masque le panneau tant que [open] est absent, ce
+   qui suffit ici : le composant n'a pas d'animation d'ouverture. Sans
+   JavaScript, il s'ouvre, se referme et soumet le formulaire normalement. */
+
+.site-header__lang { position: relative; }
+
+.site-header__lang-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  height: 34px;
+  padding: 0 9px 0 6px;
+  border: 1px solid rgba(0, 0, 0, .14);
+  border-radius: 999px;
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+  transition: border-color .15s ease, background .15s ease;
+}
+.site-header__lang-toggle::-webkit-details-marker { display: none; }
+.site-header__lang-toggle:hover { border-color: rgba(0, 0, 0, .3); }
+.site-header__lang-toggle:focus-visible { outline: 2px solid var(--color-accent, #d20d2f); outline-offset: 2px; }
+
+.site-header__lang-code {
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: var(--color-foreground, #171110);
 }
 
+.site-header__lang-caret {
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  opacity: .55;
+  transition: transform .18s ease;
+}
+.site-header__lang[open] .site-header__lang-caret { transform: translateY(1px) rotate(-135deg); }
+
+/* Le panneau sort de la barre : il se place au-dessus de la rangee de
+   navigation, qui porte z-index 60 sur ses propres panneaux. */
+.site-header__lang-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 120;
+  min-width: 170px;
+  padding: 6px;
+  border: 1px solid rgba(0, 0, 0, .08);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .16);
+}
+
+.site-header__lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-align: left;
+  color: var(--color-muted, #6b625c);
+}
+.site-header__lang-option:hover { background: rgba(210, 13, 47, .08); color: var(--color-accent-deep, #a80a26); }
+.site-header__lang-option.is-active { color: var(--color-accent-deep, #a80a26); }
+.site-header__lang-option:focus-visible { outline: 2px solid var(--color-accent, #d20d2f); outline-offset: -2px; }
+
+/* Pastille de drapeau, partagee par le <summary>, les options du panneau et le
+   repli d'une boutique monolingue (ou il n'y a rien a derouler). */
 .site-header__lang-flag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
   padding: 0;
   border-radius: 50%;
   border: 2px solid transparent;
   background: none;
-  cursor: pointer;
-  opacity: .5;
-  transition: opacity .15s ease, border-color .15s ease, transform .15s ease;
+  opacity: .55;
 }
 .site-header__lang-flag svg { display: block; width: 100%; height: 100%; border-radius: 50%; }
-.site-header__lang-flag:hover { opacity: .85; transform: translateY(-1px); }
-.site-header__lang-flag.is-active {
-  opacity: 1;
-  border-color: var(--color-accent, #d20d2f);
+.site-header__lang-flag.is-active { opacity: 1; border-color: var(--color-accent, #d20d2f); }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__lang-caret,
+  .site-header__lang-toggle { transition: none; }
 }
-.site-header__lang-flag:focus-visible { outline: 2px solid var(--color-accent, #d20d2f); outline-offset: 2px; }

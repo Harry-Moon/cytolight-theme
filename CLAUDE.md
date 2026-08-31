@@ -243,6 +243,86 @@ la consommation et rejetée à la validation des comptes publicitaires.
 
 Ne jamais ajouter une référence sans identifiant vérifiable, ni retirer le cadrage sur les limites.
 
+## Pages d'atterrissage du menu
+
+Les six onglets du mega-menu sont des **liens**, pas des boutons : chacun mène à la page qui
+coiffe sa rubrique. Un onglet qui n'ouvrait qu'un panneau laissait le visiteur sans destination
+au clic — et, le focus restant sur le bouton, l'onglet gardait son soulignement de survol après
+le clic, comme s'il était encore survolé.
+
+| Onglet | Destination | Gabarit | Section |
+|---|---|---|---|
+| Boutique | `routes.all_products_collection_url` | — (collection) | — |
+| Par objectif | `/pages/goals` | `page.goals.liquid` | `goals-hub` |
+| Protocoles | `/pages/protocols` | `page.protocols.liquid` | `protocols-hub` |
+| Apprendre | `/pages/academy` | `page.academy.liquid` | `learn-hub` |
+| Antared Pro | `/pages/antared-pro` | `page.antared-pro.liquid` | `pro-hub` |
+| Pourquoi Antared | `/pages/why-antared` | `page.why-antared.liquid` | `why-hub` |
+
+Les URL sont dérivées une fois en tête de `sections/header.liquid` (`url_shop`, `url_goals`,
+`url_protocols`, `url_learn`, `url_pro`, `url_why`) et réutilisées par la rangée d'onglets, le
+visuel de chaque panneau et le tiroir mobile. Un handle qui change se corrige à cet endroit, et
+nulle part ailleurs. Chaque variable passe par `pages[handle].url` — qui porte le préfixe de
+langue — avec repli sur le chemin écrit en dur tant que la page n'existe pas dans l'admin.
+
+**Ces pages doivent être créées dans l'admin, gabarit assigné, avant le merge** (constitution,
+principe I). Le sélecteur « Theme template » ne liste que les gabarits du thème *publié* : créer
+la page d'abord, assigner le gabarit après le merge.
+
+Les quatre sections d'atterrissage réutilisent `assets/learn.css` et `learn.js` — mêmes classes
+`ln-*`, mêmes révélations au scroll, aucune feuille de style supplémentaire. Les cartes passent
+par `snippets/nav-hub-card.liquid`, qui **rend un `<div>` au lieu d'un `<a>` quand l'URL est
+vide** : une rubrique dont la page n'existe pas encore s'affiche sans lien plutôt qu'avec un lien
+vers une 404. Créer la page suffit à activer le lien, il n'y a rien à modifier dans la section.
+
+Sur pointeur fin, le clic navigue et le panneau reste piloté par le survol. Sur pointeur grossier,
+où le survol n'existe pas, `theme.js` retient la première touche pour ouvrir le panneau ; la
+seconde suit le lien. Le test se fait au moment du clic, pas au chargement — une tablette avec
+clavier-souris bascule d'un mode à l'autre sans recharger.
+
+### Barre du header
+
+Trois réglages tiennent ensemble et se cassent facilement l'un l'autre :
+
+- **La barre garde `grid-template-columns: 1fr auto 1fr` à toutes les largeurs.** En passant à
+  `auto 1fr auto` sous 1300 px, le logo était centré dans la place restante entre le burger et les
+  utilitaires de droite — donc décalé vers la gauche, d'autant que ce côté pèse plus lourd. Deux
+  gouttières égales le centrent dans la fenêtre quoi qu'on ajoute de part et d'autre.
+- **Le padding horizontal se réécrit, il ne se supprime pas.** `.container` en pose 20 ; la règle
+  mobile posait `padding: 11px 0`, ce qui les annulait et collait le burger et le panier aux bords
+  de l'écran. Elle pose désormais `11px 16px`.
+- **Le bandeau de réassurance disparaît sous 800 px.** Il n'y tenait pas sur une ligne : il devenait
+  une bande noire à défilement horizontal dont le second argument restait hors champ. Les mêmes
+  engagements sont repris dans le tiroir, sur la fiche produit et dans le panier.
+
+### Sélecteur de langue
+
+C'est un `<details>` (`assets/lang-flags.css`) : le `<summary>` porte le drapeau courant et son code,
+le panneau liste les langues **nommées**. La rangée de drapeaux côte à côte qui vivait là tenait à
+deux langues, débordait la barre à trois, et n'avait plus de place pour marquer l'active. Un drapeau
+n'est d'ailleurs pas une langue : il désigne un pays, ce qui devient faux dès qu'une langue est
+parlée dans plusieurs.
+
+Il fonctionne sans JavaScript — ouverture, fermeture et soumission du formulaire `localization` sont
+natives. `theme.js` n'ajoute que ce qu'une liste déroulante native ne sait pas faire : se refermer
+sur un clic extérieur et sur Échap. Sous 420 px, le code de langue est masqué et il ne reste que le
+drapeau et le chevron.
+
+> Le POST vers `/localization` ne fonctionne pas sous `shopify theme dev` : il renvoie une page
+> vide. Ce n'est pas un défaut du composant. Pour tester une langue en local, ouvrir directement
+> l'URL préfixée (`/fr/...`).
+
+### Variantes de bouton des pages Learn
+
+`ln-button--light` et `ln-button--line` sont dessinés pour un **fond sombre** (hero,
+`.ln-section--dark`, `.ln-cta`), `ln-button--ink` pour un **fond clair** ; le rouge plein va partout.
+Un `--line` posé sur une section claire écrit en blanc sur crème.
+
+Le piège est aggravé par la cascade : `.ln-page a { color: inherit }` (0,1,1) est plus spécifique
+que `.ln-button--light` (0,1,0). Sans les rappels `.ln-page a.ln-button--*` de `learn.css`, un bouton
+clair hérite du blanc de son hero sombre et son libellé disparaît sur son propre fond blanc — ce qui
+était le cas sur `/pages/academy` depuis l'origine.
+
 ## Fichiers auto-générés
 
 `config/settings_data.json`, `templates/cart.json`, `templates/collection.json` et
@@ -297,15 +377,41 @@ Deux fichiers y vivent :
 
 Toute personnalisation future va dans `overrides/`, jamais dans `.specify/templates/`.
 
-## Audit de la navigation
+## Audits
+
+Deux scripts, tous deux en stdlib Python uniquement — aucune dépendance, conformément au
+principe IV. Ils testent une boutique **servie**, pas le dépôt : `--base` vise par défaut
+`cytolight.myshopify.com`, et `--base http://127.0.0.1:9292` un `shopify theme dev`.
 
 ```bash
 python3 scripts/audit-nav.py
 ```
 
-Extrait les URL écrites en dur dans le thème, les teste en FR et en EN, et sépare trois
-défauts : lien cassé, ébauche (sous le seuil de mots), page non traduite (FR et EN identiques
-au mot près). Stdlib Python uniquement, aucune dépendance. `--base`, `--min-mots` pour ajuster.
+La navigation. Extrait les URL écrites en dur dans le thème, les teste en FR et en EN, et
+sépare trois défauts : lien cassé, ébauche (sous le seuil de mots), page non traduite (FR et
+EN identiques au mot près). `--base`, `--min-mots` pour ajuster.
+
+```bash
+python3 scripts/audit-parcours.py
+```
+
+Le parcours d'achat. Lit le catalogue réel — pas de liste de handles en dur — et contrôle
+chaque fiche dans les deux langues : la page répond, un seul `h1`, un prix non nul, un
+formulaire `/cart/add` complet (action, variante, quantité), aucune image cassée ni sans
+`width`/`height`, et FR ≠ EN au mot près. `--produit HANDLE` cible une fiche, `--verbeux`
+affiche aussi les fiches saines, `--panier` ajoute réellement au panier puis le vide — c'est
+la seule requête de ces deux scripts qui modifie un état, elle reste locale à la session et
+ne s'active que sur ce drapeau.
+
+Son septième contrôle, **les promesses commerciales**, est celui qui a manqué le plus cher :
+il relève la durée d'essai, la durée de garantie et le seuil de livraison offerte sur toutes
+les fiches, et échoue si une même promesse porte deux valeurs différentes. Le 2026-08-31, deux
+branches ont annoncé simultanément 30 et 14 jours d'essai, puis 1 et 2 ans de garantie. Ni
+`theme check` ni l'audit de navigation ne voyaient quoi que ce soit.
+
+> **Une vitrine protégée par mot de passe répond 200** en servant la page de mot de passe.
+> Les deux scripts le détectent maintenant et s'arrêtent : sans ce garde-fou, ils décrivaient
+> cette page et concluaient que tout le site faisait 31 mots et n'était pas traduit.
 
 ## Workflow
 
