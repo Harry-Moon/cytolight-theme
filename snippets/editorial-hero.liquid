@@ -1,0 +1,40 @@
+{%- comment -%}
+  Hero editorial partage par les gabarits de page redigees dans l'admin.
+
+  Reprend la structure du hero de `sections/learn-science.liquid` (.ln-hero,
+  .ln-crumbs, .ln-kicker, .ln-title) sans ajouter une seule regle CSS :
+  `assets/learn.css` porte deja tout ce dont il a besoin.
+
+  Le titre est le `h1` de la page. Un gabarit qui rend ce fragment ne doit donc
+  pas en poser un second.
+
+  Parametres (tous obligatoires, FR et EN) :
+    crumb_fr / crumb_en    dernier segment du fil d'Ariane
+    kicker_fr / kicker_en  surtitre court
+    title_fr / title_en    titre de la page
+
+  Exemple :
+    {% render 'editorial-hero',
+       crumb_fr: 'Contact', crumb_en: 'Contact',
+       kicker_fr: 'Parlons-en', kicker_en: 'Let us talk',
+       title_fr: 'Une question ?', title_en: 'A question?' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+-%}
+
+<section class="ln-hero">
+  <div class="ln-shell">
+    <p class="ln-crumbs">
+      <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+      <span aria-hidden="true">/</span>
+      {% if is_fr %}{{ crumb_fr }}{% else %}{{ crumb_en }}{% endif %}
+    </p>
+    <p class="ln-kicker">{% if is_fr %}{{ kicker_fr }}{% else %}{{ kicker_en }}{% endif %}</p>
+    <h1 class="ln-title">{% if is_fr %}{{ title_fr }}{% else %}{{ title_en }}{% endif %}</h1>
+  </div>
+</section>
