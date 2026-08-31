@@ -342,15 +342,41 @@ Deux fichiers y vivent :
 
 Toute personnalisation future va dans `overrides/`, jamais dans `.specify/templates/`.
 
-## Audit de la navigation
+## Audits
+
+Deux scripts, tous deux en stdlib Python uniquement — aucune dépendance, conformément au
+principe IV. Ils testent une boutique **servie**, pas le dépôt : `--base` vise par défaut
+`cytolight.myshopify.com`, et `--base http://127.0.0.1:9292` un `shopify theme dev`.
 
 ```bash
 python3 scripts/audit-nav.py
 ```
 
-Extrait les URL écrites en dur dans le thème, les teste en FR et en EN, et sépare trois
-défauts : lien cassé, ébauche (sous le seuil de mots), page non traduite (FR et EN identiques
-au mot près). Stdlib Python uniquement, aucune dépendance. `--base`, `--min-mots` pour ajuster.
+La navigation. Extrait les URL écrites en dur dans le thème, les teste en FR et en EN, et
+sépare trois défauts : lien cassé, ébauche (sous le seuil de mots), page non traduite (FR et
+EN identiques au mot près). `--base`, `--min-mots` pour ajuster.
+
+```bash
+python3 scripts/audit-parcours.py
+```
+
+Le parcours d'achat. Lit le catalogue réel — pas de liste de handles en dur — et contrôle
+chaque fiche dans les deux langues : la page répond, un seul `h1`, un prix non nul, un
+formulaire `/cart/add` complet (action, variante, quantité), aucune image cassée ni sans
+`width`/`height`, et FR ≠ EN au mot près. `--produit HANDLE` cible une fiche, `--verbeux`
+affiche aussi les fiches saines, `--panier` ajoute réellement au panier puis le vide — c'est
+la seule requête de ces deux scripts qui modifie un état, elle reste locale à la session et
+ne s'active que sur ce drapeau.
+
+Son septième contrôle, **les promesses commerciales**, est celui qui a manqué le plus cher :
+il relève la durée d'essai, la durée de garantie et le seuil de livraison offerte sur toutes
+les fiches, et échoue si une même promesse porte deux valeurs différentes. Le 2026-08-31, deux
+branches ont annoncé simultanément 30 et 14 jours d'essai, puis 1 et 2 ans de garantie. Ni
+`theme check` ni l'audit de navigation ne voyaient quoi que ce soit.
+
+> **Une vitrine protégée par mot de passe répond 200** en servant la page de mot de passe.
+> Les deux scripts le détectent maintenant et s'arrêtent : sans ce garde-fou, ils décrivaient
+> cette page et concluaient que tout le site faisait 31 mots et n'était pas traduit.
 
 ## Workflow
 
