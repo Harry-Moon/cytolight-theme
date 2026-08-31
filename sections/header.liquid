@@ -28,9 +28,9 @@
 {{ 'header-highlight.css' | asset_url | stylesheet_tag }}
 
 <header class="site-header">
-  <div class="site-header__proof" aria-label="Store benefits">
+  <div class="site-header__proof" aria-label="{% if is_fr %}Avantages boutique{% else %}Store benefits{% endif %}">
     <span>{% if is_fr %}Essai 14 j{% else %}14-day trial{% endif %}</span>
-    <span>{% if is_fr %}Garantie 1 an{% else %}1-year warranty{% endif %}</span>
+    <span>{% if is_fr %}Garantie 2 ans{% else %}2-year warranty{% endif %}</span>
   </div>
 
   <div class="container site-header__bar">
