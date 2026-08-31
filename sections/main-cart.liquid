@@ -16,6 +16,39 @@
 
   assign cross_sell_handles = 'cytolight-desk,cytolight-cap,cytolight-mask,cytolight-foot,cytolight-knee,cytolight-pano-ultra' | split: ','
   assign cross_sell_shown = 0
+
+  # Reductions.
+  #
+  # Shopify range les remises dans DEUX endroits distincts, et le recapitulatif
+  # n'en lisait qu'un. `cart.cart_level_discount_applications` ne porte que les
+  # remises de commande ; une remise produit ou une remise automatique posee par
+  # une Shopify Function s'alloue ligne par ligne, dans
+  # `item.line_level_discount_allocations`. Comme `cart.items_subtotal_price`
+  # est deja net de ces allocations, le sous-total baissait tout seul sans
+  # qu'aucune ligne ne dise pourquoi : la remise etait invisible dans le panier
+  # et ne reapparaissait qu'au paiement.
+  #
+  # Le sous-total affiche est donc `cart.original_total_price` (avant toute
+  # remise), suivi d'une ligne par remise. L'arithmetique se referme :
+  #   original_total_price - remises de ligne = items_subtotal_price
+  #   items_subtotal_price - remises de commande = total_price
+  #
+  # Les allocations de ligne sont regroupees par intitule : une remise
+  # automatique qui touche trois articles est une seule remise, pas trois.
+  # Faute de tableaux d'objets en Liquid, la liste des intitules deja vus
+  # passe par une chaine a separateur — le meme procede que les pages
+  # Protocoles. Aucun nom de remise ne contient '||~||'.
+  assign line_discount_titles = ''
+  for item in cart.items
+    for allocation in item.line_level_discount_allocations
+      assign discount_title = allocation.discount_application.title
+      assign seen = line_discount_titles | split: '||~||'
+      unless seen contains discount_title
+        assign line_discount_titles = line_discount_titles | append: discount_title | append: '||~||'
+      endunless
+    endfor
+  endfor
+  assign line_discount_titles = line_discount_titles | split: '||~||'
 -%}
 <section class="container">
   {% if cart.item_count > 0 %}
@@ -46,6 +79,13 @@
                   {% unless item.product.has_only_default_variant %}
                     <div class="cart-item__variant">{{ item.variant.title }}</div>
                   {% endunless %}
+                  {%- if item.line_level_discount_allocations.size > 0 -%}
+                    <ul class="cart-item__discounts">
+                      {%- for allocation in item.line_level_discount_allocations -%}
+                        <li>{{ allocation.discount_application.title }} &middot; &minus;{{ allocation.amount | money }}</li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
                   <div class="product__qty" style="margin-top:10px;">
                     <button type="button" data-qty-step="-1">&minus;</button>
                     <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line-key="{{ item.key }}">
@@ -53,7 +93,14 @@
                   </div>
                   <a href="{{ item.url_to_remove }}" style="font-size:.8rem; color: var(--color-muted); margin-top:8px; display:inline-block;">{% if is_fr %}Retirer{% else %}Remove{% endif %}</a>
                 </div>
-                <div class="cart-item__price">{{ item.final_line_price | money }}</div>
+                <div class="cart-item__price">
+                  {%- if item.original_line_price > item.final_line_price -%}
+                    <s class="cart-item__price-was">{{ item.original_line_price | money }}</s>
+                    <span class="cart-item__price-now">{{ item.final_line_price | money }}</span>
+                  {%- else -%}
+                    {{ item.final_line_price | money }}
+                  {%- endif -%}
+                </div>
               </div>
             {% endfor %}
           </div>
@@ -106,13 +153,26 @@
       </div>
 
       <aside class="cart-summary">
-        <div class="cart-summary__row"><span>{% if is_fr %}Sous-total{% else %}Subtotal{% endif %}</span><span>{{ cart.items_subtotal_price | money }}</span></div>
-        {% if cart.cart_level_discount_applications.size > 0 %}
-          {% for discount in cart.cart_level_discount_applications %}
-            <div class="cart-summary__row"><span>{{ discount.title }}</span><span>&minus;{{ discount.total_allocated_amount | money }}</span></div>
-          {% endfor %}
-        {% endif %}
+        <div class="cart-summary__row"><span>{% if is_fr %}Sous-total{% else %}Subtotal{% endif %}</span><span>{{ cart.original_total_price | money }}</span></div>
+        {%- for discount_title in line_discount_titles -%}
+          {%- assign discount_amount = 0 -%}
+          {%- for item in cart.items -%}
+            {%- for allocation in item.line_level_discount_allocations -%}
+              {%- if allocation.discount_application.title == discount_title -%}
+                {%- assign discount_amount = discount_amount | plus: allocation.amount -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+          <div class="cart-summary__row cart-summary__row--discount"><span>{{ discount_title }}</span><span>&minus;{{ discount_amount | money }}</span></div>
+        {%- endfor -%}
+        {% for discount in cart.cart_level_discount_applications %}
+          <div class="cart-summary__row cart-summary__row--discount"><span>{{ discount.title }}</span><span>&minus;{{ discount.total_allocated_amount | money }}</span></div>
+        {% endfor %}
+        {%- assign total_saved = cart.original_total_price | minus: cart.total_price -%}
         <div class="cart-summary__row cart-summary__total"><span>Total</span><span>{{ cart.total_price | money }}</span></div>
+        {%- if total_saved > 0 -%}
+          <p class="cart-summary__saved">{% if is_fr %}Vous &eacute;conomisez {{ total_saved | money }}{% else %}You save {{ total_saved | money }}{% endif %}</p>
+        {%- endif -%}
         <p style="font-size:.8rem; color: var(--color-muted); margin: 8px 0 0;">{% if is_fr %}Taxes et livraison calcul&eacute;es au paiement.{% else %}Taxes and shipping calculated at checkout.{% endif %}</p>
         <a href="{{ routes.cart_url }}/checkout" class="btn btn--primary">{% if is_fr %}Paiement{% else %}Checkout{% endif %} &rarr;</a>
         <p style="text-align:center; margin: 12px 0 0; font-size:.8rem;"><a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Continuer mes achats{% else %}Continue shopping{% endif %}</a></p>

@@ -96,32 +96,61 @@
   min-height: 300px;
   display: flex;
   align-items: center;
+  /* Les etapes glissent lateralement : sans decoupe, elles depasseraient la
+     carte pendant la course. `clip` et non `hidden` — hidden sur un seul axe
+     force l'autre a `auto` et cree une barre de defilement, alors que
+     `overflow-x: clip` laisse `overflow-y: visible` intact (les etats de
+     survol et les anneaux de focus depassent en hauteur). */
+  overflow-x: clip;
 }
 
 .fyc-step {
   display: none;
   width: 100%;
 }
+/*
+ * Une etape entre par la DROITE et glisse vers la gauche ; celle qui part
+ * sort par la gauche. Retour arriere : sens inverse.
+ *
+ * Les deux ne se superposent jamais. L'etape sortante est en absolu au-dessus
+ * de l'entrante, donc il a fallu retarder l'entree du temps de la sortie
+ * (.28s) : `both` maintient l'etape entrante sur son image de depart —
+ * opacite 0, hors cadre — pendant ce delai. Le delai n'est pose que si une
+ * sortie est en cours, d'ou `.is-swapped`, que find-your-cytolight.js ajoute
+ * a la premiere navigation et ne retire jamais : au chargement il n'y a rien
+ * a attendre, la premiere etape doit apparaitre tout de suite.
+ */
 .fyc-step.is-active {
   display: block;
-  animation: fyc-in .55s cubic-bezier(.16, 1, .3, 1) both;
+  animation: fyc-in-next .42s cubic-bezier(.16, 1, .3, 1) both;
 }
+.fyc-stage.is-swapped .fyc-step.is-active { animation-delay: .28s; }
+.fyc-stage.is-back .fyc-step.is-active { animation-name: fyc-in-prev; }
+
 .fyc-step.is-leaving {
   display: block;
   position: absolute;
   inset: 0;
   pointer-events: none;
-  animation: fyc-out .32s cubic-bezier(.4, 0, 1, 1) both;
+  animation: fyc-out-next .28s cubic-bezier(.4, 0, 1, 1) both;
 }
+.fyc-stage.is-back .fyc-step.is-leaving { animation-name: fyc-out-prev; }
 
-@keyframes fyc-in {
-  from { opacity: 0; transform: translateY(16px) scale(.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes fyc-in-next {
+  from { opacity: 0; transform: translateX(54px); }
+  to { opacity: 1; transform: translateX(0); }
 }
-
-@keyframes fyc-out {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to { opacity: 0; transform: translateY(-14px) scale(.98); }
+@keyframes fyc-out-next {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(-54px); }
+}
+@keyframes fyc-in-prev {
+  from { opacity: 0; transform: translateX(-54px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes fyc-out-prev {
+  from { opacity: 1; transform: translateX(0); }
+  to { opacity: 0; transform: translateX(54px); }
 }
 
 .fyc-eyebrow {
@@ -218,9 +247,14 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  animation: fyc-in .35s ease both;
+  animation: fyc-card-in .35s ease both;
 }
 .fyc-result-card[hidden] { display: none; }
+
+@keyframes fyc-card-in {
+  from { opacity: 0; transform: translateY(16px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 .fyc-result-card__media {
   display: block;

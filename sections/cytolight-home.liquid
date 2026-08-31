@@ -4,12 +4,21 @@
     assign is_fr = true
   endif
 
+  # Racine localisee : routes.root_url vaut '/' sur la locale principale et
+  # '/en' (ou '/fr') sur les autres. Concatener directement donnerait '//pages'.
+  # Un chemin ecrit en dur sans ce prefixe ramene le visiteur sur la langue
+  # principale : les repli ci-dessous et les liens en dur le portent donc tous.
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
   assign desk_product = section.settings.featured_product
   if desk_product == blank
     assign desk_product = all_products['cytolight-desk']
   endif
 
-  assign desk_url = '/products/cytolight-desk'
+  assign desk_url = locale_root | append: '/products/cytolight-desk'
   if desk_product != blank
     assign desk_url = desk_product.url
   endif
@@ -17,37 +26,37 @@
   assign product_collection = section.settings.product_collection
 
   assign cap_product = all_products['cytolight-cap']
-  assign cap_url = '/products/cytolight-cap'
+  assign cap_url = locale_root | append: '/products/cytolight-cap'
   if cap_product != blank
     assign cap_url = cap_product.url
   endif
 
   assign pano_ultra_product = all_products['cytolight-pano-ultra']
-  assign pano_ultra_url = '/products/cytolight-pano-ultra'
+  assign pano_ultra_url = locale_root | append: '/products/cytolight-pano-ultra'
   if pano_ultra_product != blank
     assign pano_ultra_url = pano_ultra_product.url
   endif
 
   assign foot_product = all_products['cytolight-foot']
-  assign foot_url = '/products/cytolight-foot'
+  assign foot_url = locale_root | append: '/products/cytolight-foot'
   if foot_product != blank
     assign foot_url = foot_product.url
   endif
 
   assign mask_product = all_products['cytolight-mask']
-  assign mask_url = '/products/cytolight-mask'
+  assign mask_url = locale_root | append: '/products/cytolight-mask'
   if mask_product != blank
     assign mask_url = mask_product.url
   endif
 
   assign knee_product = all_products['cytolight-knee']
-  assign knee_url = '/products/cytolight-knee'
+  assign knee_url = locale_root | append: '/products/cytolight-knee'
   if knee_product != blank
     assign knee_url = knee_product.url
   endif
 
   assign sauna_dome_product = all_products['cytolight-sauna-dome']
-  assign sauna_dome_url = '/products/cytolight-sauna-dome'
+  assign sauna_dome_url = locale_root | append: '/products/cytolight-sauna-dome'
   if sauna_dome_product != blank
     assign sauna_dome_url = sauna_dome_product.url
   endif
@@ -148,7 +157,7 @@
           <span>{% if is_fr %}150 LED 3-en-1{% else %}150 3-in-1 LEDs{% endif %}</span>
         </div>
         <div class="cy-actions">
-          <a class="cy-button cy-button--light" href="/products/cytolight-cap">{% if is_fr %}D&eacute;couvrir la casquette{% else %}Discover the cap{% endif %}</a>
+          <a class="cy-button cy-button--light" href="{{ cap_url }}">{% if is_fr %}D&eacute;couvrir la casquette{% else %}Discover the cap{% endif %}</a>
         </div>
       </div>
     </div>
@@ -184,7 +193,7 @@
       </div>
       <div class="cy-intro__aside">
         <p>{% if is_fr %}Antared r&eacute;unit puissance, contr&ocirc;le spectral et design pour faire de la luminoth&eacute;rapie un rituel que vous avez vraiment envie de garder.{% else %}Antared brings together power, spectral control, and considered design to make light therapy a ritual you will actually keep.{% endif %}</p>
-        <a class="cy-link" href="/pages/academy">{% if is_fr %}Comprendre la technologie{% else %}Understand the technology{% endif %} <span aria-hidden="true">&rarr;</span></a>
+        <a class="cy-link" href="{{ locale_root }}/pages/academy">{% if is_fr %}Comprendre la technologie{% else %}Understand the technology{% endif %} <span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </section>
@@ -274,7 +283,7 @@
         </a>
 
         <a class="cy-product cy-reveal" href="{{ sauna_dome_url }}">
-          <span class="cy-product__media"><img src="{{ 'Cytolight_Sauna_Dome_2.jpg' | file_url }}" alt="Antared Sauna Dome" width="900" height="1100" loading="lazy"></span>
+          <span class="cy-product__media"><video src="https://cdn.shopify.com/videos/c/o/v/119a59c70e50438b858f9359d2d7529e.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
           <span class="cy-product__content">
             <span class="cy-product__type">{% if is_fr %}Corps entier &middot; R&eacute;cup&eacute;ration{% else %}Full Body &middot; Recovery{% endif %}</span>
             <h3>Antared Sauna Dome</h3>

@@ -115,17 +115,22 @@
   align-items: center;
 }
 .cy-cinema__world {
-  /* inset is -3%/0 (not 0) so the layer overscans slightly: the vertical
-     drift below would otherwise expose an empty edge as it pans. Kept
-     small so it doesn't perceptibly change the per-product object-position
-     framing tuned below. */
-  position: absolute; inset: -3% 0; z-index: 0;
+  /* L'overscan est en BAS uniquement (inset: 0 0 -6%), et pas en haut.
+     Le plan ne derive que vers le haut : c'est donc le bord bas qui se
+     decouvrirait, jamais le haut. Une version anterieure overscannait des
+     deux cotes (-3% 0), ce qui poussait le haut de l'image hors du cadre
+     et coupait le sujet (la tete de l'athlete sur PANO, le haut du panneau
+     sur DESK) des que la derive et le zoom s'ajoutaient. */
+  position: absolute; inset: 0 0 -6%; z-index: 0;
   /* Background plane drifts slower than the actual scroll (a fraction of
      --cy-p) while the panel below moves on its own curve: that speed
      mismatch between planes is what reads as parallax depth, on top of
      the zoom. */
-  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .08));
-  transform-origin: 58% 50%;
+  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .05));
+  /* Origine en haut, pas au centre : le zoom ne grignote alors que le bas,
+     ou l'overscan a de la marge. Centre, il rognait autant en haut qu'en
+     bas et decapitait le sujet en fin de course. */
+  transform-origin: 58% 0;
   will-change: transform;
 }
 .cy-cinema__world::after {
@@ -133,10 +138,10 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: calc(var(--cy-light-step, 0) * .85);
+  opacity: calc(var(--cy-light-step, 0) * .5);
   background:
-    radial-gradient(circle at 68% 50%, rgba(255, 22, 56, .48), transparent 25%),
-    radial-gradient(circle at 78% 78%, rgba(210, 13, 47, .34), transparent 34%);
+    radial-gradient(circle at 68% 50%, rgba(255, 22, 56, .3), transparent 25%),
+    radial-gradient(circle at 78% 78%, rgba(210, 13, 47, .2), transparent 34%);
   mix-blend-mode: screen;
   will-change: opacity;
 }
@@ -160,7 +165,7 @@
      inside a gradient (the old approach here) forces a repaint every
      frame just like the filter() above did. */
   position: absolute; inset: 0; z-index: 1;
-  background: radial-gradient(circle at 67% 52%, rgba(210,13,47,.34), transparent 31%),
+  background: radial-gradient(circle at 67% 52%, rgba(210,13,47,.2), transparent 31%),
               linear-gradient(90deg, rgba(0,0,0,.58), rgba(0,0,0,.04) 58%, rgba(0,0,0,.36));
 }
 .cy-cinema__panel {
@@ -214,8 +219,8 @@
    below), which is what reads as actual depth instead of one flat
    image zooming. */
 .cy-cinema--cap .cy-cinema__world {
-  transform-origin: 50% 20%;
-  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .07));
+  transform-origin: 50% 0;
+  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .05));
 }
 .cy-cinema--cap .cy-cinema__world img, .cy-cinema--cap .cy-cinema__world video {
   object-position: 65% center;
@@ -230,14 +235,26 @@
 }
 .cy-cinema--cap .cy-cinema__foreground {
   position: absolute;
-  inset: 0;
+  /* La boite est plus etroite que la scene (right: 16%) : avec object-fit
+     contain, retrecir la boite retrecit le sujet. A pleine largeur, la
+     casquette touchait le haut de la scene et le buste sortait par le bas.
+
+     Le bas est descendu sous la scene (bottom: -7%) parce que le decoupage
+     est coupe net au bas du fichier : tant que ce bord reste sous le pli,
+     on ne le voit pas. La derive vers le haut ne doit donc jamais depasser
+     ces 7%, d'ou le -4% ci-dessous. Avec -12%, le bord remontait dans le
+     cadre en fin de course et le sujet flottait, decolle du bas de la
+     section. */
+  inset: 0 16% -7% 0;
   z-index: 1;
   pointer-events: none;
-  /* Foreground plane moves ~5x further than the background world layer
-     (-12% vs -2.5%) plus its own slight extra scale: that speed gap
+  /* Foreground plane moves further than the background world layer
+     (-4% vs -2.5%) plus its own slight extra scale: that speed gap
      between the two planes is the actual parallax mechanism. */
-  transform: translate3d(0, calc(var(--cy-p, 0) * -12%), 0) scale(calc(1 + var(--cy-zoom, 0) * .1));
-  transform-origin: 20% 65%;
+  transform: translate3d(0, calc(var(--cy-p, 0) * -4%), 0) scale(calc(1 + var(--cy-zoom, 0) * .05));
+  /* Origine sur le bord bas : le zoom fait grandir le sujet vers le haut
+     sans jamais soulever son bord coupe. */
+  transform-origin: 24% 100%;
   will-change: transform;
 }
 .cy-cinema--cap .cy-cinema__foreground img {
@@ -285,8 +302,8 @@
 .cy-cap-points span:hover { color: #fff; }
 .cy-cap-points span:hover::before { width: 100%; }
 .cy-cinema--pano .cy-cinema__world {
-  transform-origin: 62% 50%;
-  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .075));
+  transform-origin: 62% 0;
+  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .05));
 }
 .cy-cinema--pano .cy-cinema__world img {
   object-position: 64% center;
@@ -294,14 +311,14 @@
   filter: brightness(1.08) saturate(1.14) contrast(1.04);
 }
 .cy-cinema--pano .cy-cinema__world::after {
-  opacity: calc(var(--cy-light-step, 0) * .82);
+  opacity: calc(var(--cy-light-step, 0) * .5);
   background:
-    radial-gradient(circle at 72% 48%, rgba(255, 20, 55, .48), transparent 24%),
-    radial-gradient(circle at 82% 75%, rgba(210, 13, 47, .34), transparent 32%);
+    radial-gradient(circle at 72% 48%, rgba(255, 20, 55, .3), transparent 24%),
+    radial-gradient(circle at 82% 75%, rgba(210, 13, 47, .2), transparent 32%);
 }
 .cy-cinema--pano .cy-cinema__glow {
   background:
-    radial-gradient(circle at 66% 48%, rgba(210,13,47,.4), transparent 28%),
+    radial-gradient(circle at 66% 48%, rgba(210,13,47,.24), transparent 28%),
     linear-gradient(90deg, rgba(0,0,0,.76) 0%, rgba(0,0,0,.5) 34%, rgba(0,0,0,.1) 68%, rgba(0,0,0,.42) 100%);
 }
 .cy-cinema--pano .cy-cinema__panel {
@@ -560,6 +577,11 @@
   .cy-cinema__stage { position: relative; min-height: auto; padding: 90px 0; }
   .cy-cinema__world { inset: 0; transform: none !important; }
   .cy-cinema__foreground { transform: none !important; }
+  /* Sans derive, l'overscan bas du decoupage n'a plus de raison d'etre :
+     laisse tel quel, il ferait passer le buste sous le bord de la scene.
+     Selecteur a deux classes, comme la regle qu'il annule : a specificite
+     egale, c'est l'ordre du fichier qui tranche. */
+  .cy-cinema--cap .cy-cinema__foreground { inset: 0 16% 0 0; }
   .cy-cinema__panel { opacity: 1 !important; transform: none !important; }
   .cy-cinema__title-a, .cy-cinema__title-b, .cy-cinema__body { opacity: 1 !important; transform: none !important; }
   .cy-reveal { opacity: 1; transform: none; }
