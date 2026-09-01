@@ -1,4 +1,27 @@
 <!--
+Sync Impact Report — 2026-09-01
+Version: 1.0.1 → 1.0.2 (PATCH)
+
+Amendement de correction. Aucun principe n'est ajouté, retiré ni redéfini. Une règle est
+reformulée pour cesser de dépendre d'un relevé, et une contradiction interne est levée.
+
+  - Contraintes techniques : la « dette connue et plafonnée » devient « aucune régression de
+    `theme check` ». Le plafond était écrit en chiffres — 28, puis 19 dont 6 erreurs — et le
+    dépôt est passé à zéro le 2026-09-01, les six erreurs vivant dans des sections qu'aucun
+    gabarit ne rendait. Le corriger en « zéro » aurait reconduit le défaut de forme : un compte
+    périme au premier merge, et il se lit ensuite comme une autorisation à remonter jusqu'à lui.
+    La règle porte donc la comparaison avec `origin/main`, et le relevé du jour est renvoyé à
+    `CLAUDE.md`, qui se corrige sans amendement.
+  - Contraintes techniques : le paragraphe « Header collant » décrivait le `top: 0` et le
+    `z-index` de la sous-navigation Learn, retirée du thème. Il contredisait le principe VI du
+    même document, qui acte ce retrait. La phrase est supprimée.
+
+Fichiers dépendants alignés dans le même commit :
+  - `CLAUDE.md` → relevé `theme check` formulé en comparaison, pas en plafond chiffré ✅
+  - `.specify/templates/overrides/plan-template.md` → la porte de vérification annonçait
+    encore « plafond : 28 infractions », jamais corrigé par l'amendement 1.0.1. Elle demande
+    désormais la comparaison des deux relevés ✅
+
 Sync Impact Report — 2026-08-31
 Version: 1.0.0 → 1.0.1 (PATCH)
 
@@ -231,12 +254,17 @@ intention explicite, et ne jamais y placer de logique.
 
 **Header collant.** `#shopify-section-header` porte `position: sticky`, pas `.site-header` :
 un élément collant ne peut pas sortir des limites de son parent, et l'enveloppe de section
-ajoutée par Shopify a exactement la hauteur du header. La sous-navigation Learn est en
-`top: 0` avec un `z-index` inférieur à 50 pour se glisser dessous.
+ajoutée par Shopify a exactement la hauteur du header.
 
-**Dette connue et plafonnée.** `shopify theme check` relève **19 infractions préexistantes,
-dont 6 erreurs** (relevé sur `origin/main` le 2026-08-31). Ce nombre est un plafond : il ne
-remonte pas. Comparer au résultat sur `origin/main` avant de proposer un merge.
+**Aucune régression de `theme check`.** Une branche doit sortir au moins aussi propre que
+`origin/main`. Le contrôle se fait par **comparaison des deux relevés** avant de proposer un
+merge, jamais contre un nombre écrit ici.
+
+Ce paragraphe a porté « 28 infractions préexistantes », puis « 19, dont 6 erreurs ». Un compte
+est une mesure : il périme au premier merge, et un compte périmé ne se lit pas comme une
+information dépassée mais comme une autorisation à remonter jusqu'à lui. Aucun chiffre de ce
+genre n'a sa place dans ce document. Le relevé du jour vit dans `CLAUDE.md`, qui se corrige
+sans amendement.
 
 ## Workflow et portes de qualité
 
@@ -303,4 +331,4 @@ et l'alternative écartée — jamais implicitement.
 `.specify/memory/product-brief.md` porte la direction produit et de marque. Les deux se lisent
 en complément de ce document ; aucun des deux ne peut le contredire.
 
-**Version** : 1.0.1 | **Ratifiée** : 2026-08-21 | **Dernier amendement** : 2026-08-31
+**Version** : 1.0.2 | **Ratifiée** : 2026-08-21 | **Dernier amendement** : 2026-09-01

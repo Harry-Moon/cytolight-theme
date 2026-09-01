@@ -27,11 +27,28 @@
     assign locale_root = ''
   endif
 
-  assign url_recovery = collections['recovery'].url | default: '/collections/recovery'
-  assign url_performance = collections['performance'].url | default: '/collections/performance'
-  assign url_skin = collections['skin-amp-glow'].url | default: '/collections/skin-amp-glow'
-  assign url_longevity = collections['longevity'].url | default: '/collections/longevity'
-  assign url_focus = collections['work-amp-focus'].url | default: '/collections/work-amp-focus'
+  # Le repli porte le prefixe de langue au meme titre que le lien : une
+  # collection absente du catalogue renvoyait sinon a la locale principale.
+  assign url_recovery = collections['recovery'].url
+  if url_recovery == blank
+    assign url_recovery = locale_root | append: '/collections/recovery'
+  endif
+  assign url_performance = collections['performance'].url
+  if url_performance == blank
+    assign url_performance = locale_root | append: '/collections/performance'
+  endif
+  assign url_skin = collections['skin-amp-glow'].url
+  if url_skin == blank
+    assign url_skin = locale_root | append: '/collections/skin-amp-glow'
+  endif
+  assign url_longevity = collections['longevity'].url
+  if url_longevity == blank
+    assign url_longevity = locale_root | append: '/collections/longevity'
+  endif
+  assign url_focus = collections['work-amp-focus'].url
+  if url_focus == blank
+    assign url_focus = locale_root | append: '/collections/work-amp-focus'
+  endif
 
   assign url_quiz = pages['find-your-cytolight'].url
   if url_quiz == blank

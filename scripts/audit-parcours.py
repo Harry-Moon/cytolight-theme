@@ -48,10 +48,13 @@ import urllib.request
 from collections import defaultdict
 
 BASE_DEFAUT = "https://cytolight.myshopify.com"
-LOCALES = (("fr", ""), ("en", "/en"))
+LOCALES_REPLI = (("fr", ""), ("en", "/en"))
 ENTRE_REQUETES = 0.4   # politesse : Shopify bride le storefront
 DELAI_429 = 20
 UA = "Mozilla/5.0 (CytoLight parcours audit)"
+
+RE_LANG_RACINE = re.compile(r'<html[^>]+lang="([a-z]{2})', re.I)
+RE_LOCALE_CODE = re.compile(r'name="locale_code"\s+value="([a-z]{2})"')
 
 RE_H1 = re.compile(r"<h1[\s>]", re.I)
 RE_IMG = re.compile(r"<img\b[^>]*>", re.I)
@@ -267,6 +270,37 @@ def essayer_panier(boutique, variante, prefixe):
     return None
 
 
+def detecter_locales(boutique, accueil):
+    """Les langues publiees et leur prefixe, lus sur la boutique testee.
+
+    Le prefixe ne se devine pas : Shopify Markets attache la langue principale au
+    DOMAINE, pas a la boutique. Sur `antared.care` le francais est a la racine et
+    l'anglais sous `/en` ; sur `cytolight.myshopify.com` — le domaine que sert
+    `shopify theme dev`, et la valeur par defaut de --base — c'est l'inverse.
+    Le couple ecrit en dur ici testait donc `/en/products/...` sur un domaine ou
+    l'anglais est a la racine : les huit fiches ressortaient en HTTP 404 et le
+    controle de parite FR/EN ne se declenchait jamais. Un audit qui echoue partout
+    ne se lit plus, et c'est le seul garde-fou sur les promesses commerciales.
+
+    La racine vient de <html lang>, les autres langues des boutons du selecteur
+    du header, et chaque prefixe candidat est verifie avant d'etre retenu.
+    """
+    racine = RE_LANG_RACINE.search(accueil or "")
+    if not racine:
+        return LOCALES_REPLI
+    principale = racine.group(1)
+    locales = [(principale, "")]
+
+    for code in sorted(set(RE_LOCALE_CODE.findall(accueil))):
+        if code == principale:
+            continue
+        etat, corps = boutique.get(f"/{code}")
+        if etat == 200 and (RE_LANG_RACINE.search(corps) or [""])[0]:
+            locales.append((code, f"/{code}"))
+
+    return tuple(locales) if len(locales) > 1 else LOCALES_REPLI
+
+
 def main():
     a = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -293,6 +327,9 @@ def main():
               f"    python3 scripts/audit-parcours.py --base http://127.0.0.1:9292\n")
         return 2
 
+    locales = detecter_locales(boutique, accueil)
+    langues = " et en ".join(l.upper() for l, _ in locales)
+
     if args.produit:
         handles, code = args.produit, 200
     else:
@@ -301,14 +338,14 @@ def main():
         print(f"{ROUGE}Catalogue illisible (HTTP {code}). "
               f"La boutique est-elle joignable ?{RAZ}")
         return 2
-    print(f"{len(handles)} produit(s) au catalogue, testes en FR et en EN.\n")
+    print(f"{len(handles)} produit(s) au catalogue, testes en {langues}.\n")
 
     promesses_globales = defaultdict(lambda: defaultdict(set))
     fiches_en_defaut = 0
 
     for handle in handles:
         defauts, mots = [], {}
-        for langue, prefixe in LOCALES:
+        for langue, prefixe in locales:
             fiche = auditer_fiche(boutique, handle, prefixe)
             mots[langue] = fiche["mots"]
             defauts += [f"[{langue}] {d}" for d in fiche["defauts"]]
@@ -320,8 +357,11 @@ def main():
                 if souci:
                     defauts.append(f"[{langue}] panier     {souci}")
 
-        if mots.get("fr") and mots["fr"] == mots.get("en"):
-            defauts.append(f"[--] parite     FR et EN rendent {mots['fr']} mots, au mot pres")
+        mesures = [(l, mots[l]) for l, _ in locales if mots.get(l)]
+        if len(mesures) > 1 and len({n for _, n in mesures}) == 1:
+            paire = " et ".join(l.upper() for l, _ in mesures)
+            defauts.append(
+                f"[--] parite     {paire} rendent {mesures[0][1]} mots, au mot pres")
 
         if defauts:
             fiches_en_defaut += 1
@@ -329,10 +369,11 @@ def main():
             for d in defauts:
                 print(f"    {d}")
         elif args.verbeux:
-            print(f"{VERT}✓{RAZ} {handle}  {GRIS}fr {mots['fr']} mots · en {mots['en']} mots{RAZ}")
+            detail = " · ".join(f"{l} {mots[l]} mots" for l, _ in locales)
+            print(f"{VERT}✓{RAZ} {handle}  {GRIS}{detail}{RAZ}")
 
     print()
-    for langue, prefixe in LOCALES:
+    for langue, prefixe in locales:
         code, _ = boutique.get(f"{prefixe}/cart")
         etat = f"{VERT}200{RAZ}" if code == 200 else f"{ROUGE}{code}{RAZ}"
         print(f"  page panier [{langue}] : {etat}")
