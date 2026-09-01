@@ -181,17 +181,22 @@ succès — toute la rangée de tête changeait de hauteur. L'effet reste désor
 sous le champ garde sa hauteur même vide pour ne rien pousser. Trois règles tiennent ce bloc :
 
 1. **Le POST natif reste la référence.** Sans `fetch`, sans `FormData`, ou si le navigateur refuse
-   l'adresse, le script ne touche à rien et le formulaire part comme avant.
+   l'adresse, le script ne touche à rien et le formulaire part comme avant. Et si la boutique
+   répond sans traiter l'envoi — page de vérification anti-robot, maintenance, 5xx — le script
+   **repasse la main au POST natif** plutôt que d'afficher une erreur : la page se recharge, ce qui
+   est moins bien, mais l'inscription aboutit. C'est ce qui la rend testable sous
+   `shopify theme dev`, où le proxy répond 403 à tous les coups.
 2. **Le succès se lit sur deux signaux**, aucun n'étant garanti seul : `?customer_posted=true` dans
    l'URL finale de la réponse, ou la présence de `site-footer__news-ok` dans le HTML renvoyé — cette
    pastille n'existe que sous `form.posted_successfully?`.
 3. **Le balayage d'attente est posé sur le bouton, pas sur le champ.** La règle
    `:has(input:valid…)` du champ est plus spécifique et l'emporterait sur une règle d'état.
 
-> Le POST d'inscription **ne se teste pas sous `shopify theme dev`** : le proxy local répond 403
-> et sert la page « Verifying your connection » de Shopify, quelle que soit l'adresse — même
-> limite que le POST vers `/localization`. Les quatre états (envoi, succès, adresse refusée,
-> requête bloquée) se vérifient en remplaçant `window.fetch` par un stub ; le succès réel se
+> Le chemin `fetch` **ne s'exerce pas sous `shopify theme dev`** : le proxy local répond 403 et
+> sert la page « Verifying your connection » de Shopify, quelle que soit l'adresse — même limite
+> que le POST vers `/localization`. En local, l'inscription passe donc toujours par le repli
+> natif, avec rechargement. Les quatre états (succès, adresse refusée, requête refusée, réseau
+> coupé) se vérifient en remplaçant `window.fetch` par un stub ; l'absence de rechargement se
 > contrôle en boutique.
 
 ## Sections cinema de l'accueil
@@ -205,21 +210,33 @@ tout le mouvement est en CSS. Trois regles tiennent ces sections :
    ne se pose sur `.cy-cinema__panel` : la version precedente faisait fondre le panneau au-dela de
    68 % de la course, et le paragraphe palissait sous les yeux du lecteur alors qu'il etait encore
    en plein ecran.
-2. **Les visuels sont contenus, pas recadres.** Les sources sont en 16/9, la scene ne l'est pas :
-   en `cover`, l'ecart de ratio se paye en rognage vertical — le panneau DESK perdait son sommet,
-   l'athlete PANO sa tete. DESK et PANO sont donc en `object-fit: contain`, a 88 % de la scene, et
-   le zoom du scroll ne peut pas les ramener au bord. Seule la scene Cap garde le plein cadre : son
-   plan de fond est une plaque d'ambiance, son sujet vit dans le calque avant-plan.
+2. **Les visuels sont contenus, pas recadres, et ils commencent sous le header.** Les sources sont
+   en 16/9, la scene ne l'est pas : en `cover`, l'ecart de ratio se paye en rognage vertical — le
+   panneau DESK perdait son sommet, l'athlete PANO sa tete. DESK et PANO sont donc en
+   `object-fit: contain`, a 88 % de la scene. Le header et la scene sont tous deux
+   `position: sticky; top: 0`, et le header passe devant : le haut du cadre lui revient toujours,
+   et c'est ce qui coupait encore la tete du sujet une fois le rognage supprime. D'ou le
+   `inset: var(--header-h, 0px) 0 0 0` du plan image — `--header-h` est publiee par `theme.js`.
+   Seule la scene Cap garde le plein cadre, header compris : son plan de fond est une plaque
+   d'ambiance, son sujet vit dans le calque avant-plan.
 3. **Les sept longueurs d'onde ne s'ecrivent qu'une fois**, dans les variables `--cy-wave-*` de
-   `cytolight-cinematic.css`. La liste `.cy-spectrum` et le faisceau de couleur les lisent toutes
-   deux. Le faisceau (`.cy-cinema__beam`) est une bande qui porte les sept teintes et qui **glisse**
-   derriere un masque fixe : elle ne se recolore pas. Repeindre un degrade a chaque image invalide
-   tout le calque — c'est la raison pour laquelle le `filter()` scroll-linked avait deja ete retire
-   de l'image. Sans support de `mask-image`, le faisceau ne s'affiche pas du tout : non masque, il
-   serait un aplat de sept couleurs sur toute la scene.
+   `cytolight-cinematic.css`. La liste `.cy-spectrum` et la lumiere posee sur l'image les lisent
+   toutes deux — le JS lit meme la teinte courante sur la brique elle-meme, plutot que de recopier
+   les valeurs. Cette lumiere (`.cy-cinema__beam`) **ne glisse pas** : elle change de teinte en
+   fondu, sept fois sur toute la course, quand le scroll passe d'une brique a la suivante. Une
+   version anterieure faisait defiler une bande de sept couleurs derriere un masque ; c'est plus
+   agite et cela ne dit pas ce que fait l'appareil, qui commute de longueur d'onde. Ne pas revenir
+   non plus a un degrade recolore image par image : repeindre un degrade a chaque frame invalide
+   tout le calque, exactement comme le `filter()` scroll-linked deja retire de l'image. Sans
+   support de `mask-image`, la lumiere ne s'affiche pas du tout : non masquee, elle serait un aplat
+   de couleur sur toute la scene.
+
+La course de la scene collante est de **170vh**, soit 70 % d'ecran de defilement pour derouler la
+sequence entiere. A 220vh, la derniere longueur d'onde arrivait bien apres que le texte avait fini
+de se poser.
 
 Le parallaxe est neutralise sous 900 px (la scene n'est plus collante, `--cy-p` ne progresse plus
-de maniere fiable) et sous `prefers-reduced-motion`. Dans les deux cas le faisceau est fige sur le
+de maniere fiable) et sous `prefers-reduced-motion`. Dans les deux cas la lumiere est figee sur le
 rouge profond et rien ne bouge.
 
 ## Espace Learn
