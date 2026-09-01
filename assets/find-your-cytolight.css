@@ -191,9 +191,16 @@
   font-weight: 600;
   padding: 15px 30px;
   cursor: pointer;
-  transition: background .2s ease, transform .2s ease;
+  /* Relief au repos, enfoncement au survol : mecanique decrite en tete du bloc
+     CTA de theme.css, qui porte aussi --cta-shadow. */
+  box-shadow: var(--cta-shadow, 0 14px 26px -10px rgba(210, 13, 47, .62));
+  transition: background .2s ease, color .2s ease, box-shadow .2s ease, transform .18s ease, opacity .15s ease;
 }
-.fyc-cta:hover { background: var(--color-accent-deep, #a80a26); transform: translateY(-1px); }
+.fyc-cta:hover { background: var(--cta-red, #d20d2f); color: #fff; box-shadow: none; }
+.fyc-cta:active { opacity: .5; }
+@media (prefers-reduced-motion: no-preference) {
+  .fyc-cta:hover { transform: translateY(var(--cta-press, 3px)); }
+}
 
 .fyc-question {
   font-family: "Instrument Serif", var(--font-display), Georgia, serif;
@@ -315,9 +322,14 @@
   font-size: .92rem;
   font-weight: 600;
   padding: 13px 24px;
-  transition: background .2s ease;
+  box-shadow: var(--cta-shadow, 0 14px 26px -10px rgba(210, 13, 47, .62));
+  transition: background .2s ease, color .2s ease, box-shadow .2s ease, transform .18s ease, opacity .15s ease;
 }
-.fyc-result-card__cta:hover { background: var(--color-accent-deep, #a80a26); }
+.fyc-result-card__cta:hover { background: var(--cta-red, #d20d2f); color: #fff; box-shadow: none; }
+.fyc-result-card__cta:active { opacity: .5; }
+@media (prefers-reduced-motion: no-preference) {
+  .fyc-result-card__cta:hover { transform: translateY(var(--cta-press, 3px)); }
+}
 
 .fyc-result-actions {
   margin-top: 24px;

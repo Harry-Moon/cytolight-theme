@@ -86,9 +86,9 @@
         </h1>
         <p class="cy-hero__sub">
           {%- if is_fr -%}
-            {{ section.settings.hero_text_fr | default: 'Des syst&egrave;mes de luminoth&eacute;rapie rouge intelligents, con&ccedil;us pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l&apos;&eacute;nergie.' }}
+            {{ section.settings.hero_text_fr | default: 'Des syst&egrave;mes de luminoth&eacute;rapie rouge con&ccedil;us pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l&apos;&eacute;nergie.' }}
           {%- else -%}
-            {{ section.settings.hero_text_en | default: 'Intelligent red light therapy systems designed for recovery, skin, sleep, and energy.' }}
+            {{ section.settings.hero_text_en | default: 'Red light therapy systems designed for recovery, skin, sleep, and energy.' }}
           {%- endif -%}
         </p>
         <div class="cy-actions">
@@ -100,6 +100,18 @@
           </a>
         </div>
 
+        {%- comment -%}
+          Bandeau de chiffres du hero (7 longueurs d'onde, 590-940 nm, 1-40 Hz,
+          14 jours) : MASQUE volontairement, sur demande, le 2026-09-01. Il n'est
+          pas supprime — le markup ci-dessous et les blocs `technical_fact` du
+          schema restent en place. Pour le remettre : retirer les deux balises de
+          commentaire qui l'encadrent, rien d'autre.
+
+          Il est commente plutot que masque en CSS : un `display: none` le
+          laisserait dans la page, lu par les lecteurs d'ecran et indexe par les
+          moteurs, avec des chiffres que la boutique ne veut pas montrer.
+        {%- endcomment -%}
+        {%- comment -%}
         <div class="cy-hero__facts" aria-label="{% if is_fr %}Points cl&eacute;s{% else %}Key facts{% endif %}">
           {%- assign fact_blocks = section.blocks | where: 'type', 'technical_fact' -%}
           {%- if fact_blocks.size > 0 -%}
@@ -116,6 +128,7 @@
             <div class="cy-hero__fact"><strong>14 {% if is_fr %}jours{% else %}days{% endif %}</strong><span>{% if is_fr %}pour l'essayer chez vous{% else %}to try it at home{% endif %}</span></div>
           {%- endif -%}
         </div>
+        {%- endcomment -%}
       </div>
     </div>
   </section>
@@ -506,8 +519,8 @@
     { "type": "image_picker", "id": "pro_image", "label": "Antared PANO ULTRA image" },
     { "type": "text", "id": "hero_heading_en", "label": "Hero heading EN", "default": "Light that transforms your everyday." },
     { "type": "text", "id": "hero_heading_fr", "label": "Hero heading FR", "default": "La lumi&egrave;re qui transforme votre quotidien." },
-    { "type": "textarea", "id": "hero_text_en", "label": "Hero text EN", "default": "Intelligent red light therapy systems designed for recovery, skin, sleep, and energy." },
-    { "type": "textarea", "id": "hero_text_fr", "label": "Hero text FR", "default": "Des syst&egrave;mes de luminoth&eacute;rapie rouge intelligents, con&ccedil;us pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l'&eacute;nergie." },
+    { "type": "textarea", "id": "hero_text_en", "label": "Hero text EN", "default": "Red light therapy systems designed for recovery, skin, sleep, and energy." },
+    { "type": "textarea", "id": "hero_text_fr", "label": "Hero text FR", "default": "Des syst&egrave;mes de luminoth&eacute;rapie rouge con&ccedil;us pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l'&eacute;nergie." },
     { "type": "text", "id": "primary_cta_en", "label": "Primary CTA EN", "default": "Discover Antared DESK" },
     { "type": "text", "id": "primary_cta_fr", "label": "Primary CTA FR", "default": "D&eacute;couvrir Antared DESK" },
     { "type": "url", "id": "primary_cta_url", "label": "Primary CTA URL" },

@@ -199,6 +199,34 @@ sous le champ garde sa hauteur même vide pour ne rien pousser. Trois règles ti
 > coupé) se vérifient en remplaçant `window.fetch` par un stub ; l'absence de rechargement se
 > contrôle en boutique.
 
+## Boutons d'appel a l'action
+
+Cinq familles cohabitent — `.btn` (theme.css), `.cy-button` (accueil), `.ln-button` (Learn et
+hubs), `.fyc-*` (questionnaire), `.cl-atc` (fiche produit) — et elles partagent **une seule
+mecanique**, decrite en tete du bloc CTA de `assets/theme.css` :
+
+| | |
+|---|---|
+| au repos | une ombre portee, `--cta-shadow` |
+| au survol | le bouton descend de `--cta-press` (3 px), perd son ombre, et passe au **blanc sur le rouge de la marque** — quelle que soit sa couleur de depart |
+| au clic | `opacity: .5`, le temps que le doigt reste dessus |
+
+Trois choses a ne pas rater en y touchant :
+
+1. **`--color-accent` n'est pas le rouge des boutons.** Ce reglage vaut `#c7996e`, un sable herite
+   d'une palette anterieure, encore utilise par des liens et des pastilles — et par le fond au repos
+   des CTA du questionnaire. Le rouge des boutons est `--cta-red` (`#d20d2f`), la meme valeur que
+   `--cy-red` et `--ln-red`. Un survol calcule sur `--color-accent` donnait un bouton beige.
+2. **Le deplacement vit dans `prefers-reduced-motion: no-preference`**, jamais ailleurs. Sans lui, le
+   survol change quand meme de couleur et perd son ombre : l'etat reste signale, il ne bouge pas.
+3. **La couleur du survol se reaffirme sur les variantes claires.** `.cy-button--light` porte
+   `color: #111 !important` et `.ln-page a { color: inherit }` est plus specifique que
+   `.ln-button--light` : sans rappel a la bonne specificite, le libelle reste noir sur le rouge du
+   survol. Voir les selecteurs `.ln-page a.ln-button--*:hover`.
+
+Le bouton de la newsletter est le seul a garder son propre survol : il s'enfonce comme les autres,
+mais son ombre portee cede la place au halo neon au lieu de disparaitre.
+
 ## Sections cinema de l'accueil
 
 `cytolight-home.liquid` porte trois scenes a scene collante — DESK (« Sept spectres »), Cap et
