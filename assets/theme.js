@@ -363,6 +363,97 @@
     }, 4000);
   });
 
+  /*
+   * Inscription newsletter du pied de page.
+   *
+   * Le formulaire `customer` de Shopify POSTe la page entiere : le navigateur
+   * rechargeait tout le site, remontait en haut, et le pied de page revenait
+   * avec le champ remplace par une pastille de succes — toute la rangee de
+   * tete changeait de hauteur pour un envoi de deux secondes. On intercepte
+   * donc l'envoi, et l'effet reste dans le bouton et le champ.
+   *
+   * Enrichissement progressif strict : sans `fetch`, sans `FormData`, ou si le
+   * navigateur juge l'adresse invalide, on ne touche a rien et le POST natif
+   * part comme avant. C'est lui qui reste la reference — la constitution
+   * demande que le formulaire fonctionne sans JavaScript.
+   */
+  const newsForm = document.querySelector('.site-footer__news-form');
+  const newsField = newsForm?.querySelector('.site-footer__news-field');
+  const newsInput = newsForm?.querySelector('.site-footer__news-input');
+  const newsButton = newsForm?.querySelector('.site-footer__news-button');
+  const newsLabel = newsButton?.querySelector('span');
+  const newsNote = newsForm?.querySelector('.site-footer__news-note');
+  if (newsForm && newsField && newsInput && newsButton && newsLabel && newsNote
+      && window.fetch && window.FormData) {
+    const setNote = (text, isError) => {
+      newsNote.textContent = text || '';
+      newsNote.classList.toggle('is-shown', Boolean(text));
+      newsNote.classList.toggle('is-error', Boolean(text) && isError);
+    };
+    const setLabel = (text) => {
+      if (text) newsLabel.textContent = text;
+    };
+    const settle = () => {
+      newsForm.classList.remove('is-busy');
+      newsButton.removeAttribute('aria-busy');
+    };
+
+    newsForm.addEventListener('submit', (e) => {
+      // Deja en vol, ou deja inscrit : on ne renvoie rien.
+      if (newsForm.classList.contains('is-busy') || newsForm.classList.contains('is-done')) {
+        e.preventDefault();
+        return;
+      }
+      // Adresse refusee par le navigateur : on le laisse afficher son propre
+      // message, il le fait mieux et dans la langue du visiteur.
+      if (!newsInput.checkValidity()) return;
+
+      e.preventDefault();
+      newsForm.classList.add('is-busy');
+      newsButton.setAttribute('aria-busy', 'true');
+      setLabel(newsButton.dataset.labelBusy);
+      setNote('', false);
+
+      fetch(newsForm.action, {
+        method: 'POST',
+        body: new FormData(newsForm),
+        headers: { Accept: 'text/html' },
+      })
+        .then((res) => res.text().then((html) => ({ res, html })))
+        .then(({ res, html }) => {
+          settle();
+          // Deux signaux, parce qu'aucun n'est garanti seul : Shopify redirige
+          // vers `?customer_posted=true` quand le contact est cree, et la page
+          // ainsi rendue contient la pastille de succes du pied de page, que
+          // seul `form.posted_successfully?` produit. Une adresse refusee ne
+          // donne ni l'un ni l'autre — elle revient sur la meme page avec le
+          // formulaire en erreur.
+          const posted = res.url.indexOf('customer_posted=true') !== -1
+            || html.indexOf('site-footer__news-ok') !== -1;
+          setLabel(newsButton.dataset.labelIdle);
+          if (res.ok && posted) {
+            newsForm.classList.add('is-done');
+            newsInput.readOnly = true;
+            setLabel(newsButton.dataset.labelDone);
+            setNote(newsNote.dataset.noteDone, false);
+          } else if (!res.ok) {
+            // La boutique n'a pas traite l'envoi — page de verification
+            // anti-robot, maintenance, 5xx. L'adresse n'y est pour rien : lui
+            // reprocher serait faux, on invite a reessayer.
+            setNote(newsNote.dataset.noteNetwork, true);
+          } else {
+            setNote(newsNote.dataset.noteError, true);
+            newsInput.focus();
+          }
+        })
+        .catch(() => {
+          settle();
+          setLabel(newsButton.dataset.labelIdle);
+          setNote(newsNote.dataset.noteNetwork, true);
+        });
+    });
+  }
+
   // Policy pages (Shopify's built-in /policies/* markup): some policies —
   // Terms of Service in particular — mark section titles as inline
   // "<strong>SECTION 1 - ...</strong><br>" instead of real headings, so

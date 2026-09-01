@@ -155,12 +155,17 @@ se créer depuis le dépôt. Tant qu'il n'existe pas, les moteurs ne suivent pas
 
 ## Pied de page
 
-Les colonnes de liens s'alignent par le **bas**, sur la ligne de base du bloc de marque. Cet
-alignement n'a de sens que si toutes les colonnes tiennent sur une seule rangée : au-delà, chaque
-rangée s'aligne sur sa propre hauteur et creuse des trous entre les deux. Il est donc borné à
-`min-width: 1180px`, seuil auquel les sept colonnes possibles tiennent en ligne (`flex-wrap: nowrap`
-plus `flex: 1 1 0` les y maintiennent quel que soit leur nombre). En dessous, la grille s'enroule et
-les colonnes s'alignent par le haut.
+Le pied de page tient en deux rangées. La **rangée de tête** (`.site-footer__masthead`) porte le
+logo à gauche et l'inscription newsletter à sa droite, sur son niveau, et se termine par un filet.
+La **rangée de liens** vient dessous : le bloc de marque (accroche, réseaux) à gauche, les colonnes
+de menus à sa droite — elles commencent donc sous le logo.
+
+Les colonnes s'alignent par le **haut**, à toutes les largeurs : leurs intitulés se posent sur une
+même ligne. Un alignement par le bas — l'état précédent — calait la *dernière* ligne de chaque liste
+sur une même base, et faisait donc démarrer les intitulés en escalier, d'autant plus creusé que les
+listes sont inégales. `min-width: 1180px` reste le seuil au-delà duquel les sept colonnes possibles
+tiennent sur une seule ligne (`flex-wrap: nowrap` plus `flex: 1 1 0` les y maintiennent quel que soit
+leur nombre) ; en dessous, la grille s'enroule.
 
 L'inscription newsletter passe par `{% form 'customer' %}` avec le tag `newsletter`, qui distingue
 un contact marketing d'un compte ouvert au checkout. Elle fonctionne **sans JavaScript** : succès et
@@ -168,6 +173,54 @@ erreurs viennent du POST. Le halo rouge et le balayage néon sont en CSS pur, d�
 `:has(input:valid:not(:placeholder-shown))` — `:valid` seul serait vrai dès le chargement sur un
 champ vide. Le balayage est déclaré au repos, hors cadre, et l'animation ne fait que le faire
 glisser ; il est enfermé dans `prefers-reduced-motion: no-preference`.
+
+`theme.js` **intercepte l'envoi** et le rejoue en `fetch`, sans quitter la page : le POST natif
+rechargeait tout le site, remontait le visiteur en haut et remplaçait le champ par une pastille de
+succès — toute la rangée de tête changeait de hauteur. L'effet reste désormais dans le bouton
+(balayage en boucle pendant l'envoi, puis libellé « Inscrit ✓ » et halo), et la ligne de message
+sous le champ garde sa hauteur même vide pour ne rien pousser. Trois règles tiennent ce bloc :
+
+1. **Le POST natif reste la référence.** Sans `fetch`, sans `FormData`, ou si le navigateur refuse
+   l'adresse, le script ne touche à rien et le formulaire part comme avant.
+2. **Le succès se lit sur deux signaux**, aucun n'étant garanti seul : `?customer_posted=true` dans
+   l'URL finale de la réponse, ou la présence de `site-footer__news-ok` dans le HTML renvoyé — cette
+   pastille n'existe que sous `form.posted_successfully?`.
+3. **Le balayage d'attente est posé sur le bouton, pas sur le champ.** La règle
+   `:has(input:valid…)` du champ est plus spécifique et l'emporterait sur une règle d'état.
+
+> Le POST d'inscription **ne se teste pas sous `shopify theme dev`** : le proxy local répond 403
+> et sert la page « Verifying your connection » de Shopify, quelle que soit l'adresse — même
+> limite que le POST vers `/localization`. Les quatre états (envoi, succès, adresse refusée,
+> requête bloquée) se vérifient en remplaçant `window.fetch` par un stub ; le succès réel se
+> contrôle en boutique.
+
+## Sections cinema de l'accueil
+
+`cytolight-home.liquid` porte trois scenes a scene collante — DESK (« Sept spectres »), Cap et
+PANO ULTRA — pilotees par `cytolight-cinematic.css` / `.js`. Le JS ne fait qu'une chose : publier la
+progression du scroll dans quatre variables (`--cy-p`, `--cy-pe`, `--cy-zoom`, `--cy-light-step`) ;
+tout le mouvement est en CSS. Trois regles tiennent ces sections :
+
+1. **L'effet de scroll appartient a l'image, jamais au texte.** Aucune opacite liee au defilement
+   ne se pose sur `.cy-cinema__panel` : la version precedente faisait fondre le panneau au-dela de
+   68 % de la course, et le paragraphe palissait sous les yeux du lecteur alors qu'il etait encore
+   en plein ecran.
+2. **Les visuels sont contenus, pas recadres.** Les sources sont en 16/9, la scene ne l'est pas :
+   en `cover`, l'ecart de ratio se paye en rognage vertical — le panneau DESK perdait son sommet,
+   l'athlete PANO sa tete. DESK et PANO sont donc en `object-fit: contain`, a 88 % de la scene, et
+   le zoom du scroll ne peut pas les ramener au bord. Seule la scene Cap garde le plein cadre : son
+   plan de fond est une plaque d'ambiance, son sujet vit dans le calque avant-plan.
+3. **Les sept longueurs d'onde ne s'ecrivent qu'une fois**, dans les variables `--cy-wave-*` de
+   `cytolight-cinematic.css`. La liste `.cy-spectrum` et le faisceau de couleur les lisent toutes
+   deux. Le faisceau (`.cy-cinema__beam`) est une bande qui porte les sept teintes et qui **glisse**
+   derriere un masque fixe : elle ne se recolore pas. Repeindre un degrade a chaque image invalide
+   tout le calque — c'est la raison pour laquelle le `filter()` scroll-linked avait deja ete retire
+   de l'image. Sans support de `mask-image`, le faisceau ne s'affiche pas du tout : non masque, il
+   serait un aplat de sept couleurs sur toute la scene.
+
+Le parallaxe est neutralise sous 900 px (la scene n'est plus collante, `--cy-p` ne progresse plus
+de maniere fiable) et sous `prefers-reduced-motion`. Dans les deux cas le faisceau est fige sur le
+rouge profond et rien ne bouge.
 
 ## Espace Learn
 

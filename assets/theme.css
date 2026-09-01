@@ -595,17 +595,27 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 }
 .site-footer a { color: inherit; opacity: .82; }
 .site-footer a:hover { opacity: 1; color: var(--color-accent); }
-/* Les colonnes de liens s'alignent sur le bas du bloc de marque, qui est le
-   plus haut de la rangee. En `stretch` (le defaut), chaque liste demarrait sous
-   son titre en haut de la rangee et laissait sous elle une hauteur de vide
-   inegale d'une colonne a l'autre. `flex-end` pose leur derniere ligne sur la
-   meme ligne de base. Sous 800px la rangee passe sur plusieurs lignes et
-   l'alignement bas n'a plus de sens : il est relache dans la requete media. */
-.site-footer__top { display: flex; flex-wrap: wrap; gap: 40px; margin-bottom: 48px; }
+/* Rangee de tete : le logo a gauche, l'inscription newsletter a sa droite, sur
+   le meme niveau. `align-items: center` cale le bloc newsletter — trois lignes
+   de haut — sur le milieu du lettrage plutot que sur son sommet. Le filet du
+   bas est la ligne sous laquelle demarrent les colonnes de liens. */
+.site-footer__masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px 48px;
+  padding-bottom: 34px;
+  margin-bottom: 42px;
+  border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+/* Les colonnes de liens sont alignees par le HAUT, et sur toutes les largeurs :
+   leurs intitules se posent sur une meme ligne, sous le logo. Un alignement par
+   le bas (l'etat precedent) calait la DERNIERE ligne de chaque liste sur une
+   meme base et faisait donc demarrer les intitules en escalier, d'autant plus
+   creuse que les listes etaient inegales. */
+.site-footer__top { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 40px; margin-bottom: 48px; }
 .site-footer__brand { flex: 1 1 260px; max-width: 340px; }
-/* En dessous du desktop large, les colonnes s'enroulent sur plusieurs rangees.
-   Les aligner par le bas la-dedans aligne chaque rangee sur sa propre hauteur et
-   creuse des trous entre les deux : elles restent donc alignees par le haut. */
 .site-footer__cols {
   flex: 1 1 520px;
   display: grid;
@@ -615,16 +625,14 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 }
 /* Le seuil est celui a partir duquel les sept colonnes possibles tiennent sur
    une seule ligne. Au-dela, `nowrap` + `flex: 1 1 0` garantit qu'elles y restent
-   quel que soit leur nombre, et l'alignement par le bas pose la derniere ligne
-   de chaque liste sur la meme ligne de base, elle-meme calee sur le bas du bloc
-   de marque. */
+   quel que soit leur nombre. */
 @media (min-width: 1180px) {
-  .site-footer__top { flex-wrap: nowrap; align-items: flex-end; }
-  .site-footer__brand { flex: 0 1 340px; }
+  .site-footer__top { flex-wrap: nowrap; }
+  .site-footer__brand { flex: 0 1 300px; }
   .site-footer__cols {
     display: flex;
     flex-wrap: nowrap;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 26px;
   }
   .site-footer__col { flex: 1 1 0; }
@@ -640,11 +648,12 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  */
 .site-footer .site-footer__logo {
   display: inline-block;
-  margin-bottom: 18px;
+  flex: 0 0 auto;
   opacity: 1;
 }
-.site-footer .site-footer__logo img { display: block; width: 160px; height: auto; }
+.site-footer .site-footer__logo img { display: block; width: 180px; height: auto; }
 .site-footer__brand p { opacity: .7; max-width: 320px; font-size: .9rem; }
+.site-footer__tagline { margin: 0 0 22px; }
 .site-footer__col { min-width: 0; }
 .site-footer__col h4 {
   display: inline-block;
@@ -780,7 +789,21 @@ h1, h2, h3, h4,
 .site-footer__payment-icon { width: 38px; height: 24px; border-radius: 4px; background: #fff; padding: 1px; }
 
 /* ---------- Footer : inscription newsletter ---------- */
-.site-footer__news { margin: 22px 0 26px; max-width: 340px; }
+/* Le bloc vit dans la rangee de tete, a droite du logo et sur son niveau. Il
+   se replie en colonne des que la place manque — le `flex-wrap` fait passer le
+   champ sous l'accroche avant que la rangee entiere ne casse. */
+.site-footer__news {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px 30px;
+  flex: 1 1 480px;
+  max-width: 720px;
+  margin: 0;
+}
+.site-footer__news-copy { flex: 1 1 230px; max-width: 320px; }
+.site-footer__news-form { flex: 0 1 340px; min-width: min(300px, 100%); }
 .site-footer__news-title {
   font-family: var(--font-display);
   font-size: 1.24rem;
@@ -789,7 +812,7 @@ h1, h2, h3, h4,
   color: #fff;
   margin: 0 0 8px;
 }
-.site-footer__news-text { font-size: .82rem; line-height: 1.5; opacity: .66; margin: 0 0 14px; }
+.site-footer__news-text { font-size: .82rem; line-height: 1.5; opacity: .66; margin: 0; }
 
 .site-footer__news-field {
   position: relative;
@@ -914,6 +937,60 @@ h1, h2, h3, h4,
 }
 .site-footer__news-error { margin: 10px 0 0; font-size: .78rem; color: #ff8c9e; }
 
+/* La ligne de message garde sa hauteur meme vide : succes et erreur s'y
+   ecrivent sans pousser la rangee de tete d'un cran. */
+.site-footer__news-note {
+  margin: 8px 0 0;
+  min-height: 1.1rem;
+  font-size: .76rem;
+  line-height: 1.1rem;
+  color: #f5eee7;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.site-footer__news-note.is-shown { opacity: .8; }
+.site-footer__news-note.is-error { color: #ff8c9e; opacity: 1; }
+
+/*
+ * Envoi et confirmation : tout l'effet reste dans le bouton et le champ.
+ * C'est l'objet de l'interception de `theme.js` — le POST natif rechargeait la
+ * page entiere, ramenait le visiteur en haut et remplacait le champ par une
+ * pastille, ce qui deplacait toute la rangee de tete.
+ *
+ * Le balayage d'attente est pose sur le BOUTON, pas sur le champ : la regle
+ * `:has(input:valid)` du champ est plus specifique et l'aurait emporte.
+ */
+.site-footer__news-form.is-busy .site-footer__news-input,
+.site-footer__news-form.is-done .site-footer__news-input { opacity: .5; }
+.site-footer__news-form.is-busy .site-footer__news-button,
+.site-footer__news-form.is-done .site-footer__news-button { cursor: default; }
+.site-footer__news-form.is-busy .site-footer__news-button { background: #b60b28; }
+.site-footer__news-form.is-done .site-footer__news-field {
+  border-color: rgba(255, 70, 99, .85);
+  box-shadow:
+    0 0 0 1px rgba(255, 70, 99, .35),
+    0 0 26px rgba(210, 13, 47, .5),
+    inset 0 0 20px rgba(210, 13, 47, .2);
+}
+.site-footer__news-form.is-done .site-footer__news-button {
+  background: #d20d2f;
+  box-shadow: 0 0 26px rgba(210, 13, 47, .62);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .site-footer__news-form.is-busy .site-footer__news-button::after {
+    animation: antared-neon-sweep 1.05s linear infinite;
+  }
+  .site-footer__news-form.is-done .site-footer__news-button {
+    animation: antared-news-pop .55s cubic-bezier(.22, .61, .36, 1);
+  }
+}
+@keyframes antared-news-pop {
+  0%   { transform: scale(1); }
+  38%  { transform: scale(1.07); }
+  100% { transform: scale(1); }
+}
+
 @media (max-width: 800px) {
   /*
    * Les colonnes du pied de page restent sur DEUX rangs jusqu'en bas de
@@ -924,7 +1001,9 @@ h1, h2, h3, h4,
    */
   .site-footer__top { gap: 34px 24px; }
   .site-footer__brand { flex: 1 1 100%; max-width: none; }
-  .site-footer__news { max-width: none; }
+  .site-footer__masthead { gap: 24px; padding-bottom: 28px; margin-bottom: 32px; }
+  .site-footer__news { max-width: none; justify-content: flex-start; }
+  .site-footer__news-copy { max-width: none; }
   .site-footer__cols { flex: 1 1 100%; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px; }
   .site-footer__col h4 { margin-bottom: 14px; }
 }

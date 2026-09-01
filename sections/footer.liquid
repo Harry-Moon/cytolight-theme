@@ -39,57 +39,83 @@
 
 <footer class="site-footer">
   <div class="container">
-    <div class="site-footer__top">
-      <div class="site-footer__brand">
-        <a class="site-footer__logo" href="{{ routes.root_url }}" aria-label="Antared">
-          {%- if footer_logo != blank -%}
-            <img src="{{ footer_logo | image_url: width: 440 }}"
-                 width="220" height="{{ 220 | divided_by: footer_logo.aspect_ratio | round }}"
-                 alt="Antared" loading="lazy">
-          {%- else -%}
-            <img src="{{ 'LOGO_ANTARED_transparent.png' | file_url }}"
-                 width="220" height="220"
-                 alt="Antared" loading="lazy">
-          {%- endif -%}
-        </a>
-        <p>{% if is_fr %}Technologies bien-&ecirc;tre inspir&eacute;es par la science pour accompagner le sommeil, la r&eacute;cup&eacute;ration et l'&eacute;clat de la peau.{% else %}{{ section.settings.tagline | default: "Science-backed wellness technologies to enhance sleep, recovery, and beauty." }}{% endif %}</p>
-        {%- comment -%}
-          Inscription newsletter. Le formulaire `customer` de Shopify cree un
-          contact marketing ; le tag `newsletter` le distingue d'un compte client
-          ouvert au checkout. Il fonctionne sans JavaScript : l'etat de succes et
-          les erreurs viennent du POST, pas d'un script.
-        {%- endcomment -%}
-        <div class="site-footer__news">
+    {%- comment -%}
+      Rangee de tete : le logo a gauche, l'inscription newsletter a sa droite,
+      sur le meme niveau. Elle est separee du reste par un filet, et les
+      colonnes de liens commencent donc SOUS le logo, alignees par le haut.
+    {%- endcomment -%}
+    <div class="site-footer__masthead">
+      <a class="site-footer__logo" href="{{ routes.root_url }}" aria-label="Antared">
+        {%- if footer_logo != blank -%}
+          <img src="{{ footer_logo | image_url: width: 440 }}"
+               width="220" height="{{ 220 | divided_by: footer_logo.aspect_ratio | round }}"
+               alt="Antared" loading="lazy">
+        {%- else -%}
+          <img src="{{ 'LOGO_ANTARED_transparent.png' | file_url }}"
+               width="220" height="220"
+               alt="Antared" loading="lazy">
+        {%- endif -%}
+      </a>
+
+      {%- comment -%}
+        Inscription newsletter. Le formulaire `customer` de Shopify cree un
+        contact marketing ; le tag `newsletter` le distingue d'un compte client
+        ouvert au checkout. Il fonctionne sans JavaScript : l'etat de succes et
+        les erreurs viennent du POST, pas d'un script. `theme.js` ne fait
+        qu'intercepter l'envoi pour eviter le rechargement de page — sans lui,
+        le POST natif reste la reference.
+      {%- endcomment -%}
+      <div class="site-footer__news">
+        <div class="site-footer__news-copy">
           <p class="site-footer__news-title">{% if is_fr %}Une dose de lumi&egrave;re rouge, toutes les semaines.{% else %}A weekly dose of red light.{% endif %}</p>
           <p class="site-footer__news-text">{% if is_fr %}Protocoles, nouveaut&eacute;s et ce que dit vraiment la science. Un e-mail par semaine, d&eacute;sinscription en un clic.{% else %}Protocols, new arrivals, and what the science actually says. One email a week, unsubscribe in one click.{% endif %}</p>
-
-          {%- form 'customer', id: 'footer-newsletter', class: 'site-footer__news-form' -%}
-            <input type="hidden" name="contact[tags]" value="newsletter">
-            {%- if form.posted_successfully? -%}
-              <p class="site-footer__news-ok" role="status">{% if is_fr %}&#10003; C&apos;est not&eacute;. Le premier e-mail arrive bient&ocirc;t.{% else %}&#10003; You&apos;re in. The first email lands shortly.{% endif %}</p>
-            {%- else -%}
-              <div class="site-footer__news-field">
-                <label class="visually-hidden" for="footer-newsletter-email">{% if is_fr %}Votre adresse e-mail{% else %}Your email address{% endif %}</label>
-                <input
-                  id="footer-newsletter-email"
-                  class="site-footer__news-input"
-                  type="email"
-                  name="contact[email]"
-                  value="{{ form.email }}"
-                  placeholder="{% if is_fr %}vous@exemple.com{% else %}you@example.com{% endif %}"
-                  autocomplete="email"
-                  spellcheck="false"
-                  required>
-                <button class="site-footer__news-button" type="submit">
-                  <span>{% if is_fr %}Je m&apos;inscris{% else %}Sign me up{% endif %}</span>
-                </button>
-              </div>
-              {%- if form.errors -%}
-                <p class="site-footer__news-error" role="alert">{% if is_fr %}Cette adresse n&apos;a pas &eacute;t&eacute; accept&eacute;e. V&eacute;rifiez-la et r&eacute;essayez.{% else %}That address was not accepted. Check it and try again.{% endif %}</p>
-              {%- endif -%}
-            {%- endif -%}
-          {%- endform -%}
         </div>
+
+        {%- form 'customer', id: 'footer-newsletter', class: 'site-footer__news-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p class="site-footer__news-ok" role="status">{% if is_fr %}&#10003; C&apos;est not&eacute;. Le premier e-mail arrive bient&ocirc;t.{% else %}&#10003; You&apos;re in. The first email lands shortly.{% endif %}</p>
+          {%- else -%}
+            <div class="site-footer__news-field">
+              <label class="visually-hidden" for="footer-newsletter-email">{% if is_fr %}Votre adresse e-mail{% else %}Your email address{% endif %}</label>
+              <input
+                id="footer-newsletter-email"
+                class="site-footer__news-input"
+                type="email"
+                name="contact[email]"
+                value="{{ form.email }}"
+                placeholder="{% if is_fr %}vous@exemple.com{% else %}you@example.com{% endif %}"
+                autocomplete="email"
+                spellcheck="false"
+                required>
+              <button
+                class="site-footer__news-button"
+                type="submit"
+                data-label-idle="{% if is_fr %}Je m&apos;inscris{% else %}Sign me up{% endif %}"
+                data-label-busy="{% if is_fr %}Envoi&hellip;{% else %}Sending&hellip;{% endif %}"
+                data-label-done="{% if is_fr %}Inscrit&nbsp;&#10003;{% else %}You&#39;re in&nbsp;&#10003;{% endif %}">
+                <span>{% if is_fr %}Je m&apos;inscris{% else %}Sign me up{% endif %}</span>
+              </button>
+            </div>
+            {%- comment -%}
+              La ligne de message garde sa hauteur meme vide : c'est ce qui
+              empeche le succes ou l'erreur de pousser la mise en page d'un cran
+              quand ils s'affichent.
+            {%- endcomment -%}
+            <p class="site-footer__news-note{% if form.errors %} is-shown is-error{% endif %}" role="status"
+               data-note-done="{% if is_fr %}C&apos;est not&eacute;. Le premier e-mail arrive bient&ocirc;t.{% else %}You&apos;re in. The first email lands shortly.{% endif %}"
+               data-note-error="{% if is_fr %}Cette adresse n&apos;a pas &eacute;t&eacute; accept&eacute;e. V&eacute;rifiez-la et r&eacute;essayez.{% else %}That address was not accepted. Check it and try again.{% endif %}"
+               data-note-network="{% if is_fr %}Envoi impossible pour le moment. R&eacute;essayez dans un instant.{% else %}Could not send just now. Try again in a moment.{% endif %}">
+              {%- if form.errors -%}{% if is_fr %}Cette adresse n&apos;a pas &eacute;t&eacute; accept&eacute;e. V&eacute;rifiez-la et r&eacute;essayez.{% else %}That address was not accepted. Check it and try again.{% endif %}{%- endif -%}
+            </p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+
+    <div class="site-footer__top">
+      <div class="site-footer__brand">
+        <p class="site-footer__tagline">{% if is_fr %}Technologies bien-&ecirc;tre inspir&eacute;es par la science pour accompagner le sommeil, la r&eacute;cup&eacute;ration et l'&eacute;clat de la peau.{% else %}{{ section.settings.tagline | default: "Science-backed wellness technologies to enhance sleep, recovery, and beauty." }}{% endif %}</p>
 
         <div class="site-footer__socials">
           {% if instagram_url != blank %}<a href="{{ instagram_url }}" rel="me noopener" target="_blank" aria-label="Instagram">{% render 'icon', name: 'instagram' %}</a>{% endif %}
@@ -102,10 +128,10 @@
       </div>
 
       {%- comment -%}
-        Les colonnes de liens vivent dans leur propre grille. En les laissant
-        soeurs du bloc de marque dans une seule rangee flex, la septieme passait
-        a la ligne des 1440px et s'alignait sur le bas de sa propre rangee, pas
-        sur celui des six autres.
+        Les colonnes de liens vivent dans leur propre grille, soeur du bloc de
+        marque. Elles sont alignees par le HAUT : leurs sept intitules se posent
+        sur une meme ligne, quel que soit le nombre de liens de chacune. Un
+        alignement par le bas les faisait demarrer en escalier.
       {%- endcomment -%}
       <div class="site-footer__cols">
       {% for block in section.blocks %}

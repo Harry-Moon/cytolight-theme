@@ -21,6 +21,19 @@
   --cy-radius: 8px;
   --cy-shadow: 0 24px 70px rgba(0,0,0,.12);
   --cy-ease: cubic-bezier(.2,.8,.2,1);
+  /* Les sept longueurs d'onde du systeme, ecrites UNE fois. La liste
+     .cy-spectrum de la section science et le faisceau de couleur des scenes
+     cinema lisent ces memes variables : une teinte corrigee ici l'est aux deux
+     endroits. Elles etaient auparavant recopiees en dur dans le markup de
+     cytolight-home.liquid, ou rien ne garantissait qu'elles restent d'accord
+     avec la lumiere affichee sur l'image. */
+  --cy-wave-590: #ffb347;
+  --cy-wave-630: #e8303a;
+  --cy-wave-660: #c8102e;
+  --cy-wave-810: #7b4fa6;
+  --cy-wave-830: #6a3d9a;
+  --cy-wave-850: #5b2d8e;
+  --cy-wave-940: #3d1f6e;
   background: #fff;
   color: var(--cy-ink);
   font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -115,40 +128,41 @@
   align-items: center;
 }
 .cy-cinema__world {
-  /* L'overscan est en BAS uniquement (inset: 0 0 -6%), et pas en haut.
-     Le plan ne derive que vers le haut : c'est donc le bord bas qui se
-     decouvrirait, jamais le haut. Une version anterieure overscannait des
-     deux cotes (-3% 0), ce qui poussait le haut de l'image hors du cadre
-     et coupait le sujet (la tete de l'athlete sur PANO, le haut du panneau
-     sur DESK) des que la derive et le zoom s'ajoutaient. */
-  position: absolute; inset: 0 0 -6%; z-index: 0;
-  /* Background plane drifts slower than the actual scroll (a fraction of
-     --cy-p) while the panel below moves on its own curve: that speed
-     mismatch between planes is what reads as parallax depth, on top of
-     the zoom. */
-  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .05));
-  /* Origine en haut, pas au centre : le zoom ne grignote alors que le bas,
-     ou l'overscan a de la marge. Centre, il rognait autant en haut qu'en
-     bas et decapitait le sujet en fin de course. */
-  transform-origin: 58% 0;
-  will-change: transform;
-}
-.cy-cinema__world::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: calc(var(--cy-light-step, 0) * .5);
-  background:
-    radial-gradient(circle at 68% 50%, rgba(255, 22, 56, .3), transparent 25%),
-    radial-gradient(circle at 78% 78%, rgba(210, 13, 47, .2), transparent 34%);
-  mix-blend-mode: screen;
-  will-change: opacity;
+  /*
+   * Le visuel est CONTENU, jamais recadre.
+   *
+   * Les trois sources sont en 16/9. Une scene plein ecran ne l'est pas : en
+   * "cover", tout l'ecart de ratio se paye en rognage vertical, auquel
+   * s'ajoutaient la derive et le zoom. Le panneau DESK perdait son sommet et
+   * son pied, l'athlete PANO sa tete — d'ou les origines de transform
+   * acrobatiques (58% 0, 62% 0) et l'overscan bas (-6%) que cette regle
+   * remplace : ils deplacaient le rognage au lieu de le supprimer.
+   *
+   * C'est le choix que la vue mobile fait depuis toujours (bande 16/9 +
+   * contain, plus bas dans ce fichier) ; le desktop s'y aligne.
+   *
+   * L'echelle de repos est SOUS 1 pour deux raisons : l'image est plus petite
+   * a l'ecran — c'est le but — et le zoom du scroll (+.05 au maximum) ne peut
+   * jamais la ramener au bord du cadre.
+   */
+  position: absolute; inset: 0; z-index: 0;
 }
 .cy-cinema__world img, .cy-cinema__world video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center center;
+  /* Le mouvement porte sur l'IMAGE, pas sur la boite. La boite garde la
+     taille de la scene, donc la vignette et le faisceau qu'elle contient
+     couvrent toujours le cadre entier : reduire la boite laissait une arete
+     visible la ou le degrade lateral s'arretait, au milieu du fond.
+
+     Le plan derive plus lentement que le scroll reel pendant que le panneau de
+     texte suit sa propre courbe : c'est cet ecart de vitesse entre les deux
+     plans qui se lit comme de la profondeur. */
+  transform: translate3d(0, calc(var(--cy-p, 0) * -1.6%), 0) scale(calc(.88 + var(--cy-zoom, 0) * .05));
+  transform-origin: 50% 50%;
+  will-change: transform;
   /* Scroll-linked "brightening" used to be a per-frame filter() recalc on
      this image, which forces a repaint every animation frame and was the
      main source of scroll jank (especially on mobile GPUs). The warm-up
@@ -157,6 +171,52 @@
   opacity: .92;
   filter: brightness(1.04) saturate(1.1) contrast(1.03);
   will-change: opacity;
+}
+/*
+ * Faisceau de couleur : une bande qui porte les sept longueurs d'onde et qui
+ * GLISSE derriere un masque fixe, au rythme du scroll. La teinte posee sur
+ * l'image passe donc de l'ambre (590 nm) au proche infrarouge profond
+ * (940 nm), dans l'ordre exact de la liste .cy-spectrum juste a cote.
+ *
+ * Elle glisse — elle ne se recolore pas. Repeindre un degrade a chaque image
+ * invalide tout le calque : c'est precisement pour cela que le filter()
+ * scroll-linked a ete retire de l'image (voir le commentaire plus haut).
+ * Ici, seul un `transform` change, ce que le compositeur fait gratuitement.
+ *
+ * Le masque, lui, ne bouge pas : le halo reste sur le sujet pendant que sa
+ * couleur defile dessous.
+ */
+.cy-cinema__beam {
+  position: absolute; inset: 0; z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  /* Dose : l'opacite du calque multipliee par l'alpha du masque plafonne a
+     .25 au coeur du halo — l'ordre de grandeur du bloom rouge qu'il remplace.
+     En pleine puissance, un aplat de couleur en "screen" delave le blanc du
+     panneau au lieu de l'eclairer. */
+  opacity: calc(.14 + var(--cy-light-step, 0) * .28);
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(circle at var(--cy-beam-x, 62%) var(--cy-beam-y, 50%), rgba(0,0,0,.6) 0%, rgba(0,0,0,.3) 17%, transparent 40%);
+  mask-image: radial-gradient(circle at var(--cy-beam-x, 62%) var(--cy-beam-y, 50%), rgba(0,0,0,.6) 0%, rgba(0,0,0,.3) 17%, transparent 40%);
+  will-change: opacity;
+}
+.cy-cinema__beam > span {
+  position: absolute; top: 0; left: 0;
+  width: 700%; height: 100%;
+  /* Sept fois la largeur du cadre, une teinte centree par septieme : la
+     fenetre visible ne montre qu'une longueur d'onde a la fois. */
+  background: linear-gradient(90deg,
+    var(--cy-wave-590) 7.14%,
+    var(--cy-wave-630) 21.43%,
+    var(--cy-wave-660) 35.71%,
+    var(--cy-wave-810) 50%,
+    var(--cy-wave-830) 64.29%,
+    var(--cy-wave-850) 78.57%,
+    var(--cy-wave-940) 92.86%);
+  /* -85.71% = six septiemes de la bande : de la premiere teinte a la
+     septieme, exactement. */
+  transform: translate3d(calc(var(--cy-p, 0) * -85.71%), 0, 0);
+  will-change: transform;
 }
 .cy-cinema__glow {
   /* Static vignette only — the animated red bloom lives in
@@ -171,12 +231,18 @@
 .cy-cinema__panel {
   position: relative; z-index: 2; width: min(560px, calc(100% - 48px));
   margin-left: max(24px, 8vw);
-  opacity: calc(1 - max(0, (var(--cy-pe, 0) - .68) * 1.45));
-  /* Foreground plane: moves faster/further than the background world
-     layer's slow drift, so the two read as separate depths instead of
-     one flat image zooming. */
+  /*
+   * Le texte ne se degrade JAMAIS pendant le defilement : l'effet de scroll
+   * appartient a l'image, et a elle seule.
+   *
+   * La version precedente faisait fondre le panneau entier au-dela de 68 % de
+   * la course (opacity liee a --cy-pe), donc le paragraphe palissait sous les
+   * yeux du lecteur alors qu'il etait encore en plein ecran. Ne pas
+   * reintroduire d'opacite liee au scroll ici : le seul mouvement admis sur ce
+   * plan est le decalage ci-dessous, qui ne coute rien a la lisibilite.
+   */
   transform: translate3d(0, calc(var(--cy-pe, 0) * -34px), 0);
-  will-change: opacity, transform;
+  will-change: transform;
 }
 .cy-cinema__panel h2 { margin: 0; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(44px, 5.5vw, 82px); line-height: 1; font-weight: 400; letter-spacing: -.018em; }
 .cy-cinema__panel p:not(.cy-kicker) { margin: 24px 0 0; color: #bcbcbc; font-size: 17px; line-height: 1.75; }
@@ -201,6 +267,7 @@
 .cy-spectrum span::before {
   content: ''; position: absolute; top: -1px; left: 0; width: 22px; height: 2px;
   background: var(--wave-color, #c8102e);
+  transition: width .5s var(--cy-ease), box-shadow .4s ease;
 }
 .cy-spectrum.is-visible span { opacity: 1; transform: translateY(0); }
 .cy-spectrum.is-visible span:nth-child(1) { transition-delay: .05s; }
@@ -211,23 +278,54 @@
 .cy-spectrum.is-visible span:nth-child(6) { transition-delay: .4s; }
 .cy-spectrum.is-visible span:nth-child(7) { transition-delay: .47s; }
 .cy-spectrum span:hover { color: #fff; }
-.cy-spectrum strong { display: block; margin-bottom: 5px; color: #fff; font-size: 14px; text-shadow: 0 0 18px var(--wave-glow, transparent); transition: text-shadow .3s ease; }
-.cy-spectrum span:hover strong { text-shadow: 0 0 22px var(--wave-glow, transparent); }
+/* Le halo reprend la teinte de la longueur d'onde, derivee d'elle plutot que
+   ressaisie : --wave-glow etait une seconde ecriture de la meme couleur, en
+   rgba, qu'aucun mecanisme ne tenait d'accord avec la premiere. */
+.cy-spectrum strong {
+  display: block; margin-bottom: 5px; color: #fff; font-size: 14px;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent);
+  transition: text-shadow .3s ease;
+}
+.cy-spectrum span:hover strong { text-shadow: 0 0 22px color-mix(in srgb, var(--wave-color, #c8102e) 70%, transparent); }
+/* La longueur d'onde que le faisceau traverse a cet instant du scroll. Le
+   trait s'etend et s'allume : la liste dit alors la meme chose que la lumiere
+   posee sur l'image, au meme moment. */
+.cy-spectrum span.is-current { color: #fff; }
+.cy-spectrum span.is-current::before {
+  width: 100%;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--wave-color, #c8102e) 75%, transparent);
+}
+.cy-spectrum span.is-current strong { text-shadow: 0 0 26px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent); }
 /* Antared Redlight Cap: real two-plane parallax. The background room
    plate and the transparent product cutout are separate elements that
    drift at different scroll-linked speeds (see --cy-p multipliers
    below), which is what reads as actual depth instead of one flat
    image zooming. */
+/* La casquette est la seule scene a garder le plein cadre recadre : son plan
+   de fond n'est pas un visuel produit mais une plaque d'ambiance, dont le
+   rognage n'enleve rien — le sujet, lui, vit dans le calque avant-plan, qui
+   est deja en "contain". D'ou l'overscan bas et l'origine haute conserves
+   ici, et nulle part ailleurs. */
 .cy-cinema--cap .cy-cinema__world {
-  transform-origin: 50% 0;
-  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .05));
+  inset: 0 0 -6%;
 }
 .cy-cinema--cap .cy-cinema__world img, .cy-cinema--cap .cy-cinema__world video {
+  object-fit: cover;
   object-position: 65% center;
   opacity: 1;
   filter: brightness(1.12) saturate(1.04) contrast(1.02);
+  /* Plein cadre : l'echelle part de 1 et l'origine reste en haut, le rognage
+     du zoom se prend alors sur l'overscan bas de la boite. */
+  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .05));
+  transform-origin: 50% 0;
 }
 .cy-cinema--cap .cy-cinema__world::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  will-change: opacity;
   opacity: calc(var(--cy-light-step, 0) * .7);
   background:
     radial-gradient(circle at 30% 45%, rgba(255, 20, 55, .44), transparent 24%),
@@ -301,20 +399,16 @@
 .cy-cap-points.is-visible span:nth-child(3) { transition-delay: .25s; }
 .cy-cap-points span:hover { color: #fff; }
 .cy-cap-points span:hover::before { width: 100%; }
-.cy-cinema--pano .cy-cinema__world {
-  transform-origin: 62% 0;
-  transform: translate3d(0, calc(var(--cy-p, 0) * -2.5%), 0) scale(calc(1 + var(--cy-zoom, 0) * .05));
-}
+/* PANO herite du cadrage contenu : plus d'origine ni d'overscan a corriger,
+   seul le halo est recentre sur le panneau, qui se tient plus a droite que
+   celui de DESK. */
 .cy-cinema--pano .cy-cinema__world img {
-  object-position: 64% center;
   opacity: 1;
   filter: brightness(1.08) saturate(1.14) contrast(1.04);
 }
-.cy-cinema--pano .cy-cinema__world::after {
-  opacity: calc(var(--cy-light-step, 0) * .5);
-  background:
-    radial-gradient(circle at 72% 48%, rgba(255, 20, 55, .3), transparent 24%),
-    radial-gradient(circle at 82% 75%, rgba(210, 13, 47, .2), transparent 32%);
+.cy-cinema--pano .cy-cinema__beam {
+  --cy-beam-x: 70%;
+  --cy-beam-y: 48%;
 }
 .cy-cinema--pano .cy-cinema__glow {
   background:
@@ -575,8 +669,10 @@
   .cy-home *, .cy-home *::before, .cy-home *::after { transition-duration: .001ms !important; animation-duration: .001ms !important; scroll-behavior: auto !important; }
   .cy-cinema { min-height: auto; }
   .cy-cinema__stage { position: relative; min-height: auto; padding: 90px 0; }
-  .cy-cinema__world { inset: 0; transform: none !important; }
+  .cy-cinema__world { inset: 0; }
+  .cy-cinema__world img, .cy-cinema__world video { transform: none !important; }
   .cy-cinema__foreground { transform: none !important; }
+  .cy-cinema__beam > span { transform: translate3d(-28.57%, 0, 0) !important; }
   /* Sans derive, l'overscan bas du decoupage n'a plus de raison d'etre :
      laisse tel quel, il ferait passer le buste sous le bord de la scene.
      Selecteur a deux classes, comme la regle qu'il annule : a specificite
@@ -637,12 +733,20 @@
      avant-plan. */
   .cy-home .cy-cinema__world {
     position: relative; inset: auto; width: 100%; aspect-ratio: 16 / 9;
-    transform: none !important;
   }
   .cy-home .cy-cinema__world img,
   .cy-home .cy-cinema__world video {
     object-fit: contain; object-position: center center; opacity: 1;
+    /* La bande porte deja le ratio de la source : l'image la remplit sans
+       marge, et le retrait de 12 % du desktop n'aurait ici aucun objet. */
+    transform: none !important;
   }
+  /* Sans scene collante, --cy-p ne progresse plus de maniere fiable (voir
+     l'entete de cette requete media) : le faisceau se figerait n'importe ou
+     dans le spectre. Il est cale sur le rouge profond, la teinte de la
+     marque, et cesse de defiler. */
+  .cy-home .cy-cinema__beam { opacity: .34; }
+  .cy-home .cy-cinema__beam > span { transform: translate3d(-28.57%, 0, 0); }
   .cy-home .cy-cinema--cap .cy-cinema__foreground,
   .cy-home .cy-cinema--cap .cy-cinema__glow {
     top: 0; right: 0; bottom: auto; left: 0;
@@ -704,4 +808,15 @@
   .cy-final { min-height: 620px; }
   .cy-reassure__grid { grid-template-columns: 1fr; }
   .cy-reassure__item { border-right: 0; border-bottom: 1px solid var(--cy-line); }
+}
+
+/*
+ * Sans masque, le faisceau n'est plus un halo : c'est une bande de sept
+ * couleurs sur toute la scene. Un navigateur qui ne sait pas masquer ne doit
+ * donc pas l'afficher du tout — la scene retombe sur l'image et sa vignette,
+ * qui se suffisent. Regle placee en fin de fichier pour passer apres les
+ * opacites des requetes media.
+ */
+@supports not ((mask-image: radial-gradient(#000, transparent)) or (-webkit-mask-image: radial-gradient(#000, transparent))) {
+  .cy-cinema__beam { display: none; }
 }
