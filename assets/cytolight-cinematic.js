@@ -7,11 +7,17 @@
 
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var cinemas = Array.prototype.map.call(root.querySelectorAll('[data-cy-cinema]'), function (el) {
+      var spectrum = el.querySelector('.cy-spectrum');
       return {
         el: el,
         targetProgress: 0,
         currentProgress: 0,
-        hasMeasured: false
+        hasMeasured: false,
+        // Les libelles de longueur d'onde, quand la scene en porte une liste.
+        // Le faisceau de couleur, lui, est entierement en CSS : il ne se
+        // recolore pas, il glisse (voir .cy-cinema__beam).
+        waves: spectrum ? Array.prototype.slice.call(spectrum.children) : [],
+        currentWave: -1
       };
     });
     var raf = 0;
@@ -79,6 +85,17 @@
         scene.el.style.setProperty('--cy-pe', responsiveEase(scene.currentProgress).toFixed(4));
         scene.el.style.setProperty('--cy-zoom', zoomStep(scene.currentProgress).toFixed(4));
         scene.el.style.setProperty('--cy-light-step', lightStep(scene.currentProgress).toFixed(2));
+        // La liste des spectres suit le faisceau : le libelle traverse par la
+        // lumiere a cet instant s'allume. Une seule ecriture DOM par
+        // changement d'indice — pas une par image.
+        if (scene.waves.length > 1) {
+          var index = Math.round(clamp(scene.currentProgress, 0, 1) * (scene.waves.length - 1));
+          if (index !== scene.currentWave) {
+            if (scene.currentWave >= 0) scene.waves[scene.currentWave].classList.remove('is-current');
+            scene.waves[index].classList.add('is-current');
+            scene.currentWave = index;
+          }
+        }
         if (scene.currentProgress !== scene.targetProgress) {
           shouldContinue = true;
         }
