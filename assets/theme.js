@@ -437,16 +437,30 @@
             setLabel(newsButton.dataset.labelDone);
             setNote(newsNote.dataset.noteDone, false);
           } else if (!res.ok) {
-            // La boutique n'a pas traite l'envoi — page de verification
-            // anti-robot, maintenance, 5xx. L'adresse n'y est pour rien : lui
-            // reprocher serait faux, on invite a reessayer.
-            setNote(newsNote.dataset.noteNetwork, true);
+            // La boutique a repondu, mais elle n'a pas traite l'envoi : page
+            // de verification anti-robot, maintenance, 5xx. L'adresse n'y est
+            // pour rien, et afficher une erreur laisserait le visiteur devant
+            // un formulaire qui aurait tres bien marche sans nous. On repasse
+            // donc la main au POST natif : la page se recharge, ce qui est
+            // moins bien, mais l'inscription aboutit.
+            //
+            // C'est notamment le cas sous `shopify theme dev`, ou le proxy
+            // local repond 403 et sert la page "Verifying your connection"
+            // quelle que soit l'adresse : sans ce repli, l'inscription est
+            // intestable en local.
+            //
+            // .submit() ne redeclenche pas l'evenement submit : pas de boucle.
+            newsForm.submit();
           } else {
             setNote(newsNote.dataset.noteError, true);
             newsInput.focus();
           }
         })
         .catch(() => {
+          // Rien n'a repondu du tout : reseau coupe, requete bloquee. Un POST
+          // natif finirait sur la page d'erreur du navigateur, ce qui ferait
+          // perdre la page au visiteur pour rien — on garde la main et on
+          // invite a reessayer.
           settle();
           setLabel(newsButton.dataset.labelIdle);
           setNote(newsNote.dataset.noteNetwork, true);
