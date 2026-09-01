@@ -530,11 +530,14 @@ l'autre développeur.
 shopify theme check
 ```
 
-Le dépôt est à **zéro infraction** depuis le 2026-09-01 (il en portait 19, dont 6 erreurs).
-Les six erreurs vivaient toutes dans des sections que plus aucun gabarit ne rendait —
+La règle est dans la constitution et ne dépend d'aucun chiffre : **une branche sort au moins
+aussi propre que `origin/main`**. Comparer les deux relevés avant de proposer un merge.
+
+Dernier relevé sur `origin/main`, le 2026-09-01 : **zéro infraction**. Le dépôt en portait 19,
+dont 6 erreurs ; les six vivaient toutes dans des sections que plus aucun gabarit ne rendait —
 `vg-homepage`, `hero-video`, `image-with-text`, `featured-collection`, `newsletter` — supprimées
-avec les trois snippets devenus orphelins. Zéro est le nouveau plafond : `theme check` doit
-rester vert, il n'y a plus de dette à comparer.
+avec les trois snippets devenus orphelins. Ce relevé est ici, et pas dans la constitution,
+précisément parce qu'il périme : il se corrige sans amendement.
 
 ```bash
 shopify theme dev --store cytolight.myshopify.com

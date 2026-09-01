@@ -38,7 +38,8 @@ restent inlinées dans le Liquid]
 **Budget performance** : LCP ≤ 2,5 s, CLS ≤ 0,1 (p75 mobile), page initiale ≤ 1 Mo hors
 vidéo. [Préciser si cette fonctionnalité ajoute des médias lourds]
 
-**Vérification** : `shopify theme check` (plafond : 28 infractions, ne remonte pas) +
+**Vérification** : `shopify theme check` sur la branche **et** sur `origin/main`, la branche
+au moins aussi propre que la base — aucun nombre à retenir, c'est la comparaison qui compte +
 `shopify theme dev` sur les pages affectées, onglet Réseau ouvert, zéro 404.
 
 ## Constitution Check
