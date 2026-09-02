@@ -288,9 +288,23 @@
   transition: opacity .55s var(--cy-ease), transform .55s var(--cy-ease), color .3s ease;
 }
 .cy-spectrum span::before {
+  /* Le tube neon d'une brique : une longueur FIXE, jamais etiree. S'allumer
+     est un changement d'intensite et de halo, jamais une croissance -- un
+     tube ne coulisse pas le long du mur, il s'allume. */
   content: ''; position: absolute; top: -1px; left: 0; width: 22px; height: 2px;
   background: var(--wave-color, #c8102e);
-  transition: width .5s var(--cy-ease), box-shadow .4s ease;
+  opacity: .38;
+  box-shadow: 0 0 0 transparent;
+  transition: opacity .4s var(--cy-ease), box-shadow .4s var(--cy-ease);
+}
+.cy-spectrum span::after {
+  /* Le halo : un aplat radial derriere la brique, cache au repos et amene en
+     fondu au moment ou la brique s'allume -- jamais en glissement, et sans
+     lien avec la position de scroll au-dela de cet instant precis. */
+  content: ''; position: absolute; top: -18px; left: -10px; width: 64px; height: 42px;
+  background: radial-gradient(ellipse at 0% 0%, color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent), transparent 72%);
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s var(--cy-ease);
 }
 .cy-spectrum.is-visible span { opacity: 1; transform: translateY(0); }
 .cy-spectrum.is-visible span:nth-child(1) { transition-delay: .05s; }
@@ -318,6 +332,13 @@
  * passees restent allumees en veilleuse (is-lit). La liste dit donc la meme
  * chose que la lumiere posee sur l'image, au meme moment.
  *
+ * L'allumage ne bouge rien : chaque brique garde sa taille, du repos au
+ * plein regime. Seuls son intensite (opacity), son halo (box-shadow) et
+ * l'aplat radial derriere elle (::after) changent, par transition sur
+ * classe -- jamais par une valeur derivee du scroll en continu. Une brique
+ * qui grandirait avec la lecture de --cy-p se lirait comme un curseur qui
+ * coulisse ; une brique qui s'allume se lit comme une brique qui s'allume.
+ *
  * Les deux classes sont posees par cytolight-cinematic.js, une seule fois par
  * changement de longueur d'onde. Sans le script, aucune brique n'est marquee
  * et la liste s'affiche entierement, dans son etat de repos : rien ne depend
@@ -325,24 +346,25 @@
  */
 .cy-spectrum span.is-lit { color: #cfcfcf; }
 .cy-spectrum span.is-lit::before {
-  width: 100%;
+  opacity: .85;
   box-shadow: 0 0 9px color-mix(in srgb, var(--wave-color, #c8102e) 45%, transparent);
 }
 .cy-spectrum span.is-current { color: #fff; }
 .cy-spectrum span.is-current::before {
-  width: 100%;
-  height: 3px;
+  opacity: 1;
   box-shadow:
     0 0 16px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent),
     0 0 38px color-mix(in srgb, var(--wave-color, #c8102e) 45%, transparent);
 }
+.cy-spectrum span.is-current::after { opacity: 1; }
 .cy-spectrum span.is-current strong { text-shadow: 0 0 26px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent); }
 
 /* L'amorce : un tube neon ne monte pas en fondu, il accroche, bat une fois,
-   puis tient. L'animation ne porte que sur l'opacite du trait — elle est
-   relancee a chaque fois que la classe est reposee. */
+   puis tient. L'animation ne porte que sur l'opacite du trait et de son
+   halo — elle est relancee a chaque fois que les classes sont reposees. */
 @media (prefers-reduced-motion: no-preference) {
-  .cy-spectrum span.is-current::before { animation: antared-wave-ignite .52s var(--cy-ease); }
+  .cy-spectrum span.is-current::before,
+  .cy-spectrum span.is-current::after { animation: antared-wave-ignite .52s var(--cy-ease); }
 }
 @keyframes antared-wave-ignite {
   0%   { opacity: .25; }
