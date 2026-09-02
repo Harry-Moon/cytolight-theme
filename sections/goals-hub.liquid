@@ -1,15 +1,17 @@
 {%- comment -%}
   Par objectif — page d'atterrissage de l'onglet du meme nom.
 
-  L'onglet « Par objectif » du header pointe ici. La page ne fait pas double
-  emploi avec les collections : elle explique le decoupage, puis redistribue
-  vers les cinq collections qui le portent (recovery, performance,
-  skin-amp-glow, longevity, work-amp-focus). C'est l'axe d'entree dans la
-  gamme — on entre par un resultat recherche, pas par un appareil.
+  L'onglet « Par objectif » du header pointe ici. La page ne decrit aucun
+  objectif elle-meme : elle explique le decoupage, puis redistribue vers les
+  cinq pages qui le portent (recovery, performance, skin-amp-glow, longevity,
+  work-amp-focus — gabarit `page.<handle>`, section « Par objectif — page »).
+  Ce ne sont pas des collections : la seule collection reelle du catalogue est
+  `panels`. C'est l'axe d'entree dans la gamme — on entre par un resultat de
+  recherche, pas par un appareil.
 
-  Les intitules et les URL des collections sont resolus par handle, avec un
-  repli sur le chemin ecrit en dur : une collection renommee dans l'admin ne
-  laisse donc pas la page vide, elle laisse un lien a corriger.
+  Les intitules et les URL de ces pages sont resolus par handle, avec un
+  repli sur le chemin ecrit en dur : une page renommee dans l'admin ne laisse
+  donc pas la carte vide, elle laisse un lien a corriger.
 
   Aucune formulation de cette page ne decrit un effet sur une pathologie :
   les objectifs sont des moments d'usage et des zones du corps, pas des
@@ -28,26 +30,26 @@
   endif
 
   # Le repli porte le prefixe de langue au meme titre que le lien : une
-  # collection absente du catalogue renvoyait sinon a la locale principale.
-  assign url_recovery = collections['recovery'].url
+  # page absente de l'admin renvoyait sinon a la locale principale.
+  assign url_recovery = pages['recovery'].url
   if url_recovery == blank
-    assign url_recovery = locale_root | append: '/collections/recovery'
+    assign url_recovery = locale_root | append: '/pages/recovery'
   endif
-  assign url_performance = collections['performance'].url
+  assign url_performance = pages['performance'].url
   if url_performance == blank
-    assign url_performance = locale_root | append: '/collections/performance'
+    assign url_performance = locale_root | append: '/pages/performance'
   endif
-  assign url_skin = collections['skin-amp-glow'].url
+  assign url_skin = pages['skin-amp-glow'].url
   if url_skin == blank
-    assign url_skin = locale_root | append: '/collections/skin-amp-glow'
+    assign url_skin = locale_root | append: '/pages/skin-amp-glow'
   endif
-  assign url_longevity = collections['longevity'].url
+  assign url_longevity = pages['longevity'].url
   if url_longevity == blank
-    assign url_longevity = locale_root | append: '/collections/longevity'
+    assign url_longevity = locale_root | append: '/pages/longevity'
   endif
-  assign url_focus = collections['work-amp-focus'].url
+  assign url_focus = pages['work-amp-focus'].url
   if url_focus == blank
-    assign url_focus = locale_root | append: '/collections/work-amp-focus'
+    assign url_focus = locale_root | append: '/pages/work-amp-focus'
   endif
 
   assign url_quiz = pages['find-your-cytolight'].url
@@ -283,8 +285,8 @@
    handles: 'cytolight-desk,cytolight-mask,cytolight-knee',
    heading_fr: 'Un objectif se choisit une fois. L&#39;appareil, on le garde des ann&eacute;es.',
    heading_en: 'You pick a goal once. You keep the device for years.',
-   text_fr: 'Si deux collections vous conviennent, prenez le format qui s&#39;ins&egrave;re le plus facilement dans votre semaine&nbsp;: c&#39;est celui que vous utiliserez encore dans trois mois.',
-   text_en: 'If two collections fit, take the format that slots most easily into your week: that is the one you will still be using in three months.'
+   text_fr: 'Si deux objectifs vous conviennent, prenez le format qui s&#39;ins&egrave;re le plus facilement dans votre semaine&nbsp;: c&#39;est celui que vous utiliserez encore dans trois mois.',
+   text_en: 'If two goals fit, take the format that slots most easily into your week: that is the one you will still be using in three months.'
 %}
 
 {% schema %}
@@ -294,7 +296,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Page d'atterrissage de l'onglet « Par objectif » du header. A assigner a une page de handle `goals`. Les cinq cartes pointent vers les collections recovery, performance, skin-amp-glow, longevity et work-amp-focus : renommer une collection dans l'admin casse le lien correspondant."
+      "content": "Page d'atterrissage de l'onglet « Par objectif » du header. A assigner a une page de handle `goals`. Les cinq cartes pointent vers les pages recovery, performance, skin-amp-glow, longevity et work-amp-focus (gabarit `page.<handle>`, section « Par objectif — page ») : renommer une de ces pages dans l'admin casse le lien correspondant."
     }
   ]
 }

@@ -1,27 +1,28 @@
 {%- comment -%}
   Les cinq sous-pages de « Par objectif », servies par une seule section.
 
-  Meme mecanique que `sections/protocol-page.liquid` : la section derive le sujet
-  depuis un handle — ici celui de la COLLECTION, pas d'une page — puis rend une
-  ossature commune. Cinq destinations, une seule mise en page a maintenir.
+  Meme mecanique que `sections/protocol-page.liquid` et `sections/pro-page.liquid` :
+  la section derive le sujet depuis le handle de la PAGE, puis rend une ossature
+  commune, hero compris. Cinq destinations, une seule mise en page a maintenir.
 
-  | Handle collection | Objectif                | Bloc signature          |
-  |-------------------|-------------------------|-------------------------|
-  | recovery          | Recuperation            | carte du corps          |
-  | performance       | Performance             | profondeur atteinte     |
-  | skin-amp-glow     | Peau & Eclat            | trio de surface         |
-  | longevity         | Longevite               | horizon des mesures     |
-  | work-amp-focus    | Travail & Concentration | trois questions         |
+  | Handle page     | Objectif                | Bloc signature          |
+  |------------------|-------------------------|--------------------------|
+  | recovery         | Recuperation            | carte du corps           |
+  | performance      | Performance              | profondeur atteinte      |
+  | skin-amp-glow    | Peau & Eclat             | trio de surface          |
+  | longevity        | Longevite                | horizon des mesures      |
+  | work-amp-focus   | Travail & Concentration | trois questions          |
+
+  Ces cinq pages ne sont PAS des collections : la seule collection reelle de la
+  boutique est `panels`. Chaque objectif se termine par une selection de trois
+  produits pertinents, rendue par `snippets/learn-product-cta.liquid` — un lien
+  direct vers la fiche produit, pas une grille filtree.
 
   Le bloc signature est ce qui empeche les cinq pages de se ressembler. Elles
   partaient toutes du meme hero, de la meme accroche et des memes trois
   arguments : le decoupage par objectif ne se voyait nulle part une fois clique.
   Chaque objectif rend donc un composant different d'`assets/learn.css` — aucune
   regle CSS n'est ajoutee, tous existent deja.
-
-  Toute autre collection ne rend RIEN. La section est declaree dans
-  `templates/collection.json`, donc evaluee sur `/collections/all` comme sur
-  n'importe quelle collection future : `objectif` vide est la sortie par defaut.
 
   CONTRAT EDITORIAL — il ne se contourne pas :
 
@@ -54,7 +55,7 @@
   endif
 
   assign objectif = ''
-  case collection.handle
+  case page.handle
     when 'recovery'
       assign objectif = 'recovery'
     when 'performance'
@@ -94,6 +95,25 @@
 
     case objectif
       when 'recovery'
+        assign crumb_fr = 'R&eacute;cup&eacute;ration'
+        assign crumb_en = 'Recovery'
+        assign hero_kicker_fr = 'Objectif &mdash; r&eacute;cup&eacute;ration'
+        assign hero_kicker_en = 'Goal &mdash; recovery'
+        assign hero_titre_fr = 'Le lendemain se joue dans l&apos;heure qui suit.'
+        assign hero_titre_en = 'Tomorrow is decided in the hour that follows.'
+        assign hero_accroche_fr = 'C&apos;est l&apos;objectif le plus simple &agrave; tenir, parce qu&apos;il s&apos;accroche &agrave; un moment qui existe d&eacute;j&agrave;&nbsp;: juste apr&egrave;s l&apos;effort, assis, avant la douche. Les appareils rassembl&eacute;s ici couvrent les zones qui viennent de travailler, sans vous demander de trouver du temps en plus.'
+        assign hero_accroche_en = 'This is the easiest goal to keep, because it hooks onto a moment that already exists: right after training, sitting down, before the shower. The devices gathered here cover the areas that just did the work, without asking you to find extra time.'
+        assign f1_val = '10&ndash;20 min'
+        assign f1_fr = 'par zone, la dur&eacute;e sur laquelle les protocoles convergent'
+        assign f1_en = 'per area, the duration protocols converge on'
+        assign f2_val = '3 &agrave; 5&times;'
+        assign f2_val_en = '3 to 5&times;'
+        assign f2_fr = 'par semaine, tenues sur plusieurs semaines'
+        assign f2_en = 'a week, sustained over several weeks'
+        assign f3_val = '660 + 850 nm'
+        assign f3_fr = 'le rouge profond et le proche infrarouge, sur les tissus sollicit&eacute;s'
+        assign f3_en = 'deep red and near-infrared, on the tissue that was loaded'
+
         assign produits = 'cytolight-pano-ultra,cytolight-desk,cytolight-sauna-dome'
         assign protocole_a = 'daily-recovery'
         assign protocole_b = 'post-workout'
@@ -121,6 +141,25 @@
         assign limites_en = 'This is not a treatment~Antared devices are wellness products, without medical-device CE marking. They do not diagnose, treat, or cure any disease.|Lasting pain is a doctor&apos;s business~Pain that persists, wakes you at night, or limits a movement goes to a health professional, not to a lamp.|It replaces neither sleep nor rest~Those are the two variables that decide recovery. No light session compensates for them.|It promises no individual outcome~The published work describes trends measured in a lab. None of it was run on an Antared device.'
 
       when 'performance'
+        assign crumb_fr = 'Performance'
+        assign crumb_en = 'Performance'
+        assign hero_kicker_fr = 'Objectif &mdash; performance'
+        assign hero_kicker_en = 'Goal &mdash; performance'
+        assign hero_titre_fr = 'Dix minutes avant, ou dans l&apos;heure apr&egrave;s. Jamais les deux.'
+        assign hero_titre_en = 'Ten minutes before, or within the hour after. Never both.'
+        assign hero_accroche_fr = 'Autour de l&apos;entra&icirc;nement, la contrainte n&apos;est pas la puissance de l&apos;appareil&nbsp;: c&apos;est la surface couverte en une seule pose. Un grand format prend plusieurs groupes musculaires d&apos;un coup, ce qui est la seule fa&ccedil;on qu&apos;une routine survive &agrave; une vraie semaine d&apos;entra&icirc;nement.'
+        assign hero_accroche_en = 'Around training, the constraint is not the power of the device: it is the area covered in a single pass. A large format takes several muscle groups at once, which is the only way a routine survives a real training week.'
+        assign f1_val = '10 min'
+        assign f1_fr = 'avant l&apos;effort, sur les groupes que la s&eacute;ance va charger'
+        assign f1_en = 'before training, on the groups the session will load'
+        assign f2_val = '&le; 1 h'
+        assign f2_val_en = '&le; 1 h'
+        assign f2_fr = 'apr&egrave;s l&apos;effort, la fen&ecirc;tre que d&eacute;crivent les protocoles'
+        assign f2_en = 'after training, the window the protocols describe'
+        assign f3_val = '15&ndash;50 cm'
+        assign f3_fr = 'la distance d&apos;un panneau, selon l&apos;irradiance annonc&eacute;e'
+        assign f3_en = 'the distance for a panel, depending on stated irradiance'
+
         assign produits = 'cytolight-pano-ultra,cytolight-sauna-dome,cytolight-desk'
         assign protocole_a = 'pre-workout'
         assign protocole_b = 'post-workout'
@@ -148,6 +187,25 @@
         assign limites_en = 'It is not a warm-up~It raises neither muscle temperature nor heart rate. The two are unrelated.|It treats no injury~Pain that lasts, wakes you at night, or limits a movement is a doctor&apos;s business.|It does not offset an excessive load~If training exceeds what the body absorbs, the load is what needs revisiting, not the light that needs adding.|It guarantees no progression~Trials measure group-level trends, in a lab. None of them was run on an Antared device.'
 
       when 'skin'
+        assign crumb_fr = 'Peau &amp; &Eacute;clat'
+        assign crumb_en = 'Skin &amp; Glow'
+        assign hero_kicker_fr = 'Objectif &mdash; peau &amp; &eacute;clat'
+        assign hero_kicker_en = 'Goal &mdash; skin &amp; glow'
+        assign hero_titre_fr = 'Une routine du soir ne tient que si elle tient en dix minutes.'
+        assign hero_titre_en = 'An evening routine only survives if it fits in ten minutes.'
+        assign hero_accroche_fr = 'Le visage et le cuir chevelu se travaillent en rouge visible, tout pr&egrave;s de la surface. C&apos;est aussi l&apos;objectif o&ugrave; l&apos;&eacute;cart entre la promesse habituelle et la litt&eacute;rature est le plus large&nbsp;: les essais de r&eacute;f&eacute;rence mesurent &agrave; seize semaines, pas &agrave; sept jours.'
+        assign hero_accroche_en = 'Face and scalp are worked in visible red, close to the surface. It is also the goal where the gap between the usual promise and the literature is widest: the reference trials measure at sixteen weeks, not seven days.'
+        assign f1_val = '590 &middot; 630 &middot; 660 nm'
+        assign f1_fr = 'le trio qui agit le plus pr&egrave;s de la surface'
+        assign f1_en = 'the trio acting closest to the surface'
+        assign f2_val = '10 min'
+        assign f2_val_en = '10 min'
+        assign f2_fr = 'sur peau nue et propre, avant les soins'
+        assign f2_en = 'on clean bare skin, before skincare'
+        assign f3_val = '16'
+        assign f3_fr = 'semaines&nbsp;: l&apos;horizon auquel mesurent les essais de r&eacute;f&eacute;rence'
+        assign f3_en = 'weeks: the horizon the reference trials measure at'
+
         assign produits = 'cytolight-mask,cytolight-desk,cytolight-sauna-dome'
         assign protocole_a = 'skin-routine'
         assign protocole_b = 'daily-recovery'
@@ -175,6 +233,25 @@
         assign limites_en = 'This is not dermatological care~Antared devices are wellness products, without medical-device CE marking. An undiagnosed skin lesion goes to a doctor.|There is no tanning and no UV effect~The spectrum starts at 590 nm; ultraviolet stops at 400 nm. It is neither a substitute for, nor an equivalent of, the sun.|Some situations call for medical advice first~Pregnancy, photosensitising medication, an eye condition, cancer follow-up: the question comes before the first session, not after.|No result is promised~The trials cited on our Science page were run on devices other than ours, and describe group averages.'
 
       when 'longevity'
+        assign crumb_fr = 'Long&eacute;vit&eacute;'
+        assign crumb_en = 'Longevity'
+        assign hero_kicker_fr = 'Objectif &mdash; long&eacute;vit&eacute;'
+        assign hero_kicker_en = 'Goal &mdash; longevity'
+        assign hero_titre_fr = 'Pour qui lit les param&egrave;tres avant la promesse.'
+        assign hero_titre_en = 'For anyone who reads the parameters before the promise.'
+        assign hero_accroche_fr = 'Cet objectif ne rassemble pas les appareils les plus puissants, mais ceux dont les param&egrave;tres se pilotent un par un &mdash; longueur d&apos;onde, intensit&eacute;, pulsation &mdash; plut&ocirc;t que derri&egrave;re un bouton unique. Si vous lisez les publications avant d&apos;acheter, c&apos;est ici que la fiche technique r&eacute;pond.'
+        assign hero_accroche_en = 'This goal does not gather the most powerful devices, but the ones whose parameters are driven one by one &mdash; wavelength, intensity, pulse &mdash; rather than from behind a single button. If you read the papers before buying, this is where the spec sheet answers.'
+        assign f1_val = '590&ndash;940 nm'
+        assign f1_fr = 'la fen&ecirc;tre optique, longueur d&apos;onde par longueur d&apos;onde'
+        assign f1_en = 'the optical window, wavelength by wavelength'
+        assign f2_val = 'mW/cm&sup2;'
+        assign f2_val_en = 'mW/cm&sup2;'
+        assign f2_fr = "l'irradiance, qui ne veut rien dire sans une distance annonc&eacute;e"
+        assign f2_en = 'irradiance, which means nothing without a stated distance'
+        assign f3_val = '0'
+        assign f3_fr = '&eacute;tude publi&eacute;e men&eacute;e sur un appareil Antared. Nous le disons avant d&apos;en citer.'
+        assign f3_en = 'published studies run on an Antared device. We say so before citing any.'
+
         assign produits = 'cytolight-pano-ultra,cytolight-desk,cytolight-sauna-dome'
         assign protocole_a = 'full-body-routine'
         assign protocole_b = 'daily-recovery'
@@ -202,6 +279,25 @@
         assign limites_en = 'No study was run on an Antared device~The work cited on our Science page was run on other devices, at other parameters. We do not claim it as ours.|No device slows ageing~That word describes nothing measurable here. The goal names a way of buying and a reading horizon, not a biological promise.|These are wellness products~Without medical-device CE marking. They do not diagnose, treat, or cure any disease.|A group average is not a prognosis~A trial showing a mean effect says nothing about what you, individually, will observe over sixteen weeks.'
 
       when 'focus'
+        assign crumb_fr = 'Travail &amp; Concentration'
+        assign crumb_en = 'Work &amp; Focus'
+        assign hero_kicker_fr = 'Objectif &mdash; travail &amp; concentration'
+        assign hero_kicker_en = 'Goal &mdash; work &amp; focus'
+        assign hero_titre_fr = 'Le seul cr&eacute;neau que vous ne prendrez sur rien d&apos;autre.'
+        assign hero_titre_en = 'The only slot you will not take from anything else.'
+        assign hero_accroche_fr = 'Le probl&egrave;me d&apos;une routine quotidienne n&apos;est jamais l&apos;appareil&nbsp;: c&apos;est le cr&eacute;neau. Cet objectif r&eacute;unit les formats qui se posent en face de vous pendant que vous travaillez, ou sur la t&ecirc;te pendant une r&eacute;union en &eacute;coute. La s&eacute;ance n&apos;ajoute rien &agrave; la journ&eacute;e.'
+        assign hero_accroche_en = 'The problem with a daily routine is never the device: it is the slot. This goal gathers the formats that sit in front of you while you work, or on your head through a meeting you are only listening to. The session adds nothing to the day.'
+        assign f1_val = '0 min'
+        assign f1_fr = 'de temps ajout&eacute;&nbsp;: la s&eacute;ance se fait pendant que vous travaillez'
+        assign f1_en = 'of added time: the session runs while you work'
+        assign f2_val = '7'
+        assign f2_val_en = '7'
+        assign f2_fr = 'spectres sur le DESK, du 590 nm au 940 nm'
+        assign f2_en = 'spectra on the DESK, from 590 nm to 940 nm'
+        assign f3_val = '15&ndash;50 cm'
+        assign f3_fr = 'la distance d&apos;un panneau pos&eacute; derri&egrave;re l&apos;&eacute;cran'
+        assign f3_en = 'the distance of a panel set behind the screen'
+
         assign produits = 'cytolight-desk,cytolight-cap,cytolight-mask'
         assign protocole_a = 'workday-routine'
         assign protocole_b = 'daily-recovery'
@@ -229,6 +325,13 @@
         assign limites_en = 'This is not a seasonal light-therapy lamp~Daylight lamps target the circadian rhythm with a different spectrum and a different intensity. Neither the same device nor the same use.|It treats neither fatigue nor a sleep disorder~Persistent fatigue goes to a doctor. This is a wellness product, without medical-device CE marking.|It does not replace a break~Nor a correct screen height, nor a decent chair, nor standing up.|It promises no gain in concentration~We know of no trial measuring that on a device like ours, and we do not invent one.'
     endcase
 
+    assign f2_affiche = f2_val
+    unless is_fr
+      assign f2_affiche = f2_val_en | default: f2_val
+    endunless
+
+    assign produits_count = produits | split: ',' | size
+
     assign url_protocole_a = pages[protocole_a].url
     if url_protocole_a == blank
       assign url_protocole_a = locale_root | append: '/pages/' | append: protocole_a
@@ -239,17 +342,53 @@
     endif
   -%}
 
-  {%- comment -%}
-    `learn.css` est deja declare par la banniere de collection sur ces cinq pages.
-    Le redeclarer ici emet un second `<link>` vers exactement la meme URL : le
-    navigateur ne le telecharge qu'une fois. C'est le prix d'une section autonome,
-    et il est nul — une section dont le style depend d'une autre casse des qu'on la
-    deplace ou qu'on la retire dans l'editeur de theme.
-  {%- endcomment -%}
   {{ 'learn.css' | asset_url | stylesheet_tag }}
   <script src="{{ 'learn.js' | asset_url }}" defer></script>
 
-  <div class="ln-page" data-learn>
+  <section class="ln-page-goal">
+
+    <section class="ln-hero">
+      <div class="ln-shell">
+        <p class="ln-crumbs">
+          <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+          <span aria-hidden="true">/</span>
+          <a href="{{ url_goals }}">{% if is_fr %}Par objectif{% else %}By Goal{% endif %}</a>
+          <span aria-hidden="true">/</span>
+          {% if is_fr %}{{ crumb_fr }}{% else %}{{ crumb_en }}{% endif %}
+        </p>
+        <p class="ln-kicker">{% if is_fr %}{{ hero_kicker_fr }}{% else %}{{ hero_kicker_en }}{% endif %}</p>
+        <h1 class="ln-title">{% if is_fr %}{{ hero_titre_fr }}{% else %}{{ hero_titre_en }}{% endif %}</h1>
+        <p class="ln-copy">{% if is_fr %}{{ hero_accroche_fr }}{% else %}{{ hero_accroche_en }}{% endif %}</p>
+
+        <div class="ln-hero__facts">
+          <div class="ln-hero__fact">
+            <strong>{{ f1_val }}</strong>
+            <span>{% if is_fr %}{{ f1_fr }}{% else %}{{ f1_en }}{% endif %}</span>
+          </div>
+          <div class="ln-hero__fact">
+            <strong>{{ f2_affiche }}</strong>
+            <span>{% if is_fr %}{{ f2_fr }}{% else %}{{ f2_en }}{% endif %}</span>
+          </div>
+          <div class="ln-hero__fact">
+            <strong>{{ f3_val }}</strong>
+            <span>{% if is_fr %}{{ f3_fr }}{% else %}{{ f3_en }}{% endif %}</span>
+          </div>
+        </div>
+
+        <div class="ln-actions">
+          <a class="ln-button ln-button--light" href="#objectif-produits">
+            {%- if produits_count == 1 -%}
+              {% if is_fr %}Voir l&apos;appareil{% else %}See the device{% endif %}
+            {%- else -%}
+              {% if is_fr %}Voir les {{ produits_count }} appareils{% else %}See the {{ produits_count }} devices{% endif %}
+            {%- endif -%}
+          </a>
+          <a class="ln-button ln-button--line" href="{{ url_goals }}">
+            {% if is_fr %}Les cinq objectifs{% else %}All five goals{% endif %}
+          </a>
+        </div>
+      </div>
+    </section>
 
     <section class="ln-section ln-section--tight">
       <div class="ln-shell ln-shell--narrow">
@@ -657,8 +796,8 @@
 
     {%- comment -%}
       Les quatre autres objectifs. Les intitules sont ceux de `goals-hub.liquid` ;
-      l'URL passe par `collections[handle].url`, qui porte le prefixe de langue,
-      avec repli sur le chemin ecrit en dur.
+      l'URL passe par `pages[handle].url`, qui porte le prefixe de langue, avec
+      repli sur le chemin ecrit en dur.
     {%- endcomment -%}
     <section class="ln-section ln-section--soft">
       <div class="ln-shell">
@@ -687,10 +826,10 @@
           {%- assign autres_textes_en = 'After training, on the areas that did the work. The area decides the format.|Around training: the area covered in one pass counts for more than raw power.|Face and scalp, in visible red, judged at sixteen weeks.|The spec sheet read parameter by parameter, and the horizon stated before you start.|The slot you take from nothing: the session runs while you work.' | split: '|' -%}
 
           {%- for h in autres_handles -%}
-            {%- unless h == collection.handle -%}
-              {%- assign lien = collections[h].url -%}
+            {%- unless h == page.handle -%}
+              {%- assign lien = pages[h].url -%}
               {%- if lien == blank -%}
-                {%- assign lien = locale_root | append: '/collections/' | append: h -%}
+                {%- assign lien = locale_root | append: '/pages/' | append: h -%}
               {%- endif -%}
               {% render 'nav-hub-card',
                  index: autres_num[forloop.index0],
@@ -716,24 +855,25 @@
     </section>
 
     {% render 'learn-product-cta',
+       id: 'objectif-produits',
        handles: produits,
        heading_fr: 'Un objectif se choisit une fois. L&apos;appareil, on le garde des ann&eacute;es.',
        heading_en: 'You pick a goal once. You keep the device for years.',
        text_fr: 'Si deux objectifs vous conviennent, prenez le format qui s&apos;ins&egrave;re le plus facilement dans votre semaine&nbsp;: c&apos;est celui que vous utiliserez encore dans trois mois.',
        text_en: 'If two goals fit, take the format that slots most easily into your week: that is the one you will still be using in three months.' %}
 
-  </div>
+  </section>
 
 {%- endif -%}
 
 {% schema %}
 {
-  "name": "Par objectif — sous-page",
+  "name": "Par objectif — page",
   "tag": "div",
   "settings": [
     {
       "type": "paragraph",
-      "content": "Corps editorial des cinq sous-pages de « Par objectif ». L'objectif est derive du handle de la collection : recovery, performance, skin-amp-glow, longevity, work-amp-focus. Toute autre collection ne rend rien. Le hero est rendu par « Collection banner ». Chiffres de dose : learn-how-it-works. Longueurs d'onde : learn-wavelengths. Le bloc « ce que cet objectif ne dit pas » est obligatoire."
+      "content": "Section unique des cinq pages « Par objectif ». Le sujet est derive du handle de la PAGE (pas d'une collection) : recovery, performance, skin-amp-glow, longevity, work-amp-focus. Toute autre page ne rend rien. Chiffres de dose : learn-how-it-works. Longueurs d'onde : learn-wavelengths. Le bloc « ce que cet objectif ne dit pas » est obligatoire. La selection produit finale vient de learn-product-cta, pas d'une collection."
     }
   ]
 }

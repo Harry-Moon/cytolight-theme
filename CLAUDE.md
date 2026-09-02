@@ -513,38 +513,44 @@ clavier-souris bascule d'un mode à l'autre sans recharger.
 
 ### Sous-pages « Par objectif »
 
-Les cinq cartes de `/pages/goals` mènent à des **collections**, pas à des pages de l'admin :
+Les cinq cartes de `/pages/goals` mènent à des **pages de l'admin**, pas à des collections :
 `recovery`, `performance`, `skin-amp-glow`, `longevity` et `work-amp-focus`. Ce sont elles, les
-sous-pages de l'objectif — le mega-menu et le tiroir mobile y pointent aussi.
+sous-pages de l'objectif — le mega-menu et le tiroir mobile y pointent aussi. La seule collection
+réelle du catalogue (plusieurs produits, gérée comme telle dans l'admin) est `panels` ; elle garde
+la bannière catalogue historique et n'a aucun rapport avec les cinq objectifs.
 
-Elles servaient toutes exactement la même page : le titre catalogue « La luminothérapie, pensée
-comme un rituel premium. », la même accroche, les mêmes trois arguments, puis le même teaser
-« Bureau / Cheveux / Corps entier ». Cinq entrées de menu et cinq cartes de hub pour une seule
-page : le découpage par objectif ne voulait plus rien dire dès le premier clic.
+Elles servaient toutes exactement la même page avant leur premier découpage : le titre catalogue
+« La luminothérapie, pensée comme un rituel premium. », la même accroche, les mêmes trois
+arguments, puis le même teaser « Bureau / Cheveux / Corps entier ». Cinq entrées de menu et cinq
+cartes de hub pour une seule page : le découpage par objectif ne voulait plus rien dire dès le
+premier clic. Un premier essai les avait rouvertes comme cinq **collections** — pratique pour une
+grille produits automatique, mais cinq collections vides ou mal nommées dans l'admin ne racontent
+rien : ces pages sont avant tout de l'éditorial (expliquer l'objectif, orienter le choix), pas un
+filtre de catalogue. Elles sont donc redevenues des pages, sur le modèle des Protocoles et
+d'Antared Pro.
 
-Deux sections le portent désormais, toutes deux pilotées par `collection.handle` :
+Une seule section les porte, `sections/goal-page.liquid`, qui dérive l'objectif depuis
+**`page.handle`** — exactement comme `sections/protocol-page.liquid` le fait pour les Protocoles.
+Hero compris : il n'y a plus de section séparée pour la bannière, `main-collection-banner.liquid`
+ne connaît plus ces cinq handles.
 
-| Fichier | Rôle sur une collection d'objectif | Sur toute autre collection |
-|---|---|---|
-| `sections/main-collection-banner.liquid` | hero éditorial propre à l'objectif — fil d'Ariane, titre, accroche, trois repères chiffrés | bannière catalogue historique, inchangée |
-| `sections/goal-page.liquid` | corps éditorial, sous la grille produits | ne rend rien |
+| Handle de page | Gabarit | Objectif | Bloc signature |
+|---|---|---|---|
+| `recovery` | `page.recovery.liquid` | Récupération | carte du corps, six zones — `.ln-bodymap` |
+| `performance` | `page.performance.liquid` | Performance | profondeur atteinte par longueur d'onde — `.ln-depth` |
+| `skin-amp-glow` | `page.skin-amp-glow.liquid` | Peau & Éclat | spectre et trio de surface — `.ln-spectrum` / `.ln-waves` |
+| `longevity` | `page.longevity.liquid` | Longévité | frise des échéances de mesure — `.ln-timeline` |
+| `work-amp-focus` | `page.work-amp-focus.liquid` | Travail & Concentration | trois questions dépliables — `.ln-faq` |
 
-L'ordre dans `templates/collection.json` est `banner`, `products`, `goal` : le visiteur qui a
-cliqué « Ouvrir cet objectif » voit les produits sans avoir à traverser quatre écrans de texte.
+Le **bloc signature** est ce qui empêche les cinq pages de se ressembler à nouveau — aucune règle
+CSS n'a été ajoutée, tous ces composants existaient déjà dans `assets/learn.css`.
 
-Le **bloc signature** est ce qui empêche les cinq pages de se ressembler à nouveau. Chaque
-objectif rend un composant *différent* d'`assets/learn.css` — aucune règle CSS n'a été ajoutée,
-tous existaient déjà :
+Chaque page se termine par une sélection de **trois produits pertinents pour l'objectif**, rendue
+par `snippets/learn-product-cta.liquid` (liens directs vers les fiches produit, avec prix) — pas
+par une grille de collection. Le bouton du hero (« Voir les N appareils ») y renvoie par ancre
+(`#objectif-produits`).
 
-| Objectif | Bloc signature | Classe |
-|---|---|---|
-| Récupération | carte du corps, six zones | `.ln-bodymap` |
-| Performance | profondeur atteinte par longueur d'onde | `.ln-depth` |
-| Peau & Éclat | spectre et trio de surface | `.ln-spectrum` / `.ln-waves` |
-| Longévité | frise des échéances de mesure | `.ln-timeline` |
-| Travail & Concentration | trois questions dépliables | `.ln-faq` |
-
-Trois règles tiennent ces pages :
+Trois règles tiennent ces pages, et elles ne se contournent pas :
 
 1. **Le bloc « ce que cet objectif ne dit pas » figure sur les cinq.** C'est lui qui les tient du
    bon côté du principe II : nommer une zone du corps et un moment d'usage est autorisé, laisser
@@ -552,14 +558,17 @@ Trois règles tiennent ces pages :
 2. **Aucun chiffre n'est écrit ici en premier.** Durée, fréquence, distance et horizon viennent de
    `learn-how-it-works` ; longueurs d'onde et profondeurs de `learn-wavelengths`. Ces deux pages
    font foi, y compris pour les repères du hero.
-3. **Un `paragraph` de `{% schema %}` est plafonné à 500 caractères par Shopify.** `theme check`
-   ne le voit pas : la section passe le contrôle local et l'upload échoue, la boutique servant
-   alors un 500 sur *toutes* les collections tant que `collection.json` référence une section que
-   Shopify a refusé d'écrire. Se relit dans la sortie de `shopify theme dev`.
+3. **Les cinq handles doivent être créés dans l'admin avant le merge** (constitution, principe I),
+   avec les titres exacts « Recovery », « Performance », « Skin & Glow », « Longevity », « Work &
+   Focus » — Shopify encode l'esperluette en `-amp-` à la création du handle, ce qui reproduit
+   `skin-amp-glow` et `work-amp-focus`. Si le handle réel diverge, il se corrige dans *Search
+   engine listing → Edit → URL handle*, jamais en renommant le titre. Comme pour les autres
+   espaces du site, les gabarits s'assignent à la main **après** le merge : le sélecteur ne liste
+   que les gabarits du thème publié.
 
 Le teaser générique « Bureau / Cheveux / Corps entier » de `main-collection-product-grid.liquid`
-est sauté sur ces cinq collections : il décrit le catalogue entier, il est identique partout, et
-il répète un découpage que la page vient précisément de remplacer.
+n'est donc plus sauté nulle part : il ne s'est jamais affiché que sur de vraies collections
+(`all`, `panels`), et ces cinq pages ne passent plus par ce gabarit.
 
 ### Barre du header
 

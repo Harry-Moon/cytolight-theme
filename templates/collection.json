@@ -16,15 +16,10 @@
     "products": {
       "type": "main-collection-product-grid",
       "settings": {}
-    },
-    "goal": {
-      "type": "goal-page",
-      "settings": {}
     }
   },
   "order": [
     "banner",
-    "products",
-    "goal"
+    "products"
   ]
 }

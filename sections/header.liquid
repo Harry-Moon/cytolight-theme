@@ -71,38 +71,39 @@
     assign url_why = locale_root | append: '/pages/why-antared'
   endif
 
-  # Visuel du panneau « Par objectif » : la collection si elle existe, sinon la
-  # page d'atterrissage de l'onglet. C'etait le dernier chemin du header a
-  # partir sans prefixe de langue.
+  # Visuel du panneau « Par objectif » : la page Skin & Glow.
 
-  # URL des collections du mega-menu. `collections[].url` porte le prefixe de
-  # langue ; le chemin ecrit en dur ne sert que si la collection n'existe pas.
+  # `panels` est la seule collection reelle du catalogue (plusieurs produits) ;
+  # `collections['panels'].url` porte le prefixe de langue, avec repli tant
+  # qu'elle n'existe pas. Les cinq objectifs, eux, sont des PAGES — voir
+  # CLAUDE.md, « Sous-pages Par objectif » — d'ou `pages[handle].url` pour
+  # chacune, avec repli sur `/pages/<handle>`.
   assign col_panels = collections['panels'].url
   if col_panels == blank
     assign col_panels = locale_root | append: '/collections/panels'
   endif
-  assign col_recovery = collections['recovery'].url
-  if col_recovery == blank
-    assign col_recovery = locale_root | append: '/collections/recovery'
+  assign url_recovery = pages['recovery'].url
+  if url_recovery == blank
+    assign url_recovery = locale_root | append: '/pages/recovery'
   endif
-  assign col_performance = collections['performance'].url
-  if col_performance == blank
-    assign col_performance = locale_root | append: '/collections/performance'
+  assign url_performance = pages['performance'].url
+  if url_performance == blank
+    assign url_performance = locale_root | append: '/pages/performance'
   endif
-  assign col_longevity = collections['longevity'].url
-  if col_longevity == blank
-    assign col_longevity = locale_root | append: '/collections/longevity'
+  assign url_longevity = pages['longevity'].url
+  if url_longevity == blank
+    assign url_longevity = locale_root | append: '/pages/longevity'
   endif
-  assign col_skin = collections['skin-amp-glow'].url
-  if col_skin == blank
-    assign col_skin = locale_root | append: '/collections/skin-amp-glow'
+  assign url_skin = pages['skin-amp-glow'].url
+  if url_skin == blank
+    assign url_skin = locale_root | append: '/pages/skin-amp-glow'
   endif
-  assign col_focus = collections['work-amp-focus'].url
-  if col_focus == blank
-    assign col_focus = locale_root | append: '/collections/work-amp-focus'
+  assign url_focus = pages['work-amp-focus'].url
+  if url_focus == blank
+    assign url_focus = locale_root | append: '/pages/work-amp-focus'
   endif
 
-  assign url_goals_media = col_skin
+  assign url_goals_media = url_skin
 -%}
 
 {{ 'nav-menu-v2.css' | asset_url | stylesheet_tag }}
@@ -174,11 +175,11 @@
               <summary class="site-header__drawer-group-toggle">{% if is_fr %}Par objectif{% else %}By Goal{% endif %}</summary>
               <div class="site-header__drawer-group-body">
                 <a class="site-header__drawer-all" href="{{ url_goals }}">{% if is_fr %}Tous les objectifs{% else %}All Goals{% endif %}</a>
-                <a href="{{ col_recovery }}">{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</a>
-                <a href="{{ col_performance }}">Performance</a>
-                <a href="{{ col_skin }}">{% if is_fr %}Peau &amp; &Eacute;clat{% else %}Skin &amp; Glow{% endif %}</a>
-                <a href="{{ col_longevity }}">{% if is_fr %}Long&eacute;vit&eacute;{% else %}Longevity{% endif %}</a>
-                <a href="{{ col_focus }}">{% if is_fr %}Travail &amp; Concentration{% else %}Work &amp; Focus{% endif %}</a>
+                <a href="{{ url_recovery }}">{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</a>
+                <a href="{{ url_performance }}">Performance</a>
+                <a href="{{ url_skin }}">{% if is_fr %}Peau &amp; &Eacute;clat{% else %}Skin &amp; Glow{% endif %}</a>
+                <a href="{{ url_longevity }}">{% if is_fr %}Long&eacute;vit&eacute;{% else %}Longevity{% endif %}</a>
+                <a href="{{ url_focus }}">{% if is_fr %}Travail &amp; Concentration{% else %}Work &amp; Focus{% endif %}</a>
               </div>
             </details>
 
@@ -393,14 +394,14 @@
             <div class="site-header__panel-groups">
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Corps{% else %}Body{% endif %}</p>
-                <a href="{{ col_recovery }}">{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</a>
-                <a href="{{ col_performance }}">Performance</a>
-                <a href="{{ col_longevity }}">{% if is_fr %}Long&eacute;vit&eacute;{% else %}Longevity{% endif %}</a>
+                <a href="{{ url_recovery }}">{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</a>
+                <a href="{{ url_performance }}">Performance</a>
+                <a href="{{ url_longevity }}">{% if is_fr %}Long&eacute;vit&eacute;{% else %}Longevity{% endif %}</a>
               </div>
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Quotidien{% else %}Everyday{% endif %}</p>
-                <a href="{{ col_skin }}">{% if is_fr %}Peau &amp; &Eacute;clat{% else %}Skin &amp; Glow{% endif %}</a>
-                <a href="{{ col_focus }}">{% if is_fr %}Travail &amp; Concentration{% else %}Work &amp; Focus{% endif %}</a>
+                <a href="{{ url_skin }}">{% if is_fr %}Peau &amp; &Eacute;clat{% else %}Skin &amp; Glow{% endif %}</a>
+                <a href="{{ url_focus }}">{% if is_fr %}Travail &amp; Concentration{% else %}Work &amp; Focus{% endif %}</a>
               </div>
             </div>
           </div>
