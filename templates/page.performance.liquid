@@ -1,0 +1,24 @@
+{%- comment -%}
+  Gabarit Par objectif > Performance.
+
+  A assigner dans l'admin Shopify a la page de handle `performance`
+  (Content > Pages > Performance > Theme template : page.performance).
+
+  Le contenu vit dans `sections/goal-page.liquid`, qui derive l'objectif
+  depuis le handle de la page. Ce gabarit ne porte que l'enveloppe.
+{%- endcomment -%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% section 'goal-page' %}
+
+  {%- if page.content != blank -%}
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-prose">{{ page.content }}</div>
+      </div>
+    </section>
+  {%- endif -%}
+</div>

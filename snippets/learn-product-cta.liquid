@@ -9,6 +9,7 @@
     handles     handles produit separes par une virgule (3 recommandes)
     heading_fr  / heading_en   titre du bloc
     text_fr     / text_en      phrase d'accroche
+    id          optionnel, pose un id sur la section pour un lien d'ancrage
 
   Les prix viennent de `all_products` : ils suivent la devise et les
   promotions du marche courant. Un produit absent du catalogue est simplement
@@ -24,7 +25,7 @@
   assign handle_list = handles | default: 'cytolight-desk,cytolight-mask,cytolight-pano-ultra' | split: ','
 -%}
 
-<section class="ln-cta">
+<section class="ln-cta"{% if id %} id="{{ id }}"{% endif %}>
   <div class="ln-shell">
     <p class="ln-kicker">{% if is_fr %}Passer &agrave; la pratique{% else %}Put it into practice{% endif %}</p>
     <h2 class="ln-title ln-cta__title">
