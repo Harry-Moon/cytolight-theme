@@ -1,0 +1,740 @@
+{%- comment -%}
+  Les cinq sous-pages de « Par objectif », servies par une seule section.
+
+  Meme mecanique que `sections/protocol-page.liquid` : la section derive le sujet
+  depuis un handle — ici celui de la COLLECTION, pas d'une page — puis rend une
+  ossature commune. Cinq destinations, une seule mise en page a maintenir.
+
+  | Handle collection | Objectif                | Bloc signature          |
+  |-------------------|-------------------------|-------------------------|
+  | recovery          | Recuperation            | carte du corps          |
+  | performance       | Performance             | profondeur atteinte     |
+  | skin-amp-glow     | Peau & Eclat            | trio de surface         |
+  | longevity         | Longevite               | horizon des mesures     |
+  | work-amp-focus    | Travail & Concentration | trois questions         |
+
+  Le bloc signature est ce qui empeche les cinq pages de se ressembler. Elles
+  partaient toutes du meme hero, de la meme accroche et des memes trois
+  arguments : le decoupage par objectif ne se voyait nulle part une fois clique.
+  Chaque objectif rend donc un composant different d'`assets/learn.css` — aucune
+  regle CSS n'est ajoutee, tous existent deja.
+
+  Toute autre collection ne rend RIEN. La section est declaree dans
+  `templates/collection.json`, donc evaluee sur `/collections/all` comme sur
+  n'importe quelle collection future : `objectif` vide est la sortie par defaut.
+
+  CONTRAT EDITORIAL — il ne se contourne pas :
+
+  1. Le bloc « ce que cet objectif ne dit pas » figure sur les cinq pages. C'est
+     lui qui tient la page du bon cote du principe II de la constitution :
+     nommer un objectif d'usage est autorise, laisser entendre une indication ne
+     l'est pas. Le retirer transforme la page en allegation.
+  2. Aucun chiffre n'est ecrit ici en premier. Duree, frequence, distance et
+     horizon viennent de `sections/learn-how-it-works.liquid` ; longueurs d'onde
+     et profondeurs de `sections/learn-wavelengths.liquid`. Ces deux pages font
+     foi. Une valeur changee ici sans l'etre la-bas cree une contradiction
+     qu'aucun script ne voit — elle ne se verra qu'en clientele.
+  3. Les cinq objectifs decrivent des zones du corps et des moments d'usage.
+     Aucun ne nomme une pathologie, meme par sous-entendu.
+
+  Faute de tableaux d'objets en Liquid, les listes repetees passent par une
+  chaine a deux separateurs : `|` separe les elements, `~` separe le titre du
+  texte. Aucun texte ne doit contenir ces deux caracteres.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign objectif = ''
+  case collection.handle
+    when 'recovery'
+      assign objectif = 'recovery'
+    when 'performance'
+      assign objectif = 'performance'
+    when 'skin-amp-glow'
+      assign objectif = 'skin'
+    when 'longevity'
+      assign objectif = 'longevity'
+    when 'work-amp-focus'
+      assign objectif = 'focus'
+  endcase
+-%}
+
+{%- if objectif != blank -%}
+
+  {%- liquid
+    assign url_goals = pages['goals'].url
+    if url_goals == blank
+      assign url_goals = locale_root | append: '/pages/goals'
+    endif
+    assign url_how = pages['comment-ca-marche'].url
+    if url_how == blank
+      assign url_how = locale_root | append: '/pages/comment-ca-marche'
+    endif
+    assign url_waves = pages['wavelengths'].url
+    if url_waves == blank
+      assign url_waves = locale_root | append: '/pages/wavelengths'
+    endif
+    assign url_science = pages['science'].url
+    if url_science == blank
+      assign url_science = locale_root | append: '/pages/science'
+    endif
+    assign url_quiz = pages['find-your-cytolight'].url
+    if url_quiz == blank
+      assign url_quiz = locale_root | append: '/pages/find-your-cytolight'
+    endif
+
+    case objectif
+      when 'recovery'
+        assign produits = 'cytolight-pano-ultra,cytolight-desk,cytolight-sauna-dome'
+        assign protocole_a = 'daily-recovery'
+        assign protocole_b = 'post-workout'
+        assign protocole_a_fr = 'R&eacute;cup&eacute;ration quotidienne'
+        assign protocole_a_en = 'Daily recovery'
+        assign protocole_b_fr = 'Apr&egrave;s l&apos;effort'
+        assign protocole_b_en = 'After training'
+
+        assign kicker_fr = 'La zone d&apos;abord, l&apos;appareil ensuite'
+        assign kicker_en = 'The area first, the device second'
+        assign titre_fr = 'La lumi&egrave;re n&apos;agit que l&agrave; o&ugrave; elle tombe.'
+        assign titre_en = 'Light only works where it lands.'
+        assign intro_fr = 'La r&eacute;cup&eacute;ration ne se joue pas sur la puissance affich&eacute;e mais sur la couverture&nbsp;: une peau nue, une zone pr&eacute;cise, une distance connue. Un appareil port&eacute; &mdash; genouill&egrave;re, botte, masque &mdash; supprime la question de la distance&nbsp;; un panneau la remet au centre et couvre en &eacute;change plusieurs zones d&apos;un coup. Choisissez la zone, le format suit.'
+        assign intro_en = 'Recovery is not decided by advertised power but by coverage: bare skin, one precise area, a known distance. A worn device &mdash; knee wrap, boot, mask &mdash; removes the distance question entirely; a panel puts it back at the centre and covers several areas at once in exchange. Pick the area, and the format follows.'
+        assign pour_qui_fr = 'Pour qui s&apos;entra&icirc;ne, marche beaucoup, ou finit ses journ&eacute;es debout &mdash; et cherche un geste de dix minutes, pas un rituel d&apos;une heure.'
+        assign pour_qui_en = 'For anyone who trains, walks a lot, or ends the day on their feet &mdash; and wants a ten-minute gesture, not an hour-long ritual.'
+
+        assign etapes_fr = 'Une zone par s&eacute;ance~Celle qui vient de travailler. Encha&icirc;ner cinq zones fait exploser la dur&eacute;e totale, et la r&eacute;gularit&eacute; s&apos;effondre d&egrave;s la semaine suivante.|Peau nue~Le tissu absorbe et disperse. Une s&eacute;ance faite &agrave; travers un legging ne d&eacute;livre plus la dose annonc&eacute;e, quel que soit l&apos;appareil.|10 &agrave; 20 minutes~Vingt pour une grande zone, dix pour une articulation. Le minuteur de l&apos;appareil suffit&nbsp;: doubler la s&eacute;ance ne double pas le r&eacute;sultat.|Trois &agrave; cinq fois par semaine~Sur la m&ecirc;me zone, plusieurs semaines de suite. C&apos;est la r&eacute;gularit&eacute; que mesurent les &eacute;tudes, pas la s&eacute;ance isol&eacute;e.'
+        assign etapes_en = 'One area per session~The one that just did the work. Stacking five areas blows up the total duration, and consistency collapses by the following week.|Bare skin~Fabric absorbs and scatters. A session run through leggings no longer delivers the stated dose, whatever the device.|Ten to twenty minutes~Twenty for a large area, ten for a joint. The device timer is enough: doubling the session does not double the result.|Three to five times a week~On the same area, several weeks running. Consistency is what the studies measure, not the isolated session.'
+
+        assign erreurs_fr = 'Choisir l&apos;appareil avant la zone. Un grand panneau pour un seul genou co&ucirc;te de la place et du temps de mise en route, et c&apos;est le temps de mise en route qui d&eacute;cide de la r&eacute;gularit&eacute;.|Prendre la sensation de chaleur pour une mesure. Le proche infrarouge chauffe l&eacute;g&egrave;rement &agrave; courte distance&nbsp;; la chaleur n&apos;indique ni la dose ni la profondeur atteinte.|Changer de zone tous les jours pour « tout couvrir ». Trois s&eacute;ances par semaine sur une zone valent mieux que sept zones une fois chacune.|Juger au bout de dix jours. Sur la r&eacute;cup&eacute;ration, ce qui se mesure se mesure sur des semaines de s&eacute;ances tenues.'
+        assign erreurs_en = 'Picking the device before the area. A large panel for a single knee costs floor space and set-up time &mdash; and set-up time is what decides consistency.|Reading the warmth as a measurement. Near-infrared warms slightly at close range; warmth indicates neither dose nor depth reached.|Switching areas daily to cover everything. Three sessions a week on one area beats seven areas once each.|Judging after ten days. On recovery, what gets measured is measured over weeks of sustained sessions.'
+
+        assign limites_fr = 'Ce n&apos;est pas un traitement~Les appareils Antared sont des produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. Ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie.|Une douleur qui dure rel&egrave;ve d&apos;un m&eacute;decin~Une douleur qui persiste, qui r&eacute;veille la nuit ou qui limite un mouvement se montre &agrave; un professionnel de sant&eacute;, pas &agrave; une lampe.|Elle ne remplace ni le sommeil ni le repos~Ce sont les deux variables qui d&eacute;terminent la r&eacute;cup&eacute;ration. Aucune s&eacute;ance de lumi&egrave;re ne les compense.|Elle ne promet aucun r&eacute;sultat individuel~Les travaux publi&eacute;s d&eacute;crivent des tendances mesur&eacute;es en laboratoire. Aucun n&apos;a port&eacute; sur un appareil Antared.'
+        assign limites_en = 'This is not a treatment~Antared devices are wellness products, without medical-device CE marking. They do not diagnose, treat, or cure any disease.|Lasting pain is a doctor&apos;s business~Pain that persists, wakes you at night, or limits a movement goes to a health professional, not to a lamp.|It replaces neither sleep nor rest~Those are the two variables that decide recovery. No light session compensates for them.|It promises no individual outcome~The published work describes trends measured in a lab. None of it was run on an Antared device.'
+
+      when 'performance'
+        assign produits = 'cytolight-pano-ultra,cytolight-sauna-dome,cytolight-desk'
+        assign protocole_a = 'pre-workout'
+        assign protocole_b = 'post-workout'
+        assign protocole_a_fr = 'Avant l&apos;effort'
+        assign protocole_a_en = 'Before training'
+        assign protocole_b_fr = 'Apr&egrave;s l&apos;effort'
+        assign protocole_b_en = 'After training'
+
+        assign kicker_fr = 'Profondeur'
+        assign kicker_en = 'Depth'
+        assign titre_fr = 'Toutes les longueurs d&apos;onde ne descendent pas au m&ecirc;me endroit.'
+        assign titre_en = 'Not every wavelength reaches the same place.'
+        assign intro_fr = 'Autour de l&apos;entra&icirc;nement, la question n&apos;est plus la surface de la peau mais ce qu&apos;il y a dessous. Le rouge visible s&apos;arr&ecirc;te au derme&nbsp;; le proche infrarouge est la part du spectre que la recherche utilise pour les tissus profonds. Un appareil qui n&apos;annonce que « du rouge » ne dit donc pas o&ugrave; il travaille.'
+        assign intro_en = 'Around training, the question is no longer the surface of the skin but what sits underneath it. Visible red stops at the dermis; near-infrared is the part of the spectrum research uses for deep tissue. A device advertising only red therefore does not tell you where it works.'
+        assign pour_qui_fr = 'Pour qui s&apos;entra&icirc;ne trois fois par semaine ou plus et veut un geste r&eacute;p&eacute;table, coll&eacute; &agrave; la s&eacute;ance plut&ocirc;t qu&apos;ajout&eacute; &agrave; la journ&eacute;e.'
+        assign pour_qui_en = 'For anyone training three times a week or more who wants a repeatable gesture attached to the session, not added to the day.'
+
+        assign etapes_fr = 'Choisissez un c&ocirc;t&eacute; de la s&eacute;ance~Avant l&apos;effort ou dans l&apos;heure qui suit, pas les deux. Deux s&eacute;ances par entra&icirc;nement doublent la contrainte sans rien doubler d&apos;autre.|Ciblez ce que la s&eacute;ance charge~Cuisses avant des squats, &eacute;paules avant du tirage&nbsp;; les jambes apr&egrave;s une sortie, le genou apr&egrave;s un match.|Tenez la distance annonc&eacute;e~Entre 15 et 50 cm pour un panneau, selon son irradiance. L&apos;&eacute;nergie re&ccedil;ue chute vite avec la distance&nbsp;: c&apos;est le param&egrave;tre le plus facile &agrave; rater.|La s&eacute;ance ne remplace pas l&apos;&eacute;chauffement~Elle s&apos;ajoute au moment o&ugrave; vous vous pr&eacute;parez d&eacute;j&agrave;. L&apos;&eacute;chauffement reste enti&egrave;rement &agrave; faire.'
+        assign etapes_en = 'Pick one side of the session~Before training or within the hour after, not both. Two sessions per workout double the constraint without doubling anything else.|Target what the session loads~Quads before squats, shoulders before pulls; legs after a ride, the knee after a match.|Hold the stated distance~Between 15 and 50 cm for a panel, depending on its irradiance. Received energy drops fast with distance: it is the easiest parameter to get wrong.|The session does not replace the warm-up~It slots into the moment you are already getting ready. The warm-up is still entirely ahead of you.'
+
+        assign erreurs_fr = 'Comparer deux appareils sur leur nombre de LED. Un nombre de LED seul ne dit rien&nbsp;: c&apos;est l&apos;irradiance &agrave; une distance annonc&eacute;e, et la surface r&eacute;ellement couverte, qui se comparent.|Rallonger la s&eacute;ance en pensant faire mieux. Au-del&agrave; de vingt minutes par zone, la litt&eacute;rature ne montre pas de gain, et parfois l&apos;inverse.|Faire la s&eacute;ance en tenue d&apos;entra&icirc;nement. Un t-shirt technique absorbe et disperse&nbsp;: la dose re&ccedil;ue n&apos;a plus de rapport avec celle annonc&eacute;e.|Attendre le lendemain pour la s&eacute;ance d&apos;apr&egrave;s-effort. Ce n&apos;est plus le m&ecirc;me protocole.'
+        assign erreurs_en = 'Comparing two devices on LED count. An LED count on its own tells you nothing: what compares is irradiance at a stated distance, and the area actually covered.|Stretching the session out, assuming more is better. Beyond twenty minutes per area the literature shows no gain, and sometimes the opposite.|Running the session in training kit. A technical tee absorbs and scatters: the dose received no longer resembles the one advertised.|Waiting until tomorrow for the post-training session. That is a different protocol.'
+
+        assign limites_fr = 'Ce n&apos;est pas un &eacute;chauffement~Elle n&apos;&eacute;l&egrave;ve ni la temp&eacute;rature musculaire ni la fr&eacute;quence cardiaque. Ce sont deux choses sans rapport.|Elle ne traite aucune blessure~Une douleur qui dure, qui r&eacute;veille la nuit ou qui limite un mouvement rel&egrave;ve d&apos;un m&eacute;decin.|Elle ne compense pas une charge trop lourde~Si l&apos;entra&icirc;nement d&eacute;passe ce que le corps encaisse, c&apos;est la charge qu&apos;il faut revoir, pas la lumi&egrave;re qu&apos;il faut ajouter.|Elle ne garantit aucune progression~Les essais mesurent des tendances de groupe, en laboratoire. Aucun n&apos;a port&eacute; sur un appareil Antared.'
+        assign limites_en = 'It is not a warm-up~It raises neither muscle temperature nor heart rate. The two are unrelated.|It treats no injury~Pain that lasts, wakes you at night, or limits a movement is a doctor&apos;s business.|It does not offset an excessive load~If training exceeds what the body absorbs, the load is what needs revisiting, not the light that needs adding.|It guarantees no progression~Trials measure group-level trends, in a lab. None of them was run on an Antared device.'
+
+      when 'skin'
+        assign produits = 'cytolight-mask,cytolight-desk,cytolight-sauna-dome'
+        assign protocole_a = 'skin-routine'
+        assign protocole_b = 'daily-recovery'
+        assign protocole_a_fr = 'Routine peau'
+        assign protocole_a_en = 'Skin routine'
+        assign protocole_b_fr = 'R&eacute;cup&eacute;ration quotidienne'
+        assign protocole_b_en = 'Daily recovery'
+
+        assign kicker_fr = 'Le trio de surface'
+        assign kicker_en = 'The surface trio'
+        assign titre_fr = 'Trois longueurs d&apos;onde qui ne cherchent pas la profondeur.'
+        assign titre_en = 'Three wavelengths that are not looking for depth.'
+        assign intro_fr = 'Sur le visage et le cuir chevelu, la profondeur n&apos;est pas l&apos;objectif&nbsp;: la cible est &agrave; quelques millim&egrave;tres. C&apos;est pour cela que cet objectif se joue en rouge visible, l&agrave; o&ugrave; la performance se joue en proche infrarouge. C&apos;est aussi pour cela qu&apos;un masque, pos&eacute; au contact, est un format plus fiable qu&apos;un panneau tenu &agrave; une distance approximative.'
+        assign intro_en = 'On the face and scalp, depth is not the point: the target sits a few millimetres down. That is why this goal runs in visible red, where performance runs in near-infrared. It is also why a mask, worn in contact, is a more reliable format than a panel held at an approximate distance.'
+        assign pour_qui_fr = 'Pour qui veut une routine du soir courte et r&eacute;guli&egrave;re, et accepte de la juger sur plusieurs mois plut&ocirc;t que sur une semaine.'
+        assign pour_qui_en = 'For anyone wanting a short, regular evening routine, willing to judge it over months rather than over a week.'
+
+        assign etapes_fr = 'Peau propre et nue~Avant les soins, sans cr&egrave;me ni maquillage. Une couche de soin filtre une partie de la lumi&egrave;re avant qu&apos;elle n&apos;atteigne la peau.|Dix minutes~C&apos;est la dur&eacute;e sur laquelle les protocoles convergent pour le visage. Aller au-del&agrave; n&apos;apporte rien de document&eacute;.|Ne fixez pas les LED~La lumi&egrave;re est &eacute;blouissante dans le rouge visible et invisible dans le proche infrarouge&nbsp;: le r&eacute;flexe de clignement ne vous prot&egrave;ge pas. Fermez les yeux.|Notez la date de d&eacute;part~Vous jugerez &agrave; seize semaines. Sans date &eacute;crite quelque part, on juge de m&eacute;moire, et la m&eacute;moire est complaisante.'
+        assign etapes_en = 'Clean bare skin~Before skincare, with no cream and no make-up. A layer of product filters part of the light before it reaches the skin.|Ten minutes~That is the duration protocols converge on for the face. Going beyond it adds nothing documented.|Do not stare into the LEDs~The light is dazzling in visible red and invisible in the near-infrared: the blink reflex does not protect you. Close your eyes.|Write down the start date~You will judge at sixteen weeks. Without a date written somewhere, you judge from memory, and memory is generous.'
+
+        assign erreurs_fr = 'Attendre un r&eacute;sultat visible en une semaine. Sur la peau et les cheveux, les essais de r&eacute;f&eacute;rence mesurent &agrave; seize semaines de s&eacute;ances r&eacute;guli&egrave;res.|Faire la s&eacute;ance apr&egrave;s les soins. La cr&egrave;me est entre la lumi&egrave;re et la peau, et c&apos;est l&apos;ordre inverse qui est d&eacute;crit.|Arr&ecirc;ter puis reprendre. Une s&eacute;rie interrompue ne se rattrape pas en doublant les s&eacute;ances suivantes.|Croire qu&apos;une lumi&egrave;re rouge dispense d&apos;une protection solaire. Ce sont deux sujets sans rapport&nbsp;: le spectre utilis&eacute; commence &agrave; 590 nm, tr&egrave;s au-dessus des ultraviolets.'
+        assign erreurs_en = 'Expecting a visible result in a week. On skin and hair, the reference trials measure at sixteen weeks of regular sessions.|Running the session after skincare. The cream sits between the light and the skin, and the described order is the reverse.|Stopping then restarting. An interrupted run is not recovered by doubling the next sessions.|Assuming red light replaces sun protection. The two are unrelated: the spectrum used starts at 590 nm, well above ultraviolet.'
+
+        assign limites_fr = 'Ce n&apos;est pas un soin dermatologique~Les appareils Antared sont des produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. Une l&eacute;sion cutan&eacute;e non diagnostiqu&eacute;e se montre &agrave; un m&eacute;decin.|Il n&apos;y a ni bronzage ni effet UV~Le spectre commence &agrave; 590 nm&nbsp;; les ultraviolets s&apos;arr&ecirc;tent &agrave; 400 nm. Ce n&apos;est ni un substitut ni un &eacute;quivalent du soleil.|Certaines situations demandent un avis m&eacute;dical d&apos;abord~Grossesse, traitement photosensibilisant, pathologie oculaire, suivi oncologique&nbsp;: la question se pose avant la premi&egrave;re s&eacute;ance, pas apr&egrave;s.|Aucun r&eacute;sultat n&apos;est promis~Les essais cit&eacute;s sur notre page Science portent sur d&apos;autres appareils que les n&ocirc;tres, et d&eacute;crivent des moyennes de groupe.'
+        assign limites_en = 'This is not dermatological care~Antared devices are wellness products, without medical-device CE marking. An undiagnosed skin lesion goes to a doctor.|There is no tanning and no UV effect~The spectrum starts at 590 nm; ultraviolet stops at 400 nm. It is neither a substitute for, nor an equivalent of, the sun.|Some situations call for medical advice first~Pregnancy, photosensitising medication, an eye condition, cancer follow-up: the question comes before the first session, not after.|No result is promised~The trials cited on our Science page were run on devices other than ours, and describe group averages.'
+
+      when 'longevity'
+        assign produits = 'cytolight-pano-ultra,cytolight-desk,cytolight-sauna-dome'
+        assign protocole_a = 'full-body-routine'
+        assign protocole_b = 'daily-recovery'
+        assign protocole_a_fr = 'S&eacute;ance corps entier'
+        assign protocole_a_en = 'Full-body session'
+        assign protocole_b_fr = 'R&eacute;cup&eacute;ration quotidienne'
+        assign protocole_b_en = 'Daily recovery'
+
+        assign kicker_fr = 'L&apos;horizon'
+        assign kicker_en = 'The horizon'
+        assign titre_fr = 'Ce qui se mesure, et &agrave; quelle &eacute;ch&eacute;ance.'
+        assign titre_en = 'What gets measured, and when.'
+        assign intro_fr = 'Cet objectif est celui o&ugrave; l&apos;on ach&egrave;te une fiche technique autant qu&apos;un appareil&nbsp;: longueurs d&apos;onde exactes en nanom&egrave;tres, irradiance en mW/cm&sup2; annonc&eacute;e &agrave; une distance, surface r&eacute;ellement couverte. Et une derni&egrave;re donn&eacute;e que peu de marques &eacute;crivent&nbsp;: le temps qu&apos;il faut avant de pouvoir juger quoi que ce soit.'
+        assign intro_en = 'This is the goal where you buy a spec sheet as much as a device: exact wavelengths in nanometres, irradiance in mW/cm&sup2; stated at a distance, area actually covered. And one last figure few brands write down: how long it takes before you can judge anything at all.'
+        assign pour_qui_fr = 'Pour qui lit les publications avant d&apos;acheter, et pr&eacute;f&egrave;re un param&egrave;tre v&eacute;rifiable &agrave; un superlatif.'
+        assign pour_qui_en = 'For anyone who reads the papers before buying, and prefers a verifiable parameter to a superlative.'
+
+        assign etapes_fr = 'Lisez l&apos;irradiance avec sa distance~Un chiffre de mW/cm&sup2; sans distance annonc&eacute;e ne veut rien dire. C&apos;est le premier filtre, et il &eacute;limine beaucoup de fiches.|Lisez les longueurs d&apos;onde, pas la couleur~« Rouge » couvre 630 et 660 nm, qui ne travaillent pas &agrave; la m&ecirc;me profondeur. « Infrarouge » couvre 810, 830 et 850 nm.|Regardez la surface couverte~Un appareil qui couvre deux fois plus de surface divise par deux le nombre de poses, donc la seule contrainte qui compte&nbsp;: la dur&eacute;e totale.|Fixez l&apos;&eacute;ch&eacute;ance avant de commencer~D&eacute;cider &agrave; l&apos;avance quand vous jugerez est le seul moyen de ne pas juger &agrave; la premi&egrave;re impression.'
+        assign etapes_en = 'Read irradiance with its distance~A mW/cm&sup2; figure without a stated distance means nothing. It is the first filter, and it eliminates a lot of spec sheets.|Read wavelengths, not colours~Red covers 630 and 660 nm, which do not work at the same depth. Infrared covers 810, 830, and 850 nm.|Look at the area covered~A device covering twice the area halves the number of passes, and therefore the only constraint that matters: total duration.|Set the deadline before you start~Deciding in advance when you will judge is the only way not to judge on first impressions.'
+
+        assign erreurs_fr = 'Prendre un nombre de LED pour une mesure de puissance. Deux appareils au m&ecirc;me nombre de LED peuvent d&eacute;livrer des irradiances tr&egrave;s diff&eacute;rentes.|Additionner les longueurs d&apos;onde comme un argument. Sept spectres ne valent pas mieux que trois si les trois sont ceux dont vous avez l&apos;usage.|Chercher la profondeur maximale. Au-del&agrave; de 940 nm, l&apos;absorption par l&apos;eau augmente&nbsp;: la fen&ecirc;tre optique a une borne haute, ce n&apos;est pas un curseur qu&apos;on pousse.|Juger sur le ressenti de chaleur. La chaleur vient des LED elles-m&ecirc;mes &agrave; courte distance, pas d&apos;un effet mesur&eacute;.'
+        assign erreurs_en = 'Reading an LED count as a power measurement. Two devices with the same LED count can deliver very different irradiances.|Adding up wavelengths as an argument. Seven spectra are not better than three if the three are the ones you actually use.|Chasing maximum depth. Beyond 940 nm, water absorption rises: the optical window has an upper bound, it is not a slider you push.|Judging by the warmth you feel. The warmth comes from the LEDs themselves at close range, not from a measured effect.'
+
+        assign limites_fr = 'Aucune &eacute;tude n&apos;a port&eacute; sur un appareil Antared~Les travaux cit&eacute;s sur notre page Science portent sur d&apos;autres dispositifs, &agrave; d&apos;autres param&egrave;tres. Nous ne nous les attribuons pas.|Aucun appareil ne ralentit le vieillissement~Ce mot ne d&eacute;crit rien de mesurable ici. L&apos;objectif d&eacute;signe une fa&ccedil;on d&apos;acheter et un horizon de lecture, pas une promesse biologique.|Ce sont des produits de bien-&ecirc;tre~Sans marquage CE de dispositif m&eacute;dical. Ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie.|Une moyenne de groupe n&apos;est pas un pronostic~Un essai qui montre un effet moyen ne dit rien de ce que vous observerez, vous, sur seize semaines.'
+        assign limites_en = 'No study was run on an Antared device~The work cited on our Science page was run on other devices, at other parameters. We do not claim it as ours.|No device slows ageing~That word describes nothing measurable here. The goal names a way of buying and a reading horizon, not a biological promise.|These are wellness products~Without medical-device CE marking. They do not diagnose, treat, or cure any disease.|A group average is not a prognosis~A trial showing a mean effect says nothing about what you, individually, will observe over sixteen weeks.'
+
+      when 'focus'
+        assign produits = 'cytolight-desk,cytolight-cap,cytolight-mask'
+        assign protocole_a = 'workday-routine'
+        assign protocole_b = 'daily-recovery'
+        assign protocole_a_fr = 'Journ&eacute;e de travail'
+        assign protocole_a_en = 'Workday'
+        assign protocole_b_fr = 'R&eacute;cup&eacute;ration quotidienne'
+        assign protocole_b_en = 'Daily recovery'
+
+        assign kicker_fr = 'Devant l&apos;&eacute;cran'
+        assign kicker_en = 'In front of the screen'
+        assign titre_fr = 'Trois questions qu&apos;on se pose au bureau.'
+        assign titre_en = 'Three questions you ask at your desk.'
+        assign intro_fr = 'Le probl&egrave;me d&apos;une routine quotidienne n&apos;est presque jamais l&apos;appareil&nbsp;: c&apos;est le cr&eacute;neau. Cet objectif r&eacute;unit les formats qui n&apos;en demandent pas &mdash; un panneau pos&eacute; de c&ocirc;t&eacute; pendant que vous travaillez, une casquette pendant une r&eacute;union en &eacute;coute. La s&eacute;ance n&apos;ajoute rien &agrave; la journ&eacute;e&nbsp;; c&apos;est tout son int&eacute;r&ecirc;t.'
+        assign intro_en = 'The problem with a daily routine is almost never the device: it is the slot. This goal gathers the formats that do not ask for one &mdash; a panel set to the side while you work, a cap through a meeting you are only listening to. The session adds nothing to the day; that is the whole point.'
+        assign pour_qui_fr = 'Pour qui travaille assis plusieurs heures d&apos;affil&eacute;e et n&apos;a pas de cr&eacute;neau libre &agrave; consacrer &agrave; un rituel de plus.'
+        assign pour_qui_en = 'For anyone working seated for hours at a stretch, with no free slot to give to one more ritual.'
+
+        assign etapes_fr = 'Posez l&apos;appareil hors de l&apos;axe du regard~De c&ocirc;t&eacute; ou derri&egrave;re l&apos;&eacute;cran, jamais en face. La lumi&egrave;re n&apos;est pas dangereuse aux irradiances domestiques, mais elle est &eacute;blouissante.|Gardez la distance annonc&eacute;e~Entre 15 et 50 cm selon l&apos;irradiance de l&apos;appareil. Un panneau repouss&eacute; au fond du bureau ne d&eacute;livre plus grand-chose.|Le m&ecirc;me cr&eacute;neau chaque jour~Le d&eacute;but de matin&eacute;e, ou juste apr&egrave;s le d&eacute;jeuner. Un moment &agrave; d&eacute;cider chaque jour est un moment qu&apos;on finit par sauter.|Dix &agrave; vingt minutes, puis on n&apos;y pense plus~Le minuteur fait le travail. La s&eacute;ance ne doit demander aucune attention, sinon elle en prend.'
+        assign etapes_en = 'Place the device out of your line of sight~To the side or behind the screen, never facing you. The light is not dangerous at home irradiances, but it is dazzling.|Keep the stated distance~Between 15 and 50 cm depending on the device&apos;s irradiance. A panel pushed to the back of the desk no longer delivers much.|The same slot every day~Early morning, or right after lunch. A moment you have to decide on each day is a moment you end up skipping.|Ten to twenty minutes, then forget it~The timer does the work. The session must ask for no attention, otherwise it takes some.'
+
+        assign erreurs_fr = 'Placer le panneau face &agrave; soi pour « en profiter plus ». C&apos;est &eacute;blouissant, et le r&eacute;flexe de clignement ne prot&egrave;ge pas du proche infrarouge, qui est invisible.|Confondre l&apos;appareil avec une lampe de luminoth&eacute;rapie saisonni&egrave;re. Les lampes de jour travaillent sur un autre spectre et une autre intensit&eacute;.|Supprimer les pauses parce que la s&eacute;ance tourne. Se lever, marcher et regarder au loin r&eacute;pondent &agrave; des besoins que la lumi&egrave;re ne couvre pas.|D&eacute;placer l&apos;appareil chaque jour. Un appareil qu&apos;il faut r&eacute;installer est un appareil qu&apos;on n&apos;allume plus au bout de trois semaines.'
+        assign erreurs_en = 'Facing the panel toward you to get more out of it. It is dazzling, and the blink reflex does not protect against near-infrared, which is invisible.|Mistaking the device for a seasonal light-therapy lamp. Daylight lamps work on a different spectrum and a different intensity.|Dropping your breaks because the session is running. Standing up, walking, and looking into the distance meet needs light does not cover.|Moving the device every day. A device you have to set up again is a device you stop switching on after three weeks.'
+
+        assign limites_fr = 'Ce n&apos;est pas une lampe de luminoth&eacute;rapie saisonni&egrave;re~Les lampes de jour visent le rythme circadien avec un autre spectre et une autre intensit&eacute;. Ce n&apos;est ni le m&ecirc;me appareil ni le m&ecirc;me usage.|Elle ne traite ni la fatigue ni un trouble du sommeil~Une fatigue persistante rel&egrave;ve d&apos;un m&eacute;decin. C&apos;est un produit de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical.|Elle ne remplace pas une pause~Ni une bonne hauteur d&apos;&eacute;cran, ni une chaise correcte, ni le fait de se lever.|Elle ne promet aucun gain de concentration~Nous ne connaissons pas d&apos;essai qui mesurerait cela sur un appareil comme les n&ocirc;tres, et nous n&apos;en inventons pas.'
+        assign limites_en = 'This is not a seasonal light-therapy lamp~Daylight lamps target the circadian rhythm with a different spectrum and a different intensity. Neither the same device nor the same use.|It treats neither fatigue nor a sleep disorder~Persistent fatigue goes to a doctor. This is a wellness product, without medical-device CE marking.|It does not replace a break~Nor a correct screen height, nor a decent chair, nor standing up.|It promises no gain in concentration~We know of no trial measuring that on a device like ours, and we do not invent one.'
+    endcase
+
+    assign url_protocole_a = pages[protocole_a].url
+    if url_protocole_a == blank
+      assign url_protocole_a = locale_root | append: '/pages/' | append: protocole_a
+    endif
+    assign url_protocole_b = pages[protocole_b].url
+    if url_protocole_b == blank
+      assign url_protocole_b = locale_root | append: '/pages/' | append: protocole_b
+    endif
+  -%}
+
+  {%- comment -%}
+    `learn.css` est deja declare par la banniere de collection sur ces cinq pages.
+    Le redeclarer ici emet un second `<link>` vers exactement la meme URL : le
+    navigateur ne le telecharge qu'une fois. C'est le prix d'une section autonome,
+    et il est nul — une section dont le style depend d'une autre casse des qu'on la
+    deplace ou qu'on la retire dans l'editeur de theme.
+  {%- endcomment -%}
+  {{ 'learn.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+  <div class="ln-page" data-learn>
+
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <p class="ln-kicker">{% if is_fr %}{{ kicker_fr }}{% else %}{{ kicker_en }}{% endif %}</p>
+        <h2 class="ln-subtitle">{% if is_fr %}{{ titre_fr }}{% else %}{{ titre_en }}{% endif %}</h2>
+        <p class="ln-copy">{% if is_fr %}{{ intro_fr }}{% else %}{{ intro_en }}{% endif %}</p>
+        <p class="ln-copy"><strong>{% if is_fr %}{{ pour_qui_fr }}{% else %}{{ pour_qui_en }}{% endif %}</strong></p>
+      </div>
+    </section>
+
+    {%- comment -%} ---------- bloc signature, un par objectif ---------- {%- endcomment -%}
+
+    {%- if objectif == 'recovery' -%}
+
+      <section class="ln-section ln-section--dark">
+        <div class="ln-shell">
+          <p class="ln-kicker">{% if is_fr %}Six zones{% else %}Six areas{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}O&ugrave; l&apos;on pose l&apos;appareil, et avec quel format{% else %}Where the device goes, and in which format{% endif %}</h2>
+
+          <div class="ln-bodymap ln-reveal">
+            <ol class="ln-bodymap__list ln-bodymap__list--left">
+              <li class="ln-bodymap__item"><span class="ln-bodymap__n">01</span><div>
+                <p class="ln-bodymap__zone">{% if is_fr %}Nuque et &eacute;paules{% else %}Neck and shoulders{% endif %}</p>
+                <p class="ln-bodymap__what">{% if is_fr %}Panneau de face, assis, dix minutes{% else %}Panel facing you, seated, ten minutes{% endif %}</p></div></li>
+              <li class="ln-bodymap__item"><span class="ln-bodymap__n">02</span><div>
+                <p class="ln-bodymap__zone">{% if is_fr %}Dos et lombaires{% else %}Back and lower back{% endif %}</p>
+                <p class="ln-bodymap__what">{% if is_fr %}Grand format, de dos&nbsp;: la surface prime sur la puissance{% else %}Large format, back turned: area matters more than power{% endif %}</p></div></li>
+              <li class="ln-bodymap__item"><span class="ln-bodymap__n">03</span><div>
+                <p class="ln-bodymap__zone">{% if is_fr %}Cuisses et mollets{% else %}Quads and calves{% endif %}</p>
+                <p class="ln-bodymap__what">{% if is_fr %}Deux groupes en une pose, 15 &agrave; 50 cm{% else %}Two groups in one pass, 15 to 50 cm{% endif %}</p></div></li>
+            </ol>
+
+            <div class="ln-bodymap__figure">
+              <svg viewBox="0 0 240 460" role="img" aria-labelledby="ln-goal-bm-title ln-goal-bm-desc">
+                <title id="ln-goal-bm-title">{% if is_fr %}Les six zones de r&eacute;cup&eacute;ration list&eacute;es sur cette page{% else %}The six recovery areas listed on this page{% endif %}</title>
+                <desc id="ln-goal-bm-desc">{% if is_fr %}Silhouette humaine sch&eacute;matique portant six rep&egrave;res num&eacute;rot&eacute;s&nbsp;: nuque et &eacute;paules, dos et lombaires, cuisses et mollets, genou, pied et cheville, mains et poignets. Chaque rep&egrave;re correspond &agrave; une entr&eacute;e des deux listes qui encadrent la figure.{% else %}Schematic human figure carrying six numbered markers: neck and shoulders, back and lower back, quads and calves, knee, foot and ankle, hands and wrists. Each marker matches an entry in the two lists framing the figure.{% endif %}</desc>
+                <defs>
+                  <radialGradient id="ln-goal-bm-glow" cx="50%" cy="42%" r="55%">
+                    <stop offset="0%" stop-color="#d20d2f" stop-opacity=".34"/>
+                    <stop offset="60%" stop-color="#d20d2f" stop-opacity=".08"/>
+                    <stop offset="100%" stop-color="#d20d2f" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <rect x="0" y="0" width="240" height="460" fill="url(#ln-goal-bm-glow)"/>
+                <g class="ln-bodymap__body" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="120" cy="44" r="25"/>
+                  <path d="M120 69v18"/>
+                  <path d="M86 96q34-14 68 0l7 78q-41 12-82 0z"/>
+                  <path d="M86 96 61 116l-14 84 13 5 17-74"/>
+                  <path d="M154 96l25 20 14 84-13 5-17-74"/>
+                  <path d="M92 174l-4 96 6 84h17l4-84"/>
+                  <path d="M148 174l4 96-6 84h-17l-4-84"/>
+                </g>
+                <g class="ln-bodymap__pins">
+                  <g class="ln-bodymap__pin"><circle cx="120" cy="86" r="11"/><text x="120" y="90">1</text></g>
+                  <g class="ln-bodymap__pin"><circle cx="120" cy="136" r="11"/><text x="120" y="140">2</text></g>
+                  <g class="ln-bodymap__pin"><circle cx="94" cy="216" r="11"/><text x="94" y="220">3</text></g>
+                  <g class="ln-bodymap__pin"><circle cx="152" cy="270" r="11"/><text x="152" y="274">4</text></g>
+                  <g class="ln-bodymap__pin"><circle cx="146" cy="348" r="11"/><text x="146" y="352">5</text></g>
+                  <g class="ln-bodymap__pin"><circle cx="190" cy="198" r="11"/><text x="190" y="202">6</text></g>
+                </g>
+              </svg>
+            </div>
+
+            <ol class="ln-bodymap__list" start="4">
+              <li class="ln-bodymap__item"><span class="ln-bodymap__n">04</span><div>
+                <p class="ln-bodymap__zone">{% if is_fr %}Genou{% else %}Knee{% endif %}</p>
+                <p class="ln-bodymap__what">{% if is_fr %}Format port&eacute;, au contact&nbsp;: plus de question de distance{% else %}Worn format, in contact: the distance question disappears{% endif %}</p></div></li>
+              <li class="ln-bodymap__item"><span class="ln-bodymap__n">05</span><div>
+                <p class="ln-bodymap__zone">{% if is_fr %}Pied et cheville{% else %}Foot and ankle{% endif %}</p>
+                <p class="ln-bodymap__what">{% if is_fr %}Zone enveloppante, assis, en fin de journ&eacute;e{% else %}A wraparound area, seated, at the end of the day{% endif %}</p></div></li>
+              <li class="ln-bodymap__item"><span class="ln-bodymap__n">06</span><div>
+                <p class="ln-bodymap__zone">{% if is_fr %}Mains et poignets{% else %}Hands and wrists{% endif %}</p>
+                <p class="ln-bodymap__what">{% if is_fr %}Petite surface, panneau &agrave; courte distance{% else %}Small area, panel at close range{% endif %}</p></div></li>
+            </ol>
+          </div>
+
+          <div class="ln-bodymap__note">
+            <p class="ln-copy">
+              {%- if is_fr -%}
+                Les six zones ci-dessus sont des <strong>emplacements d&apos;appareil</strong>, pas des indications. Elles disent o&ugrave; la lumi&egrave;re est pos&eacute;e, pas ce qu&apos;elle produirait.
+              {%- else -%}
+                The six areas above are <strong>device placements</strong>, not indications. They say where the light goes, not what it would produce.
+              {%- endif -%}
+            </p>
+          </div>
+        </div>
+      </section>
+
+    {%- elsif objectif == 'performance' -%}
+
+      <section class="ln-section ln-section--dark">
+        <div class="ln-shell">
+          <p class="ln-kicker">{% if is_fr %}Jusqu&apos;o&ugrave; &ccedil;a descend{% else %}How far it reaches{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}Le rouge s&apos;arr&ecirc;te au derme. Le reste continue.{% else %}Red stops at the dermis. The rest carries on.{% endif %}</h2>
+          <p class="ln-copy">
+            {%- if is_fr -%}
+              Ces proportions sont relatives, pas des millim&egrave;tres&nbsp;: la p&eacute;n&eacute;tration d&eacute;pend du tissu, de la pigmentation et de l&apos;irradiance. Elles disent l&apos;ordre, pas la profondeur exacte &mdash; annoncer « 10 cm » serait un chiffre invent&eacute;.
+            {%- else -%}
+              These proportions are relative, not millimetres: penetration depends on tissue, pigmentation, and irradiance. They give the order, not an exact depth &mdash; announcing 10 cm would be a made-up figure.
+            {%- endif -%}
+          </p>
+
+          <div class="ln-depth ln-reveal">
+            <div class="ln-depth__row">
+              <p class="ln-depth__label">630 nm <small>{% if is_fr %}Derme superficiel{% else %}Upper dermis{% endif %}</small></p>
+              <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 26%;"></span></span>
+            </div>
+            <div class="ln-depth__row">
+              <p class="ln-depth__label">660 nm <small>{% if is_fr %}Derme{% else %}Dermis{% endif %}</small></p>
+              <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 38%;"></span></span>
+            </div>
+            <div class="ln-depth__row">
+              <p class="ln-depth__label">810 nm <small>{% if is_fr %}Sous-cutan&eacute;, muscle{% else %}Subcutaneous, muscle{% endif %}</small></p>
+              <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 78%;"></span></span>
+            </div>
+            <div class="ln-depth__row">
+              <p class="ln-depth__label">850 nm <small>{% if is_fr %}Muscle, articulation{% else %}Muscle, joint{% endif %}</small></p>
+              <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 92%;"></span></span>
+            </div>
+            <div class="ln-depth__row">
+              <p class="ln-depth__label">940 nm <small>{% if is_fr %}Absorption par l&apos;eau croissante{% else %}Rising water absorption{% endif %}</small></p>
+              <span class="ln-depth__track"><span class="ln-depth__fill" style="width: 70%;"></span></span>
+            </div>
+          </div>
+
+          <div class="ln-actions">
+            <a class="ln-button ln-button--line" href="{{ url_waves }}">
+              {% if is_fr %}Les sept longueurs d&apos;onde en d&eacute;tail{% else %}All seven wavelengths in detail{% endif %}
+            </a>
+          </div>
+        </div>
+      </section>
+
+    {%- elsif objectif == 'skin' -%}
+
+      <section class="ln-section ln-section--dark">
+        <div class="ln-shell">
+          <p class="ln-kicker">{% if is_fr %}590 &agrave; 660 nm{% else %}590 to 660 nm{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}Les trois longueurs d&apos;onde qui travaillent pr&egrave;s de la surface{% else %}The three wavelengths that work close to the surface{% endif %}</h2>
+
+          <div class="ln-spectrum ln-reveal">
+            <div class="ln-spectrum__bar" role="img" aria-label="{% if is_fr %}Spectre continu de 590 &agrave; 940 nanom&egrave;tres, de l&apos;ambre au proche infrarouge profond. Cet objectif n&apos;utilise que sa premi&egrave;re moiti&eacute;.{% else %}Continuous spectrum from 590 to 940 nanometres, amber through deep near-infrared. This goal only uses its first half.{% endif %}"></div>
+            <div class="ln-spectrum__scale">
+              <span>590 nm &middot; {% if is_fr %}ambre{% else %}amber{% endif %}</span>
+              <span>{% if is_fr %}rouge{% else %}red{% endif %}</span>
+              <span>{% if is_fr %}proche infrarouge{% else %}near-infrared{% endif %}</span>
+              <span>940 nm</span>
+            </div>
+
+            <div class="ln-waves">
+              <article class="ln-wave">
+                <p class="ln-wave__nm">590 <i>nm</i></p>
+                <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ffb547, #ff9a3c);" aria-hidden="true"></span>
+                <p class="ln-wave__label">{% if is_fr %}Ambre &mdash; surface{% else %}Amber &mdash; surface{% endif %}</p>
+                <p class="ln-wave__text">{% if is_fr %}Absorb&eacute; d&egrave;s l&apos;&eacute;piderme. Utilis&eacute; pour le teint et le confort cutan&eacute;, pas pour atteindre un muscle.{% else %}Absorbed within the epidermis. Used for complexion and skin comfort, not to reach a muscle.{% endif %}</p>
+              </article>
+              <article class="ln-wave">
+                <p class="ln-wave__nm">630 <i>nm</i></p>
+                <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ff5f3a, #ea1f36);" aria-hidden="true"></span>
+                <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; peau{% else %}Red &mdash; skin{% endif %}</p>
+                <p class="ln-wave__text">{% if is_fr %}&Eacute;piderme et derme superficiel. C&apos;est le canal rouge du masque Antared, celui que documentent les essais sur le collag&egrave;ne.{% else %}Epidermis and superficial dermis. This is the red channel of the Antared mask, the one collagen trials document.{% endif %}</p>
+              </article>
+              <article class="ln-wave">
+                <p class="ln-wave__nm">660 <i>nm</i></p>
+                <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #e01a30, #a30d1e);" aria-hidden="true"></span>
+                <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; derme{% else %}Red &mdash; dermis{% endif %}</p>
+                <p class="ln-wave__text">{% if is_fr %}La longueur d&apos;onde rouge la plus &eacute;tudi&eacute;e du domaine, pr&eacute;sente sur la quasi-totalit&eacute; de la gamme.{% else %}The most studied red wavelength in the field, present across almost the entire range.{% endif %}</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="ln-actions">
+            <a class="ln-button ln-button--line" href="{{ url_waves }}">
+              {% if is_fr %}Les sept longueurs d&apos;onde en d&eacute;tail{% else %}All seven wavelengths in detail{% endif %}
+            </a>
+          </div>
+        </div>
+      </section>
+
+    {%- elsif objectif == 'longevity' -%}
+
+      <section class="ln-section ln-section--dark">
+        <div class="ln-shell">
+          <p class="ln-kicker">{% if is_fr %}Horizon de lecture{% else %}Reading horizon{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}Quatre &eacute;ch&eacute;ances, et ce qu&apos;on peut en dire{% else %}Four deadlines, and what can be said at each{% endif %}</h2>
+
+          <ol class="ln-timeline" data-ln-timeline>
+            <span class="ln-timeline__spine" aria-hidden="true"><span class="ln-timeline__spark"></span></span>
+
+            <li class="ln-tl">
+              <span class="ln-tl__node" aria-hidden="true"></span>
+              <div class="ln-tl__body">
+                <span class="ln-tl__year">{% if is_fr %}S&eacute;ance 1{% else %}Session 1{% endif %}</span>
+                <h3 class="ln-tl__title">{% if is_fr %}La seule &eacute;ch&eacute;ance courte du domaine{% else %}The one short deadline in the field{% endif %}</h3>
+                <p class="ln-tl__text">
+                  {%- if is_fr -%}
+                    Sur la r&eacute;cup&eacute;ration musculaire, les essais observent un effet d&egrave;s la premi&egrave;re s&eacute;ance. C&apos;est l&apos;exception, et elle ne concerne ni la peau ni les cheveux.
+                  {%- else -%}
+                    On muscle recovery, trials see an effect from the first session. That is the exception, and it concerns neither skin nor hair.
+                  {%- endif -%}
+                </p>
+              </div>
+            </li>
+
+            <li class="ln-tl">
+              <span class="ln-tl__node" aria-hidden="true"></span>
+              <div class="ln-tl__body">
+                <span class="ln-tl__year">{% if is_fr %}Semaine 4{% else %}Week 4{% endif %}</span>
+                <h3 class="ln-tl__title">{% if is_fr %}Rien &agrave; mesurer, et c&apos;est normal{% else %}Nothing to measure, and that is normal{% endif %}</h3>
+                <p class="ln-tl__text">
+                  {%- if is_fr -%}
+                    C&apos;est le moment o&ugrave; une routine s&apos;abandonne le plus facilement. Sur la peau et les cheveux, aucun r&eacute;sultat n&apos;est attendu ici&nbsp;: le protocole le dit avant que vous ne commenciez.
+                  {%- else -%}
+                    This is where a routine is most easily abandoned. On skin and hair, no result is expected yet: the protocol says so before you begin.
+                  {%- endif -%}
+                </p>
+              </div>
+            </li>
+
+            <li class="ln-tl">
+              <span class="ln-tl__node" aria-hidden="true"></span>
+              <div class="ln-tl__body">
+                <span class="ln-tl__year">{% if is_fr %}Semaine 16{% else %}Week 16{% endif %}</span>
+                <h3 class="ln-tl__title">{% if is_fr %}L&apos;horizon des essais de r&eacute;f&eacute;rence{% else %}The horizon of the reference trials{% endif %}</h3>
+                <p class="ln-tl__text">
+                  {%- if is_fr -%}
+                    Les &eacute;tudes qui documentent le rouge sur la peau et les cheveux mesurent &agrave; seize semaines de s&eacute;ances r&eacute;guli&egrave;res. Une marque qui annonce un r&eacute;sultat visible en une semaine ne d&eacute;crit pas ces &eacute;tudes.
+                  {%- else -%}
+                    The studies documenting red light on skin and hair measure at sixteen weeks of regular sessions. A brand announcing a visible result in a week is not describing those studies.
+                  {%- endif -%}
+                </p>
+                <a class="ln-tl__source" href="{{ url_science }}">
+                  {% if is_fr %}Les &eacute;tudes, et leurs limites{% else %}The studies, and their limits{% endif %} <em>&rarr;</em>
+                </a>
+              </div>
+            </li>
+
+            <li class="ln-tl">
+              <span class="ln-tl__node" aria-hidden="true"></span>
+              <div class="ln-tl__body">
+                <span class="ln-tl__year">{% if is_fr %}Ensuite{% else %}After that{% endif %}</span>
+                <h3 class="ln-tl__title">{% if is_fr %}La seule variable qui d&eacute;pende de vous{% else %}The one variable that is yours{% endif %}</h3>
+                <p class="ln-tl__text">
+                  {%- if is_fr -%}
+                    Un appareil utilis&eacute; trois fois par semaine pendant six mois vaut mieux qu&apos;un appareil plus puissant utilis&eacute; deux semaines. C&apos;est le seul param&egrave;tre qu&apos;aucune fiche technique ne porte.
+                  {%- else -%}
+                    A device used three times a week for six months beats a more powerful one used for a fortnight. It is the only parameter no spec sheet carries.
+                  {%- endif -%}
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+    {%- elsif objectif == 'focus' -%}
+
+      <section class="ln-section ln-section--soft">
+        <div class="ln-shell ln-shell--narrow">
+          <p class="ln-kicker">{% if is_fr %}Avant d&apos;installer quoi que ce soit{% else %}Before installing anything{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}Trois questions, trois r&eacute;ponses courtes{% else %}Three questions, three short answers{% endif %}</h2>
+
+          <div class="ln-faq">
+            <details class="ln-faq__item">
+              <summary class="ln-faq__q">{% if is_fr %}Puis-je vraiment travailler pendant la s&eacute;ance&nbsp;?{% else %}Can I really work during the session?{% endif %}</summary>
+              <p class="ln-faq__a">
+                {%- if is_fr -%}
+                  Oui, c&apos;est le principe m&ecirc;me de cet objectif. Une seule consigne&nbsp;: ne fixez pas les LED. La lumi&egrave;re n&apos;est pas dangereuse aux irradiances domestiques, mais elle est &eacute;blouissante dans le rouge visible et invisible dans le proche infrarouge &mdash; le r&eacute;flexe de clignement ne vous prot&egrave;ge donc pas. Le panneau se pose de c&ocirc;t&eacute; ou derri&egrave;re l&apos;&eacute;cran, pas dans l&apos;axe du regard.
+                {%- else -%}
+                  Yes &mdash; that is the whole point of this goal. One rule only: do not stare into the LEDs. The light is not dangerous at home irradiances, but it is dazzling in visible red and invisible in the near-infrared, so the blink reflex does not protect you. The panel sits to the side or behind the screen, not in your line of sight.
+                {%- endif -%}
+              </p>
+            </details>
+
+            <details class="ln-faq__item">
+              <summary class="ln-faq__q">{% if is_fr %}Est-ce que &ccedil;a remplace une pause&nbsp;?{% else %}Does it replace a break?{% endif %}</summary>
+              <p class="ln-faq__a">
+                {%- if is_fr -%}
+                  Non, et ce n&apos;est pas une pr&eacute;caution de style. Se lever, marcher et regarder au loin r&eacute;pondent &agrave; des besoins que la lumi&egrave;re ne couvre pas. Une s&eacute;ance qui vous donne une raison de rester assis vingt minutes de plus travaille contre vous.
+                {%- else -%}
+                  No, and that is not stylistic caution. Standing up, walking, and looking into the distance meet needs that light does not cover. A session that gives you a reason to stay seated twenty minutes longer is working against you.
+                {%- endif -%}
+              </p>
+            </details>
+
+            <details class="ln-faq__item">
+              <summary class="ln-faq__q">{% if is_fr %}Est-ce une lampe de luminoth&eacute;rapie saisonni&egrave;re&nbsp;?{% else %}Is it a seasonal light-therapy lamp?{% endif %}</summary>
+              <p class="ln-faq__a">
+                {%- if is_fr -%}
+                  Non. Les lampes de jour visent le rythme circadien avec un autre spectre et une autre intensit&eacute;. Ce n&apos;est ni le m&ecirc;me appareil, ni le m&ecirc;me usage, et l&apos;un ne se substitue pas &agrave; l&apos;autre.
+                {%- else -%}
+                  No. Daylight lamps target the circadian rhythm with a different spectrum and a different intensity. Neither the same device nor the same use, and one does not stand in for the other.
+                {%- endif -%}
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+    {%- endif -%}
+
+    {%- comment -%} ---------- ossature commune ---------- {%- endcomment -%}
+
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell">
+        <div class="ln-head ln-reveal">
+          <div>
+            <p class="ln-kicker">{% if is_fr %}La routine{% else %}The routine{% endif %}</p>
+            <h2 class="ln-subtitle">{% if is_fr %}Dans l&apos;ordre, sans rien deviner{% else %}In order, with nothing left to guess{% endif %}</h2>
+          </div>
+          <div class="ln-head__aside">
+            <p>
+              {%- if is_fr -%}
+                Les quatre param&egrave;tres de s&eacute;ance &mdash; moment, dur&eacute;e, distance, fr&eacute;quence &mdash; viennent de notre page <a class="ln-link" href="{{ url_how }}">Comment &ccedil;a marche</a>. Ils ne sont pas propres &agrave; cet objectif&nbsp;: c&apos;est le moment qui change.
+              {%- else -%}
+                The four session parameters &mdash; when, how long, at what distance, how often &mdash; come from our <a class="ln-link" href="{{ url_how }}">How it works</a> page. They are not specific to this goal: it is the moment that changes.
+              {%- endif -%}
+            </p>
+          </div>
+        </div>
+
+        <div class="ln-steps">
+          {%- if is_fr -%}
+            {%- assign etapes = etapes_fr | split: '|' -%}
+          {%- else -%}
+            {%- assign etapes = etapes_en | split: '|' -%}
+          {%- endif -%}
+          {%- for etape in etapes -%}
+            {%- assign paire = etape | split: '~' -%}
+            <div class="ln-step ln-reveal">
+              <h3 class="ln-step__title">{{ paire[0] }}</h3>
+              <p class="ln-step__text">{{ paire[1] }}</p>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <div class="ln-actions">
+          <a class="ln-button ln-button--ink" href="{{ url_protocole_a }}">
+            {% if is_fr %}Protocole &mdash; {{ protocole_a_fr }}{% else %}Protocol &mdash; {{ protocole_a_en }}{% endif %}
+          </a>
+          <a class="ln-button ln-button--ink" href="{{ url_protocole_b }}">
+            {% if is_fr %}Protocole &mdash; {{ protocole_b_fr }}{% else %}Protocol &mdash; {{ protocole_b_en }}{% endif %}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-note ln-reveal">
+          <h2 class="ln-note__title">{% if is_fr %}Les erreurs qui co&ucirc;tent le plus{% else %}The mistakes that cost the most{% endif %}</h2>
+          <ul>
+            {%- if is_fr -%}
+              {%- assign erreurs = erreurs_fr | split: '|' -%}
+            {%- else -%}
+              {%- assign erreurs = erreurs_en | split: '|' -%}
+            {%- endif -%}
+            {%- for erreur in erreurs -%}
+              <li>{{ erreur }}</li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <p class="ln-kicker">{% if is_fr %}Cadrage{% else %}Framing{% endif %}</p>
+        <h2 class="ln-subtitle">{% if is_fr %}Ce que cet objectif ne dit pas{% else %}What this goal does not say{% endif %}</h2>
+        <p class="ln-copy">
+          {%- if is_fr -%}
+            Un objectif n&apos;est pas une indication. Il nomme une zone du corps et un moment de la semaine&nbsp;; il ne d&eacute;signe aucune pathologie et n&apos;en sous-entend aucune. Ce qui suit n&apos;est pas une pr&eacute;caution de style&nbsp;: c&apos;est la limite exacte de ce que cette page peut annoncer.
+          {%- else -%}
+            A goal is not a medical indication. It names an area of the body and a moment in the week; it points to no condition and implies none. What follows is not stylistic caution: it is the exact boundary of what this page may state.
+          {%- endif -%}
+        </p>
+        <div class="ln-pledge">
+          {%- if is_fr -%}
+            {%- assign limites = limites_fr | split: '|' -%}
+          {%- else -%}
+            {%- assign limites = limites_en | split: '|' -%}
+          {%- endif -%}
+          {%- for limite in limites -%}
+            {%- assign paire = limite | split: '~' -%}
+            <div class="ln-pledge__row">
+              <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+              <div>
+                <p class="ln-pledge__title">{{ paire[0] }}</p>
+                <p class="ln-pledge__text">{{ paire[1] }}</p>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+        <div class="ln-actions">
+          <a class="ln-button ln-button--ink" href="{{ url_how }}">
+            {% if is_fr %}Dose, s&eacute;curit&eacute; et m&eacute;canisme{% else %}Dose, safety and mechanism{% endif %}
+          </a>
+          <a class="ln-button ln-button--ink" href="{{ url_science }}">
+            {% if is_fr %}Ce que disent &mdash; et ne disent pas &mdash; les &eacute;tudes{% else %}What the studies do &mdash; and do not &mdash; say{% endif %}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {%- comment -%}
+      Les quatre autres objectifs. Les intitules sont ceux de `goals-hub.liquid` ;
+      l'URL passe par `collections[handle].url`, qui porte le prefixe de langue,
+      avec repli sur le chemin ecrit en dur.
+    {%- endcomment -%}
+    <section class="ln-section ln-section--soft">
+      <div class="ln-shell">
+        <div class="ln-head ln-reveal">
+          <div>
+            <p class="ln-kicker">{% if is_fr %}Changer d&apos;angle{% else %}Another angle{% endif %}</p>
+            <h2 class="ln-subtitle">{% if is_fr %}Les quatre autres objectifs{% else %}The other four goals{% endif %}</h2>
+          </div>
+          <div class="ln-head__aside">
+            <p>
+              {%- if is_fr -%}
+                Un m&ecirc;me appareil appara&icirc;t souvent dans deux objectifs&nbsp;: le d&eacute;coupage sert &agrave; entrer dans la gamme, pas &agrave; ranger les produits dans des cases &eacute;tanches.
+              {%- else -%}
+                The same device often shows up under two goals: the split is a way into the range, not a set of watertight boxes.
+              {%- endif -%}
+            </p>
+          </div>
+        </div>
+
+        <div class="ln-hub">
+          {%- assign autres_handles = 'recovery,performance,skin-amp-glow,longevity,work-amp-focus' | split: ',' -%}
+          {%- assign autres_num = '01,02,03,04,05' | split: ',' -%}
+          {%- assign autres_titres_fr = 'R&eacute;cup&eacute;ration|Performance|Peau &amp; &Eacute;clat|Long&eacute;vit&eacute;|Travail &amp; Concentration' | split: '|' -%}
+          {%- assign autres_titres_en = 'Recovery|Performance|Skin &amp; Glow|Longevity|Work &amp; Focus' | split: '|' -%}
+          {%- assign autres_textes_fr = 'Apr&egrave;s l&apos;effort, sur les zones qui ont travaill&eacute;. La zone d&eacute;cide du format.|Autour de l&apos;entra&icirc;nement&nbsp;: la surface couverte en une pose compte plus que la puissance.|Visage et cuir chevelu, en rouge visible, jug&eacute;s &agrave; seize semaines.|La fiche technique lue param&egrave;tre par param&egrave;tre, et l&apos;horizon annonc&eacute; avant de commencer.|Le cr&eacute;neau que vous ne prenez sur rien&nbsp;: la s&eacute;ance tourne pendant que vous travaillez.' | split: '|' -%}
+          {%- assign autres_textes_en = 'After training, on the areas that did the work. The area decides the format.|Around training: the area covered in one pass counts for more than raw power.|Face and scalp, in visible red, judged at sixteen weeks.|The spec sheet read parameter by parameter, and the horizon stated before you start.|The slot you take from nothing: the session runs while you work.' | split: '|' -%}
+
+          {%- for h in autres_handles -%}
+            {%- unless h == collection.handle -%}
+              {%- assign lien = collections[h].url -%}
+              {%- if lien == blank -%}
+                {%- assign lien = locale_root | append: '/collections/' | append: h -%}
+              {%- endif -%}
+              {% render 'nav-hub-card',
+                 index: autres_num[forloop.index0],
+                 url: lien,
+                 title_fr: autres_titres_fr[forloop.index0],
+                 title_en: autres_titres_en[forloop.index0],
+                 text_fr: autres_textes_fr[forloop.index0],
+                 text_en: autres_textes_en[forloop.index0],
+                 cta_fr: 'Voir cet objectif', cta_en: 'See this goal' %}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="ln-actions">
+          <a class="ln-button" href="{{ url_quiz }}">
+            {% if is_fr %}Trouvez votre Antared{% else %}Find your Antared{% endif %}
+          </a>
+          <a class="ln-button ln-button--ink" href="{{ url_goals }}">
+            {% if is_fr %}La page Par objectif{% else %}The By Goal page{% endif %}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {% render 'learn-product-cta',
+       handles: produits,
+       heading_fr: 'Un objectif se choisit une fois. L&apos;appareil, on le garde des ann&eacute;es.',
+       heading_en: 'You pick a goal once. You keep the device for years.',
+       text_fr: 'Si deux objectifs vous conviennent, prenez le format qui s&apos;ins&egrave;re le plus facilement dans votre semaine&nbsp;: c&apos;est celui que vous utiliserez encore dans trois mois.',
+       text_en: 'If two goals fit, take the format that slots most easily into your week: that is the one you will still be using in three months.' %}
+
+  </div>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Par objectif — sous-page",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Corps editorial des cinq sous-pages de « Par objectif ». L'objectif est derive du handle de la collection : recovery, performance, skin-amp-glow, longevity, work-amp-focus. Toute autre collection ne rend rien. Le hero est rendu par « Collection banner ». Chiffres de dose : learn-how-it-works. Longueurs d'onde : learn-wavelengths. Le bloc « ce que cet objectif ne dit pas » est obligatoire."
+    }
+  ]
+}
+{% endschema %}

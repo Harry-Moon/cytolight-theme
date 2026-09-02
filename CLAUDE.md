@@ -511,6 +511,56 @@ où le survol n'existe pas, `theme.js` retient la première touche pour ouvrir l
 seconde suit le lien. Le test se fait au moment du clic, pas au chargement — une tablette avec
 clavier-souris bascule d'un mode à l'autre sans recharger.
 
+### Sous-pages « Par objectif »
+
+Les cinq cartes de `/pages/goals` mènent à des **collections**, pas à des pages de l'admin :
+`recovery`, `performance`, `skin-amp-glow`, `longevity` et `work-amp-focus`. Ce sont elles, les
+sous-pages de l'objectif — le mega-menu et le tiroir mobile y pointent aussi.
+
+Elles servaient toutes exactement la même page : le titre catalogue « La luminothérapie, pensée
+comme un rituel premium. », la même accroche, les mêmes trois arguments, puis le même teaser
+« Bureau / Cheveux / Corps entier ». Cinq entrées de menu et cinq cartes de hub pour une seule
+page : le découpage par objectif ne voulait plus rien dire dès le premier clic.
+
+Deux sections le portent désormais, toutes deux pilotées par `collection.handle` :
+
+| Fichier | Rôle sur une collection d'objectif | Sur toute autre collection |
+|---|---|---|
+| `sections/main-collection-banner.liquid` | hero éditorial propre à l'objectif — fil d'Ariane, titre, accroche, trois repères chiffrés | bannière catalogue historique, inchangée |
+| `sections/goal-page.liquid` | corps éditorial, sous la grille produits | ne rend rien |
+
+L'ordre dans `templates/collection.json` est `banner`, `products`, `goal` : le visiteur qui a
+cliqué « Ouvrir cet objectif » voit les produits sans avoir à traverser quatre écrans de texte.
+
+Le **bloc signature** est ce qui empêche les cinq pages de se ressembler à nouveau. Chaque
+objectif rend un composant *différent* d'`assets/learn.css` — aucune règle CSS n'a été ajoutée,
+tous existaient déjà :
+
+| Objectif | Bloc signature | Classe |
+|---|---|---|
+| Récupération | carte du corps, six zones | `.ln-bodymap` |
+| Performance | profondeur atteinte par longueur d'onde | `.ln-depth` |
+| Peau & Éclat | spectre et trio de surface | `.ln-spectrum` / `.ln-waves` |
+| Longévité | frise des échéances de mesure | `.ln-timeline` |
+| Travail & Concentration | trois questions dépliables | `.ln-faq` |
+
+Trois règles tiennent ces pages :
+
+1. **Le bloc « ce que cet objectif ne dit pas » figure sur les cinq.** C'est lui qui les tient du
+   bon côté du principe II : nommer une zone du corps et un moment d'usage est autorisé, laisser
+   entendre une indication ne l'est pas. Le retirer transforme la page en allégation.
+2. **Aucun chiffre n'est écrit ici en premier.** Durée, fréquence, distance et horizon viennent de
+   `learn-how-it-works` ; longueurs d'onde et profondeurs de `learn-wavelengths`. Ces deux pages
+   font foi, y compris pour les repères du hero.
+3. **Un `paragraph` de `{% schema %}` est plafonné à 500 caractères par Shopify.** `theme check`
+   ne le voit pas : la section passe le contrôle local et l'upload échoue, la boutique servant
+   alors un 500 sur *toutes* les collections tant que `collection.json` référence une section que
+   Shopify a refusé d'écrire. Se relit dans la sortie de `shopify theme dev`.
+
+Le teaser générique « Bureau / Cheveux / Corps entier » de `main-collection-product-grid.liquid`
+est sauté sur ces cinq collections : il décrit le catalogue entier, il est identique partout, et
+il répète un découpage que la page vient précisément de remplacer.
+
 ### Barre du header
 
 Trois réglages tiennent ensemble et se cassent facilement l'un l'autre :
