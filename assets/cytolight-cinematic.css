@@ -57,11 +57,29 @@
 .cy-button {
   min-height: 52px; display: inline-flex; align-items: center; justify-content: center;
   padding: 0 26px; border: 1px solid transparent; border-radius: 6px; background: var(--cy-red);
-  color: #fff !important; font-size: 14px; font-weight: 650; letter-spacing:.03em; transition: background .2s var(--cy-ease), transform .2s var(--cy-ease);
+  color: #fff !important; font-size: 14px; font-weight: 650; letter-spacing:.03em;
+  /* Relief au repos, enfoncement au survol : la mecanique est decrite en tete
+     du bloc CTA de theme.css, qui porte aussi --cta-shadow. */
+  box-shadow: var(--cta-shadow, 0 14px 26px -10px rgba(210, 13, 47, .62));
+  transition: background .2s var(--cy-ease), color .2s var(--cy-ease), border-color .2s var(--cy-ease), box-shadow .2s var(--cy-ease), transform .18s var(--cy-ease), opacity .15s var(--cy-ease);
 }
-.cy-button:hover { background: var(--cy-red-dark); transform: translateY(-1px); }
 .cy-button--light { background: #fff; color: #111 !important; }
 .cy-button--line { border-color: rgba(255,255,255,.55); background: transparent; color: #fff !important; }
+/* Le blanc sur rouge vaut pour les trois variantes. `!important` parce que les
+   couleurs de repos en portent un : sans lui, le libelle du bouton clair
+   resterait noir sur le rouge du survol. */
+.cy-button:hover,
+.cy-button--light:hover,
+.cy-button--line:hover {
+  background: var(--cy-red);
+  color: #fff !important;
+  border-color: var(--cy-red);
+  box-shadow: none;
+}
+.cy-button:active { opacity: .5; }
+@media (prefers-reduced-motion: no-preference) {
+  .cy-button:hover { transform: translateY(var(--cta-press, 3px)); }
+}
 .cy-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
 
 .cy-hero {
@@ -114,7 +132,11 @@
 .cy-intro__aside p, .cy-range__aside p, .cy-faq__aside p { margin: 0 0 22px; color: var(--cy-muted); font-size: 16px; line-height: 1.7; }
 
 .cy-cinema {
-  min-height: 220vh;
+  /* La course de la scene collante : 170vh, soit 70 % d'ecran de defilement
+     pour derouler toute la sequence. A 220vh il fallait scroller une fois et
+     demie l'ecran avant d'en sortir, et la derniere longueur d'onde arrivait
+     bien apres que le texte avait fini de se poser. */
+  min-height: 170vh;
   background: var(--cy-bg);
   color: #fff;
 }
@@ -145,7 +167,17 @@
    * a l'ecran — c'est le but — et le zoom du scroll (+.05 au maximum) ne peut
    * jamais la ramener au bord du cadre.
    */
-  position: absolute; inset: 0; z-index: 0;
+  /*
+   * Le plan demarre SOUS le header, pas sous le haut de la fenetre.
+   *
+   * Le header et la scene sont tous deux `position: sticky; top: 0`, et le
+   * header passe devant (z-index 50). Le haut du cadre lui revient donc
+   * toujours : avec une image contenue et centree, c'est la tete du sujet qui
+   * finissait derriere la barre — l'athlete de PANO ULTRA en particulier.
+   * `--header-h` est publiee par theme.js, qui mesure le header a chaque
+   * redimensionnement ; le repli a 0 laisse simplement l'ancien cadrage.
+   */
+  position: absolute; inset: var(--header-h, 0px) 0 0 0; z-index: 0;
 }
 .cy-cinema__world img, .cy-cinema__world video {
   width: 100%;
@@ -173,27 +205,27 @@
   will-change: opacity;
 }
 /*
- * Faisceau de couleur : une bande qui porte les sept longueurs d'onde et qui
- * GLISSE derriere un masque fixe, au rythme du scroll. La teinte posee sur
- * l'image passe donc de l'ambre (590 nm) au proche infrarouge profond
- * (940 nm), dans l'ordre exact de la liste .cy-spectrum juste a cote.
+ * La lumiere posee sur l'image prend la couleur de la longueur d'onde en
+ * cours. Elle ne glisse pas : elle CHANGE de teinte, en fondu, quand le scroll
+ * passe d'une brique du spectre a la suivante — comme un appareil qui commute
+ * de longueur d'onde, ce qu'il fait reellement.
  *
- * Elle glisse — elle ne se recolore pas. Repeindre un degrade a chaque image
- * invalide tout le calque : c'est precisement pour cela que le filter()
- * scroll-linked a ete retire de l'image (voir le commentaire plus haut).
- * Ici, seul un `transform` change, ce que le compositeur fait gratuitement.
+ * La couleur ne bouge donc que sept fois sur toute la course, et pas a chaque
+ * image : c'est une transition sur `background-color`, pas un degrade
+ * repeint en boucle. Repeindre un degrade a chaque frame invalide tout le
+ * calque — c'est la raison pour laquelle le filter() scroll-linked avait deja
+ * ete retire de l'image, et la raison pour laquelle la bande a sept couleurs
+ * qui defilait derriere un masque a ete abandonnee a son tour.
  *
- * Le masque, lui, ne bouge pas : le halo reste sur le sujet pendant que sa
- * couleur defile dessous.
+ * Le masque, lui, ne bouge jamais : le halo reste sur le sujet.
  */
 .cy-cinema__beam {
   position: absolute; inset: 0; z-index: 1;
   overflow: hidden;
   pointer-events: none;
   /* Dose : l'opacite du calque multipliee par l'alpha du masque plafonne a
-     .25 au coeur du halo — l'ordre de grandeur du bloom rouge qu'il remplace.
-     En pleine puissance, un aplat de couleur en "screen" delave le blanc du
-     panneau au lieu de l'eclairer. */
+     .25 au coeur du halo. En pleine puissance, un aplat de couleur en
+     "screen" delave le blanc du panneau au lieu de l'eclairer. */
   opacity: calc(.14 + var(--cy-light-step, 0) * .28);
   mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(circle at var(--cy-beam-x, 62%) var(--cy-beam-y, 50%), rgba(0,0,0,.6) 0%, rgba(0,0,0,.3) 17%, transparent 40%);
@@ -201,22 +233,13 @@
   will-change: opacity;
 }
 .cy-cinema__beam > span {
-  position: absolute; top: 0; left: 0;
-  width: 700%; height: 100%;
-  /* Sept fois la largeur du cadre, une teinte centree par septieme : la
-     fenetre visible ne montre qu'une longueur d'onde a la fois. */
-  background: linear-gradient(90deg,
-    var(--cy-wave-590) 7.14%,
-    var(--cy-wave-630) 21.43%,
-    var(--cy-wave-660) 35.71%,
-    var(--cy-wave-810) 50%,
-    var(--cy-wave-830) 64.29%,
-    var(--cy-wave-850) 78.57%,
-    var(--cy-wave-940) 92.86%);
-  /* -85.71% = six septiemes de la bande : de la premiere teinte a la
-     septieme, exactement. */
-  transform: translate3d(calc(var(--cy-p, 0) * -85.71%), 0, 0);
-  will-change: transform;
+  position: absolute; inset: 0;
+  /* --cy-wave-now est posee par cytolight-cinematic.js a chaque changement de
+     longueur d'onde, et vaut la couleur reellement affichee sur la brique
+     correspondante. Une scene sans liste de spectres — PANO ULTRA — garde le
+     rouge profond du repli. */
+  background-color: var(--cy-wave-now, var(--cy-wave-660));
+  transition: background-color .5s var(--cy-ease);
 }
 .cy-cinema__glow {
   /* Static vignette only — the animated red bloom lives in
@@ -287,15 +310,48 @@
   transition: text-shadow .3s ease;
 }
 .cy-spectrum span:hover strong { text-shadow: 0 0 22px color-mix(in srgb, var(--wave-color, #c8102e) 70%, transparent); }
-/* La longueur d'onde que le faisceau traverse a cet instant du scroll. Le
-   trait s'etend et s'allume : la liste dit alors la meme chose que la lumiere
-   posee sur l'image, au meme moment. */
+/*
+ * Le neon, brique par brique.
+ *
+ * Les longueurs d'onde s'allument l'une apres l'autre au fil du scroll : celle
+ * que le systeme "emet" a cet instant est au plein (is-current), celles deja
+ * passees restent allumees en veilleuse (is-lit). La liste dit donc la meme
+ * chose que la lumiere posee sur l'image, au meme moment.
+ *
+ * Les deux classes sont posees par cytolight-cinematic.js, une seule fois par
+ * changement de longueur d'onde. Sans le script, aucune brique n'est marquee
+ * et la liste s'affiche entierement, dans son etat de repos : rien ne depend
+ * du JS pour etre lisible.
+ */
+.cy-spectrum span.is-lit { color: #cfcfcf; }
+.cy-spectrum span.is-lit::before {
+  width: 100%;
+  box-shadow: 0 0 9px color-mix(in srgb, var(--wave-color, #c8102e) 45%, transparent);
+}
 .cy-spectrum span.is-current { color: #fff; }
 .cy-spectrum span.is-current::before {
   width: 100%;
-  box-shadow: 0 0 14px color-mix(in srgb, var(--wave-color, #c8102e) 75%, transparent);
+  height: 3px;
+  box-shadow:
+    0 0 16px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent),
+    0 0 38px color-mix(in srgb, var(--wave-color, #c8102e) 45%, transparent);
 }
 .cy-spectrum span.is-current strong { text-shadow: 0 0 26px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent); }
+
+/* L'amorce : un tube neon ne monte pas en fondu, il accroche, bat une fois,
+   puis tient. L'animation ne porte que sur l'opacite du trait — elle est
+   relancee a chaque fois que la classe est reposee. */
+@media (prefers-reduced-motion: no-preference) {
+  .cy-spectrum span.is-current::before { animation: antared-wave-ignite .52s var(--cy-ease); }
+}
+@keyframes antared-wave-ignite {
+  0%   { opacity: .25; }
+  16%  { opacity: 1; }
+  27%  { opacity: .38; }
+  44%  { opacity: 1; }
+  58%  { opacity: .66; }
+  100% { opacity: 1; }
+}
 /* Antared Redlight Cap: real two-plane parallax. The background room
    plate and the transparent product cutout are separate elements that
    drift at different scroll-linked speeds (see --cy-p multipliers
@@ -307,6 +363,8 @@
    est deja en "contain". D'ou l'overscan bas et l'origine haute conserves
    ici, et nulle part ailleurs. */
 .cy-cinema--cap .cy-cinema__world {
+  /* Plein cadre, header compris : la plaque d'ambiance n'a pas de sujet a
+     proteger en haut, et la degager laisserait une bande vide sous la barre. */
   inset: 0 0 -6%;
 }
 .cy-cinema--cap .cy-cinema__world img, .cy-cinema--cap .cy-cinema__world video {
@@ -468,6 +526,36 @@
 .cy-product__meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.18); }
 .cy-product__price { font-size: 15px; font-weight: 650; }
 .cy-product__meta .cy-link { color: #fff; font-size: 13px; }
+
+/*
+ * Le « Decouvrir » des cartes du catalogue, et le « Voir tous les produits »
+ * qui coiffe la section : la fleche glisse vers la droite quand la carte est
+ * survolee.
+ *
+ * Le survol se prend sur la CARTE, pas sur le lien. Le lien est un `<span>`
+ * pose au bas d'une carte qui est elle-meme le lien cliquable : viser
+ * `.cy-link:hover` n'aurait repondu qu'au pointeur exactement dessus, alors
+ * que c'est toute la carte qui reagit deja (elle se souleve et son image
+ * grandit). La fleche est le seul element du bloc qui ne faisait rien.
+ *
+ * La fleche est enveloppee dans un `<span aria-hidden>` cote Liquid : en
+ * simple caractere de texte, il n'y avait rien a animer. `aria-hidden` parce
+ * qu'un lecteur d'ecran annoncerait « fleche vers la droite » apres le
+ * libelle, ce qui n'apporte rien.
+ *
+ * Le glissement est enferme dans prefers-reduced-motion : c'est une decoration,
+ * la carte reste parfaitement lisible sans lui.
+ */
+.cy-range .cy-link > span[aria-hidden] {
+  display: inline-block;
+  transition: transform .34s var(--cy-ease);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cy-range .cy-product:hover .cy-link > span[aria-hidden],
+  .cy-range .cy-link:hover > span[aria-hidden] {
+    transform: translateX(7px);
+  }
+}
 
 .cy-use__grid {
   display: grid;
@@ -672,7 +760,7 @@
   .cy-cinema__world { inset: 0; }
   .cy-cinema__world img, .cy-cinema__world video { transform: none !important; }
   .cy-cinema__foreground { transform: none !important; }
-  .cy-cinema__beam > span { transform: translate3d(-28.57%, 0, 0) !important; }
+  .cy-cinema__beam > span { background-color: var(--cy-wave-660) !important; }
   /* Sans derive, l'overscan bas du decoupage n'a plus de raison d'etre :
      laisse tel quel, il ferait passer le buste sous le bord de la scene.
      Selecteur a deux classes, comme la regle qu'il annule : a specificite
@@ -742,11 +830,11 @@
     transform: none !important;
   }
   /* Sans scene collante, --cy-p ne progresse plus de maniere fiable (voir
-     l'entete de cette requete media) : le faisceau se figerait n'importe ou
-     dans le spectre. Il est cale sur le rouge profond, la teinte de la
-     marque, et cesse de defiler. */
+     l'entete de cette requete media) : la lumiere s'arreterait sur une teinte
+     prise au hasard. Elle est calee sur le rouge profond, celle de la marque,
+     et ne change plus. */
   .cy-home .cy-cinema__beam { opacity: .34; }
-  .cy-home .cy-cinema__beam > span { transform: translate3d(-28.57%, 0, 0); }
+  .cy-home .cy-cinema__beam > span { background-color: var(--cy-wave-660); }
   .cy-home .cy-cinema--cap .cy-cinema__foreground,
   .cy-home .cy-cinema--cap .cy-cinema__glow {
     top: 0; right: 0; bottom: auto; left: 0;
@@ -811,11 +899,11 @@
 }
 
 /*
- * Sans masque, le faisceau n'est plus un halo : c'est une bande de sept
- * couleurs sur toute la scene. Un navigateur qui ne sait pas masquer ne doit
- * donc pas l'afficher du tout — la scene retombe sur l'image et sa vignette,
- * qui se suffisent. Regle placee en fin de fichier pour passer apres les
- * opacites des requetes media.
+ * Sans masque, la lumiere n'est plus un halo : c'est un aplat de couleur sur
+ * toute la scene. Un navigateur qui ne sait pas masquer ne doit donc pas
+ * l'afficher du tout — la scene retombe sur l'image et sa vignette, qui se
+ * suffisent. Regle placee en fin de fichier pour passer apres les opacites
+ * des requetes media.
  */
 @supports not ((mask-image: radial-gradient(#000, transparent)) or (-webkit-mask-image: radial-gradient(#000, transparent))) {
   .cy-cinema__beam { display: none; }

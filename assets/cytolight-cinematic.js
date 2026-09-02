@@ -85,14 +85,26 @@
         scene.el.style.setProperty('--cy-pe', responsiveEase(scene.currentProgress).toFixed(4));
         scene.el.style.setProperty('--cy-zoom', zoomStep(scene.currentProgress).toFixed(4));
         scene.el.style.setProperty('--cy-light-step', lightStep(scene.currentProgress).toFixed(2));
-        // La liste des spectres suit le faisceau : le libelle traverse par la
-        // lumiere a cet instant s'allume. Une seule ecriture DOM par
-        // changement d'indice — pas une par image.
+        // Le neon suit le scroll : la longueur d'onde en cours passe au plein,
+        // celles deja franchies restent en veilleuse, et la lumiere posee sur
+        // l'image prend la couleur de la brique courante.
+        //
+        // Tout cela ne s'ecrit qu'aux changements d'indice — sept fois sur
+        // toute la course, pas une fois par image. C'est ce qui permet a la
+        // couleur d'etre une transition CSS sans repeindre le calque a chaque
+        // frame.
         if (scene.waves.length > 1) {
           var index = Math.round(clamp(scene.currentProgress, 0, 1) * (scene.waves.length - 1));
           if (index !== scene.currentWave) {
-            if (scene.currentWave >= 0) scene.waves[scene.currentWave].classList.remove('is-current');
-            scene.waves[index].classList.add('is-current');
+            scene.waves.forEach(function (wave, i) {
+              wave.classList.toggle('is-lit', i < index);
+              wave.classList.toggle('is-current', i === index);
+            });
+            // La teinte est lue sur la brique elle-meme (le trait de couleur
+            // de son ::before) plutot que recopiee dans le script : les sept
+            // valeurs restent ecrites une seule fois, dans le CSS.
+            var lit = window.getComputedStyle(scene.waves[index], '::before').backgroundColor;
+            if (lit) scene.el.style.setProperty('--cy-wave-now', lit);
             scene.currentWave = index;
           }
         }
