@@ -387,6 +387,13 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   gap: clamp(20px, 3vw, 48px);
   align-content: start;
 }
+/* Filet de securite : quand le visuel manque — produit sans image mise en
+   avant, fichier absent de Content > Files — les colonnes de liens deviennent
+   le seul enfant de la grille et tombent dans la colonne de 260 px reservee a
+   ce visuel. Les groupes s'empilaient alors les uns sous les autres dans un
+   couloir etroit, au lieu de se poser cote a cote. Elles reprennent ici toute
+   la largeur du panneau. */
+.site-header__panel-groups:only-child { grid-column: 1 / -1; }
 .site-header__panel-group { display: grid; gap: 2px; align-content: start; }
 .site-header__panel-heading {
   margin: 0 0 12px;
@@ -616,10 +623,13 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
    creuse que les listes etaient inegales. */
 .site-footer__top { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 40px; margin-bottom: 48px; }
 .site-footer__brand { flex: 1 1 260px; max-width: 340px; }
+/* `minmax(150px, ...)` et non 118 : sous 150 px, un intitule d'un seul mot
+   long — PROFESSIONNELS — depasse sa colonne et vient chevaucher la suivante.
+   La piste ne descend donc jamais sous la largeur du plus long intitule. */
 .site-footer__cols {
   flex: 1 1 520px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   align-items: start;
   gap: 28px 26px;
 }
@@ -629,13 +639,21 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 @media (min-width: 1180px) {
   .site-footer__top { flex-wrap: nowrap; }
   .site-footer__brand { flex: 0 1 300px; }
+  /* Les colonnes sont dimensionnees par leur contenu, et l'espace restant est
+     reparti a parts egales entre elles : l'ecart d'un bloc au suivant est le
+     meme partout. Des pistes de largeur egale (l'etat precedent, `flex: 1 1 0`)
+     donnaient l'inverse — les listes n'ont pas la meme largeur de texte, donc
+     le blanc entre deux blocs variait d'une paire a l'autre, et le plus long
+     intitule debordait sur son voisin. `auto` ne descend jamais sous le mot le
+     plus long : le chevauchement n'est plus possible. */
   .site-footer__cols {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: flex-start;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    justify-content: space-between;
+    align-items: start;
     gap: 26px;
   }
-  .site-footer__col { flex: 1 1 0; }
 }
 .site-footer__brand h3 { font-family: var(--font-body); font-weight: 700; letter-spacing: .25em; font-size: 1.2rem; margin-bottom: 12px; }
 /*
@@ -654,7 +672,11 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .site-footer .site-footer__logo img { display: block; width: 180px; height: auto; }
 .site-footer__brand p { opacity: .7; max-width: 320px; font-size: .9rem; }
 .site-footer__tagline { margin: 0 0 22px; }
-.site-footer__col { min-width: 0; }
+/* `min-content` et non `0` : a zero, la piste peut descendre sous la largeur
+   du mot le plus long, et l'intitule PROFESSIONNELS debordait sur la colonne
+   voisine. La colonne se retrecit toujours, mais jamais au point de couper un
+   mot. */
+.site-footer__col { min-width: min-content; }
 .site-footer__col h4 {
   display: inline-block;
   font-family: var(--font-body);
