@@ -1,0 +1,26 @@
+{%- comment -%}
+  Gabarit Antared Pro > Bien-etre en entreprise.
+
+  A assigner dans l'admin Shopify a la page de handle `corporate-wellness`
+  (Content > Pages > ... > Theme template : page.corporate-wellness).
+
+  Le contenu vit dans `sections/pro-page.liquid`, qui derive le segment depuis
+  le handle de la page. Ce gabarit ne porte que l'enveloppe. Si quelqu'un saisit
+  malgre tout du texte dans l'editeur, il est rendu en bas plutot que perdu sans
+  trace.
+{%- endcomment -%}
+
+{{ 'learn.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'learn.js' | asset_url }}" defer></script>
+
+<div class="ln-page" data-learn>
+  {% section 'pro-page' %}
+
+  {%- if page.content != blank -%}
+    <section class="ln-section ln-section--tight">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-prose">{{ page.content }}</div>
+      </div>
+    </section>
+  {%- endif -%}
+</div>

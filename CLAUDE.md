@@ -370,6 +370,61 @@ la consommation et rejetée à la validation des comptes publicitaires.
 
 Ne jamais ajouter une référence sans identifiant vérifiable, ni retirer le cadrage sur les limites.
 
+## Pages Antared Pro
+
+Six pages de segment B2B, servies par **une seule section** — `sections/pro-page.liquid` — qui
+dérive le segment depuis `page.handle`, exactement comme `protocol-page.liquid` le fait pour les
+Protocoles. Six gabarits d'une ligne, une seule mise en page à maintenir. Un handle inconnu
+retombe sur une page générique qui renvoie vers `/pages/antared-pro`.
+
+| Handle | Gabarit | Segment |
+|---|---|---|
+| `clinics` | `page.clinics.liquid` | cliniques et cabinets |
+| `physios` | `page.physios.liquid` | kinésithérapeutes |
+| `gyms` | `page.gyms.liquid` | salles de sport |
+| `hotels-spas` | `page.hotels-spas.liquid` | hôtels et spas |
+| `corporate-wellness` | `page.corporate-wellness.liquid` | bien-être en entreprise |
+| `become-a-dealer` | `page.become-a-dealer.liquid` | revendeurs |
+
+La page d'atterrissage `antared-pro` reste servie par `sections/pro-hub.liquid` : elle distribue
+vers ces six pages et n'en décrit aucune. Les URL, elles, vivent dans `sections/header.liquid`
+comme tout le reste du mega-menu.
+
+Trois règles tiennent ces pages :
+
+1. **Le bloc « ce que vous ne pouvez pas annoncer » figure sur chacune.** C'est lui qui les tient
+   du bon côté du principe II : le professionnel qui installe l'appareil est celui qui prendra la
+   parole devant ses patients, ses adhérents ou ses clients. Lui donner le matériel sans lui
+   donner la limite déplacerait l'allégation, ça ne l'éviterait pas.
+2. **Aucun tarif, aucune remise, aucun volume minimum, aucune référence client** (principe III).
+   Ces conditions se discutent, elles ne s'affichent pas tant qu'elles n'existent pas. Le segment
+   revendeur le dit explicitement plutôt que de laisser croire à un oubli.
+3. **Aucun chiffre de dose écrit ici en premier.** Durée, fréquence et distance viennent de
+   `learn-how-it-works` ; les longueurs d'onde de `learn-wavelengths`. Ces deux pages font foi.
+
+Comme pour l'espace Learn et les Protocoles, **les gabarits s'assignent à la main dans Content →
+Pages après le merge** : le sélecteur ne liste que les gabarits du thème publié. Les six pages
+existent déjà dans l'admin, avec leur ébauche d'une centaine de mots identique en FR et en EN :
+**vider ce corps de page en même temps qu'on assigne le gabarit.** Sans cela l'ébauche reste rendue
+en bas de page, dans `.ln-prose`, et rajoute au pied d'une page bilingue le bloc monolingue que
+l'audit du 2026-08-21 reproche justement à ces six pages.
+
+### Encarts visuels
+
+Chaque page porte trois emplacements d'image rendus par `snippets/media-slot.liquid` : une bande
+16/9 sous l'introduction, un portrait 4/5 dans la section installation, un 3/2 face au bloc de
+contact. Tant que le fichier n'existe pas, l'encart occupe **exactement la même place, au même
+ratio**, et affiche le brief du visuel attendu — la mise en page ne bouge pas le jour où la photo
+arrive, et personne n'a à deviner ce qu'il faut photographier.
+
+Le défaut est vide, et c'est délibéré : `file_url` sur un nom absent de Content → Files ne renvoie
+pas une erreur, il renvoie une URL qui répond 404. Une image cassée coûte plus qu'un encart assumé.
+
+Pour remplir un encart : uploader la photo dans Content → Files, relever le nom exact retourné par
+Shopify, puis le reporter dans les `assign media_hero_file` / `media_install_file` /
+`media_ask_file` en tête de `sections/pro-page.liquid`, avec les dimensions réelles du fichier.
+Ces trois `assign` sont le seul endroit à modifier.
+
 ## Pages d'atterrissage du menu
 
 Les six onglets du mega-menu sont des **liens**, pas des boutons : chacun mène à la page qui
