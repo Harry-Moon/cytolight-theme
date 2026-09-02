@@ -3,8 +3,10 @@
 
   Parametres :
     product_handle  handle produit dont on prend l'image mise en avant
-    image_file      nom de fichier Content > Files, si aucun produit ne convient
-    label           titre affiche sous le visuel, identique dans les 3 langues
+    image_file      nom de fichier Content > Files. Sert de repli quand le
+                    produit n'a pas d'image mise en avant, ou de source
+                    principale quand aucun produit ne convient.
+    label           titre affiche sous le visuel, identique dans les deux langues
     label_fr        variante francaise du titre, si besoin
     caption_fr      lien d'action sous le titre (caption = version anglaise)
     url             destination du visuel et du lien
@@ -13,6 +15,12 @@
   rabat alors sur ses seules colonnes de liens, plutot que d'afficher un cadre
   vide. Les images produit viennent de featured_image, donc aucune n'a besoin
   d'etre televersee a la main.
+
+  Chaque appel passe donc les DEUX parametres : un produit sans image mise en
+  avant est invisible ici — le panneau Protocoles y a perdu son visuel, et ses
+  colonnes de liens, devenues seul enfant de la grille, se sont empilees dans
+  le couloir de 260 px reserve a l'image. Le repli `image_file` ne coute rien
+  quand le produit a une image : il n'est jamais lu.
 {%- endcomment -%}
 
 {%- liquid
