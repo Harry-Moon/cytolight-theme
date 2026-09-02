@@ -1,63 +1,276 @@
-{%- assign is_fr = false -%}
-{%- if request.locale.iso_code contains 'fr' -%}
-  {%- assign is_fr = true -%}
-{%- endif -%}
-
 {%- comment -%}
-  La fiche DESK est visee par son objet produit plutot que par un chemin ecrit
-  en dur : product.url porte le prefixe de langue, un chemin nu ramene le
-  visiteur anglophone sur la version francaise.
+  Banniere de collection.
+
+  Deux rendus, un seul h1 dans les deux cas :
+
+  1. Les CINQ COLLECTIONS D'OBJECTIF — recovery, performance, skin-amp-glow,
+     longevity, work-amp-focus — sont les sous-pages de `/pages/goals`. Elles
+     recoivent un hero editorial propre a l'objectif, dans la langue visuelle de
+     l'espace Learn (`assets/learn.css`, classes `ln-*`), celle-la meme que la
+     page « Par objectif » d'ou vient le visiteur. Le corps de la page est rendu
+     par `sections/goal-page.liquid`, sous la grille produits.
+
+  2. Toute autre collection garde la banniere catalogue historique, inchangee.
+
+  Avant, les cinq objectifs servaient tous le meme titre — « La luminotherapie,
+  pensee comme un rituel premium. » — au-dessus de la meme accroche et des memes
+  trois arguments. Cinq entrees de menu, cinq cartes sur le hub, une seule page.
+  Le decoupage par objectif ne voulait plus rien dire des le premier clic.
+
+  Les chiffres affiches dans les reperes du hero ne sont ecrits en premier nulle
+  part ici : duree, frequence et distance viennent de `learn-how-it-works`, les
+  longueurs d'onde de `learn-wavelengths`. Ces deux pages font foi.
 {%- endcomment -%}
-{%- assign desk_product = all_products['cytolight-desk'] -%}
-{%- assign locale_root = routes.root_url -%}
-{%- if locale_root == '/' -%}
-  {%- assign locale_root = '' -%}
-{%- endif -%}
-{%- assign desk_url = locale_root | append: '/products/cytolight-desk' -%}
-{%- if desk_product != blank -%}
-  {%- assign desk_url = desk_product.url -%}
-{%- endif -%}
 
-{%- if collection.handle == 'all' -%}
-  {{ 'collection-banner-video.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
 
-<section class="collection-banner collection-banner--cyto">
-  {%- if collection.handle == 'all' -%}
-    <div class="collection-banner__video" aria-hidden="true">
-      <video src="https://cdn.shopify.com/videos/c/o/v/7c5e3e2ed7e04dd38d5a5e21485e9363.mp4" autoplay loop muted playsinline></video>
-    </div>
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign url_goals = pages['goals'].url
+  if url_goals == blank
+    assign url_goals = locale_root | append: '/pages/goals'
+  endif
+
+  assign objectif = ''
+  case collection.handle
+    when 'recovery'
+      assign objectif = 'recovery'
+    when 'performance'
+      assign objectif = 'performance'
+    when 'skin-amp-glow'
+      assign objectif = 'skin'
+    when 'longevity'
+      assign objectif = 'longevity'
+    when 'work-amp-focus'
+      assign objectif = 'focus'
+  endcase
+-%}
+
+{%- if objectif != blank -%}
+
+  {%- liquid
+    case objectif
+      when 'recovery'
+        assign crumb_fr = 'R&eacute;cup&eacute;ration'
+        assign crumb_en = 'Recovery'
+        assign kicker_fr = 'Objectif &mdash; r&eacute;cup&eacute;ration'
+        assign kicker_en = 'Goal &mdash; recovery'
+        assign titre_fr = 'Le lendemain se joue dans l&apos;heure qui suit.'
+        assign titre_en = 'Tomorrow is decided in the hour that follows.'
+        assign accroche_fr = 'C&apos;est l&apos;objectif le plus simple &agrave; tenir, parce qu&apos;il s&apos;accroche &agrave; un moment qui existe d&eacute;j&agrave;&nbsp;: juste apr&egrave;s l&apos;effort, assis, avant la douche. Les appareils rassembl&eacute;s ici couvrent les zones qui viennent de travailler, sans vous demander de trouver du temps en plus.'
+        assign accroche_en = 'This is the easiest goal to keep, because it hooks onto a moment that already exists: right after training, sitting down, before the shower. The devices gathered here cover the areas that just did the work, without asking you to find extra time.'
+        assign f1_val = '10&ndash;20 min'
+        assign f1_fr = 'par zone, la dur&eacute;e sur laquelle les protocoles convergent'
+        assign f1_en = 'per area, the duration protocols converge on'
+        assign f2_val = '3 &agrave; 5&times;'
+        assign f2_val_en = '3 to 5&times;'
+        assign f2_fr = 'par semaine, tenues sur plusieurs semaines'
+        assign f2_en = 'a week, sustained over several weeks'
+        assign f3_val = '660 + 850 nm'
+        assign f3_fr = 'le rouge profond et le proche infrarouge, sur les tissus sollicit&eacute;s'
+        assign f3_en = 'deep red and near-infrared, on the tissue that was loaded'
+
+      when 'performance'
+        assign crumb_fr = 'Performance'
+        assign crumb_en = 'Performance'
+        assign kicker_fr = 'Objectif &mdash; performance'
+        assign kicker_en = 'Goal &mdash; performance'
+        assign titre_fr = 'Dix minutes avant, ou dans l&apos;heure apr&egrave;s. Jamais les deux.'
+        assign titre_en = 'Ten minutes before, or within the hour after. Never both.'
+        assign accroche_fr = 'Autour de l&apos;entra&icirc;nement, la contrainte n&apos;est pas la puissance de l&apos;appareil&nbsp;: c&apos;est la surface couverte en une seule pose. Un grand format prend plusieurs groupes musculaires d&apos;un coup, ce qui est la seule fa&ccedil;on qu&apos;une routine survive &agrave; une vraie semaine d&apos;entra&icirc;nement.'
+        assign accroche_en = 'Around training, the constraint is not the power of the device: it is the area covered in a single pass. A large format takes several muscle groups at once, which is the only way a routine survives a real training week.'
+        assign f1_val = '10 min'
+        assign f1_fr = 'avant l&apos;effort, sur les groupes que la s&eacute;ance va charger'
+        assign f1_en = 'before training, on the groups the session will load'
+        assign f2_val = '&le; 1 h'
+        assign f2_val_en = '&le; 1 h'
+        assign f2_fr = 'apr&egrave;s l&apos;effort, la fen&ecirc;tre que d&eacute;crivent les protocoles'
+        assign f2_en = 'after training, the window the protocols describe'
+        assign f3_val = '15&ndash;50 cm'
+        assign f3_fr = 'la distance d&apos;un panneau, selon l&apos;irradiance annonc&eacute;e'
+        assign f3_en = 'the distance for a panel, depending on stated irradiance'
+
+      when 'skin'
+        assign crumb_fr = 'Peau &amp; &Eacute;clat'
+        assign crumb_en = 'Skin &amp; Glow'
+        assign kicker_fr = 'Objectif &mdash; peau &amp; &eacute;clat'
+        assign kicker_en = 'Goal &mdash; skin &amp; glow'
+        assign titre_fr = 'Une routine du soir ne tient que si elle tient en dix minutes.'
+        assign titre_en = 'An evening routine only survives if it fits in ten minutes.'
+        assign accroche_fr = 'Le visage et le cuir chevelu se travaillent en rouge visible, tout pr&egrave;s de la surface. C&apos;est aussi l&apos;objectif o&ugrave; l&apos;&eacute;cart entre la promesse habituelle et la litt&eacute;rature est le plus large&nbsp;: les essais de r&eacute;f&eacute;rence mesurent &agrave; seize semaines, pas &agrave; sept jours.'
+        assign accroche_en = 'Face and scalp are worked in visible red, close to the surface. It is also the goal where the gap between the usual promise and the literature is widest: the reference trials measure at sixteen weeks, not seven days.'
+        assign f1_val = '590 &middot; 630 &middot; 660 nm'
+        assign f1_fr = 'le trio qui agit le plus pr&egrave;s de la surface'
+        assign f1_en = 'the trio acting closest to the surface'
+        assign f2_val = '10 min'
+        assign f2_val_en = '10 min'
+        assign f2_fr = 'sur peau nue et propre, avant les soins'
+        assign f2_en = 'on clean bare skin, before skincare'
+        assign f3_val = '16'
+        assign f3_fr = 'semaines&nbsp;: l&apos;horizon auquel mesurent les essais de r&eacute;f&eacute;rence'
+        assign f3_en = 'weeks: the horizon the reference trials measure at'
+
+      when 'longevity'
+        assign crumb_fr = 'Long&eacute;vit&eacute;'
+        assign crumb_en = 'Longevity'
+        assign kicker_fr = 'Objectif &mdash; long&eacute;vit&eacute;'
+        assign kicker_en = 'Goal &mdash; longevity'
+        assign titre_fr = 'Pour qui lit les param&egrave;tres avant la promesse.'
+        assign titre_en = 'For anyone who reads the parameters before the promise.'
+        assign accroche_fr = 'Cet objectif ne rassemble pas les appareils les plus puissants, mais ceux dont les param&egrave;tres se pilotent un par un &mdash; longueur d&apos;onde, intensit&eacute;, pulsation &mdash; plut&ocirc;t que derri&egrave;re un bouton unique. Si vous lisez les publications avant d&apos;acheter, c&apos;est ici que la fiche technique r&eacute;pond.'
+        assign accroche_en = 'This goal does not gather the most powerful devices, but the ones whose parameters are driven one by one &mdash; wavelength, intensity, pulse &mdash; rather than from behind a single button. If you read the papers before buying, this is where the spec sheet answers.'
+        assign f1_val = '590&ndash;940 nm'
+        assign f1_fr = 'la fen&ecirc;tre optique, longueur d&apos;onde par longueur d&apos;onde'
+        assign f1_en = 'the optical window, wavelength by wavelength'
+        assign f2_val = 'mW/cm&sup2;'
+        assign f2_val_en = 'mW/cm&sup2;'
+        assign f2_fr = "l'irradiance, qui ne veut rien dire sans une distance annonc&eacute;e"
+        assign f2_en = 'irradiance, which means nothing without a stated distance'
+        assign f3_val = '0'
+        assign f3_fr = '&eacute;tude publi&eacute;e men&eacute;e sur un appareil Antared. Nous le disons avant d&apos;en citer.'
+        assign f3_en = 'published studies run on an Antared device. We say so before citing any.'
+
+      when 'focus'
+        assign crumb_fr = 'Travail &amp; Concentration'
+        assign crumb_en = 'Work &amp; Focus'
+        assign kicker_fr = 'Objectif &mdash; travail &amp; concentration'
+        assign kicker_en = 'Goal &mdash; work &amp; focus'
+        assign titre_fr = 'Le seul cr&eacute;neau que vous ne prendrez sur rien d&apos;autre.'
+        assign titre_en = 'The only slot you will not take from anything else.'
+        assign accroche_fr = 'Le probl&egrave;me d&apos;une routine quotidienne n&apos;est jamais l&apos;appareil&nbsp;: c&apos;est le cr&eacute;neau. Cet objectif r&eacute;unit les formats qui se posent en face de vous pendant que vous travaillez, ou sur la t&ecirc;te pendant une r&eacute;union en &eacute;coute. La s&eacute;ance n&apos;ajoute rien &agrave; la journ&eacute;e.'
+        assign accroche_en = 'The problem with a daily routine is never the device: it is the slot. This goal gathers the formats that sit in front of you while you work, or on your head through a meeting you are only listening to. The session adds nothing to the day.'
+        assign f1_val = '0 min'
+        assign f1_fr = 'de temps ajout&eacute;&nbsp;: la s&eacute;ance se fait pendant que vous travaillez'
+        assign f1_en = 'of added time: the session runs while you work'
+        assign f2_val = '7'
+        assign f2_val_en = '7'
+        assign f2_fr = 'spectres sur le DESK, du 590 nm au 940 nm'
+        assign f2_en = 'spectra on the DESK, from 590 nm to 940 nm'
+        assign f3_val = '15&ndash;50 cm'
+        assign f3_fr = 'la distance d&apos;un panneau pos&eacute; derri&egrave;re l&apos;&eacute;cran'
+        assign f3_en = 'the distance of a panel set behind the screen'
+    endcase
+
+    assign f2_affiche = f2_val
+    unless is_fr
+      assign f2_affiche = f2_val_en | default: f2_val
+    endunless
+  -%}
+
+  {{ 'learn.css' | asset_url | stylesheet_tag }}
+
+  <div class="ln-page">
+    <section class="ln-hero">
+      <div class="ln-shell">
+        <p class="ln-crumbs">
+          <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+          <span aria-hidden="true">/</span>
+          <a href="{{ url_goals }}">{% if is_fr %}Par objectif{% else %}By Goal{% endif %}</a>
+          <span aria-hidden="true">/</span>
+          {% if is_fr %}{{ crumb_fr }}{% else %}{{ crumb_en }}{% endif %}
+        </p>
+        <p class="ln-kicker">{% if is_fr %}{{ kicker_fr }}{% else %}{{ kicker_en }}{% endif %}</p>
+        <h1 class="ln-title">{% if is_fr %}{{ titre_fr }}{% else %}{{ titre_en }}{% endif %}</h1>
+        <p class="ln-copy">{% if is_fr %}{{ accroche_fr }}{% else %}{{ accroche_en }}{% endif %}</p>
+
+        <div class="ln-hero__facts">
+          <div class="ln-hero__fact">
+            <strong>{{ f1_val }}</strong>
+            <span>{% if is_fr %}{{ f1_fr }}{% else %}{{ f1_en }}{% endif %}</span>
+          </div>
+          <div class="ln-hero__fact">
+            <strong>{{ f2_affiche }}</strong>
+            <span>{% if is_fr %}{{ f2_fr }}{% else %}{{ f2_en }}{% endif %}</span>
+          </div>
+          <div class="ln-hero__fact">
+            <strong>{{ f3_val }}</strong>
+            <span>{% if is_fr %}{{ f3_fr }}{% else %}{{ f3_en }}{% endif %}</span>
+          </div>
+        </div>
+
+        <div class="ln-actions">
+          <a class="ln-button ln-button--light" href="#collection-products">
+            {%- if collection.products_count == 1 -%}
+              {% if is_fr %}Voir l&apos;appareil{% else %}See the device{% endif %}
+            {%- else -%}
+              {% if is_fr %}Voir les {{ collection.products_count }} appareils{% else %}See the {{ collection.products_count }} devices{% endif %}
+            {%- endif -%}
+          </a>
+          <a class="ln-button ln-button--line" href="{{ url_goals }}">
+            {% if is_fr %}Les cinq objectifs{% else %}All five goals{% endif %}
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+{%- else -%}
+
+  {%- comment -%}
+    La fiche DESK est visee par son objet produit plutot que par un chemin ecrit
+    en dur : product.url porte le prefixe de langue, un chemin nu ramene le
+    visiteur anglophone sur la version francaise.
+  {%- endcomment -%}
+  {%- assign desk_product = all_products['cytolight-desk'] -%}
+  {%- assign desk_url = locale_root | append: '/products/cytolight-desk' -%}
+  {%- if desk_product != blank -%}
+    {%- assign desk_url = desk_product.url -%}
   {%- endif -%}
-  <div class="container collection-banner__inner">
-    <div class="collection-banner__copy">
-      <span class="eyebrow">{% if is_fr %}Catalogue Antared{% else %}Antared catalogue{% endif %}</span>
-      <h1>{% if is_fr %}La luminoth&eacute;rapie, pens&eacute;e comme un rituel premium.{% else %}Red light therapy, designed as a premium ritual.{% endif %}</h1>
-      <p>
-        {% if collection.description != blank %}
-          {{ collection.description }}
-        {% elsif is_fr %}
-          D&eacute;couvrez les formats Antared pour le bureau, la routine cheveux, la r&eacute;cup&eacute;ration et les espaces wellness. Certains produits arrivent bient&ocirc;t.
-        {% else %}
-          Explore Antared formats for desk rituals, hair routines, recovery, and wellness spaces. Some products are arriving soon.
-        {% endif %}
-      </p>
-      <div class="collection-banner__actions">
-        <a class="btn btn--primary" href="#collection-products">{% if is_fr %}Voir les produits{% else %}View products{% endif %}</a>
-        <a class="btn btn--ghost collection-banner__ghost" href="{{ desk_url }}">{% if is_fr %}Commencer par DESK{% else %}Start with DESK{% endif %}</a>
+
+  {%- if collection.handle == 'all' -%}
+    {{ 'collection-banner-video.css' | asset_url | stylesheet_tag }}
+  {%- endif -%}
+
+  <section class="collection-banner collection-banner--cyto">
+    {%- if collection.handle == 'all' -%}
+      <div class="collection-banner__video" aria-hidden="true">
+        <video src="https://cdn.shopify.com/videos/c/o/v/7c5e3e2ed7e04dd38d5a5e21485e9363.mp4" autoplay loop muted playsinline></video>
+      </div>
+    {%- endif -%}
+    <div class="container collection-banner__inner">
+      <div class="collection-banner__copy">
+        <span class="eyebrow">{% if is_fr %}Catalogue Antared{% else %}Antared catalogue{% endif %}</span>
+        <h1>{% if is_fr %}La luminoth&eacute;rapie, pens&eacute;e comme un rituel premium.{% else %}Red light therapy, designed as a premium ritual.{% endif %}</h1>
+        <p>
+          {% if collection.description != blank %}
+            {{ collection.description }}
+          {% elsif is_fr %}
+            D&eacute;couvrez les formats Antared pour le bureau, la routine cheveux, la r&eacute;cup&eacute;ration et les espaces wellness. Certains produits arrivent bient&ocirc;t.
+          {% else %}
+            Explore Antared formats for desk rituals, hair routines, recovery, and wellness spaces. Some products are arriving soon.
+          {% endif %}
+        </p>
+        <div class="collection-banner__actions">
+          <a class="btn btn--primary" href="#collection-products">{% if is_fr %}Voir les produits{% else %}View products{% endif %}</a>
+          <a class="btn btn--ghost collection-banner__ghost" href="{{ desk_url }}">{% if is_fr %}Commencer par DESK{% else %}Start with DESK{% endif %}</a>
+        </div>
+      </div>
+      <div class="collection-banner__tease" aria-label="{% if is_fr %}Points forts{% else %}Highlights{% endif %}">
+        <div><strong>{% if is_fr %}Rituel{% else %}Ritual{% endif %}</strong><span>{% if is_fr %}Des formats simples &agrave; int&eacute;grer dans votre journ&eacute;e.{% else %}Formats designed to fit naturally into your day.{% endif %}</span></div>
+        <div><strong>{% if is_fr %}Cibl&eacute;{% else %}Targeted{% endif %}</strong><span>{% if is_fr %}Bureau, cheveux, r&eacute;cup&eacute;ration ou corps entier.{% else %}Desk, hair, recovery, or full-body wellness.{% endif %}</span></div>
+        <div><strong>{% if is_fr %}Premium{% else %}Premium{% endif %}</strong><span>{% if is_fr %}Une pr&eacute;sence design pour la maison ou le studio.{% else %}A design presence for home or studio spaces.{% endif %}</span></div>
       </div>
     </div>
-    <div class="collection-banner__tease" aria-label="{% if is_fr %}Points forts{% else %}Highlights{% endif %}">
-      <div><strong>{% if is_fr %}Rituel{% else %}Ritual{% endif %}</strong><span>{% if is_fr %}Des formats simples &agrave; int&eacute;grer dans votre journ&eacute;e.{% else %}Formats designed to fit naturally into your day.{% endif %}</span></div>
-      <div><strong>{% if is_fr %}Cibl&eacute;{% else %}Targeted{% endif %}</strong><span>{% if is_fr %}Bureau, cheveux, r&eacute;cup&eacute;ration ou corps entier.{% else %}Desk, hair, recovery, or full-body wellness.{% endif %}</span></div>
-      <div><strong>{% if is_fr %}Premium{% else %}Premium{% endif %}</strong><span>{% if is_fr %}Une pr&eacute;sence design pour la maison ou le studio.{% else %}A design presence for home or studio spaces.{% endif %}</span></div>
-    </div>
-  </div>
-</section>
+  </section>
+
+{%- endif -%}
 
 {% schema %}
 {
   "name": "Collection banner",
   "tag": "section",
-  "settings": []
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Deux rendus. Les cinq collections d'objectif (recovery, performance, skin-amp-glow, longevity, work-amp-focus) recoivent un hero propre a l'objectif, dans la langue visuelle de l'espace Learn ; le corps de la page vient de « Par objectif — sous-page ». Toute autre collection garde la banniere catalogue."
+    }
+  ]
 }
 {% endschema %}

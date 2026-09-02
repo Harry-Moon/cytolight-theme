@@ -2,7 +2,23 @@
 {%- if request.locale.iso_code contains 'fr' -%}
   {%- assign is_fr = true -%}
 {%- endif -%}
+
+{%- comment -%}
+  Les cinq collections d'objectif portent deja leur propre cadrage — hero
+  editorial en tete, section « Par objectif — sous-page » sous la grille. Le
+  teaser generique « Bureau / Cheveux / Corps entier » qui suit decrit le
+  catalogue entier : sur une page Recuperation ou Peau & Eclat, il repete un
+  decoupage que la page vient justement de remplacer, et il est identique sur
+  les cinq. Il est donc saute la.
+{%- endcomment -%}
+{%- assign est_objectif = false -%}
+{%- case collection.handle -%}
+  {%- when 'recovery', 'performance', 'skin-amp-glow', 'longevity', 'work-amp-focus' -%}
+    {%- assign est_objectif = true -%}
+{%- endcase -%}
+
 <section class="container collection-products" id="collection-products">
+  {%- unless est_objectif -%}
   <div class="collection-teaser">
     <p class="eyebrow">{% if is_fr %}Choisir son format{% else %}Choose your format{% endif %}</p>
     <div class="collection-teaser__grid">
@@ -11,6 +27,7 @@
       <div class="collection-teaser__item collection-teaser__item--body" style="--teaser-image: url('{{ 'cytolight-pano-ultra-luxury.jpg' | file_url }}');"><strong>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</strong><span>{% if is_fr %}Des panneaux grand format pour les espaces wellness.{% else %}Larger panels for dedicated wellness spaces.{% endif %}</span></div>
     </div>
   </div>
+  {%- endunless -%}
 
   <div class="collection-toolbar">
     <span>{{ collection.products_count }} {% if is_fr %}produits disponibles{% else %}products available{% endif %}</span>
