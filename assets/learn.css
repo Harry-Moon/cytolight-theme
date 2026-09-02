@@ -892,3 +892,95 @@
 .ln-grade--rct { color: #6d5010; background: rgba(201, 156, 44, .12); }
 .ln-grade--signal { color: var(--ln-muted); background: rgba(0, 0, 0, .05); }
 .ln-grade--mech { color: #2f5361; background: rgba(47, 83, 97, .1); }
+
+/* ---------- encarts visuels (snippets/media-slot.liquid) ---------- */
+
+/*
+ * Deux etats, une seule boite : image reelle ou emplacement reserve. Le ratio
+ * est porte par la boite et non par son contenu, donc la mise en page ne bouge
+ * pas le jour ou l'image arrive — c'est tout l'interet de reserver la place
+ * plutot que de laisser la section sans visuel.
+ */
+.ln-media { margin: 0; }
+.ln-media__frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--ln-media-ratio, 16 / 9);
+  border: 1px solid var(--ln-line);
+  border-radius: var(--ln-radius-lg);
+  background: var(--ln-black);
+}
+.ln-section--dark .ln-media__frame { border-color: var(--ln-line-dark); }
+.ln-media__frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/*
+ * L'encart reserve n'est pas un trou : c'est un aplat de marque qui porte le
+ * brief du visuel attendu. Il se lit comme un element dessine, pas comme une
+ * image cassee — et il dit exactement quoi photographier.
+ */
+.ln-media__ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(20px, 3vw, 34px);
+  background:
+    radial-gradient(120% 90% at 82% 8%, rgba(210, 13, 47, .34), transparent 58%),
+    radial-gradient(90% 70% at 8% 100%, rgba(255, 70, 99, .14), transparent 62%),
+    linear-gradient(150deg, #151515, #0a0a0a 62%, #120407);
+}
+.ln-media__ph::after {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: calc(var(--ln-radius-lg) - 6px);
+  pointer-events: none;
+}
+.ln-media__tag {
+  margin: 0 0 12px;
+  color: #ff5c76;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+.ln-media__brief {
+  margin: 0;
+  max-width: 48ch;
+  color: rgba(255, 255, 255, .82);
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.6;
+}
+.ln-media__spec {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, .42);
+  font-size: 11px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+.ln-media__caption { margin: 12px 0 0; color: var(--ln-muted); font-size: 13.5px; line-height: 1.6; }
+.ln-section--dark .ln-media__caption { color: rgba(255, 255, 255, .6); }
+
+/* ---------- texte et visuel cote a cote ---------- */
+
+.ln-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  margin-top: clamp(40px, 5vw, 64px);
+}
+/* `--flip` place le visuel a gauche sur grand ecran ; sous 900 px le texte
+   reprend la premiere place, l'ordre de lecture prime sur l'alternance. */
+.ln-split--flip .ln-split__text { order: 2; }
+.ln-split .ln-steps { margin-top: clamp(28px, 3vw, 38px); }
+.ln-steps--stack { grid-template-columns: 1fr; }
+
+@media (max-width: 900px) {
+  .ln-split { grid-template-columns: 1fr; }
+  .ln-split--flip .ln-split__text { order: 0; }
+}

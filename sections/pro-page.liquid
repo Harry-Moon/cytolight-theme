@@ -1,0 +1,713 @@
+{%- comment -%}
+  Les six pages de segment Antared Pro, servies par une seule section.
+
+  Meme mecanique que `sections/protocol-page.liquid` : la section derive le
+  segment depuis le handle de la page, puis rend une ossature identique pour
+  toutes. Six pages, une seule mise en page a maintenir. Ajouter un segment =
+  un `when` de plus et un gabarit d'une ligne.
+
+  | Handle              | Segment                     |
+  |---------------------|-----------------------------|
+  | clinics             | cliniques et cabinets       |
+  | physios             | kinesitherapeutes           |
+  | gyms                | salles de sport             |
+  | hotels-spas         | hotels et spas              |
+  | corporate-wellness  | bien-etre en entreprise     |
+  | become-a-dealer     | revendeurs                  |
+
+  La page d'atterrissage `antared-pro` reste servie par `sections/pro-hub.liquid`
+  et distribue vers ces six pages : ses cartes se rendent sans lien tant que la
+  page correspondante n'existe pas dans l'admin (voir `snippets/nav-hub-card`).
+
+  CONTRAT EDITORIAL — il ne se contourne pas :
+
+  1. Chaque page porte son bloc « ce que vous ne pouvez pas annoncer ». C'est
+     lui qui tient ces pages du bon cote du principe II : un professionnel qui
+     revend ou installe nos appareils est celui qui prendra la parole devant un
+     patient, un adherent ou un client. Lui donner le materiel sans lui donner
+     la limite serait deplacer l'allegation, pas l'eviter.
+  2. Aucun tarif, aucune remise, aucun volume minimum, aucune reference client,
+     aucun effectif equipe ne figure ici (principe III). Ces conditions se
+     discutent, elles ne s'affichent pas tant qu'elles n'existent pas.
+  3. Aucun chiffre de dose n'est ecrit ici en premier. Duree, frequence et
+     distance viennent de `learn-how-it-works` ; les longueurs d'onde de
+     `learn-wavelengths`. Ces deux pages font foi.
+
+  Les visuels passent par `snippets/media-slot.liquid` : tant que le fichier
+  n'est pas dans Content > Files, l'encart occupe la place au bon ratio et
+  porte le brief du visuel attendu. Les `assign *_file` ci-dessous sont les
+  seuls endroits a modifier le jour ou les photos existent.
+
+  Les listes repetees passent par une chaine a deux separateurs, faute de
+  tableaux d'objets en Liquid : `|` separe les elements, `~` separe le titre du
+  texte. Aucun texte ne doit contenir ces deux caracteres.
+
+  Aucune regle de CSS propre a ce fichier : `assets/learn.css` porte tous les
+  composants utilises ici (.ln-hero, .ln-section, .ln-steps, .ln-split,
+  .ln-media, .ln-note, .ln-pledge, .ln-actions).
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign url_pro = pages['antared-pro'].url
+  if url_pro == blank
+    assign url_pro = locale_root | append: '/pages/antared-pro'
+  endif
+  assign url_contact = pages['contact'].url
+  if url_contact == blank
+    assign url_contact = locale_root | append: '/pages/contact'
+  endif
+  assign url_science = pages['science'].url
+  if url_science == blank
+    assign url_science = locale_root | append: '/pages/science'
+  endif
+  assign url_waves = pages['wavelengths'].url
+  if url_waves == blank
+    assign url_waves = locale_root | append: '/pages/wavelengths'
+  endif
+  assign url_how = pages['comment-ca-marche'].url
+  if url_how == blank
+    assign url_how = locale_root | append: '/pages/comment-ca-marche'
+  endif
+  assign url_values = pages['nos-valeurs'].url
+  if url_values == blank
+    assign url_values = locale_root | append: '/pages/nos-valeurs'
+  endif
+
+  comment
+    Les trois encarts visuels de chaque page. Vides par defaut : `file_url` sur
+    un nom absent de Content > Files renvoie une URL qui repond 404, et une
+    image cassee coute plus qu'un encart assume. Renseigner le nom exact
+    retourne par Shopify, avec les dimensions reelles du fichier.
+  endcomment
+  assign media_hero_file = ''
+  assign media_hero_w = 1600
+  assign media_hero_h = 900
+  assign media_install_file = ''
+  assign media_install_w = 1200
+  assign media_install_h = 1500
+  assign media_ask_file = ''
+  assign media_ask_w = 1500
+  assign media_ask_h = 1000
+
+  assign handle = page.handle
+-%}
+
+{%- case handle -%}
+
+{%- when 'clinics' -%}
+  {%- liquid
+    assign produits = 'cytolight-pano-ultra,cytolight-knee,cytolight-desk'
+
+    assign crumb_fr = 'Cliniques et cabinets'
+    assign crumb_en = 'Clinics and practices'
+    assign kicker_fr = 'Antared Pro &mdash; sant&eacute;'
+    assign kicker_en = 'Antared Pro &mdash; health'
+    assign titre_fr = 'Une salle, plusieurs passages par jour, et une ligne &agrave; ne pas franchir.'
+    assign titre_en = 'One room, several sessions a day, and one line not to cross.'
+    assign intro_fr = 'Un cabinet n&apos;ach&egrave;te pas un appareil de bien-&ecirc;tre comme un particulier. La question n&apos;est pas de savoir si l&apos;objet plaira : c&apos;est de savoir o&ugrave; il se range entre deux rendez-vous, combien de minutes il co&ucirc;te au planning, et ce que vous avez le droit d&apos;&eacute;crire &agrave; c&ocirc;t&eacute; de lui en salle d&apos;attente. Cette page r&eacute;pond dans cet ordre.'
+    assign intro_en = 'A practice does not buy a wellness device the way a household does. The question is not whether the object will please: it is where it goes between two appointments, how many minutes it costs the schedule, and what you are allowed to write next to it in the waiting room. This page answers in that order.'
+    assign pour_qui_fr = 'Pour un cabinet qui veut proposer une s&eacute;ance de lumi&egrave;re en compl&eacute;ment, sans sortir du cadre de sa pratique.'
+    assign pour_qui_en = 'For a practice offering a light session alongside its work, without stepping outside the frame of that practice.'
+
+    assign media_hero_brief_fr = 'Salle de soin &eacute;quip&eacute;e : panneau Antared PANO ULTRA sur pied, allum&eacute; en rouge, &agrave; c&ocirc;t&eacute; d&apos;une table de soin. Pi&egrave;ce r&eacute;elle, rang&eacute;e, lumi&egrave;re du jour.'
+    assign media_hero_brief_en = 'An equipped treatment room: an Antared PANO ULTRA panel on its stand, lit red, beside a treatment table. A real room, tidy, with daylight.'
+
+    assign contraintes_aside_fr = 'Le format se choisit apr&egrave;s le lieu, jamais avant. Une salle partag&eacute;e, un planning serr&eacute; et un affichage r&eacute;glement&eacute; excluent des appareils que la fiche technique aurait class&eacute;s premiers.'
+    assign contraintes_aside_en = 'The format is chosen after the space, never before. A shared room, a tight schedule, and regulated signage rule out devices a spec sheet would have ranked first.'
+    assign contraintes_fr = 'La salle sert &agrave; autre chose~L&apos;appareil partage la pi&egrave;ce avec le reste de votre activit&eacute;. Un format sur pied se roule contre un mur entre deux patients ; un panneau fixe demande une salle qui lui appartient.|Le planning compte en minutes~Une s&eacute;ance de dix &agrave; vingt minutes ne s&apos;ins&egrave;re pas dans un cr&eacute;neau de trente sans qu&apos;on ait d&eacute;cid&eacute; qui allume, qui surveille et qui &eacute;teint.|Le nettoyage se pense d&egrave;s l&apos;achat~Ce qui touche la peau se d&eacute;sinfecte entre deux personnes. Les formats souples se nettoient au chiffon ; un panneau, lui, ne touche personne et ne pose pas la question.|L&apos;affichage vous engage~Ce qui est &eacute;crit sur la porte, la plaquette ou le site du cabinet engage votre responsabilit&eacute; professionnelle. Nous fournissons des textes d&eacute;j&agrave; cadr&eacute;s pour cette raison.'
+    assign contraintes_en = 'The room has another job~The device shares the space with the rest of your practice. A stand format rolls against a wall between patients; a fixed panel needs a room of its own.|The schedule counts in minutes~A ten to twenty minute session does not slot into a thirty minute appointment until someone has decided who switches it on, who supervises, and who switches it off.|Cleaning is decided at purchase~Anything touching skin is wiped between two people. Soft formats clean with a cloth; a panel touches nobody and never raises the question.|Signage commits you~What is written on the door, the leaflet, or the practice website engages your professional liability. That is why we supply copy that is already framed.'
+
+    assign install_kicker_fr = 'L&apos;installation'
+    assign install_kicker_en = 'The setup'
+    assign install_titre_fr = 'O&ugrave; l&apos;appareil se pose, et qui l&apos;allume.'
+    assign install_titre_en = 'Where the device sits, and who switches it on.'
+    assign install_texte_fr = 'La bonne question n&apos;est pas &laquo;&nbsp;quel appareil&nbsp;?&nbsp;&raquo; mais &laquo;&nbsp;&agrave; quel endroit quelqu&apos;un reste-t-il immobile dix minutes chez vous&nbsp;?&nbsp;&raquo;. Table de soin, fauteuil d&apos;attente encadr&eacute;, salle de repos : le poste d&eacute;cide du format, et la distance d&eacute;cide de la dose re&ccedil;ue &mdash; pas la dur&eacute;e.'
+    assign install_texte_en = 'The question that settles it is not &ldquo;which device?&rdquo; but &ldquo;where does someone stay still for ten minutes in your practice?&rdquo;. Treatment table, supervised waiting chair, rest room: the position decides the format, and distance decides the dose received &mdash; not duration.'
+    assign install_etapes_fr = 'Choisissez le poste~Il existe d&eacute;j&agrave; dans votre cabinet. L&apos;appareil vient s&apos;y poser, il ne cr&eacute;e pas un poste de plus.|Fixez la distance une fois~De 15 &agrave; 50 cm selon le format. Un rep&egrave;re au sol ou un bras r&eacute;glable &eacute;vite de la r&eacute;estimer &agrave; chaque passage.|Affichez la consigne~Dur&eacute;e, distance, peau d&eacute;couverte. Une consigne au mur tient mieux qu&apos;une consigne r&eacute;p&eacute;t&eacute;e de m&eacute;moire.|Nommez un responsable~Un protocole que personne n&apos;a en charge dispara&icirc;t en trois semaines, quel que soit le mat&eacute;riel.'
+    assign install_etapes_en = 'Pick the position~It already exists in your practice. The device comes to it; it does not create one more station.|Set the distance once~15 to 50 cm depending on the format. A floor marker or an adjustable arm saves re-estimating it every time.|Post the instructions~Duration, distance, bare skin. Guidance on the wall holds better than guidance repeated from memory.|Name an owner~A protocol nobody owns disappears within three weeks, whatever the hardware.'
+
+    assign media_install_brief_fr = 'Cadrage serr&eacute; sur la distance de travail : un panneau orient&eacute; vers un genou pos&eacute; sur une table, rep&egrave;re de distance visible, visage hors champ.'
+    assign media_install_brief_en = 'A tight frame on the working distance: a panel angled at a knee resting on a table, the distance marker visible, face out of frame.'
+
+    assign fourniture_fr = 'Les mesures d&apos;irradiance, avec leur distance~Une valeur en mW/cm&sup2; sans distance de mesure ne veut rien dire. Les n&ocirc;tres sont publi&eacute;es sous la forme mW/cm&sup2; &agrave; X cm, sur le site comme dans les documents que nous transmettons.|Le spectre, canal par canal~Quelles longueurs d&apos;onde sur quel appareil, et lesquelles se pilotent s&eacute;par&eacute;ment.|Des textes bilingues d&eacute;j&agrave; cadr&eacute;s~En fran&ccedil;ais et en anglais, &eacute;crits dans le cadre l&eacute;gal du produit de bien-&ecirc;tre. Vous n&apos;aurez pas &agrave; r&eacute;&eacute;crire une affiche parce qu&apos;elle promet un traitement.'
+    assign fourniture_en = 'Irradiance measurements, with their distance~A mW/cm&sup2; figure without a measurement distance means nothing. Ours are published as mW/cm&sup2; at X cm, on the site and in the documents we send you.|The spectrum, channel by channel~Which wavelengths on which device, and which of them are controlled separately.|Bilingual copy, already framed~In French and English, written inside the legal frame of a wellness product. You will not have to rewrite a poster because it promises a treatment.'
+
+    assign limites_titre_fr = 'Ce que vous ne pouvez pas annoncer &agrave; un patient.'
+    assign limites_titre_en = 'What you may not announce to a patient.'
+    assign limites_fr = 'Ce n&apos;est pas un dispositif m&eacute;dical~Les appareils Antared sont des produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. Aucun ne se pr&eacute;sente comme un traitement, m&ecirc;me &agrave; l&apos;oral.|Aucune all&eacute;gation de soin~Ni traitement, ni gu&eacute;rison, ni soulagement d&apos;une pathologie, quelle que soit la litt&eacute;rature invoqu&eacute;e.|Pas de protocole th&eacute;rapeutique de notre part~Nous publions des consignes d&apos;usage : moment, dur&eacute;e, distance, fr&eacute;quence. Ce qui rel&egrave;ve du soin rel&egrave;ve de votre exercice, pas de notre documentation.|Aucune &eacute;tude n&apos;a port&eacute; sur nos appareils~Les travaux publi&eacute;s portent sur des longueurs d&apos;onde et des doses, jamais sur un mat&eacute;riel Antared. Nous ne pr&eacute;sentons jamais l&apos;inverse, et nous demandons la m&ecirc;me chose &agrave; nos partenaires.'
+    assign limites_en = 'It is not a medical device~Antared devices are wellness products, without medical-device CE marking. None of them is presented as a treatment, not even verbally.|No care claims~No treating, no curing, no relieving of any condition, whatever literature is invoked.|No therapeutic protocol from us~We publish usage guidance: when, how long, at what distance, how often. What belongs to care belongs to your practice, not to our documentation.|No study has been run on our devices~Published work covers wavelengths and doses, never Antared hardware. We never present it otherwise, and we ask the same of our partners.'
+
+    assign questions_fr = 'La pi&egrave;ce : surface disponible, et si l&apos;appareil doit se ranger entre deux rendez-vous.|Le poste : table de soin, fauteuil, salle de repos, ou zone debout.|Le rythme : combien de passages par jour, et sur quelle dur&eacute;e de cr&eacute;neau.|La zone vis&eacute;e : corps entier, une articulation, le visage.|Votre calendrier, et si vous &eacute;quipez un site ou plusieurs.'
+    assign questions_en = 'The room: available floor space, and whether the device must be stored between appointments.|The position: treatment table, chair, rest room, or a standing area.|The rhythm: how many sessions a day, and inside what appointment length.|The target area: full body, one joint, the face.|Your timeline, and whether you are equipping one site or several.'
+
+    assign media_ask_brief_fr = 'Praticien en tenue de ville, appareil &eacute;teint, expliquant la s&eacute;ance &agrave; une personne assise dans une pi&egrave;ce ordinaire.'
+    assign media_ask_brief_en = 'A practitioner in everyday clothes, device switched off, explaining the session to a seated person in an ordinary room.'
+  -%}
+
+{%- when 'physios' -%}
+  {%- liquid
+    assign produits = 'cytolight-knee,cytolight-foot,cytolight-pano-ultra'
+
+    assign crumb_fr = 'Kin&eacute;sith&eacute;rapeutes'
+    assign crumb_en = 'Physiotherapists'
+    assign kicker_fr = 'Antared Pro &mdash; sant&eacute;'
+    assign kicker_en = 'Antared Pro &mdash; health'
+    assign titre_fr = 'L&apos;appareil tient sur une zone pendant que vous travaillez ailleurs.'
+    assign titre_en = 'The device holds one area while you work somewhere else.'
+    assign intro_fr = 'En cabinet de kin&eacute;sith&eacute;rapie, le crit&egrave;re qui d&eacute;partage les formats n&apos;est ni le nombre de LED ni le prix : c&apos;est de savoir si l&apos;appareil tient seul. Ce qu&apos;il faut maintenir &agrave; la main co&ucirc;te une paire de mains que vous n&apos;avez pas, et ce qui immobilise la table co&ucirc;te un cr&eacute;neau.'
+    assign intro_en = 'In a physiotherapy practice, what separates the formats is neither LED count nor price: it is whether the device holds on its own. Anything you have to hold costs a pair of hands you do not have, and anything that occupies the table costs a slot.'
+    assign pour_qui_fr = 'Pour un cabinet qui encha&icirc;ne les patients et cherche un format qui se pose, se nettoie et se d&eacute;place vite.'
+    assign pour_qui_en = 'For a practice running back-to-back patients and looking for a format that fits, cleans, and moves quickly.'
+
+    assign media_hero_brief_fr = 'Genouill&egrave;re Antared en place sur un genou, sangles ferm&eacute;es, patient assis au bord d&apos;une table de soin, praticien occup&eacute; &agrave; autre chose en arri&egrave;re-plan.'
+    assign media_hero_brief_en = 'An Antared knee wrap fitted and strapped on a knee, the patient sitting on the edge of a treatment table, the practitioner busy with something else in the background.'
+
+    assign contraintes_aside_fr = 'Un format port&eacute; ne concurrence pas un panneau : il occupe un autre moment de la s&eacute;ance. C&apos;est ce d&eacute;coupage du temps, pas la puissance, qui d&eacute;cide de ce qui vous servira.'
+    assign contraintes_aside_en = 'A worn format does not compete with a panel: it occupies a different moment of the session. That split of time, not output, decides what will actually serve you.'
+    assign contraintes_fr = 'Vos mains sont prises~Le format utile est celui qui tient seul sur une zone : genouill&egrave;re, botte, panneau orient&eacute;. Tout ce qu&apos;il faut maintenir sort du cadre d&egrave;s le deuxi&egrave;me patient.|La table ne s&apos;immobilise pas~Une s&eacute;ance de dix minutes qui bloque la table bloque le planning. Un format port&eacute; lib&egrave;re la table et suit le patient jusqu&apos;au fauteuil.|Le nettoyage se compte en secondes~Sangles et coques se nettoient au chiffon entre deux patients, sans d&eacute;montage. Un textile qui part au lavage sort du circuit pour la journ&eacute;e.|Un c&acirc;ble qui traverse la salle est un risque~Une batterie int&eacute;gr&eacute;e n&apos;est pas un confort, c&apos;est ce qui &eacute;vite une rallonge en travers du passage.'
+    assign contraintes_en = 'Your hands are taken~The useful format is the one that holds an area on its own: knee wrap, boot, angled panel. Anything you must hold falls apart by the second patient.|The table stays free~A ten minute session that occupies the table occupies the schedule. A worn format frees the table and follows the patient to the chair.|Cleaning is counted in seconds~Straps and shells wipe down between patients, with nothing to dismantle. A textile that goes to the wash is out of service for the day.|A cable across the room is a hazard~An integrated battery is not a comfort feature; it is what keeps an extension lead out of the walkway.'
+
+    assign install_kicker_fr = 'Dans la s&eacute;ance'
+    assign install_kicker_en = 'Inside the session'
+    assign install_titre_fr = 'Le moment o&ugrave; la lumi&egrave;re co&ucirc;te z&eacute;ro minute.'
+    assign install_titre_en = 'The moment when light costs zero minutes.'
+    assign install_texte_fr = 'Un appareil port&eacute; se pose pendant ce qui existe d&eacute;j&agrave; : l&apos;interrogatoire de d&eacute;but de s&eacute;ance, la fin d&apos;un exercice, l&apos;attente entre deux mobilisations. La s&eacute;ance de lumi&egrave;re dure dix &agrave; vingt minutes ; le cr&eacute;neau, lui, ne s&apos;allonge pas.'
+    assign install_texte_en = 'A worn device goes on during something that already happens: the opening questions, the end of an exercise, the wait between two mobilisations. The light session runs ten to twenty minutes; the appointment itself does not get longer.'
+    assign install_etapes_fr = 'Posez pendant le temps mort~Le d&eacute;but de s&eacute;ance ou la fin d&apos;un exercice. Ce sont des minutes qui existent d&eacute;j&agrave; dans votre cr&eacute;neau.|Une zone &agrave; la fois~Un genou, un pied, une &eacute;paule. Encha&icirc;ner quatre zones fait exploser la dur&eacute;e sans rien ajouter.|Peau d&eacute;couverte~La lumi&egrave;re ne traverse pas un v&ecirc;tement sans perdre l&apos;essentiel de la dose. C&apos;est vrai d&apos;un legging comme d&apos;un bandage.|Nettoyez avant de ranger~Pas apr&egrave;s le patient suivant. Le geste ne tient que s&apos;il est pris dans la routine de fin de s&eacute;ance.'
+    assign install_etapes_en = 'Fit it during the dead time~The start of the session or the end of an exercise. Those minutes already exist inside your slot.|One area at a time~A knee, a foot, a shoulder. Chaining four areas blows up the duration without adding anything.|Bare skin~Light does not cross fabric without losing most of the dose. That holds for leggings as much as for a bandage.|Clean before storing~Not after the next patient. The habit only survives if it belongs to the end-of-session routine.'
+
+    assign media_install_brief_fr = 'Botte Antared referm&eacute;e sur un pied, patient assis, chaussure et chaussette pos&eacute;es &agrave; c&ocirc;t&eacute;, salle de cabinet en arri&egrave;re-plan.'
+    assign media_install_brief_en = 'An Antared boot closed around a foot, the patient seated, shoe and sock set aside, the practice room behind.'
+
+    assign fourniture_fr = 'Les mesures d&apos;irradiance, avec leur distance~Une valeur en mW/cm&sup2; sans distance de mesure ne veut rien dire. Les n&ocirc;tres sont publi&eacute;es sous la forme mW/cm&sup2; &agrave; X cm, contact compris pour les formats port&eacute;s.|Le spectre, canal par canal~Quelles longueurs d&apos;onde sur quel appareil, et lesquelles se pilotent s&eacute;par&eacute;ment.|L&apos;entretien, &eacute;crit~Ce qui se nettoie au chiffon, ce qui se d&eacute;monte, ce qui ne se plonge jamais dans l&apos;eau. En fran&ccedil;ais et en anglais.'
+    assign fourniture_en = 'Irradiance measurements, with their distance~A mW/cm&sup2; figure without a measurement distance means nothing. Ours are published as mW/cm&sup2; at X cm, contact included for worn formats.|The spectrum, channel by channel~Which wavelengths on which device, and which of them are controlled separately.|Maintenance, in writing~What wipes down, what comes apart, what never goes into water. In French and in English.'
+
+    assign limites_titre_fr = 'Ce que vous ne pouvez pas annoncer &agrave; un patient.'
+    assign limites_titre_en = 'What you may not announce to a patient.'
+    assign limites_fr = 'Ce n&apos;est pas un dispositif m&eacute;dical~Produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. Un appareil Antared ne se pr&eacute;sente pas comme un acte de r&eacute;&eacute;ducation.|Aucune all&eacute;gation de soin~Ni traitement, ni gu&eacute;rison, ni soulagement d&apos;une pathologie ou d&apos;une douleur, quelle que soit la litt&eacute;rature invoqu&eacute;e.|La s&eacute;ance ne remplace aucun acte~Elle s&apos;ajoute &agrave; ce que vous faites d&eacute;j&agrave;. Nous n&apos;&eacute;crivons jamais qu&apos;elle abr&egrave;ge une prise en charge.|Aucune &eacute;tude n&apos;a port&eacute; sur nos appareils~Les travaux publi&eacute;s portent sur des longueurs d&apos;onde et des doses, jamais sur un mat&eacute;riel Antared.'
+    assign limites_en = 'It is not a medical device~Wellness products, without medical-device CE marking. An Antared device is not presented as a rehabilitation procedure.|No care claims~No treating, no curing, no relieving of any condition or pain, whatever literature is invoked.|The session replaces no procedure~It adds to what you already do. We never write that it shortens a course of care.|No study has been run on our devices~Published work covers wavelengths and doses, never Antared hardware.'
+
+    assign questions_fr = 'Le nombre de salles, et si l&apos;appareil doit passer de l&apos;une &agrave; l&apos;autre.|Les zones que vous traitez le plus : genou, pied et cheville, dos, &eacute;paule.|Le nombre de patients par jour, et la dur&eacute;e d&apos;un cr&eacute;neau.|Qui posera l&apos;appareil : vous, un assistant, ou le patient lui-m&ecirc;me.|Votre calendrier, et si vous &eacute;quipez un cabinet ou un groupe.'
+    assign questions_en = 'How many rooms, and whether the device has to move between them.|The areas you treat most: knee, foot and ankle, back, shoulder.|How many patients a day, and how long a slot runs.|Who will fit the device: you, an assistant, or the patient.|Your timeline, and whether you are equipping one practice or a group.'
+
+    assign media_ask_brief_fr = 'Plan large d&apos;une salle de kin&eacute;sith&eacute;rapie ordinaire, table, tapis, appareil Antared rang&eacute; sur une &eacute;tag&egrave;re, personne au centre.'
+    assign media_ask_brief_en = 'A wide shot of an ordinary physiotherapy room: table, mat, an Antared device stored on a shelf, nobody in the centre of frame.'
+  -%}
+
+{%- when 'gyms' -%}
+  {%- liquid
+    assign produits = 'cytolight-pano-ultra,cytolight-sauna-dome,cytolight-foot'
+
+    assign crumb_fr = 'Salles de sport'
+    assign crumb_en = 'Gyms'
+    assign kicker_fr = 'Antared Pro &mdash; lieux'
+    assign kicker_en = 'Antared Pro &mdash; venues'
+    assign titre_fr = 'Un coin r&eacute;cup&eacute;ration a le d&eacute;bit d&apos;un vestiaire, pas d&apos;une cabine.'
+    assign titre_en = 'A recovery corner runs at changing-room pace, not treatment-room pace.'
+    assign intro_fr = 'Dans une salle, l&apos;appareil n&apos;est pas utilis&eacute; par vous mais par vos adh&eacute;rents, sans rendez-vous et souvent sans personne &agrave; c&ocirc;t&eacute;. Ce qui compte devient donc : combien de personnes passent dans l&apos;heure, ce que l&apos;appareil supporte d&apos;&ecirc;tre allum&eacute; toute la journ&eacute;e, et ce que dit le panneau accroch&eacute; au-dessus.'
+    assign intro_en = 'In a gym the device is not used by you but by your members, without an appointment and often with nobody standing by. What matters becomes: how many people pass through in an hour, what the hardware tolerates when it runs all day, and what the sign above it says.'
+    assign pour_qui_fr = 'Pour une salle qui veut un espace r&eacute;cup&eacute;ration tenable en libre-service, pas une cabine &agrave; g&eacute;rer.'
+    assign pour_qui_en = 'For a gym that wants a recovery area workable in self-service, not one more booth to manage.'
+
+    assign media_hero_brief_fr = 'Coin r&eacute;cup&eacute;ration d&apos;une salle de sport : grand panneau Antared PANO ULTRA fix&eacute; au mur, banc devant, sol et miroirs de la salle visibles autour.'
+    assign media_hero_brief_en = 'A gym recovery corner: a large Antared PANO ULTRA panel wall-mounted, a bench in front, the gym floor and mirrors visible around it.'
+
+    assign contraintes_aside_fr = 'Le mat&eacute;riel de salle vit une autre vie que le mat&eacute;riel de cabinet : plus de passages, moins de surveillance, et des utilisateurs qui n&apos;ont lu aucune notice. Ces trois faits pr&eacute;c&egrave;dent toute comparaison de fiche technique.'
+    assign contraintes_aside_en = 'Gym hardware lives a different life from practice hardware: more passes, less supervision, and users who have read no manual. Those three facts come before any spec-sheet comparison.'
+    assign contraintes_fr = 'Le d&eacute;bit avant la puissance~Le facteur limitant est le nombre de personnes par heure, pas l&apos;irradiance. Un grand format qui couvre le corps entier fait passer plus de monde qu&apos;un appareil cibl&eacute;.|Allum&eacute; du matin au soir~Le mat&eacute;riel doit supporter une journ&eacute;e d&apos;ouverture compl&egrave;te, pas trois s&eacute;ances. La ventilation et la fixation comptent autant que le spectre.|Personne pour expliquer~En libre-service, la consigne est ce qui est affich&eacute; au mur. Dur&eacute;e, distance, peau d&eacute;couverte : trois lignes, dans les deux langues de votre client&egrave;le.|Le passage et le nettoyage~Un banc, un sol qui se lave, et des surfaces essuyables. Ce qui traverse le passage se fait arracher dans le mois.'
+    assign contraintes_en = 'Throughput before output~The limiting factor is people per hour, not irradiance. A large format covering the whole body moves more people than a targeted device.|On from open to close~The hardware has to survive a full opening day, not three sessions. Ventilation and mounting matter as much as the spectrum.|Nobody there to explain~In self-service, the instructions are whatever is on the wall. Duration, distance, bare skin: three lines, in both languages your members speak.|Traffic and cleaning~A bench, a washable floor, wipeable surfaces. Anything crossing a walkway gets torn out within the month.'
+
+    assign install_kicker_fr = 'L&apos;espace'
+    assign install_kicker_en = 'The space'
+    assign install_titre_fr = 'Un mur, un banc, et une consigne lisible de loin.'
+    assign install_titre_en = 'A wall, a bench, and instructions readable from a distance.'
+    assign install_texte_fr = 'Un coin r&eacute;cup&eacute;ration tient dans quelques m&egrave;tres carr&eacute;s, &agrave; condition que la place soit prise sur un mur et non au milieu du passage. Le grand format se fixe ou se pose sur pied ; le banc donne la distance sans avoir &agrave; l&apos;expliquer.'
+    assign install_texte_en = 'A recovery corner fits into a few square metres, provided the space is taken from a wall and not from the middle of a walkway. The large format is mounted or stands on its base; the bench sets the distance without anyone having to explain it.'
+    assign install_etapes_fr = 'Prenez la place sur un mur~Pas au milieu de la salle. Un appareil dans le passage g&ecirc;ne le nettoyage et finit d&eacute;plac&eacute; par quelqu&apos;un.|Le banc fixe la distance~Un si&egrave;ge pos&eacute; au bon &eacute;cart vaut mieux qu&apos;un rep&egrave;re au sol que personne ne regarde.|Trois lignes au mur~Dur&eacute;e, distance, peau d&eacute;couverte. Affich&eacute;es en fran&ccedil;ais et en anglais, lisibles &agrave; deux m&egrave;tres.|Un cr&eacute;neau, pas une file~Dix &agrave; vingt minutes par personne : un minuteur visible &eacute;vite d&apos;avoir &agrave; arbitrer entre deux adh&eacute;rents.'
+    assign install_etapes_en = 'Take the space from a wall~Not from the middle of the floor. A device in a walkway blocks cleaning and ends up moved by someone.|The bench sets the distance~A seat placed at the right gap beats a floor marker nobody looks at.|Three lines on the wall~Duration, distance, bare skin. Posted in French and English, readable from two metres.|A slot, not a queue~Ten to twenty minutes per person: a visible timer saves you arbitrating between two members.'
+
+    assign media_install_brief_fr = 'Adh&eacute;rent assis sur un banc face &agrave; un panneau Antared allum&eacute;, serviette sur l&apos;&eacute;paule, panneau de consignes visible au mur &agrave; c&ocirc;t&eacute;.'
+    assign media_install_brief_en = 'A member seated on a bench facing a lit Antared panel, towel over the shoulder, the instruction sign visible on the wall beside it.'
+
+    assign fourniture_fr = 'Les mesures d&apos;irradiance, avec leur distance~Une valeur en mW/cm&sup2; sans distance de mesure ne veut rien dire. Les n&ocirc;tres sont publi&eacute;es sous la forme mW/cm&sup2; &agrave; X cm : c&apos;est ce qui permet de placer le banc.|Le spectre, canal par canal~Quelles longueurs d&apos;onde sur quel appareil, et lesquelles se pilotent s&eacute;par&eacute;ment.|La consigne d&apos;affichage, pr&ecirc;te &agrave; poser~Le texte des trois lignes &agrave; afficher, en fran&ccedil;ais et en anglais, d&eacute;j&agrave; &eacute;crit dans le cadre l&eacute;gal du produit de bien-&ecirc;tre.'
+    assign fourniture_en = 'Irradiance measurements, with their distance~A mW/cm&sup2; figure without a measurement distance means nothing. Ours are published as mW/cm&sup2; at X cm: that is what lets you place the bench.|The spectrum, channel by channel~Which wavelengths on which device, and which of them are controlled separately.|Wall copy, ready to post~The text of the three lines to display, in French and English, already written inside the legal frame of a wellness product.'
+
+    assign limites_titre_fr = 'Ce que vous ne pouvez pas annoncer &agrave; vos adh&eacute;rents.'
+    assign limites_titre_en = 'What you may not announce to your members.'
+    assign limites_fr = 'Ce n&apos;est pas un soin~Produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. Une s&eacute;ance de lumi&egrave;re ne s&apos;annonce ni comme un traitement, ni comme une prise en charge de blessure.|Aucune promesse de performance~Nous n&apos;&eacute;crivons pas qu&apos;une s&eacute;ance fait progresser un adh&eacute;rent, ni qu&apos;elle raccourcit une courbature. Ce qui se d&eacute;crit, c&apos;est l&apos;usage.|Pas de d&eacute;lai de r&eacute;cup&eacute;ration chiffr&eacute;~Aucun &laquo;&nbsp;-30&nbsp;% de temps de r&eacute;cup&eacute;ration&nbsp;&raquo; sur une affiche. Ce chiffre n&apos;existe pas, chez nous comme ailleurs.|Aucune &eacute;tude n&apos;a port&eacute; sur nos appareils~Les travaux publi&eacute;s portent sur des longueurs d&apos;onde et des doses, jamais sur un mat&eacute;riel Antared.'
+    assign limites_en = 'It is not care~Wellness products, without medical-device CE marking. A light session is announced neither as a treatment nor as injury management.|No performance promise~We do not write that a session makes a member progress, or that it shortens soreness. What can be described is the usage.|No recovery figure~No &ldquo;30% faster recovery&rdquo; on a poster. That number does not exist, here or anywhere else.|No study has been run on our devices~Published work covers wavelengths and doses, never Antared hardware.'
+
+    assign questions_fr = 'La surface disponible, et si elle se prend sur un mur ou au sol.|Vos horaires d&apos;ouverture : c&apos;est la dur&eacute;e r&eacute;elle d&apos;allumage quotidien.|Le nombre d&apos;adh&eacute;rents, et si l&apos;acc&egrave;s est libre ou r&eacute;serv&eacute;.|Libre-service ou accompagn&eacute; par un coach.|Votre calendrier, et si vous &eacute;quipez un club ou un r&eacute;seau.'
+    assign questions_en = 'The available surface, and whether it comes from a wall or the floor.|Your opening hours: that is the real daily run time.|How many members, and whether access is open or booked.|Self-service or coach-supervised.|Your timeline, and whether you are equipping one club or a network.'
+
+    assign media_ask_brief_fr = 'Plan large du coin r&eacute;cup&eacute;ration vide, appareil &eacute;teint, sol propre : la place que prend r&eacute;ellement l&apos;installation dans une salle.'
+    assign media_ask_brief_en = 'A wide shot of the empty recovery corner, device off, clean floor: the footprint the installation really takes in a gym.'
+  -%}
+
+{%- when 'hotels-spas' -%}
+  {%- liquid
+    assign produits = 'cytolight-sauna-dome,cytolight-mask,cytolight-pano-ultra'
+
+    assign crumb_fr = 'H&ocirc;tels et spas'
+    assign crumb_en = 'Hotels and spas'
+    assign kicker_fr = 'Antared Pro &mdash; lieux'
+    assign kicker_en = 'Antared Pro &mdash; venues'
+    assign titre_fr = 'Le client voit l&apos;appareil avant de l&apos;utiliser.'
+    assign titre_en = 'Guests see the device before they use it.'
+    assign intro_fr = 'C&apos;est le seul segment o&ugrave; l&apos;objet est jug&eacute; deux fois : une premi&egrave;re fois &agrave; l&apos;entr&eacute;e de la cabine, sur ses finitions et son encombrement, une seconde fois pendant la s&eacute;ance. Un appareil techniquement parfait qui ne tient pas dans le d&eacute;cor d&apos;une cabine ne se vendra pas &agrave; votre client&egrave;le.'
+    assign intro_en = 'This is the one segment where the object is judged twice: first at the door of the treatment room, on its finish and its footprint, and again during the session. A technically perfect device that does not sit inside the room it lives in will not sell to your guests.'
+    assign pour_qui_fr = 'Pour un spa ou un h&ocirc;tel qui int&egrave;gre une s&eacute;ance de lumi&egrave;re &agrave; une cabine ou &agrave; une carte de soins existante.'
+    assign pour_qui_en = 'For a spa or hotel adding a light session to an existing room or treatment menu.'
+
+    assign media_hero_brief_fr = 'Cabine de spa &agrave; la lumi&egrave;re tamis&eacute;e : d&ocirc;me Antared install&eacute; sur une table de massage, textiles et bois de la cabine visibles, appareil allum&eacute; en rouge.'
+    assign media_hero_brief_en = 'A dimly lit spa room: an Antared dome set over a massage table, the room&apos;s textiles and wood visible, the device lit red.'
+
+    assign contraintes_aside_fr = 'La cabine existe d&eacute;j&agrave;, avec sa dur&eacute;e de soin, son rangement et son esth&eacute;tique. L&apos;appareil s&apos;y ins&egrave;re ou n&apos;y entre pas : c&apos;est la contrainte qui &eacute;limine le plus d&apos;options.'
+    assign contraintes_aside_en = 'The room already exists, with its treatment length, its storage, and its look. The device fits into it or it does not go in at all: that is the constraint eliminating the most options.'
+    assign contraintes_fr = 'Les finitions font partie de la technique~Le client juge l&apos;objet avant la s&eacute;ance. Mati&egrave;res, c&acirc;bles apparents, bruit de ventilation : tout ce qui se voit ou s&apos;entend appartient &agrave; la prestation.|La cabine est d&eacute;j&agrave; pleine~Une table, un chariot, un rangement. L&apos;appareil doit trouver sa place sans supprimer un rangement existant, ou se ranger entre deux soins.|La dur&eacute;e est vendue~Votre carte vend des cr&eacute;neaux. Une s&eacute;ance de dix &agrave; vingt minutes s&apos;ajoute &agrave; un soin ou se vend seule, mais elle se d&eacute;cide avant l&apos;achat de l&apos;appareil.|Le personnel tourne~La consigne doit s&apos;apprendre en une d&eacute;monstration. Ce qui demande une formation longue se perd au premier remplacement.'
+    assign contraintes_en = 'Finish is part of the specification~Guests judge the object before the session. Materials, visible cables, fan noise: whatever is seen or heard belongs to the treatment.|The room is already full~A table, a trolley, storage. The device has to find its place without removing existing storage, or it has to be stowed between treatments.|The duration is sold~Your menu sells slots. A ten to twenty minute session either adds to a treatment or is sold on its own, but that is decided before the device is bought.|Staff rotate~The instructions must be learnable in one demonstration. Anything needing long training is lost at the first replacement.'
+
+    assign install_kicker_fr = 'Dans la cabine'
+    assign install_kicker_en = 'In the room'
+    assign install_titre_fr = 'Ajout&eacute; &agrave; un soin, ou vendu seul.'
+    assign install_titre_en = 'Added to a treatment, or sold on its own.'
+    assign install_texte_fr = 'Deux montages tiennent : la s&eacute;ance de lumi&egrave;re en ouverture ou en cl&ocirc;ture d&apos;un soin existant, ou un cr&eacute;neau court vendu seul. Le premier n&apos;allonge pas la cabine et se forme en une fois ; le second demande un cr&eacute;neau &agrave; l&apos;agenda, mais se vend sans praticien mobilis&eacute;.'
+    assign install_texte_en = 'Two arrangements hold: the light session opening or closing an existing treatment, or a short slot sold on its own. The first does not lengthen the room and is taught in one go; the second needs a slot in the diary, but sells without tying up a therapist.'
+    assign install_etapes_fr = 'Choisissez le montage d&apos;abord~Ajout &agrave; un soin ou cr&eacute;neau autonome. Tout le reste &mdash; format, rangement, formation &mdash; d&eacute;coule de cette d&eacute;cision.|Rangez avant d&apos;installer~O&ugrave; l&apos;appareil dort entre deux clients d&eacute;cide s&apos;il restera en service au bout d&apos;un mois.|Une d&eacute;monstration, pas un manuel~Dur&eacute;e, distance, peau d&eacute;couverte, nettoyage. Ce qui ne tient pas en quatre points ne survit pas &agrave; la rotation d&apos;&eacute;quipe.|Nettoyage entre deux clients~Surfaces essuyables et textiles &agrave; usage unique l&agrave; o&ugrave; il y a contact. C&apos;est un standard de cabine, pas une contrainte de l&apos;appareil.'
+    assign install_etapes_en = 'Choose the arrangement first~Add-on or standalone slot. Everything else &mdash; format, storage, training &mdash; follows from that decision.|Solve storage before installation~Where the device sleeps between two guests decides whether it is still in service a month later.|A demonstration, not a manual~Duration, distance, bare skin, cleaning. Anything that does not fit in four points will not survive staff rotation.|Cleaning between guests~Wipeable surfaces and single-use textiles wherever there is contact. That is a room standard, not a constraint of the device.'
+
+    assign media_install_brief_fr = 'D&eacute;tail de finition : masque Antared pos&eacute; sur une serviette pli&eacute;e, plateau en bois, lumi&egrave;re chaude de cabine, aucun c&acirc;ble visible.'
+    assign media_install_brief_en = 'A finish detail: an Antared mask resting on a folded towel, wooden tray, warm room light, no visible cables.'
+
+    assign fourniture_fr = 'Les mesures d&apos;irradiance, avec leur distance~Une valeur en mW/cm&sup2; sans distance de mesure ne veut rien dire. Les n&ocirc;tres sont publi&eacute;es sous la forme mW/cm&sup2; &agrave; X cm.|Le spectre, canal par canal~Quelles longueurs d&apos;onde sur quel appareil, et lesquelles se pilotent s&eacute;par&eacute;ment. C&apos;est ce qui permet d&apos;&eacute;crire une carte de soins exacte.|Le descriptif de carte, bilingue~Un texte court pour votre carte de soins, en fran&ccedil;ais et en anglais, d&eacute;j&agrave; &eacute;crit dans le cadre l&eacute;gal du produit de bien-&ecirc;tre.'
+    assign fourniture_en = 'Irradiance measurements, with their distance~A mW/cm&sup2; figure without a measurement distance means nothing. Ours are published as mW/cm&sup2; at X cm.|The spectrum, channel by channel~Which wavelengths on which device, and which of them are controlled separately. That is what lets you write an accurate treatment menu.|Menu copy, bilingual~A short description for your treatment menu, in French and English, already written inside the legal frame of a wellness product.'
+
+    assign limites_titre_fr = 'Ce que vous ne pouvez pas &eacute;crire sur une carte de soins.'
+    assign limites_titre_en = 'What you may not write on a treatment menu.'
+    assign limites_fr = 'Ni soin m&eacute;dical, ni acte esth&eacute;tique r&eacute;glement&eacute;~Produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. La s&eacute;ance se d&eacute;crit comme une s&eacute;ance de lumi&egrave;re, rien de plus.|Aucun r&eacute;sultat annonc&eacute;~Pas de rides effac&eacute;es, pas de peau rajeunie, pas de &laquo;&nbsp;lifting&nbsp;&raquo;. Ce qui se d&eacute;crit, c&apos;est l&apos;usage, la dur&eacute;e et le confort.|Aucun avant / apr&egrave;s~Une photo de comparaison sur une carte ou une vitrine est une all&eacute;gation, quelle que soit la l&eacute;gende qui l&apos;accompagne.|Aucune &eacute;tude n&apos;a port&eacute; sur nos appareils~Les travaux publi&eacute;s portent sur des longueurs d&apos;onde et des doses, jamais sur un mat&eacute;riel Antared.'
+    assign limites_en = 'Neither medical care nor a regulated aesthetic procedure~Wellness products, without medical-device CE marking. The session is described as a light session, nothing more.|No announced result~No erased wrinkles, no rejuvenated skin, no &ldquo;lifting&rdquo;. What can be described is the usage, the duration, and the comfort.|No before and after~A comparison photo on a menu or a window is a claim, whatever caption goes with it.|No study has been run on our devices~Published work covers wavelengths and doses, never Antared hardware.'
+
+    assign questions_fr = 'Le type de cabine, et la place r&eacute;ellement disponible autour de la table.|La dur&eacute;e des cr&eacute;neaux que vous vendez d&eacute;j&agrave;.|Ajout &agrave; un soin existant, ou s&eacute;ance vendue seule.|Vos contraintes de finition et de rangement entre deux clients.|Votre calendrier, et si vous &eacute;quipez un &eacute;tablissement ou un groupe.'
+    assign questions_en = 'The type of room, and the space actually available around the table.|The length of the slots you already sell.|Add-on to an existing treatment, or a session sold on its own.|Your finish and storage constraints between two guests.|Your timeline, and whether you are equipping one property or a group.'
+
+    assign media_ask_brief_fr = 'Cabine vue depuis la porte, appareil install&eacute; et &eacute;teint, table faite : ce que le client voit en entrant.'
+    assign media_ask_brief_en = 'The room seen from the doorway, device installed and switched off, table made up: what the guest sees on entering.'
+  -%}
+
+{%- when 'corporate-wellness' -%}
+  {%- liquid
+    assign produits = 'cytolight-desk,cytolight-mask,cytolight-pano-ultra'
+
+    assign crumb_fr = 'Bien-&ecirc;tre en entreprise'
+    assign crumb_en = 'Corporate wellness'
+    assign kicker_fr = 'Antared Pro &mdash; lieux'
+    assign kicker_en = 'Antared Pro &mdash; venues'
+    assign titre_fr = 'Dix minutes dans une salle de pause, sans personne pour expliquer.'
+    assign titre_en = 'Ten minutes in a break room, with nobody there to explain.'
+    assign intro_fr = 'En entreprise, l&apos;utilisateur n&apos;a re&ccedil;u aucune formation, ne lira pas de notice, et dispose d&apos;un cr&eacute;neau court entre deux r&eacute;unions. La simplicit&eacute; d&apos;usage passe donc avant le nombre de r&eacute;glages, et la question du responsable interne passe avant celle du mod&egrave;le.'
+    assign intro_en = 'In a workplace the user has had no training, will not read a manual, and has a short slot between two meetings. Simplicity of use therefore beats the number of settings, and the question of who owns it internally comes before the question of which model.'
+    assign pour_qui_fr = 'Pour une entreprise qui installe un &eacute;quipement de pause partag&eacute;, sans personnel d&eacute;di&eacute; pour l&apos;encadrer.'
+    assign pour_qui_en = 'For a company installing shared break-room equipment, with no dedicated staff to supervise it.'
+
+    assign media_hero_brief_fr = 'Salle de pause d&apos;entreprise : panneau Antared DESK pos&eacute; sur une table basse, fauteuil, plantes, lumi&egrave;re du jour par une baie vitr&eacute;e.'
+    assign media_hero_brief_en = 'A workplace break room: an Antared DESK panel on a low table, an armchair, plants, daylight through a window wall.'
+
+    assign contraintes_aside_fr = 'Ce segment se joue sur l&apos;appropriation, pas sur la fiche technique : un &eacute;quipement partag&eacute; que personne ne s&apos;approprie finit dans un placard avant la fin du trimestre.'
+    assign contraintes_aside_en = 'This segment is decided by adoption, not by the spec sheet: shared equipment nobody owns ends up in a cupboard before the quarter is out.'
+    assign contraintes_fr = 'Aucun utilisateur form&eacute;~Un bouton, un minuteur, une consigne affich&eacute;e. Chaque r&eacute;glage suppl&eacute;mentaire est une raison de plus de ne pas s&apos;en servir.|Une salle partag&eacute;e~L&apos;appareil vit dans un lieu commun, donc visible et manipul&eacute; par tous. Il doit se ranger, se nettoyer et supporter d&apos;&ecirc;tre d&eacute;plac&eacute;.|Un cr&eacute;neau court~Dix minutes entre deux r&eacute;unions. Ce qui demande de se d&eacute;shabiller compl&egrave;tement ou de r&eacute;server une salle ne sera pas utilis&eacute;.|Il faut un responsable interne~Quelqu&apos;un qui r&eacute;pond aux questions et remet l&apos;appareil en place. Sans ce r&ocirc;le, l&apos;&eacute;quipement dispara&icirc;t sans que personne ne le d&eacute;cide.'
+    assign contraintes_en = 'No trained users~One button, one timer, one posted instruction. Every extra setting is one more reason not to use it.|A shared room~The device lives in a common space, so it is visible and handled by everyone. It has to be stowed, cleaned, and moved without harm.|A short slot~Ten minutes between two meetings. Anything requiring full undressing or booking a room will not be used.|It needs an internal owner~Someone who answers questions and puts the device back. Without that role, the equipment disappears without anyone deciding to remove it.'
+
+    assign install_kicker_fr = 'L&apos;installation'
+    assign install_kicker_en = 'The setup'
+    assign install_titre_fr = 'Un poste assis, une consigne, un responsable.'
+    assign install_titre_en = 'A seated spot, one instruction, one owner.'
+    assign install_texte_fr = 'Le format de bureau s&apos;installe sur une table basse ou un plan de travail, orient&eacute; de biais plut&ocirc;t qu&apos;en face : la lumi&egrave;re atteint la peau sans se trouver dans le champ de vision. Dix minutes suffisent, et la distance utile est celle d&apos;un &eacute;cran &mdash; environ 40 &agrave; 50 cm.'
+    assign install_texte_en = 'The desk format sits on a low table or a worktop, angled to one side rather than facing the user: the light reaches skin without sitting in the field of view. Ten minutes is enough, and the useful distance is that of a screen &mdash; roughly 40 to 50 cm.'
+    assign install_etapes_fr = 'Un poste assis, pas une salle~Un fauteuil dans la salle de pause suffit. Cr&eacute;er une salle d&eacute;di&eacute;e ajoute une r&eacute;servation, donc un obstacle.|De biais, jamais en face~L&apos;appareil n&apos;est pas fait pour &ecirc;tre regard&eacute;. Une orientation lat&eacute;rale r&egrave;gle la question sans consigne suppl&eacute;mentaire.|Une consigne de trois lignes~Dur&eacute;e, distance, peau d&eacute;couverte. Affich&eacute;e en fran&ccedil;ais et en anglais, &agrave; c&ocirc;t&eacute; de l&apos;appareil.|Un nom sur le mat&eacute;riel~La personne qui r&eacute;pond aux questions. C&apos;est le point qui d&eacute;cide de l&apos;usage r&eacute;el au bout de trois mois.'
+    assign install_etapes_en = 'A seated spot, not a room~An armchair in the break room is enough. A dedicated room adds a booking, and therefore an obstacle.|Angled, never facing~The device is not made to be looked at. A sideways orientation settles that without an extra instruction.|A three-line instruction~Duration, distance, bare skin. Posted in French and English, next to the device.|A name on the equipment~The person who answers questions. That is what decides real usage three months in.'
+
+    assign media_install_brief_fr = 'Vue de trois quarts : panneau DESK allum&eacute; pos&eacute; de biais &agrave; c&ocirc;t&eacute; d&apos;un fauteuil, avant-bras d&eacute;couverts d&apos;une personne assise, salle de pause en arri&egrave;re-plan.'
+    assign media_install_brief_en = 'A three-quarter view: a lit DESK panel angled beside an armchair, the bare forearms of a seated person, the break room behind.'
+
+    assign fourniture_fr = 'Les mesures d&apos;irradiance, avec leur distance~Une valeur en mW/cm&sup2; sans distance de mesure ne veut rien dire. Les n&ocirc;tres sont publi&eacute;es sous la forme mW/cm&sup2; &agrave; X cm.|Le spectre, canal par canal~Quelles longueurs d&apos;onde sur quel appareil, et lesquelles se pilotent s&eacute;par&eacute;ment.|La consigne d&apos;affichage et la communication interne~Le texte &agrave; poser &agrave; c&ocirc;t&eacute; de l&apos;appareil et celui &agrave; envoyer aux &eacute;quipes, en fran&ccedil;ais et en anglais, sans promesse que nous ne pourrions pas tenir.'
+    assign fourniture_en = 'Irradiance measurements, with their distance~A mW/cm&sup2; figure without a measurement distance means nothing. Ours are published as mW/cm&sup2; at X cm.|The spectrum, channel by channel~Which wavelengths on which device, and which of them are controlled separately.|Wall copy and internal communications~The text to post beside the device and the text to send your teams, in French and English, with no promise we could not keep.'
+
+    assign limites_titre_fr = 'Ce que vous ne pouvez pas &eacute;crire dans une communication interne.'
+    assign limites_titre_en = 'What you may not write in an internal communication.'
+    assign limites_fr = 'Ce n&apos;est pas de la sant&eacute; au travail~Produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. L&apos;&eacute;quipement ne rel&egrave;ve d&apos;aucun dispositif de pr&eacute;vention r&eacute;glement&eacute;.|Aucune promesse sur la fatigue ou le sommeil~Nous n&apos;&eacute;crivons pas qu&apos;une s&eacute;ance r&eacute;duit la fatigue, am&eacute;liore le sommeil ou la concentration. Ce qui se d&eacute;crit, c&apos;est l&apos;usage.|Aucun suivi individuel~Un &eacute;quipement de pause ne collecte rien et ne se rattache &agrave; aucun dossier. Un usage individuel ne se mesure pas et ne se demande pas.|Aucune &eacute;tude n&apos;a port&eacute; sur nos appareils~Les travaux publi&eacute;s portent sur des longueurs d&apos;onde et des doses, jamais sur un mat&eacute;riel Antared.'
+    assign limites_en = 'This is not occupational health~Wellness products, without medical-device CE marking. The equipment is not part of any regulated prevention scheme.|No promise about fatigue or sleep~We do not write that a session reduces fatigue, improves sleep, or sharpens focus. What can be described is the usage.|No individual tracking~Break-room equipment collects nothing and attaches to no record. Individual usage is neither measured nor requested.|No study has been run on our devices~Published work covers wavelengths and doses, never Antared hardware.'
+
+    assign questions_fr = 'Le nombre de personnes sur le site, et le nombre de sites concern&eacute;s.|La salle : pause partag&eacute;e, espace calme, ou salle r&eacute;servable.|La dur&eacute;e du cr&eacute;neau que vos &eacute;quipes peuvent r&eacute;ellement prendre.|Qui portera l&apos;&eacute;quipement en interne.|Votre calendrier, et le cadre budg&eacute;taire dans lequel il s&apos;inscrit.'
+    assign questions_en = 'How many people on site, and how many sites are involved.|The room: shared break area, quiet space, or bookable room.|How long a slot your teams can realistically take.|Who will own the equipment internally.|Your timeline, and the budget frame it belongs to.'
+
+    assign media_ask_brief_fr = 'Salle de pause vide, appareil &eacute;teint pos&eacute; sur sa table, consigne affich&eacute;e &agrave; c&ocirc;t&eacute; : l&apos;installation telle qu&apos;elle est le matin.'
+    assign media_ask_brief_en = 'An empty break room, device off on its table, the instruction sign beside it: the installation as it looks in the morning.'
+  -%}
+
+{%- when 'become-a-dealer' -%}
+  {%- liquid
+    assign produits = 'cytolight-pano-ultra,cytolight-desk,cytolight-mask'
+
+    assign crumb_fr = 'Devenir revendeur'
+    assign crumb_en = 'Become a dealer'
+    assign kicker_fr = 'Antared Pro &mdash; travailler avec nous'
+    assign kicker_en = 'Antared Pro &mdash; work with us'
+    assign titre_fr = 'Distribuer Antared, c&apos;est reprendre nos chiffres et nos limites.'
+    assign titre_en = 'Distributing Antared means taking on our numbers and our limits.'
+    assign intro_fr = 'Nous fournissons les fiches techniques, les mesures d&apos;irradiance avec leur distance et les textes bilingues. En retour, nous demandons que ces chiffres soient repris tels quels et que le cadre l&eacute;gal du produit de bien-&ecirc;tre soit tenu partout o&ugrave; la marque appara&icirc;t. Un argumentaire qui promet un traitement met en jeu vos comptes publicitaires comme les n&ocirc;tres.'
+    assign intro_en = 'We supply the technical sheets, the irradiance measurements with their distance, and the bilingual copy. In return, we ask that those numbers be used as they stand and that the wellness-product frame be held wherever the brand appears. A pitch promising a treatment puts your advertising accounts at risk along with ours.'
+    assign pour_qui_fr = 'Pour un distributeur, un installateur ou une enseigne qui veut porter la marque sur son march&eacute;.'
+    assign pour_qui_en = 'For a distributor, installer, or retailer wanting to carry the brand on their market.'
+
+    assign media_hero_brief_fr = 'Trois appareils Antared align&eacute;s sur un fond neutre &mdash; panneau, masque, genouill&egrave;re &mdash; &eacute;clairage de studio, aucun d&eacute;cor.'
+    assign media_hero_brief_en = 'Three Antared devices lined up on a neutral background &mdash; panel, mask, knee wrap &mdash; studio lighting, no set dressing.'
+
+    assign contraintes_aside_fr = 'Ce que nous attendons d&apos;un revendeur tient en quatre points, et aucun ne se n&eacute;gocie apr&egrave;s la premi&egrave;re commande. Les conditions commerciales, elles, se discutent : elles ne sont pas affich&eacute;es sur cette page parce qu&apos;elles d&eacute;pendent du march&eacute; et du volume.'
+    assign contraintes_aside_en = 'What we expect from a dealer comes down to four points, and none of them is negotiated after the first order. Commercial terms are discussed: they are not published on this page because they depend on the market and the volume.'
+    assign contraintes_fr = 'Les chiffres se reprennent tels quels~Irradiance, nombre de LED, longueurs d&apos;onde, autonomie : ceux de la fiche fournisseur, avec leur distance de mesure. Un chiffre arrondi vers le haut sur votre site nous engage aussi.|Le cadre l&eacute;gal ne se n&eacute;gocie pas~Produit de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. Aucune all&eacute;gation de traitement, nulle part, dans aucune langue.|La traduction part de nos textes~Nous fournissons le fran&ccedil;ais et l&apos;anglais. Une autre langue se traduit &agrave; partir de ces textes, pas d&apos;un argumentaire r&eacute;&eacute;crit qui perdrait le cadrage en route.|Le service apr&egrave;s-vente se d&eacute;cide avant~Qui r&eacute;pond &agrave; un client dont l&apos;appareil ne s&apos;allume plus, sous quel d&eacute;lai et dans quelle langue. Cette r&eacute;ponse se donne avant la premi&egrave;re commande.'
+    assign contraintes_en = 'The numbers are used as they stand~Irradiance, LED count, wavelengths, battery life: the supplier&apos;s figures, with their measurement distance. A number rounded up on your site commits us too.|The legal frame is not negotiable~A wellness product, without medical-device CE marking. No treatment claim, anywhere, in any language.|Translation starts from our copy~We supply French and English. Another language is translated from those texts, not from a rewritten pitch that would lose the framing on the way.|After-sales is decided first~Who answers a customer whose device no longer switches on, within what delay and in what language. That answer is given before the first order.'
+
+    assign install_kicker_fr = 'Travailler ensemble'
+    assign install_kicker_en = 'Working together'
+    assign install_titre_fr = 'Ce qui se d&eacute;cide avant la premi&egrave;re commande.'
+    assign install_titre_en = 'What gets decided before the first order.'
+    assign install_texte_fr = 'Nous pr&eacute;f&eacute;rons un premier &eacute;change pr&eacute;cis &agrave; un dossier g&eacute;n&eacute;rique. March&eacute;, canal de vente, langues, et qui prend en charge le service apr&egrave;s-vente : ces quatre points d&eacute;terminent tout le reste, y compris les conditions commerciales.'
+    assign install_texte_en = 'We would rather have one precise conversation than a generic pack. Market, sales channel, languages, and who handles after-sales: those four points determine everything else, commercial terms included.'
+    assign install_etapes_fr = 'Le march&eacute; et le canal~Quel pays, et par quel canal : boutique, installation sur site, vente en ligne, ou r&eacute;seau de professionnels.|La gamme port&eacute;e~Toute la gamme ou une partie. Les grands formats et les formats port&eacute;s ne s&apos;adressent pas aux m&ecirc;mes acheteurs.|La documentation~Fiches techniques, mesures d&apos;irradiance, visuels et textes bilingues. Nous les fournissons ; vous les reprenez sans les r&eacute;&eacute;crire.|Le service apr&egrave;s-vente~Qui r&eacute;pond, dans quel d&eacute;lai, et dans quelle langue. C&apos;est le point qui d&eacute;cide de la relation, pas la premi&egrave;re commande.'
+    assign install_etapes_en = 'Market and channel~Which country, and through which channel: retail, on-site installation, online sales, or a professional network.|The range carried~All of it or part of it. Large formats and worn formats do not address the same buyers.|The documentation~Technical sheets, irradiance measurements, visuals, and bilingual copy. We supply them; you use them without rewriting.|After-sales~Who answers, within what delay, and in what language. That is what decides the relationship, not the first order.'
+
+    assign media_install_brief_fr = 'Fiche technique imprim&eacute;e pos&eacute;e &agrave; c&ocirc;t&eacute; d&apos;un appareil &eacute;teint, mesures d&apos;irradiance et distances lisibles, plan de travail neutre.'
+    assign media_install_brief_en = 'A printed technical sheet beside a switched-off device, irradiance figures and distances legible, on a neutral worktop.'
+
+    assign fourniture_fr = 'Les mesures d&apos;irradiance, avec leur distance~Une valeur en mW/cm&sup2; sans distance de mesure ne veut rien dire. Les n&ocirc;tres sont publi&eacute;es sous la forme mW/cm&sup2; &agrave; X cm, et c&apos;est cette forme qui doit &ecirc;tre reprise.|Le spectre, canal par canal~Quelles longueurs d&apos;onde sur quel appareil, et lesquelles se pilotent s&eacute;par&eacute;ment. La correspondance compl&egrave;te est publique.|Les textes et visuels, en FR et EN~Descriptifs produit, arguments et visuels, d&eacute;j&agrave; &eacute;crits dans le cadre l&eacute;gal du produit de bien-&ecirc;tre.'
+    assign fourniture_en = 'Irradiance measurements, with their distance~A mW/cm&sup2; figure without a measurement distance means nothing. Ours are published as mW/cm&sup2; at X cm, and that is the form to reuse.|The spectrum, channel by channel~Which wavelengths on which device, and which of them are controlled separately. The full mapping is public.|Copy and visuals, in FR and EN~Product descriptions, arguments, and imagery, already written inside the legal frame of a wellness product.'
+
+    assign limites_titre_fr = 'Ce que vous ne pouvez pas &eacute;crire sur votre site.'
+    assign limites_titre_en = 'What you may not write on your own site.'
+    assign limites_fr = 'Aucune all&eacute;gation th&eacute;rapeutique~Ni traitement, ni gu&eacute;rison, ni soulagement d&apos;une pathologie. Cette r&egrave;gle vaut pour la fiche produit comme pour une publicit&eacute; ou un courriel.|Aucun chiffre invent&eacute;~Pas d&apos;irradiance arrondie, pas de LED compt&eacute;es deux fois, pas d&apos;autonomie optimiste. En cas de doute sur une valeur, elle ne se publie pas.|Aucun avis, logo ou certification fabriqu&eacute;~Pas d&apos;&eacute;toiles sans avis r&eacute;els, pas de logo de presse non accord&eacute;, pas de mention &laquo;&nbsp;certifi&eacute; m&eacute;dicalement&nbsp;&raquo;.|Aucune &eacute;tude pr&eacute;sent&eacute;e comme portant sur nos appareils~Les travaux publi&eacute;s portent sur des longueurs d&apos;onde et des doses. Les citer est permis ; laisser croire qu&apos;ils testent un appareil Antared ne l&apos;est pas.'
+    assign limites_en = 'No therapeutic claims~No treating, no curing, no relieving of any condition. This holds for the product page as much as for an ad or an email.|No invented numbers~No rounded irradiance, no LEDs counted twice, no optimistic battery life. If a value is in doubt, it is not published.|No fabricated reviews, logos, or certifications~No stars without real reviews, no press logo that was not granted, no &ldquo;medically certified&rdquo; wording.|No study presented as testing our devices~Published work covers wavelengths and doses. Citing it is allowed; implying it tested an Antared device is not.'
+
+    assign questions_fr = 'Votre march&eacute; : pays, langues, et type de client&egrave;le.|Votre canal : boutique, installation sur site, vente en ligne, r&eacute;seau de professionnels.|La gamme que vous souhaitez porter.|Qui assurera le service apr&egrave;s-vente aupr&egrave;s du client final.|Votre calendrier, et le volume que vous envisagez sur une premi&egrave;re p&eacute;riode.'
+    assign questions_en = 'Your market: country, languages, and type of customer.|Your channel: retail, on-site installation, online sales, professional network.|The part of the range you want to carry.|Who will handle after-sales with the end customer.|Your timeline, and the volume you have in mind for a first period.'
+
+    assign media_ask_brief_fr = 'Appareil Antared dans son emballage ouvert, accessoires align&eacute;s, fond neutre : ce que re&ccedil;oit un client final.'
+    assign media_ask_brief_en = 'An Antared device in its opened packaging, accessories lined up, neutral background: what an end customer receives.'
+  -%}
+
+{%- else -%}
+  {%- liquid
+    comment
+      Repli : le gabarit a ete assigne a une page dont le handle ne fait pas
+      partie des six segments. La page reste complete et renvoie vers le hub
+      plutot que de se rendre vide.
+    endcomment
+    assign produits = 'cytolight-pano-ultra,cytolight-desk,cytolight-mask'
+
+    assign crumb_fr = 'Antared Pro'
+    assign crumb_en = 'Antared Pro'
+    assign kicker_fr = 'Antared Pro'
+    assign kicker_en = 'Antared Pro'
+    assign titre_fr = '&Eacute;quiper un lieu, ce n&apos;est pas acheter six fois le m&ecirc;me appareil.'
+    assign titre_en = 'Equipping a space is not buying the same device six times over.'
+    assign intro_fr = 'Antared Pro est notre offre pour les lieux qui re&ccedil;oivent du public : cabinets, salles, spas, entreprises et revendeurs. Les questions n&apos;y sont pas celles de la vente directe &mdash; surface &agrave; couvrir, rotation, encombrement, maintenance, et ce qu&apos;on a le droit d&apos;&eacute;crire sur une affiche.'
+    assign intro_en = 'Antared Pro is our offer for spaces that welcome people: practices, gyms, spas, workplaces, and resellers. The questions are not the ones consumers ask &mdash; surface to cover, turnover, footprint, maintenance, and what you are allowed to write on a poster.'
+    assign pour_qui_fr = 'Six contextes, six pages. Celle-ci renvoie vers la bonne.'
+    assign pour_qui_en = 'Six contexts, six pages. This one points you to the right one.'
+
+    assign media_hero_brief_fr = 'Trois lieux &eacute;quip&eacute;s en triptyque : cabinet, salle de sport, cabine de spa, m&ecirc;me traitement de lumi&egrave;re rouge.'
+    assign media_hero_brief_en = 'Three equipped spaces as a triptych: a practice, a gym, a spa room, with the same red-light treatment.'
+
+    assign contraintes_aside_fr = 'Le lieu commande tout : le format, la puissance utile, la dur&eacute;e d&apos;une s&eacute;ance, et le discours que vous pourrez tenir sans sortir du cadre l&eacute;gal.'
+    assign contraintes_aside_en = 'The space decides everything: the format, the useful output, the length of a session, and what you can say without stepping outside the legal frame.'
+    assign contraintes_fr = 'La surface &agrave; couvrir~Une zone, une articulation ou un corps entier n&apos;appellent ni le m&ecirc;me format ni la m&ecirc;me distance.|La rotation~Le nombre de passages par jour d&eacute;cide du format bien avant l&apos;irradiance.|L&apos;encombrement~Ce qui reste en place et ce qui se range entre deux passages.|Ce que vous afficherez~Le cadre l&eacute;gal du produit de bien-&ecirc;tre s&apos;applique &agrave; tout ce qui porte la marque.'
+    assign contraintes_en = 'The surface to cover~One area, one joint, or a whole body call for neither the same format nor the same distance.|Turnover~How many people pass through per day decides the format long before irradiance does.|Footprint~What stays in place and what gets stowed between two sessions.|What you will display~The wellness-product frame applies to everything carrying the brand.'
+
+    assign install_kicker_fr = 'L&apos;installation'
+    assign install_kicker_en = 'The setup'
+    assign install_titre_fr = 'O&ugrave; l&apos;appareil se pose, et qui l&apos;allume.'
+    assign install_titre_en = 'Where the device sits, and who switches it on.'
+    assign install_texte_fr = 'La question qui tranche est toujours la m&ecirc;me : &agrave; quel endroit quelqu&apos;un reste-t-il immobile dix minutes chez vous ? Le poste d&eacute;cide du format, et la distance d&eacute;cide de la dose re&ccedil;ue.'
+    assign install_texte_en = 'The question that settles it is always the same: where does someone stay still for ten minutes in your space? The position decides the format, and distance decides the dose received.'
+    assign install_etapes_fr = 'Choisissez le poste~Il existe d&eacute;j&agrave; chez vous. L&apos;appareil vient s&apos;y poser.|Fixez la distance une fois~De 15 &agrave; 50 cm selon le format.|Affichez la consigne~Dur&eacute;e, distance, peau d&eacute;couverte, dans les deux langues.|Nommez un responsable~Un protocole que personne n&apos;a en charge dispara&icirc;t en trois semaines.'
+    assign install_etapes_en = 'Pick the position~It already exists in your space. The device comes to it.|Set the distance once~15 to 50 cm depending on the format.|Post the instructions~Duration, distance, bare skin, in both languages.|Name an owner~A protocol nobody owns disappears within three weeks.'
+
+    assign media_install_brief_fr = 'Cadrage serr&eacute; sur la distance de travail entre un appareil allum&eacute; et une zone du corps, rep&egrave;re de distance visible.'
+    assign media_install_brief_en = 'A tight frame on the working distance between a lit device and one area of the body, the distance marker visible.'
+
+    assign fourniture_fr = 'Les mesures d&apos;irradiance, avec leur distance~Une valeur en mW/cm&sup2; sans distance de mesure ne veut rien dire. Les n&ocirc;tres sont publi&eacute;es sous la forme mW/cm&sup2; &agrave; X cm.|Le spectre, canal par canal~Quelles longueurs d&apos;onde sur quel appareil, et lesquelles se pilotent s&eacute;par&eacute;ment.|Des textes bilingues d&eacute;j&agrave; cadr&eacute;s~En fran&ccedil;ais et en anglais, &eacute;crits dans le cadre l&eacute;gal du produit de bien-&ecirc;tre.'
+    assign fourniture_en = 'Irradiance measurements, with their distance~A mW/cm&sup2; figure without a measurement distance means nothing. Ours are published as mW/cm&sup2; at X cm.|The spectrum, channel by channel~Which wavelengths on which device, and which of them are controlled separately.|Bilingual copy, already framed~In French and English, written inside the legal frame of a wellness product.'
+
+    assign limites_titre_fr = 'Ce que vous ne pouvez pas annoncer &agrave; vos clients.'
+    assign limites_titre_en = 'What you may not announce to your clients.'
+    assign limites_fr = 'Ce ne sont pas des dispositifs m&eacute;dicaux~Produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical.|Aucune all&eacute;gation de soin~Ni traitement, ni gu&eacute;rison, ni soulagement d&apos;une pathologie.|Aucun chiffre invent&eacute;~Irradiance, LED, longueurs d&apos;onde et autonomie sont ceux de la fiche fournisseur.|Aucune &eacute;tude n&apos;a port&eacute; sur nos appareils~Les travaux publi&eacute;s portent sur des longueurs d&apos;onde et des doses.'
+    assign limites_en = 'These are not medical devices~Wellness products, without medical-device CE marking.|No care claims~No treating, no curing, no relieving of any condition.|No invented numbers~Irradiance, LEDs, wavelengths, and battery life are the supplier&apos;s figures.|No study has been run on our devices~Published work covers wavelengths and doses.'
+
+    assign questions_fr = 'Le lieu, et la surface &agrave; couvrir.|Le nombre de passages par jour.|La zone vis&eacute;e : corps entier, une articulation, le visage.|Qui utilisera l&apos;appareil, et avec quel accompagnement.|Votre calendrier, et le nombre de sites concern&eacute;s.'
+    assign questions_en = 'The space, and the surface to cover.|How many sessions a day.|The target area: full body, one joint, the face.|Who will use the device, and with what support.|Your timeline, and how many sites are involved.'
+
+    assign media_ask_brief_fr = 'Plan large d&apos;un lieu &eacute;quip&eacute;, appareil &eacute;teint, personne au centre : la place que prend l&apos;installation.'
+    assign media_ask_brief_en = 'A wide shot of an equipped space, device off, nobody in the centre of frame: the footprint the installation takes.'
+  -%}
+
+{%- endcase -%}
+
+{%- liquid
+  comment
+    Intitules communs aux six pages. Seul le segment revendeur change de
+    registre : on n'y equipe pas un lieu, on y prend des engagements.
+  endcomment
+  assign contraintes_kicker_fr = 'Le lieu'
+  assign contraintes_kicker_en = 'The space'
+  assign contraintes_titre_fr = 'Ce que ce lieu impose au mat&eacute;riel.'
+  assign contraintes_titre_en = 'What this space demands of the hardware.'
+  if handle == 'become-a-dealer'
+    assign contraintes_kicker_fr = 'Ce que nous attendons'
+    assign contraintes_kicker_en = 'What we expect'
+    assign contraintes_titre_fr = 'Quatre points qui ne se n&eacute;gocient pas.'
+    assign contraintes_titre_en = 'Four points that are not negotiable.'
+  endif
+-%}
+
+<section class="ln-page-pro">
+  {% render 'editorial-hero',
+     crumb_fr: crumb_fr, crumb_en: crumb_en,
+     kicker_fr: kicker_fr, kicker_en: kicker_en,
+     title_fr: titre_fr, title_en: titre_en %}
+
+  <section class="ln-section ln-section--tight">
+    <div class="ln-shell ln-shell--narrow">
+      <p class="ln-copy">{% if is_fr %}{{ intro_fr }}{% else %}{{ intro_en }}{% endif %}</p>
+      <p class="ln-copy"><strong>{% if is_fr %}{{ pour_qui_fr }}{% else %}{{ pour_qui_en }}{% endif %}</strong></p>
+    </div>
+  </section>
+
+  <section class="ln-section ln-section--tight">
+    <div class="ln-shell">
+      {% render 'media-slot',
+         file: media_hero_file, w: media_hero_w, h: media_hero_h,
+         ratio: '16 / 9', priority: 'high',
+         alt_fr: media_hero_brief_fr, alt_en: media_hero_brief_en,
+         brief_fr: media_hero_brief_fr, brief_en: media_hero_brief_en %}
+    </div>
+  </section>
+
+  <section class="ln-section ln-section--soft">
+    <div class="ln-shell">
+      <div class="ln-head ln-reveal">
+        <div>
+          <p class="ln-kicker">{% if is_fr %}{{ contraintes_kicker_fr }}{% else %}{{ contraintes_kicker_en }}{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}{{ contraintes_titre_fr }}{% else %}{{ contraintes_titre_en }}{% endif %}</h2>
+        </div>
+        <div class="ln-head__aside">
+          <p>{% if is_fr %}{{ contraintes_aside_fr }}{% else %}{{ contraintes_aside_en }}{% endif %}</p>
+        </div>
+      </div>
+
+      <div class="ln-steps">
+        {%- if is_fr -%}
+          {%- assign contraintes = contraintes_fr | split: '|' -%}
+        {%- else -%}
+          {%- assign contraintes = contraintes_en | split: '|' -%}
+        {%- endif -%}
+        {%- for contrainte in contraintes -%}
+          {%- assign paire = contrainte | split: '~' -%}
+          <div class="ln-step">
+            <h3 class="ln-step__title">{{ paire[0] }}</h3>
+            <p class="ln-step__text">{{ paire[1] }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="ln-section">
+    <div class="ln-shell">
+      <div class="ln-split">
+        <div class="ln-split__text ln-reveal">
+          <p class="ln-kicker">{% if is_fr %}{{ install_kicker_fr }}{% else %}{{ install_kicker_en }}{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}{{ install_titre_fr }}{% else %}{{ install_titre_en }}{% endif %}</h2>
+          <p class="ln-copy">{% if is_fr %}{{ install_texte_fr }}{% else %}{{ install_texte_en }}{% endif %}</p>
+
+          <div class="ln-steps ln-steps--stack">
+            {%- if is_fr -%}
+              {%- assign install_etapes = install_etapes_fr | split: '|' -%}
+            {%- else -%}
+              {%- assign install_etapes = install_etapes_en | split: '|' -%}
+            {%- endif -%}
+            {%- for etape in install_etapes -%}
+              {%- assign paire = etape | split: '~' -%}
+              <div class="ln-step">
+                <h3 class="ln-step__title">{{ paire[0] }}</h3>
+                <p class="ln-step__text">{{ paire[1] }}</p>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="ln-split__media ln-reveal">
+          {% render 'media-slot',
+             file: media_install_file, w: media_install_w, h: media_install_h,
+             ratio: '4 / 5',
+             alt_fr: media_install_brief_fr, alt_en: media_install_brief_en,
+             brief_fr: media_install_brief_fr, brief_en: media_install_brief_en %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ln-section ln-section--dark">
+    <div class="ln-shell">
+      <div class="ln-head ln-reveal">
+        <div>
+          <p class="ln-kicker">{% if is_fr %}Ce que nous fournissons{% else %}What we supply{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}Le mat&eacute;riel, et de quoi en parler sans se tromper.{% else %}The hardware, and what you need to talk about it correctly.{% endif %}</h2>
+        </div>
+        <div class="ln-head__aside">
+          <p>
+            {%- if is_fr -%}
+              Ces documents ne sont pas un argumentaire : ce sont les m&ecirc;mes chiffres que ceux publi&eacute;s sur le site, dans la m&ecirc;me forme, pour que rien ne diverge entre ce que nous &eacute;crivons et ce que vous &eacute;crirez.
+            {%- else -%}
+              These documents are not a pitch: they are the same figures published on the site, in the same form, so that nothing diverges between what we write and what you will write.
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+
+      <div class="ln-steps">
+        {%- if is_fr -%}
+          {%- assign fourniture = fourniture_fr | split: '|' -%}
+        {%- else -%}
+          {%- assign fourniture = fourniture_en | split: '|' -%}
+        {%- endif -%}
+        {%- for item in fourniture -%}
+          {%- assign paire = item | split: '~' -%}
+          <div class="ln-step">
+            <h3 class="ln-step__title">{{ paire[0] }}</h3>
+            <p class="ln-step__text">{{ paire[1] }}</p>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="ln-actions">
+        <a class="ln-button ln-button--line" href="{{ url_waves }}">{% if is_fr %}Les sept longueurs d&apos;onde{% else %}All seven wavelengths{% endif %}</a>
+        <a class="ln-button ln-button--line" href="{{ url_how }}">{% if is_fr %}Dose, s&eacute;curit&eacute; et m&eacute;canisme{% else %}Dose, safety and mechanism{% endif %}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ln-section ln-section--tight">
+    <div class="ln-shell ln-shell--narrow">
+      <p class="ln-kicker">{% if is_fr %}Cadrage{% else %}Framing{% endif %}</p>
+      <h2 class="ln-subtitle">{% if is_fr %}{{ limites_titre_fr }}{% else %}{{ limites_titre_en }}{% endif %}</h2>
+      <p class="ln-copy">
+        {%- if is_fr -%}
+          Ce bloc n&apos;est pas une pr&eacute;caution de style. Un professionnel qui installe nos appareils est celui qui prendra la parole devant les personnes qui s&apos;en servent : lui donner le mat&eacute;riel sans lui donner la limite reviendrait &agrave; d&eacute;placer l&apos;all&eacute;gation, pas &agrave; l&apos;&eacute;viter.
+        {%- else -%}
+          This block is not stylistic caution. A professional installing our devices is the one who will speak to the people using them: handing over the hardware without the boundary would move the claim, not avoid it.
+        {%- endif -%}
+      </p>
+
+      <div class="ln-pledge">
+        {%- if is_fr -%}
+          {%- assign limites = limites_fr | split: '|' -%}
+        {%- else -%}
+          {%- assign limites = limites_en | split: '|' -%}
+        {%- endif -%}
+        {%- for limite in limites -%}
+          {%- assign paire = limite | split: '~' -%}
+          <div class="ln-pledge__row">
+            <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+            <div>
+              <p class="ln-pledge__title">{{ paire[0] }}</p>
+              <p class="ln-pledge__text">{{ paire[1] }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="ln-actions">
+        <a class="ln-button ln-button--ink" href="{{ url_science }}">{% if is_fr %}Ce que dit la litt&eacute;rature{% else %}What the literature says{% endif %}</a>
+        <a class="ln-button ln-button--ink" href="{{ url_values }}">{% if is_fr %}Nos r&egrave;gles d&apos;&eacute;criture{% else %}Our writing rules{% endif %}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ln-section ln-section--soft">
+    <div class="ln-shell">
+      <div class="ln-split ln-split--flip">
+        <div class="ln-split__text ln-reveal">
+          <p class="ln-kicker">{% if is_fr %}Parler &agrave; quelqu&apos;un{% else %}Talk to someone{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}Ce qu&apos;il nous faut pour r&eacute;pondre utilement.{% else %}What we need in order to answer usefully.{% endif %}</h2>
+          <p class="ln-copy">
+            {%- if is_fr -%}
+              Cinq lignes suffisent pour une premi&egrave;re r&eacute;ponse pr&eacute;cise, chiffr&eacute;e l&agrave; o&ugrave; nous avons des chiffres. Nous r&eacute;pondons en fran&ccedil;ais comme en anglais.
+            {%- else -%}
+              Five lines are enough for a first precise answer, with figures wherever we have them. We reply in French and in English.
+            {%- endif -%}
+          </p>
+
+          <div class="ln-note">
+            <p class="ln-note__title">{% if is_fr %}&Agrave; nous &eacute;crire{% else %}Tell us{% endif %}</p>
+            <ul>
+              {%- if is_fr -%}
+                {%- assign questions = questions_fr | split: '|' -%}
+              {%- else -%}
+                {%- assign questions = questions_en | split: '|' -%}
+              {%- endif -%}
+              {%- for question in questions -%}
+                <li>{{ question }}</li>
+              {%- endfor -%}
+            </ul>
+          </div>
+
+          <div class="ln-actions">
+            <a class="ln-button" href="{{ url_contact }}">{% if is_fr %}Nous &eacute;crire{% else %}Get in touch{% endif %}</a>
+            <a class="ln-button ln-button--ink" href="{{ url_pro }}">{% if is_fr %}Les six contextes{% else %}The six contexts{% endif %}</a>
+          </div>
+        </div>
+
+        <div class="ln-split__media ln-reveal">
+          {% render 'media-slot',
+             file: media_ask_file, w: media_ask_w, h: media_ask_h,
+             ratio: '3 / 2',
+             alt_fr: media_ask_brief_fr, alt_en: media_ask_brief_en,
+             brief_fr: media_ask_brief_fr, brief_en: media_ask_brief_en %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% render 'learn-product-cta',
+     handles: produits,
+     heading_fr: 'Le bon appareil est celui qui tient dans votre lieu.',
+     heading_en: 'The right device is the one that fits your space.',
+     text_fr: 'Ces trois formats sont ceux que ce contexte appelle le plus souvent. Le choix d&eacute;finitif se fait sur la surface &agrave; couvrir et le nombre de passages, pas sur le nombre de LED.',
+     text_en: 'These three formats are the ones this context calls for most often. The final pick is decided by the surface to cover and the number of sessions, not by LED count.' %}
+</section>
+
+{% schema %}
+{
+  "name": "Antared Pro — Segment",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Section unique des six pages de segment Antared Pro. Le segment est derive du handle de la page : clinics, physios, gyms, hotels-spas, corporate-wellness, become-a-dealer. Un handle inconnu retombe sur une page generique qui renvoie vers /pages/antared-pro. Le bloc « ce que vous ne pouvez pas annoncer » est obligatoire sur chaque page : c'est lui qui tient ces pages du bon cote du principe II. Aucun tarif, remise, volume minimum ou reference client ne s'ajoute ici tant qu'il n'en existe pas de reel."
+    },
+    {
+      "type": "paragraph",
+      "content": "Les trois encarts visuels sont vides par defaut et affichent le brief du visuel attendu. Pour les remplir : uploader la photo dans Content > Files, relever le nom exact retourne par Shopify, puis le reporter dans les assign media_hero_file / media_install_file / media_ask_file en tete de la section, avec les dimensions reelles du fichier."
+    }
+  ]
+}
+{% endschema %}

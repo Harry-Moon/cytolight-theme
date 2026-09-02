@@ -1,0 +1,72 @@
+{%- comment -%}
+  Encart visuel — image de Content > Files, ou emplacement reserve.
+
+  Les pages editoriales du theme ont besoin d'images qui n'existent pas encore
+  en boutique. Ce fragment tient les deux etats sans que la mise en page bouge :
+
+    - `file` renseigne  -> l'image est rendue, avec son `alt`, ses `width` /
+      `height` reels et sa legende.
+    - `file` vide       -> un encart de marque occupe exactement la meme place,
+      au meme ratio, et porte le brief du visuel attendu. Aucun trou, aucun
+      decalage de mise en page (CLS) le jour ou l'image arrive.
+
+  POURQUOI PAS UNE URL PAR DEFAUT : `file_url` sur un nom absent de Content >
+  Files ne renvoie pas une erreur, il renvoie une URL qui repond 404. Une image
+  cassee coute plus qu'un encart assume — d'ou le defaut vide.
+
+  POUR REMPLIR UN ENCART :
+    1. Uploader le visuel dans Content > Files depuis l'admin Shopify.
+    2. Relever le nom exact retourne par Shopify (un doublon est suffixe :
+       `photo.jpg` -> `photo_1.jpg`).
+    3. Reporter ce nom dans le `assign ..._file` correspondant, en tete de la
+       section qui rend cet encart, avec les dimensions reelles du fichier.
+
+  Parametres :
+    file          nom du fichier dans Content > Files. Vide = encart reserve.
+    w / h         dimensions reelles du fichier, en pixels (obligatoires des
+                  que `file` est renseigne — principe VII, pas de `height=auto`)
+    ratio         ratio de l'encart, en valeur CSS. Defaut : '16 / 9'
+    alt_fr/alt_en texte alternatif de l'image
+    brief_fr/_en  ce que le visuel doit montrer — affiche dans l'encart reserve
+    caption_fr/_en legende affichee sous l'image (facultative)
+    priority      'high' pour la premiere image de la page (pas de lazy)
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign slot_ratio = ratio | default: '16 / 9'
+  assign slot_alt = alt_en
+  assign slot_brief = brief_en
+  assign slot_caption = caption_en
+  if is_fr
+    assign slot_alt = alt_fr | default: alt_en
+    assign slot_brief = brief_fr | default: brief_en
+    assign slot_caption = caption_fr | default: caption_en
+  endif
+-%}
+
+<figure class="ln-media" style="--ln-media-ratio: {{ slot_ratio }};">
+  <div class="ln-media__frame">
+    {%- if file != blank -%}
+      <img src="{{ file | file_url }}"
+           alt="{{ slot_alt | strip_html | escape }}"
+           width="{{ w | default: 1600 }}"
+           height="{{ h | default: 900 }}"
+           {% if priority == 'high' %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+           decoding="async">
+    {%- else -%}
+      <div class="ln-media__ph">
+        <p class="ln-media__tag">{% if is_fr %}Visuel{% else %}Visual{% endif %}</p>
+        <p class="ln-media__brief">{{ slot_brief }}</p>
+        <p class="ln-media__spec">{{ slot_ratio | replace: '/', '&frasl;' }} &middot; Content &rarr; Files</p>
+      </div>
+    {%- endif -%}
+  </div>
+  {%- if file != blank and slot_caption != blank -%}
+    <figcaption class="ln-media__caption">{{ slot_caption }}</figcaption>
+  {%- endif -%}
+</figure>
