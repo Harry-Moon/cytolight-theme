@@ -527,6 +527,36 @@
 .cy-product__price { font-size: 15px; font-weight: 650; }
 .cy-product__meta .cy-link { color: #fff; font-size: 13px; }
 
+/*
+ * Le « Decouvrir » des cartes du catalogue, et le « Voir tous les produits »
+ * qui coiffe la section : la fleche glisse vers la droite quand la carte est
+ * survolee.
+ *
+ * Le survol se prend sur la CARTE, pas sur le lien. Le lien est un `<span>`
+ * pose au bas d'une carte qui est elle-meme le lien cliquable : viser
+ * `.cy-link:hover` n'aurait repondu qu'au pointeur exactement dessus, alors
+ * que c'est toute la carte qui reagit deja (elle se souleve et son image
+ * grandit). La fleche est le seul element du bloc qui ne faisait rien.
+ *
+ * La fleche est enveloppee dans un `<span aria-hidden>` cote Liquid : en
+ * simple caractere de texte, il n'y avait rien a animer. `aria-hidden` parce
+ * qu'un lecteur d'ecran annoncerait « fleche vers la droite » apres le
+ * libelle, ce qui n'apporte rien.
+ *
+ * Le glissement est enferme dans prefers-reduced-motion : c'est une decoration,
+ * la carte reste parfaitement lisible sans lui.
+ */
+.cy-range .cy-link > span[aria-hidden] {
+  display: inline-block;
+  transition: transform .34s var(--cy-ease);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .cy-range .cy-product:hover .cy-link > span[aria-hidden],
+  .cy-range .cy-link:hover > span[aria-hidden] {
+    transform: translateX(7px);
+  }
+}
+
 .cy-use__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

@@ -244,7 +244,7 @@
             <span class="cy-product__desc">{% if is_fr %}Le panneau compact &agrave; 7 spectres pour votre routine quotidienne.{% else %}The compact 7-spectrum panel for your daily routine.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if desk_product != blank %}{{ desk_product.price | money }}{% else %}299 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
             </span>
           </span>
         </a>
@@ -257,7 +257,7 @@
             <span class="cy-product__desc">{% if is_fr %}Routine cuir chevelu simple et facile &agrave; garder.{% else %}A simple scalp routine that is easy to keep.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if cap_product != blank %}{{ cap_product.price | money }}{% else %}330 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
             </span>
           </span>
         </a>
@@ -270,14 +270,24 @@
             <span class="cy-product__desc">{% if is_fr %}Masque LED souple pour une routine visage courte.{% else %}A flexible LED mask for a short face routine.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if mask_product != blank %}{{ mask_product.price | money }}{% else %}250 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
             </span>
           </span>
         </a>
 
         <a class="cy-product cy-reveal" href="{{ foot_url }}">
           <span class="cy-product__media">
-            {%- if foot_product.featured_image -%}
+            {%- comment -%}
+              `!= blank`, et pas seulement la presence : quand le produit
+              n'existe pas dans la boutique, `all_products[handle]` rend un
+              EmptyDrop, et `.featured_image` en rend un autre — qui est VRAI
+              dans un `if`, puisque seuls nil et false sont faux en Liquid. La
+              condition passait donc, `image_url` recevait un objet vide et
+              rendait « Liquid error: invalid url input » dans le `src`. La
+              carte affichait une image cassee sur la page d'accueil.
+              `!= blank` reconnait l'EmptyDrop et bascule sur le visuel de repli.
+            {%- endcomment -%}
+            {%- if foot_product.featured_image != blank -%}
               <img src="{{ foot_product.featured_image | image_url: width: 900 }}" alt="{{ foot_product.featured_image.alt | escape }}" width="900" height="1100" loading="lazy">
             {%- else -%}
               <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="Antared Foot Therapy" width="900" height="1100" loading="lazy">
@@ -289,7 +299,7 @@
             <span class="cy-product__desc">{% if is_fr %}Pour les pieds fatigu&eacute;s et les routines &agrave; domicile.{% else %}For tired feet and simple at-home routines.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if foot_product != blank %}{{ foot_product.price | money }}{% else %}220 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
             </span>
           </span>
         </a>
@@ -302,7 +312,7 @@
             <span class="cy-product__desc">{% if is_fr %}Pour l'articulation du genou et le confort &agrave; domicile.{% else %}For the knee joint and simple at-home comfort.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if knee_product != blank %}{{ knee_product.price | money }}{% else %}250 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
             </span>
           </span>
         </a>
@@ -315,7 +325,7 @@
             <span class="cy-product__desc">{% if is_fr %}Lumi&egrave;re, chaleur et PEMF pour une session compl&egrave;te.{% else %}Light, heat, and PEMF for a complete session.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if sauna_dome_product != blank %}{{ sauna_dome_product.price | money }}{% else %}1997 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
             </span>
           </span>
         </a>
@@ -328,7 +338,7 @@
             <span class="cy-product__desc">{% if is_fr %}Panneau grand format pour routines corps entier.{% else %}Large-format panel for full-body routines.{% endif %}</span>
             <span class="cy-product__meta">
               <span class="cy-product__price">{% if pano_ultra_product != blank %}{{ pano_ultra_product.price | money }}{% else %}1500 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} &rarr;</span>
+              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
             </span>
           </span>
         </a>
