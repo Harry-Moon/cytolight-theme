@@ -296,8 +296,11 @@
      est un changement d'intensite et de halo, jamais une croissance -- un
      tube ne coulisse pas le long du mur, il s'allume. Le halo est une
      SURCOUCHE du trait (box-shadow, qui epouse sa forme exacte) : pas de
-     calque separe, pas de rectangle visible autour de la brique. */
+     calque separe, pas de rectangle visible autour de la brique.
+     `border-radius` arrondit le trait lui-meme (en pilule) : le halo suit
+     cette forme, jamais celle -- anguleuse -- d'un rectangle brut. */
   content: ''; position: absolute; top: -1px; left: 0; width: 22px; height: 2px;
+  border-radius: 999px;
   background: var(--wave-color, #c8102e);
   opacity: .38;
   box-shadow: 0 0 0 transparent;
@@ -348,17 +351,20 @@
 .cy-spectrum span.is-lit { color: #cfcfcf; }
 .cy-spectrum span.is-lit::before {
   opacity: .85;
-  box-shadow: 0 0 5px color-mix(in srgb, var(--wave-color, #c8102e) 40%, transparent);
+  box-shadow: 0 0 2px color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent);
 }
 .cy-spectrum span.is-current { color: #fff; }
 /* Un petit halo, pas un sursaut : la brique passe de son opacite de repos au
    plein regime par un simple fondu (la transition deja posee sur ::before,
    .4s) -- aucune animation separee ne rejoue par-dessus. Une amorce qui
    clignote plusieurs fois avant de tenir se lit comme un flash, pas comme un
-   halo qui s'allume. */
+   halo qui s'allume.
+   Le flou reste court (3px) et porte un leger etalement (1px) plutot que
+   l'inverse : un grand flou sans etalement finit par se lire comme une
+   tache diffuse, decrochee de la brique -- pas comme un halo qui la colle. */
 .cy-spectrum span.is-current::before {
   opacity: 1;
-  box-shadow: 0 0 8px color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent);
+  box-shadow: 0 0 3px 1px color-mix(in srgb, var(--wave-color, #c8102e) 75%, transparent);
 }
 .cy-spectrum span.is-current strong { text-shadow: 0 0 26px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent); }
 /* Antared Redlight Cap: real two-plane parallax. The background room
