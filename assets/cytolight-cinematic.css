@@ -348,31 +348,19 @@
 .cy-spectrum span.is-lit { color: #cfcfcf; }
 .cy-spectrum span.is-lit::before {
   opacity: .85;
-  box-shadow: 0 0 9px color-mix(in srgb, var(--wave-color, #c8102e) 45%, transparent);
+  box-shadow: 0 0 5px color-mix(in srgb, var(--wave-color, #c8102e) 40%, transparent);
 }
 .cy-spectrum span.is-current { color: #fff; }
+/* Un petit halo, pas un sursaut : la brique passe de son opacite de repos au
+   plein regime par un simple fondu (la transition deja posee sur ::before,
+   .4s) -- aucune animation separee ne rejoue par-dessus. Une amorce qui
+   clignote plusieurs fois avant de tenir se lit comme un flash, pas comme un
+   halo qui s'allume. */
 .cy-spectrum span.is-current::before {
   opacity: 1;
-  box-shadow:
-    0 0 16px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent),
-    0 0 38px color-mix(in srgb, var(--wave-color, #c8102e) 45%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent);
 }
 .cy-spectrum span.is-current strong { text-shadow: 0 0 26px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent); }
-
-/* L'amorce : un tube neon ne monte pas en fondu, il accroche, bat une fois,
-   puis tient. L'animation ne porte que sur l'opacite du trait — elle est
-   relancee a chaque fois que la classe est reposee. */
-@media (prefers-reduced-motion: no-preference) {
-  .cy-spectrum span.is-current::before { animation: antared-wave-ignite .52s var(--cy-ease); }
-}
-@keyframes antared-wave-ignite {
-  0%   { opacity: .25; }
-  16%  { opacity: 1; }
-  27%  { opacity: .38; }
-  44%  { opacity: 1; }
-  58%  { opacity: .66; }
-  100% { opacity: 1; }
-}
 /* Antared Redlight Cap: real two-plane parallax. The background room
    plate and the transparent product cutout are separate elements that
    drift at different scroll-linked speeds (see --cy-p multipliers
