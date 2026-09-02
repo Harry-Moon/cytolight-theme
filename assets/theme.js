@@ -287,6 +287,16 @@
       closeDrawer();
       navDrawer.querySelector('summary')?.focus();
     });
+    // Le glissement du panneau (et le blocage du scroll de fond) s'appuient
+    // sur cette classe plutot que sur un selecteur [open] anime directement :
+    // certains moteurs ne rejouent pas fidelement une transition de transform
+    // qui depend d'un attribut change au meme instant que le toggle. `toggle`
+    // est l'evenement natif du <details> — il se declenche aussi bien pour un
+    // clic sur le burger que pour les fermetures scriptees ci-dessus.
+    navDrawer.addEventListener('toggle', () => {
+      navDrawer.classList.toggle('is-open', navDrawer.open);
+      document.documentElement.classList.toggle('has-drawer-open', navDrawer.open);
+    });
   }
 
   // Selecteur de langue — le <details> s'ouvre et se ferme tout seul ; on
