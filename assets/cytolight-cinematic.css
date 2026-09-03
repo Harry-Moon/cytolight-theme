@@ -183,6 +183,15 @@
    */
   position: absolute; inset: var(--header-h, 0px) 0 0 0; z-index: 0;
 }
+/*
+ * L'image DESK ne va jamais la chercher elle-meme : contenue puis reduite a
+ * 88 %, elle laisse un bandeau du fond de la scene visible a gauche et a
+ * droite. Plutot que d'agrandir ou de recadrer le fichier source, ce fond
+ * reprend la teinte du studio releve au bord meme de la photo (quasi noir,
+ * legerement chaud a gauche) : la bande vide se lit comme la suite du meme
+ * decor plutot que comme un cadre qui s'arrete trop tot.
+ */
+#cy-science .cy-cinema__world { background-color: #17161a; }
 .cy-cinema__world img, .cy-cinema__world video {
   width: 100%;
   height: 100%;
@@ -351,7 +360,7 @@
 .cy-spectrum span.is-lit { color: #cfcfcf; }
 .cy-spectrum span.is-lit::before {
   opacity: .85;
-  box-shadow: 0 0 2px color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent);
+  box-shadow: 0 0 3px color-mix(in srgb, var(--wave-color, #c8102e) 70%, transparent);
 }
 .cy-spectrum span.is-current { color: #fff; }
 /* Un petit halo, pas un sursaut : la brique passe de son opacite de repos au
@@ -364,7 +373,7 @@
    tache diffuse, decrochee de la brique -- pas comme un halo qui la colle. */
 .cy-spectrum span.is-current::before {
   opacity: 1;
-  box-shadow: 0 0 3px 1px color-mix(in srgb, var(--wave-color, #c8102e) 75%, transparent);
+  box-shadow: 0 0 4px 2px color-mix(in srgb, var(--wave-color, #c8102e) 90%, transparent);
 }
 .cy-spectrum span.is-current strong { text-shadow: 0 0 26px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent); }
 /* Antared Redlight Cap: real two-plane parallax. The background room
