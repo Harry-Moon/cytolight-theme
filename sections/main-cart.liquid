@@ -109,6 +109,24 @@
           <button type="submit" name="update" class="visually-hidden" tabindex="-1" aria-hidden="true">{% if is_fr %}Mettre &agrave; jour le panier{% else %}Update cart{% endif %}</button>
         </form>
 
+        {%- assign cs_available = 0 -%}
+        {%- for handle in cross_sell_handles -%}
+          {%- assign cs_check = all_products[handle] -%}
+          {%- if cs_check == blank or cs_check.available == false -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- assign cs_check_in_cart = false -%}
+          {%- for item in cart.items -%}
+            {%- if item.product_id == cs_check.id -%}
+              {%- assign cs_check_in_cart = true -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if cs_check_in_cart -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- assign cs_available = cs_available | plus: 1 -%}
+        {%- endfor -%}
+        {%- if cs_available > 0 -%}
         <div class="cart-crosssell">
           <h2>{% if is_fr %}Compl&eacute;tez votre rituel{% else %}Complete your ritual{% endif %}</h2>
           <div class="cart-crosssell__grid">
@@ -169,6 +187,7 @@
             {% endfor %}
           </div>
         </div>
+        {%- endif -%}
       </div>
 
       <aside class="cart-summary">
