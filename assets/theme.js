@@ -229,6 +229,74 @@
     input.dispatchEvent(new Event('change', { bubbles: true }));
   });
 
+  /*
+   * Panier — mise a jour en direct.
+   *
+   * Le stepper et le champ numerique ci-dessus ne font que changer la valeur
+   * affichee ; c'est ici qu'elle part vers Shopify, via `/cart/change.js`
+   * plutot que le POST classique du formulaire, pour que la quantite, les
+   * prix et le sous-total se mettent a jour sans recharger la page.
+   *
+   * Le fragment revient avec `sections`, pour que la section entiere soit
+   * rerendue par Liquid — remises, note de livraison, ventes additionnelles
+   * compris — plutot que recalculee a la main en JavaScript, ce qui aurait
+   * duplique toute l'arithmetique deja ecrite dans main-cart.liquid.
+   *
+   * Les ecouteurs sont delegues sur `document`, jamais attaches au formulaire
+   * lui-meme : `cartWrapper.innerHTML` est remplace a chaque mise a jour, ce
+   * qui detache l'ancien formulaire et rendrait tout ecouteur pose dessus
+   * silencieux des la premiere quantite changee.
+   *
+   * Le bouton de soumission cache dans le formulaire reste la reference : si
+   * `fetch` echoue — reseau coupe, page de verification anti-robot sous
+   * `shopify theme dev` — on lui rend la main plutot que de laisser le panier
+   * affiche desynchronise du serveur, meme principe que l'inscription
+   * newsletter du pied de page.
+   */
+  const cartWrapper = document.querySelector('.cart__form')?.closest('.shopify-section') || null;
+  if (cartWrapper && window.fetch) {
+    const sectionId = cartWrapper.id.replace('shopify-section-', '');
+    const cartCount = document.querySelector('.site-header__cart-count');
+    const pending = {};
+
+    const changeLine = (key, quantity, row) => {
+      if (!key || !sectionId) return;
+      row?.classList.add('is-updating');
+      fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: key, quantity, sections: sectionId }),
+      })
+        .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+        .then((data) => {
+          if (!data.sections || !data.sections[sectionId]) return Promise.reject(data);
+          if (cartCount) cartCount.textContent = data.item_count;
+          cartWrapper.innerHTML = data.sections[sectionId];
+        })
+        .catch(() => {
+          cartWrapper.querySelector('.cart__form')?.submit();
+        });
+    };
+
+    document.addEventListener('change', (e) => {
+      const input = e.target.closest('.cart-item input[data-line-key]');
+      if (!input || !cartWrapper.contains(input)) return;
+      const key = input.dataset.lineKey;
+      const quantity = Math.max(0, parseInt(input.value, 10) || 0);
+      clearTimeout(pending[key]);
+      pending[key] = setTimeout(() => changeLine(key, quantity, input.closest('.cart-item')), 300);
+    });
+
+    document.addEventListener('click', (e) => {
+      const removeLink = e.target.closest('[data-cart-remove]');
+      if (!removeLink || !cartWrapper.contains(removeLink)) return;
+      e.preventDefault();
+      const key = removeLink.dataset.lineKey;
+      clearTimeout(pending[key]);
+      changeLine(key, 0, removeLink.closest('.cart-item'));
+    });
+  }
+
   // Variant option toggle (cosmetic — Shopify form posts variant id)
   document.addEventListener('click', (e) => {
     const opt = e.target.closest('[data-variant-option]');
