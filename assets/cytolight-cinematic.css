@@ -183,15 +183,6 @@
    */
   position: absolute; inset: var(--header-h, 0px) 0 0 0; z-index: 0;
 }
-/*
- * L'image DESK ne va jamais la chercher elle-meme : contenue puis reduite a
- * 88 %, elle laisse un bandeau du fond de la scene visible a gauche et a
- * droite. Plutot que d'agrandir ou de recadrer le fichier source, ce fond
- * reprend la teinte du studio releve au bord meme de la photo (quasi noir,
- * legerement chaud a gauche) : la bande vide se lit comme la suite du meme
- * decor plutot que comme un cadre qui s'arrete trop tot.
- */
-#cy-science .cy-cinema__world { background-color: #17161a; }
 .cy-cinema__world img, .cy-cinema__world video {
   width: 100%;
   height: 100%;
@@ -216,6 +207,14 @@
   opacity: .92;
   filter: brightness(1.04) saturate(1.1) contrast(1.03);
   will-change: opacity;
+}
+/* DESK seule est agrandie au-dela du reglage commun (.88) : sa photo laissait
+   un bandeau du fond de la scene visible a gauche et a droite. Le plafond
+   reste 1 au maximum du zoom de scroll (.95 + .05) pour ne jamais depasser le
+   cadrage "contain" et retomber dans le rognage vertical que ce choix
+   evitait deja (voir l'entete de .cy-cinema__world). */
+#cy-science .cy-cinema__world img {
+  transform: translate3d(0, calc(var(--cy-p, 0) * -1.6%), 0) scale(calc(.95 + var(--cy-zoom, 0) * .05));
 }
 /*
  * La lumiere posee sur l'image prend la couleur de la longueur d'onde en
