@@ -10,7 +10,7 @@
     assign shipping_remaining_cents = 0
   endif
 
-  assign cross_sell_handles = 'cytolight-desk,cytolight-cap,cytolight-mask,cytolight-sauna-dome,cytolight-pano-plus,antared-pano-ultra' | split: ','
+  assign cross_sell_handles = 'antared-desk-red-light-therapy-panel,cap,mask,antared-sauna-dome-infrared-red-light-pemf,pano-plus,antared-pano-ultra' | split: ','
   assign cross_sell_shown = 0
 
   # Reductions.
@@ -140,9 +140,9 @@
               {%- endcomment -%}
               {%- assign cs_short_title = cs_product.title -%}
               {%- case handle -%}
-                {%- when 'cytolight-desk' -%}{%- assign cs_short_title = 'Antared Desk' -%}
-                {%- when 'cytolight-cap' -%}{%- assign cs_short_title = 'Antared Cap' -%}
-                {%- when 'cytolight-mask' -%}{%- assign cs_short_title = 'Antared Mask' -%}
+                {%- when 'antared-desk-red-light-therapy-panel' -%}{%- assign cs_short_title = 'Antared Desk' -%}
+                {%- when 'cap' -%}{%- assign cs_short_title = 'Antared Cap' -%}
+                {%- when 'mask' -%}{%- assign cs_short_title = 'Antared Mask' -%}
                 {%- when 'cytolight-foot' -%}{%- assign cs_short_title = 'Antared Foot' -%}
                 {%- when 'cytolight-knee' -%}{%- assign cs_short_title = 'Antared Knee' -%}
                 {%- when 'cytolight-pano-ultra' -%}{%- assign cs_short_title = 'Antared Pano Ultra' -%}
