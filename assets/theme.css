@@ -886,7 +886,34 @@ h1, h2, h3, h4,
 .site-footer__col ul li { margin-bottom: 8px; font-size: .9rem; }
 .site-footer__bottom { border-top: 1px solid rgba(255,255,255,.12); padding-top: 24px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: .8rem; opacity: .7; }
 .site-footer__socials { display: flex; gap: 14px; flex-wrap: wrap; }
-.site-footer__socials a { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); display: inline-flex; align-items: center; justify-content: center; }
+.site-footer__socials a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Tactile par defaut (mobile/tablette, pas de vrai hover) : deja au rouge vif. */
+  color: #ff1f3d;
+  border-color: #ff1f3d;
+  background-color: rgba(255,31,61,.12);
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .site-footer__socials a {
+    /* Desktop : rouge sombre mais visible au repos, l'effet plein n'arrive qu'au survol. */
+    color: #b3182c;
+    border-color: rgba(255,255,255,.2);
+    background-color: transparent;
+  }
+  .site-footer__socials a:hover,
+  .site-footer__socials a:focus-visible {
+    color: #ff1f3d;
+    border-color: #ff1f3d;
+    background-color: rgba(255,31,61,.12);
+  }
+}
 .site-footer__payments { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-bottom: 24px; }
 .site-footer__payment-icon { width: 38px; height: 24px; border-radius: 4px; background: #fff; padding: 1px; }
 

@@ -21,6 +21,11 @@
     "color_promo": "#D81126",
     "font_body": "Instrument Sans",
     "font_display": "Instrument Serif",
+    "social_instagram_url": "https://www.instagram.com/antared.therapy/",
+    "social_youtube_url": "https://www.youtube.com/@Antared.therapy",
+    "social_whatsapp_url": "https://wa.me/33745986333",
+    "social_tiktok_url": "https://www.tiktok.com/@antared4",
+    "social_facebook_url": "https://www.facebook.com/people/Antared/61593995133458/",
     "sections": {
       "cytolight-home": {
         "type": "cytolight-home",
