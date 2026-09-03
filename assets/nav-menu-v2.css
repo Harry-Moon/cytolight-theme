@@ -10,7 +10,16 @@
    so panel and scrim get an explicit display here that wins over the UA
    rule regardless of [open], and visibility is driven by transform/opacity
    instead. That's what lets the panel slide in on open/close rather than
-   popping. */
+   popping.
+
+   The slide itself keys off `.is-open` — a class theme.js sets from the
+   <details> `toggle` event — rather than the `[open]` attribute directly.
+   Some engines don't reliably re-run a transform transition (or the
+   companion `html:has(...)` scroll lock) off an attribute selector that
+   changes at the same instant as the toggle; a plain class flip is the
+   dependable path across all of them. `[open]` still governs the native
+   disclosure semantics (focus, accessibility tree) — only the animation
+   hook moved. */
 
 .site-header__drawer { display: none; }
 .site-header__burger { display: none; }
@@ -38,9 +47,9 @@
     background: currentColor;
     transition: transform .22s ease, opacity .18s ease;
   }
-  .site-header__drawer[open] .site-header__burger-bar:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
-  .site-header__drawer[open] .site-header__burger-bar:nth-child(2) { opacity: 0; }
-  .site-header__drawer[open] .site-header__burger-bar:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+  .site-header__drawer.is-open .site-header__burger-bar:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .site-header__drawer.is-open .site-header__burger-bar:nth-child(2) { opacity: 0; }
+  .site-header__drawer.is-open .site-header__burger-bar:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
   .site-header__drawer-scrim {
     display: block;
@@ -52,7 +61,7 @@
     transition: opacity .28s ease;
     pointer-events: none;
   }
-  .site-header__drawer[open] .site-header__drawer-scrim {
+  .site-header__drawer.is-open .site-header__drawer-scrim {
     opacity: 1;
     pointer-events: auto;
   }
@@ -74,11 +83,11 @@
     transform: translateX(-100%);
     transition: transform .32s cubic-bezier(.2, .8, .2, 1);
   }
-  .site-header__drawer[open] .site-header__drawer-panel {
+  .site-header__drawer.is-open .site-header__drawer-panel {
     transform: translateX(0);
   }
 
-  html:has(.site-header__drawer[open]) {
+  html.has-drawer-open {
     overflow: hidden;
   }
 
@@ -104,9 +113,11 @@
     cursor: pointer;
     transition: background .2s ease, border-color .2s ease;
   }
-  .site-header__drawer-close:hover {
-    background: rgba(210, 13, 47, .08);
-    border-color: rgba(210, 13, 47, .32);
+  @media (hover: hover) and (pointer: fine) {
+    .site-header__drawer-close:hover {
+      background: rgba(210, 13, 47, .08);
+      border-color: rgba(210, 13, 47, .32);
+    }
   }
   .site-header__drawer-close span {
     position: absolute;
@@ -131,7 +142,9 @@
     letter-spacing: .03em;
     color: var(--color-accent-deep, #a80a26);
   }
-  .site-header__drawer-toplink:hover { background: rgba(210, 13, 47, .08); }
+  @media (hover: hover) and (pointer: fine) {
+    .site-header__drawer-toplink:hover { background: rgba(210, 13, 47, .08); }
+  }
 
   .site-header__drawer-group { border-top: 1px solid rgba(0, 0, 0, .07); }
   .site-header__drawer-group-toggle {
@@ -173,7 +186,9 @@
     letter-spacing: .02em;
     color: var(--color-muted, #6b625c);
   }
-  .site-header__drawer-group-body a:hover { background: rgba(210, 13, 47, .08); color: var(--color-accent-deep, #a80a26); }
+  @media (hover: hover) and (pointer: fine) {
+    .site-header__drawer-group-body a:hover { background: rgba(210, 13, 47, .08); color: var(--color-accent-deep, #a80a26); }
+  }
 
   /* Tete de groupe : le <summary> ne peut pas etre un lien, l'entree
      d'atterrissage de la rubrique est donc le premier lien du corps. Elle se

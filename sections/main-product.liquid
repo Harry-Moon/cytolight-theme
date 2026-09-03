@@ -13,9 +13,9 @@
 .cl-launch-hero__ctas{display:flex;gap:12px;flex-wrap:wrap;}
 .cl-launch-hero__primary,.cl-launch-hero__secondary{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:14px 24px;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;transition:transform .3s ease,box-shadow .3s ease,background .3s ease,border-color .3s ease;}
 .cl-launch-hero__primary{background:#fff;color:#0d0d0d;box-shadow:0 0 0 1px rgba(232,64,84,.18),0 8px 26px rgba(210,13,47,.22);}
-.cl-launch-hero__primary:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(232,64,84,.4),0 14px 36px rgba(210,13,47,.38),0 0 44px rgba(210,13,47,.28);}
+@media (hover: hover) and (pointer: fine) { .cl-launch-hero__primary:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(232,64,84,.4),0 14px 36px rgba(210,13,47,.38),0 0 44px rgba(210,13,47,.28);} }
 .cl-launch-hero__secondary{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);box-shadow:0 0 0 1px rgba(232,64,84,.1) inset;}
-.cl-launch-hero__secondary:hover{border-color:rgba(232,64,84,.65);background:rgba(232,64,84,.14);transform:translateY(-2px);box-shadow:0 0 0 1px rgba(232,64,84,.22) inset,0 0 34px rgba(210,13,47,.26);}
+@media (hover: hover) and (pointer: fine) { .cl-launch-hero__secondary:hover{border-color:rgba(232,64,84,.65);background:rgba(232,64,84,.14);transform:translateY(-2px);box-shadow:0 0 0 1px rgba(232,64,84,.22) inset,0 0 34px rgba(210,13,47,.26);} }
 .cl-launch-hero__stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:920px;}
 .cl-launch-stat{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:18px;backdrop-filter:blur(12px);}
 .cl-launch-stat strong{display:block;font-size:30px;font-weight:950;letter-spacing:0;color:#fff;line-height:1;}
@@ -24,7 +24,7 @@
 .cl-launch-hero__stats--glow .cl-launch-stat::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 100% at 50% -10%,rgba(232,64,84,.2),transparent 62%);opacity:.7;pointer-events:none;animation:cl-stat-glow-breathe 6s ease-in-out infinite;}
 .cl-launch-hero__stats--glow .cl-launch-stat strong{position:relative;text-shadow:0 0 22px rgba(232,64,84,.45);}
 .cl-launch-hero__stats--glow .cl-launch-stat span{position:relative;}
-.cl-launch-hero__stats--glow .cl-launch-stat:hover{border-color:rgba(232,64,84,.6);box-shadow:0 0 0 1px rgba(232,64,84,.14) inset,0 16px 46px rgba(210,13,47,.26),0 0 64px rgba(210,13,47,.16);transform:translateY(-3px);}
+@media (hover: hover) and (pointer: fine) { .cl-launch-hero__stats--glow .cl-launch-stat:hover{border-color:rgba(232,64,84,.6);box-shadow:0 0 0 1px rgba(232,64,84,.14) inset,0 16px 46px rgba(210,13,47,.26),0 0 64px rgba(210,13,47,.16);transform:translateY(-3px);} }
 @keyframes cl-stat-glow-breathe{0%,100%{opacity:.5;}50%{opacity:1;}}
 @media (prefers-reduced-motion:reduce){.cl-launch-hero__stats--glow .cl-launch-stat::before{animation:none;opacity:.7;}}
 .cl-feature-showcase{background:#f6f6f6;padding:28px 40px 72px;}
@@ -35,7 +35,7 @@
 .cl-persona-title{font-size:clamp(24px,3.2vw,34px);font-weight:900;color:#0d0d0d;margin:0 auto;max-width:760px;letter-spacing:-.02em;line-height:1.15;}
 .cl-persona-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
 .cl-persona-card{background:#fafafa;border:1px solid #eee;border-radius:16px;padding:22px 20px;transition:transform .2s,box-shadow .2s,border-color .2s,background .2s;}
-.cl-persona-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.08);border-color:#e2c9c9;background:#fff;}
+@media (hover: hover) and (pointer: fine) { .cl-persona-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.08);border-color:#e2c9c9;background:#fff;} }
 .cl-persona-card__kicker{display:block;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#d20d2f;margin:0 0 10px;}
 .cl-persona-card__title{font-size:15px;font-weight:900;color:#0d0d0d;margin:0 0 6px;letter-spacing:-.01em;line-height:1.25;}
 .cl-persona-card__body{font-size:12.5px;line-height:1.55;color:#666;margin:0;}
@@ -82,7 +82,7 @@
 .cl-mask-uses__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
 .cl-mask-use{position:relative;border-radius:20px;overflow:hidden;min-height:300px;display:flex;align-items:flex-end;background:#111;}
 .cl-mask-use__bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.02);transition:transform .4s ease;}
-.cl-mask-use:hover .cl-mask-use__bg{transform:scale(1.06);}
+@media (hover: hover) and (pointer: fine) { .cl-mask-use:hover .cl-mask-use__bg{transform:scale(1.06);} }
 .cl-mask-use__veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 34%,rgba(0,0,0,.78) 100%);}
 .cl-mask-use__content{position:relative;padding:22px;color:#fff;}
 .cl-mask-use__num{display:block;font-size:11px;font-weight:800;letter-spacing:.14em;color:#ff6060;margin-bottom:8px;}
@@ -103,7 +103,7 @@
 .cl-thumbstrip::-webkit-scrollbar-track{background:#f0f0f0;border-radius:2px;}
 .cl-thumbstrip::-webkit-scrollbar-thumb{background:#ccc;border-radius:2px;}
 .cl-thumbitem{flex:0 0 90px;height:90px;border-radius:10px;overflow:hidden;border:2px solid #e8e8e8;cursor:pointer;background:#f0f0f0;scroll-snap-align:start;transition:border-color .2s,transform .15s,box-shadow .2s;position:relative;}
-.cl-thumbitem:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1);border-color:#ccc;}
+@media (hover: hover) and (pointer: fine) { .cl-thumbitem:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1);border-color:#ccc;} }
 .cl-thumbitem.is-active{border-color:#d20d2f;box-shadow:0 0 0 1px #d20d2f;}
 .cl-thumbitem img{width:100%;height:100%;object-fit:cover;display:block;}
 .cl-thumbitem__play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);color:#fff;font-size:22px;}
@@ -178,7 +178,7 @@
 .cl-urgency svg{width:18px;height:18px;flex-shrink:0;color:#d20d2f;}
 .cl-bundles{display:flex;gap:10px;margin-bottom:22px;}
 .cl-bundle{flex:1;border:2px solid #e8e8e8;border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;background:#fff;position:relative;}
-.cl-bundle:hover{transform:translateY(-1px);}
+@media (hover: hover) and (pointer: fine) { .cl-bundle:hover{transform:translateY(-1px);} }
 .cl-bundle.is-selected{border-color:#d20d2f;background:#fff8f8;}
 .cl-bundle__badge{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#d20d2f;color:#fff;font-size:9px;font-weight:800;border-radius:20px;padding:2px 8px;white-space:nowrap;}
 .cl-bundle__row{display:flex;align-items:baseline;gap:5px;justify-content:center;}
@@ -188,9 +188,13 @@
 .cl-atc{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:19px;background:#d20d2f;color:#fff;font-size:16px;font-weight:900;border:none;border-radius:14px;cursor:pointer;letter-spacing:.02em;transition:background .2s,color .2s,box-shadow .2s,transform .18s,opacity .15s;margin-bottom:10px;box-shadow:var(--cta-shadow,0 14px 26px -10px rgba(210,13,47,.62));}
 .cl-atc__price{font-weight:400;}
 /* Enfoncement au survol, comme tous les CTA du site : le bouton descend et
-       perd son ombre au lieu de se soulever. Voir le bloc CTA de theme.css. */
-    .cl-atc:hover{background:#d20d2f;color:#fff;box-shadow:none;}
-    @media (prefers-reduced-motion: no-preference){.cl-atc:hover{transform:translateY(var(--cta-press,3px));}}
+       perd son ombre au lieu de se soulever. Voir le bloc CTA de theme.css.
+       Reserve au pointeur qui sait reellement survoler : sur tactile, un tap
+       ne doit pas laisser le bouton "colle" dans cet etat jusqu'au tap suivant. */
+    @media (hover: hover) and (pointer: fine) {
+      .cl-atc:hover{background:#d20d2f;color:#fff;box-shadow:none;}
+    }
+    @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {.cl-atc:hover{transform:translateY(var(--cta-press,3px));}}
     .cl-atc:active{opacity:.5;}
 .cl-atc:disabled{background:#ccc;cursor:not-allowed;box-shadow:none;transform:none;}
 .cl-atc svg{width:20px;height:20px;flex-shrink:0;}
@@ -210,7 +214,7 @@
 .cl-notice-head h2{margin:0;font-size:clamp(28px,3.4vw,42px);font-weight:900;letter-spacing:-.01em;color:#0d0d0d;line-height:1.1;font-family:inherit;}
 .cl-notice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:0 0 56px;}
 .cl-notice-card{display:flex;align-items:flex-start;gap:16px;background:#fff;border:1px solid #f0e9e9;border-radius:20px;padding:26px 28px;box-shadow:0 14px 34px rgba(210,13,47,.05);transition:transform .25s ease,box-shadow .25s ease;}
-.cl-notice-card:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(210,13,47,.1);}
+@media (hover: hover) and (pointer: fine) { .cl-notice-card:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(210,13,47,.1);} }
 .cl-notice-card__icon{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#e8304a,#d20d2f);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 18px rgba(210,13,47,.28);}
 .cl-notice-card__icon svg{width:20px;height:20px;stroke-width:3;}
 .cl-notice-card h4{margin:0 0 6px;font-size:18px;font-weight:800;color:#0d0d0d;line-height:1.3;font-family:inherit;}
@@ -265,13 +269,13 @@
 .cl-reviews__title{font-size:13px;font-weight:800;color:#0d0d0d;}
 .cl-reviews__avg{display:flex;align-items:center;gap:6px;}
 .cl-reviews__big{font-size:28px;font-weight:900;color:#0d0d0d;}
-.cl-sticky-atc{position:fixed;left:50%;bottom:16px;transform:translate(-50%,18px);z-index:60;width:min(760px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(13,13,13,.96);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 14px 12px 18px;box-shadow:0 18px 50px rgba(0,0,0,.28);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;}
+.cl-sticky-atc{position:fixed;left:50%;top:calc(var(--header-h, 0px) + 12px);transform:translate(-50%,-18px);z-index:60;width:min(760px,calc(100% - 32px));display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(13,13,13,.96);color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:12px 14px 12px 18px;box-shadow:0 18px 50px rgba(0,0,0,.28);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;}
 .cl-sticky-atc.is-visible{opacity:1;pointer-events:auto;transform:translate(-50%,0);}
 .cl-sticky-atc__info{min-width:0;}
 .cl-sticky-atc__title{display:block;font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:420px;}
 .cl-sticky-atc__meta{display:flex;gap:8px;align-items:center;font-size:12px;color:rgba(255,255,255,.72);margin-top:2px;}
 .cl-sticky-atc__button{flex:0 0 auto;background:#d20d2f;color:#fff;border:none;border-radius:12px;padding:13px 18px;font-size:13px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;box-shadow:0 8px 24px rgba(210,13,47,.35);}
-.cl-sticky-atc__button:hover{background:#a50d25;}
+@media (hover: hover) and (pointer: fine) { .cl-sticky-atc__button:hover{background:#a50d25;} }
 .cl-sticky-atc__button:disabled{background:#555;cursor:not-allowed;box-shadow:none;}
 /* ===== STATS STRIP ===== */
 .cl-stats-strip{background:#0d0d0d;padding:48px 40px;}
@@ -286,7 +290,7 @@
 .cl-stats-strip--glow .cl-stat::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(120% 100% at 50% -10%,rgba(232,64,84,.18),transparent 62%);opacity:.65;pointer-events:none;animation:cl-stat-glow-breathe 6s ease-in-out infinite;}
 .cl-stats-strip--glow .cl-stat__num{position:relative;text-shadow:0 0 26px rgba(232,64,84,.55);}
 .cl-stats-strip--glow .cl-stat__label{position:relative;color:rgba(255,255,255,.68);}
-.cl-stats-strip--glow .cl-stat:hover{border-color:rgba(232,64,84,.55);box-shadow:0 0 0 1px rgba(232,64,84,.12) inset,0 16px 40px rgba(210,13,47,.22),0 0 56px rgba(210,13,47,.14);transform:translateY(-4px);}
+@media (hover: hover) and (pointer: fine) { .cl-stats-strip--glow .cl-stat:hover{border-color:rgba(232,64,84,.55);box-shadow:0 0 0 1px rgba(232,64,84,.12) inset,0 16px 40px rgba(210,13,47,.22),0 0 56px rgba(210,13,47,.14);transform:translateY(-4px);} }
 @media (prefers-reduced-motion:reduce){.cl-stats-strip--glow .cl-stat::before{animation:none;opacity:.65;}}
 /* ===== EDITORIAL ===== */
 .cl-editorial{padding:80px 40px;}
@@ -437,7 +441,7 @@
 .cl-faq-cta{text-align:center;margin-top:36px;padding:28px;background:#fafafa;border-radius:16px;}
 .cl-faq-cta p{font-size:15px;color:#555;margin:0 0 16px;}
 .cl-faq-cta a{display:inline-flex;align-items:center;gap:8px;background:#0d0d0d;color:#fff;font-size:14px;font-weight:700;border-radius:10px;padding:12px 24px;text-decoration:none;transition:background .2s;}
-.cl-faq-cta a:hover{background:#333;}
+@media (hover: hover) and (pointer: fine) { .cl-faq-cta a:hover{background:#333;} }
 /* ===== RESPONSIVE ===== */
 @media(max-width:900px){
   .cl-launch-hero{min-height:620px;}
@@ -480,7 +484,7 @@
   .cl-notice-grid{grid-template-columns:1fr;}
   .cl-bundles{flex-direction:column;gap:8px;}
   .cl-payment-row{grid-template-columns:1fr;}
-  .cl-sticky-atc{bottom:10px;width:calc(100% - 20px);border-radius:14px;padding:10px;}
+  .cl-sticky-atc{top:calc(var(--header-h, 0px) + 8px);width:calc(100% - 20px);border-radius:14px;padding:10px;}
   .cl-sticky-atc__title{max-width:180px;font-size:12px;}
   .cl-sticky-atc__meta{font-size:11px;}
   .cl-sticky-atc__button{padding:12px 13px;font-size:12px;}
@@ -660,217 +664,6 @@
       </div>
     </div>
   </section>
-
-  {%- if is_foot -%}
-  <section class='cl-foot-intro' aria-label='{% if is_fr %}Pr&eacute;sentation Antared Foot{% else %}Antared Foot introduction{% endif %}'>
-    <div class='cl-foot-intro__media'>
-      {%- if foot_image_4 -%}
-        <img src='{{ foot_image_4 | image_url: width: 1400 }}' alt='{{ foot_image_4.alt | escape }}' loading='lazy' width='1400' height='788'>
-      {%- elsif product.featured_image -%}
-        <img src='{{ product.featured_image | image_url: width: 1400 }}' alt='{{ product.featured_image.alt | escape }}' loading='lazy' width='1400' height='788'>
-      {%- endif -%}
-    </div>
-    <div class='cl-foot-intro__copy'>
-      <p class='cl-eyebrow'>{% if is_fr %}Pieds et chevilles{% else %}Feet and ankles{% endif %}</p>
-      <h2>{% if is_fr %}Un rituel cibl&eacute; pour les pieds qui portent toute votre journ&eacute;e.{% else %}A targeted ritual for the feet that carry your day.{% endif %}</h2>
-      <p>{% if is_fr %}Antared Foot rapproche la lumi&egrave;re rouge et proche infrarouge des zones qui travaillent le plus : plante du pied, talon et cheville. Enfilez la botte, lancez votre session, puis laissez le rituel se faire pendant que vous vous reposez.{% else %}Antared Foot brings red and near-infrared light close to the areas that work hardest: sole, heel, and ankle. Wear the boot, start your session, then let the ritual run while you rest.{% endif %}</p>
-      <div class='cl-foot-intro__chips'>
-        <span>{% if is_fr %}Confort local{% else %}Local comfort{% endif %}</span>
-        <span>660nm</span>
-        <span>850nm</span>
-        <span>{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}</span>
-      </div>
-    </div>
-  </section>
-  {%- endif -%}
-
-  {%- if is_knee -%}
-  <section class='cl-foot-intro' aria-label='{% if is_fr %}Pr&eacute;sentation Antared Knee{% else %}Antared Knee introduction{% endif %}'>
-    <div class='cl-foot-intro__media'>
-      <img src='{{ "Cytolight_-_Knee_1.jpg" | file_url }}' alt='{% if is_fr %}Genouill&egrave;re Antared Knee avec lumi&egrave;re rouge et proche infrarouge activ&eacute;e{% else %}Antared Knee sleeve with red and near-infrared light active{% endif %}' loading='lazy' width='1400' height='788'>
-    </div>
-    <div class='cl-foot-intro__copy'>
-      <p class='cl-eyebrow'>{% if is_fr %}Genou et articulation{% else %}Knee and joint{% endif %}</p>
-      <h2>{% if is_fr %}Un rituel cibl&eacute; pour l'articulation qui porte tout votre poids.{% else %}A targeted ritual for the joint that carries your weight.{% endif %}</h2>
-      <p>{% if is_fr %}Antared Knee rapproche la lumi&egrave;re rouge et proche infrarouge de l'articulation. Enfilez, lancez la session, reposez-vous.{% else %}Antared Knee brings red and near-infrared light close to the joint. Wrap it on, start the session, and rest.{% endif %}</p>
-      <div class='cl-foot-intro__chips'>
-        <span>{% if is_fr %}Confort articulaire{% else %}Joint comfort{% endif %}</span>
-        <span>660nm</span>
-        <span>850nm</span>
-        <span>{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}</span>
-      </div>
-    </div>
-  </section>
-  {%- endif -%}
-
-  {%- if is_sauna_dome -%}
-  <section class='cl-foot-intro' aria-label='{% if is_fr %}Pr&eacute;sentation Antared Sauna Dome{% else %}Antared Sauna Dome introduction{% endif %}'>
-    <div class='cl-foot-intro__media'>
-      <img src='{{ "Cytolight_Sauna_Dome_2.jpg" | file_url }}' alt='{% if is_fr %}Antared Sauna Dome dans un salon moderne, lumi&egrave;re rouge activ&eacute;e{% else %}Antared Sauna Dome in a modern living room, red light active{% endif %}' loading='lazy' width='1400' height='788'>
-    </div>
-    <div class='cl-foot-intro__copy'>
-      <p class='cl-eyebrow'>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</p>
-      <h2>{% if is_fr %}Un rituel complet, sans quitter la maison.{% else %}A complete ritual, without leaving home.{% endif %}</h2>
-      <p>{% if is_fr %}Antared Sauna Dome combine lumi&egrave;re rouge et proche infrarouge, th&eacute;rapie PEMF, chaleur infrarouge et un tapis &eacute;nerg&eacute;tique en une seule session. Installez-vous, lancez la session, laissez le rituel se faire.{% else %}Antared Sauna Dome combines red and near-infrared light, PEMF therapy, infrared heat, and an energy stone mat into a single session. Settle in, start the session, and let the ritual run.{% endif %}</p>
-      <div class='cl-foot-intro__chips'>
-        <span>{% if is_fr %}PEMF{% else %}PEMF{% endif %}</span>
-        <span>660nm</span>
-        <span>850nm</span>
-        <span>{% if is_fr %}3 zones{% else %}3 zones{% endif %}</span>
-      </div>
-    </div>
-  </section>
-  {%- endif -%}
-
-  {%- if is_mask -%}
-  <section class='cl-mask-intro' aria-label='{% if is_fr %}Pr&eacute;sentation Antared Mask{% else %}Antared Mask introduction{% endif %}'>
-    <div class='cl-mask-intro__media'>
-      <img src='{{ "01_CytoLight_Mask_Product.png" | file_url }}' alt='{% if is_fr %}Masque LED Antared Mask en silicone souple pour le visage{% else %}Antared Mask flexible silicone LED face mask{% endif %}' loading='lazy' width='900' height='720'>
-    </div>
-    <div class='cl-mask-intro__copy'>
-      <p class='cl-eyebrow'>{% if is_fr %}Visage et beaut&eacute;{% else %}Face and beauty{% endif %}</p>
-      <h2>{% if is_fr %}Dix minutes de lumi&egrave;re, pos&eacute;es sur le visage.{% else %}Ten minutes of light, worn on the face.{% endif %}</h2>
-      <p>{% if is_fr %}Antared Mask &eacute;pouse les contours du visage gr&acirc;ce &agrave; un silicone souple de 5,8 mm d'&eacute;paisseur. Ses 288 LED diffusent le bleu 460nm, le rouge 630nm et le proche infrarouge 850nm au plus pr&egrave;s de la peau, sans fil, pour une routine beaut&eacute; courte et r&eacute;guli&egrave;re.{% else %}Antared Mask follows the contours of the face with a 5.8mm flexible silicone body. Its 288 LEDs deliver 460nm blue, 630nm red, and 850nm near-infrared light close to the skin, cordless, for a short and consistent beauty routine.{% endif %}</p>
-      <div class='cl-mask-intro__chips'>
-        <span>460nm</span>
-        <span>630nm</span>
-        <span>850nm</span>
-        <span>{% if is_fr %}288 LED{% else %}288 LEDs{% endif %}</span>
-        <span>{% if is_fr %}375 g{% else %}375g{% endif %}</span>
-        <span>{% if is_fr %}Sans fil{% else %}Cordless{% endif %}</span>
-      </div>
-    </div>
-  </section>
-  {%- endif -%}
-
-  {%- comment -%}
-    Section d'introduction des quatre fiches qui n'en avaient pas : cap, pano-ultra,
-    desk et pano-plus tombaient du hero directement dans les fonctionnalites, la ou
-    mask, foot, knee et sauna ouvrent sur une presentation.
-
-    Le composant .cl-foot-intro est reutilise tel quel, sans une regle de CSS en
-    plus. Le visuel est la deuxieme image du produit quand elle existe, l'image
-    principale sinon : aucun nom de fichier ecrit en dur, donc aucun 404 possible.
-
-    Chaque chiffre cite ici figure deja dans le tableau technique de la meme fiche.
-  {%- endcomment -%}
-  {%- unless is_mask or is_foot or is_knee or is_sauna_dome -%}
-  {%- assign intro_image = product.images[1] | default: product.featured_image -%}
-  <section class='cl-foot-intro' aria-label='{% if is_fr %}Pr&eacute;sentation de {{ product.title }}{% else %}{{ product.title }} introduction{% endif %}'>
-    <div class='cl-foot-intro__media'>
-      {%- if intro_image -%}
-        <img src='{{ intro_image | image_url: width: 1400 }}' alt='{{ intro_image.alt | escape }}' loading='lazy' width='{{ intro_image.width }}' height='{{ intro_image.height }}'>
-      {%- endif -%}
-    </div>
-    <div class='cl-foot-intro__copy'>
-      <p class='cl-eyebrow'>{% if is_cap %}{% if is_fr %}Cheveux et cuir chevelu{% else %}Hair and scalp{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Corps entier{% else %}Full body{% endif %}{% else %}{% if is_fr %}Sept longueurs d'onde{% else %}Seven wavelengths{% endif %}{% endif %}</p>
-      <h2>{% if is_cap %}{% if is_fr %}Une routine cuir chevelu qui tient dans un seul geste.{% else %}A scalp routine that fits into a single gesture.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Une surface lumineuse &agrave; la mesure du corps entier.{% else %}A light surface built for the whole body.{% endif %}{% else %}{% if is_fr %}Sept longueurs d'onde, pilot&eacute;es une par une.{% else %}Seven wavelengths, each one under your control.{% endif %}{% endif %}</h2>
-      <p>{% if is_cap %}{% if is_fr %}ANTARED cap int&egrave;gre 150 LED 3-en-1 dans la casquette pour garder la lumi&egrave;re rouge 660nm et le proche infrarouge 850nm au contact du cuir chevelu, sans rien tenir. Posez-la, choisissez votre dur&eacute;e, puis laissez la s&eacute;ance se faire pendant que vous faites autre chose. L'intensit&eacute;, le minuteur, la pulsation et la s&eacute;lection des longueurs d'onde se r&egrave;glent depuis le contr&ocirc;leur.{% else %}ANTARED cap builds 150 3-in-1 LEDs into the cap so 660nm red and 850nm near-infrared light stay close to the scalp, with nothing to hold. Put it on, choose your session length, then let it run while you do something else. Intensity, timer, pulsing, and wavelength selection are all set from the controller.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}PANO ULTRA d&eacute;ploie les sept longueurs d'onde Antared, de l'ambre 590nm &agrave; l'infrarouge profond 940nm, sur un panneau vertical grand format. R&eacute;glez la dur&eacute;e, la luminosit&eacute; et les pulsations depuis l'&eacute;cran tactile ou l'application, puis installez-vous devant : la s&eacute;ance couvre le corps sans que vous ayez &agrave; d&eacute;placer l'appareil.{% else %}PANO ULTRA spreads all seven Antared wavelengths, from 590nm amber to 940nm deep infrared, across a large vertical panel. Set the duration, brightness, and pulsing from the touch screen or the app, then stand in front of it: the session covers the body without moving the device.{% endif %}{% else %}{% if is_fr %}De l'ambre 590nm &agrave; l'infrarouge profond 940nm, chaque longueur d'onde se r&egrave;gle ind&eacute;pendamment en luminosit&eacute; et en pulsation, depuis l'&eacute;cran tactile couleur ou l'application Antared. Enregistrez la s&eacute;ance qui vous convient, puis retrouvez-la d'un geste &#8212; minuteur, r&eacute;veil et biblioth&egrave;que de sc&egrave;nes compris.{% else %}From 590nm amber to 940nm deep infrared, every wavelength is adjusted independently for brightness and pulsing, from the full-colour touch screen or the Antared App. Save the session that suits you, then bring it back in one gesture &#8212; timer, alarm clock, and scene library included.{% endif %}{% endif %}</p>
-      <div class='cl-foot-intro__chips'>
-        {%- if is_cap -%}
-          <span>{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}</span>
-          <span>{% if is_fr %}150 LED{% else %}150 LEDs{% endif %}</span>
-          <span>660nm</span>
-          <span>850nm</span>
-        {%- elsif is_pano_ultra -%}
-          <span>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</span>
-          <span>{% if is_fr %}7 longueurs d'onde{% else %}7 wavelengths{% endif %}</span>
-          <span>590-940nm</span>
-          <span>1-40 Hz</span>
-        {%- else -%}
-          <span>{% if is_fr %}7 longueurs d'onde{% else %}7 wavelengths{% endif %}</span>
-          <span>590-940nm</span>
-          <span>Bluetooth + Wi-Fi</span>
-          <span>1-40 Hz</span>
-        {%- endif -%}
-      </div>
-    </div>
-  </section>
-  {%- endunless -%}
-
-  {%- if is_knee -%}
-  <section class='cl-persona-section' aria-label='{% if is_fr %}Adapt&eacute; &agrave; votre pratique{% else %}Built for your activity{% endif %}'>
-    <div class='cl-persona-inner'>
-      <div class='cl-persona-header'>
-        <p class='cl-persona-eyebrow'>{% if is_fr %}Pour chaque pratique{% else %}For every activity{% endif %}</p>
-        <h2 class='cl-persona-title'>{% if is_fr %}Sportif ou non, votre genou m&eacute;rite une routine adapt&eacute;e.{% else %}Athlete or not, your knee deserves a routine that fits.{% endif %}</h2>
-      </div>
-      <div class='cl-persona-grid'>
-        <div class='cl-persona-card'>
-          <span class='cl-persona-card__kicker'>{% if is_fr %}Salle de sport{% else %}Gym{% endif %}</span>
-          <p class='cl-persona-card__title'>{% if is_fr %}Apr&egrave;s la s&eacute;ance, avant la raideur.{% else %}After the session, before the stiffness.{% endif %}</p>
-          <p class='cl-persona-card__body'>{% if is_fr %}Squats, fentes, leg press : le genou encaisse beaucoup. Une routine courte en sortant de la salle.{% else %}Squats, lunges, leg press &#8212; the knee takes a lot of load. A short routine on your way out of the gym.{% endif %}</p>
-        </div>
-        <div class='cl-persona-card'>
-          <span class='cl-persona-card__kicker'>{% if is_fr %}Padel{% else %}Padel{% endif %}</span>
-          <p class='cl-persona-card__title'>{% if is_fr %}Freinages et pivots, match apr&egrave;s match.{% else %}Sharp stops and pivots, match after match.{% endif %}</p>
-          <p class='cl-persona-card__body'>{% if is_fr %}Le padel multiplie les appuis brusques. Une session apr&egrave;s le match pour rester pr&ecirc;t pour le prochain.{% else %}Padel means constant sharp stops and turns. A post-match session to stay ready for the next one.{% endif %}</p>
-        </div>
-        <div class='cl-persona-card'>
-          <span class='cl-persona-card__kicker'>{% if is_fr %}Tennis{% else %}Tennis{% endif %}</span>
-          <p class='cl-persona-card__title'>{% if is_fr %}Entre deux sets, entre deux matchs.{% else %}Between sets, between matches.{% endif %}</p>
-          <p class='cl-persona-card__body'>{% if is_fr %}Les appuis lat&eacute;raux sollicitent fortement l'articulation. Une routine courte pour tenir tout le tournoi.{% else %}Lateral footwork puts real strain on the joint. A short routine to last the whole tournament.{% endif %}</p>
-        </div>
-        <div class='cl-persona-card'>
-          <span class='cl-persona-card__kicker'>{% if is_fr %}Football{% else %}Soccer{% endif %}</span>
-          <p class='cl-persona-card__title'>{% if is_fr %}Pour tenir toute la saison.{% else %}To last the whole season.{% endif %}</p>
-          <p class='cl-persona-card__body'>{% if is_fr %}Sprints, contacts, changements de direction : une routine de r&eacute;cup&eacute;ration entre deux matchs.{% else %}Sprints, contact, sharp turns &#8212; a recovery routine between matches.{% endif %}</p>
-        </div>
-        <div class='cl-persona-card cl-persona-card--senior'>
-          <span class='cl-persona-card__kicker'>{% if is_fr %}Seniors{% else %}Older Adults{% endif %}</span>
-          <p class='cl-persona-card__title'>{% if is_fr %}Une routine douce, &agrave; tout &acirc;ge.{% else %}A gentle routine, at any age.{% endif %}</p>
-          <p class='cl-persona-card__body'>{% if is_fr %}Assis chez soi, sans effort ni contorsion : une session simple pens&eacute;e pour une articulation qui a bien servi, jour apr&egrave;s jour.{% else %}Seated at home, no effort or awkward positions &#8212; a simple session built for a joint that has done a lot of work, day after day.{% endif %}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  {%- endif -%}
-
-  <section class='cl-feature-showcase' id='cl-highlights' aria-label='{% if is_fr %}Points forts du produit{% else %}Product highlights{% endif %}'>
-    <div class='cl-feature-showcase__inner'>
-      <div class='cl-feature-tile cl-feature-tile--large {% if is_cap or is_mask or is_foot or is_knee or is_sauna_dome %}cl-feature-tile--image-bg{% else %}cl-feature-tile--infographic{% endif %}'>
-        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-targeted-ritual.jpg" | file_url }});'{% elsif is_mask %}style='background-image:url({{ "05_CytoLight_Mask_Spa.png" | file_url }});'{% elsif is_foot and foot_image_3 %}style='background-image:url({{ foot_image_3 | image_url: width: 1600 }});'{% elsif is_knee %}style='background-image:url({{ "Cytolight_Knee_Garden.jpg" | file_url }});'{% elsif is_sauna_dome %}style='background-image:url({{ "Cytolight_Sauna_Dome_2.jpg" | file_url }});'{% else %}style='background-image:url({{ "cytolight-7-wavelengths-infographic.jpg" | file_url }});'{% endif %}></div>
-        <div class='cl-feature-tile__content'>
-          <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Rituel capillaire cibl&eacute;{% else %}Targeted hair ritual{% endif %}{% elsif is_mask %}{% if is_fr %}Rituel visage cibl&eacute;{% else %}Targeted face ritual{% endif %}{% elsif is_foot %}{% if is_fr %}Rituel pieds cibl&eacute;{% else %}Targeted foot ritual{% endif %}{% elsif is_knee %}{% if is_fr %}Rituel genou cibl&eacute;{% else %}Targeted knee ritual{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Rituel corps entier{% else %}Full-body ritual{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Th&eacute;rapie spectrale compl&egrave;te{% else %}Full-spectrum therapy{% endif %}{% endif %}</p>
-          <h2 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Rouge et proche infrarouge. Un geste quotidien.{% else %}Red and near-infrared. One daily habit.{% endif %}{% elsif is_mask %}{% if is_fr %}Bleu, rouge, proche infrarouge. Un seul masque.{% else %}Blue, red, near-infrared. One single mask.{% endif %}{% elsif is_foot %}{% if is_fr %}Rouge et proche infrarouge. Pour les pieds fatigu&eacute;s.{% else %}Red and near-infrared. For tired feet.{% endif %}{% elsif is_knee %}{% if is_fr %}Rouge et proche infrarouge. Pour l'articulation du genou.{% else %}Red and near-infrared. For the knee joint.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Lumi&egrave;re, chaleur, PEMF. Un rituel, quatre technologies.{% else %}Light, heat, PEMF. One ritual, four technologies.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Sept longueurs d'onde. Un rituel quotidien.{% else %}Seven wavelengths. One daily ritual.{% endif %}{% endif %}</h2>
-          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}ANTARED cap concentre la lumi&egrave;re 660nm et 850nm dans un format portable, pour accompagner une routine cuir chevelu r&eacute;guli&egrave;re sans bloquer votre journ&eacute;e.{% else %}ANTARED cap brings 660nm red and 850nm near-infrared light into a wearable format, supporting a consistent scalp routine without interrupting your day.{% endif %}{% elsif is_mask %}{% if is_fr %}Antared Mask r&eacute;unit trois longueurs d'onde en un seul appareil : le bleu 460nm pour la routine peau du quotidien, le rouge 630nm pour l'&eacute;clat et la texture, le proche infrarouge 850nm pour les couches plus profondes.{% else %}Antared Mask combines three wavelengths in a single device: 460nm blue for everyday skin routines, 630nm red for radiance and texture, and 850nm near-infrared for deeper layers.{% endif %}{% elsif is_foot %}{% if is_fr %}Antared Foot rapproche la lumi&egrave;re 660nm et 850nm du pied, du talon et de la cheville, dans un format souple pens&eacute; pour les moments de repos &agrave; domicile.{% else %}Antared Foot keeps 660nm and 850nm light close to the foot, heel, and ankle in a soft format built for at-home rest moments.{% endif %}{% elsif is_knee %}{% if is_fr %}Antared Knee rapproche la lumi&egrave;re 660nm et 850nm de l'articulation du genou, dans une genouill&egrave;re souple pens&eacute;e pour les moments de repos &agrave; domicile.{% else %}Antared Knee keeps 660nm and 850nm light close to the knee joint in a soft wraparound sleeve built for at-home rest moments.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Antared Sauna Dome combine 1 120 LED rouge et proche infrarouge, 4 bobines PEMF et un tapis chauffant &agrave; 3 zones pour une session compl&egrave;te de r&eacute;cup&eacute;ration, sans quitter la maison.{% else %}Antared Sauna Dome combines 1,120 red and near-infrared LEDs, 4 PEMF coils, and a 3-zone heating mat for a complete recovery session without leaving home.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}La lumi&egrave;re rouge et proche infrarouge couvre une zone plus large pour accompagner les routines corps entier, la r&eacute;cup&eacute;ration sportive et les espaces wellness d&eacute;di&eacute;s.{% else %}Red and near-infrared light cover a larger area for full-body routines, athletic recovery, and dedicated wellness spaces.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}La lumi&egrave;re ambre, rouge et proche infrarouge accompagne la peau, les muscles, les articulations, le rythme du sommeil et l'&eacute;nergie mentale, depuis un panneau con&ccedil;u pour le bureau.{% else %}Amber, red, and near-infrared light work across skin, muscles, joints, sleep rhythm, and mental energy, all from a desk-ready panel.{% endif %}{% endif %}</p>
-        </div>
-      </div>
-      <div class='cl-feature-tile cl-feature-tile--light {% if is_cap %}cl-feature-tile--cap-head-bg{% elsif is_mask or is_foot or is_knee or is_sauna_dome %}cl-feature-tile--photo-light{% endif %}'>
-        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-head-scalp.jpg" | file_url }});'{% elsif is_mask %}style='background-image:url({{ "03_CytoLight_Mask_Home.png" | file_url }});'{% elsif is_foot and foot_image_4 %}style='background-image:url({{ foot_image_4 | image_url: width: 1400 }});'{% elsif is_knee %}style='background-image:url({{ "Cytolight_Knee_-_Elder_Man.jpg" | file_url }});'{% elsif is_sauna_dome %}style='background-image:url({{ "Cytolight_Sauna_Dome_2.png" | file_url }});'{% endif %}></div>
-        <div class='cl-feature-tile__content'>
-          <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}{% elsif is_mask %}{% if is_fr %}Sans fil{% else %}Cordless{% endif %}{% elsif is_foot %}{% if is_fr %}Repos &agrave; domicile{% else %}At-home rest{% endif %}{% elsif is_knee %}{% if is_fr %}Repos &agrave; domicile{% else %}At-home rest{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Chaleur infrarouge{% else %}Infrared heat{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Grand format{% else %}Large format{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Pr&ecirc;t pour le bureau{% else %}Desk-ready{% endif %}{% endif %}</p>
-          <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Pens&eacute; pour rester dans votre routine.{% else %}Built to stay in your routine.{% endif %}{% elsif is_mask %}{% if is_fr %}Une batterie, z&eacute;ro c&acirc;ble.{% else %}One battery, zero cables.{% endif %}{% elsif is_foot %}{% if is_fr %}Portez-le pendant un moment calme.{% else %}Wear it during a calm moment.{% endif %}{% elsif is_knee %}{% if is_fr %}Portez-la pendant un moment calme.{% else %}Wear it during a calm moment.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}25 &agrave; 90&deg;C, r&eacute;gl&eacute;s &agrave; votre confort.{% else %}25&ndash;90&deg;C, tuned to your comfort.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Con&ccedil;u pour les espaces d&eacute;di&eacute;s.{% else %}Built for dedicated spaces.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Con&ccedil;u pour rester visible.{% else %}Built to stay visible.{% endif %}{% endif %}</h3>
-          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}Le format casquette garde la lumi&egrave;re proche du cuir chevelu pendant que vous lisez, travaillez ou vous d&eacute;tendez.{% else %}The cap format keeps light positioned close to the scalp while you read, work, or unwind.{% endif %}{% elsif is_mask %}{% if is_fr %}La batterie 1800 mAh se recharge en 3 heures et lib&egrave;re le masque de tout c&acirc;ble : vous continuez &agrave; lire, &agrave; marcher dans la maison ou &agrave; vous d&eacute;tendre pendant la s&eacute;ance.{% else %}The 1800mAh battery charges in 3 hours and frees the mask from any cable, so you can keep reading, moving around the house, or relaxing during a session.{% endif %}{% elsif is_foot %}{% if is_fr %}La botte s'enfile pendant une lecture, une pause canap&eacute;, une soir&eacute;e calme ou apr&egrave;s l'entra&icirc;nement, sans tenir d'appareil.{% else %}The boot fits into reading, sofa time, a calm evening, or post-training rest without holding a device.{% endif %}{% elsif is_knee %}{% if is_fr %}La genouill&egrave;re s'enfile pendant une lecture, une pause canap&eacute;, une soir&eacute;e calme ou apr&egrave;s l'entra&icirc;nement, sans tenir d'appareil.{% else %}The sleeve wraps on during reading, sofa time, a calm evening, or post-training rest without holding a device.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Le d&ocirc;me chauffe de 25 &agrave; 90&deg;C et le tapis de 25 &agrave; 80&deg;C, avec des sessions de 5 &agrave; 60 minutes r&eacute;glables selon votre tol&eacute;rance &agrave; la chaleur.{% else %}The dome heats from 25&ndash;90&deg;C and the mat from 25&ndash;80&deg;C, with 5&ndash;60 minute sessions adjustable to your heat tolerance.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Son format vertical apporte une pr&eacute;sence lumineuse immersive pour les studios, salles de sport priv&eacute;es et routines &agrave; domicile plus compl&egrave;tes.{% else %}Its vertical format creates an immersive light presence for studios, private training rooms, and more complete at-home routines.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Format compact, support ajustable et fonctionnement silencieux pour une utilisation simple matin ou soir.{% else %}Compact footprint, adjustable stand, and quiet operation make it easy to use every morning or evening.{% endif %}{% endif %}</p>
-        </div>
-      </div>
-      <div class='cl-feature-tile'>
-        <div class='cl-feature-tile__bg'></div>
-        <div class='cl-feature-tile__content'>
-          <p class='cl-feature-tile__kicker'>{% if request.locale.iso_code contains 'fr' %}Contr&ocirc;le intelligent{% else %}Smart control{% endif %}</p>
-          <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Intensit&eacute;, minuteur, pulsation.{% else %}Dimming, timer, pulsing.{% endif %}{% elsif is_mask %}{% if is_fr %}Trois modes, intensit&eacute; variable.{% else %}Three modes, adjustable brightness.{% endif %}{% elsif is_foot %}{% if is_fr %}Une session simple &agrave; lancer.{% else %}A session that is simple to start.{% endif %}{% elsif is_knee %}{% if is_fr %}Une session simple &agrave; lancer.{% else %}A session that is simple to start.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Un bo&icirc;tier, trois zones.{% else %}One control box, three zones.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}&Eacute;cran tactile et application.{% else %}Touchscreen and app control.{% endif %}{% endif %}</h3>
-          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}Ajustez la luminosit&eacute;, la dur&eacute;e, les pulsations et la s&eacute;lection des longueurs d'onde pour r&eacute;p&eacute;ter facilement votre routine.{% else %}Adjust brightness, session time, pulsing, and wavelength selection so your routine feels easy to repeat.{% endif %}{% elsif is_mask %}{% if is_fr %}Choisissez un mode de lumi&egrave;re, ajustez l'intensit&eacute; et lancez le minuteur int&eacute;gr&eacute;. Trois commandes suffisent &agrave; d&eacute;marrer une s&eacute;ance.{% else %}Pick a light mode, adjust the brightness, and start the built-in timer. Three controls are all it takes to begin a session.{% endif %}{% elsif is_foot %}{% if is_fr %}Choisissez votre moment, enfilez la botte et gardez une dur&eacute;e confortable. Le rituel doit rester facile &agrave; r&eacute;p&eacute;ter.{% else %}Choose your moment, wear the boot, and keep a comfortable duration. The ritual is designed to stay easy to repeat.{% endif %}{% elsif is_knee %}{% if is_fr %}Choisissez votre moment, enfilez la genouill&egrave;re et gardez une dur&eacute;e confortable. Le rituel doit rester facile &agrave; r&eacute;p&eacute;ter.{% else %}Choose your moment, wrap on the sleeve, and keep a comfortable duration. The ritual is designed to stay easy to repeat.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Le bo&icirc;tier de contr&ocirc;le &agrave; 3 zones ajuste ind&eacute;pendamment la chaleur du haut du corps, de la taille et du bas du corps, avec les bobines PEMF r&eacute;glables de 1 &agrave; 30Hz.{% else %}The 3-zone control box independently adjusts heat for upper body, waist, and lower body, alongside PEMF coils adjustable from 1&ndash;30Hz.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}R&eacute;glez la luminosit&eacute;, la dur&eacute;e, les sc&egrave;nes et les pulsations depuis l'appareil ou votre t&eacute;l&eacute;phone.{% else %}Fine-tune brightness, timing, scenes, and pulse settings from the device or your phone.{% endif %}{% endif %}</p>
-        </div>
-      </div>
-      <div class='cl-feature-tile {% if is_cap %}cl-feature-tile--image-bg cl-feature-tile--scalp-bg{% elsif is_mask or is_foot or is_knee or is_sauna_dome %}cl-feature-tile--image-bg cl-feature-tile--photo-dark{% endif %}'>
-        <div class='cl-feature-tile__bg' {% if is_cap %}style='background-image:url({{ "cytolight-cap-scalp-density.jpg" | file_url }});'{% elsif is_mask %}style='background-image:url({{ "04_CytoLight_Mask_Relax_Meditation.png" | file_url }});'{% elsif is_foot and foot_image_1 %}style='background-image:url({{ foot_image_1 | image_url: width: 1600 }});'{% elsif is_knee %}style='background-image:url({{ "Cytolight_Knee_Football_Soccer.jpg" | file_url }});'{% elsif is_sauna_dome %}style='background-image:url({{ "Cytolight_Sauna_Dome_2.jpg" | file_url }});'{% endif %}></div>
-        <div class='cl-feature-tile__content'>
-          <p class='cl-feature-tile__kicker'>{% if is_cap %}{% if is_fr %}Cheveux et cuir chevelu{% else %}Hair and scalp{% endif %}{% elsif is_mask %}{% if is_fr %}Peau et d&eacute;tente{% else %}Skin and calm{% endif %}{% elsif is_foot %}{% if is_fr %}Pied, talon et cheville{% else %}Foot, heel, and ankle{% endif %}{% elsif is_knee %}{% if is_fr %}Genou et articulation{% else %}Knee and joint{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Corps entier et &eacute;nergie{% else %}Full body and energy{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}R&eacute;cup&eacute;ration et bien-&ecirc;tre{% else %}Recovery and wellness{% endif %}{% endif %}</p>
-          <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Pour une apparence de cheveux plus dense.{% else %}For fuller-looking hair routines.{% endif %}{% elsif is_mask %}{% if is_fr %}Un moment calme, allong&eacute; ou assis.{% else %}A calm moment, lying down or seated.{% endif %}{% elsif is_foot %}{% if is_fr %}Cibl&eacute; l&agrave; o&ugrave; les pieds travaillent le plus.{% else %}Targeted where feet work the most.{% endif %}{% elsif is_knee %}{% if is_fr %}Cibl&eacute; l&agrave; o&ugrave; l'articulation travaille le plus.{% else %}Targeted where the joint works the most.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Ions n&eacute;gatifs et pierres &eacute;nerg&eacute;tiques inclus.{% else %}Negative ions and energy stones included.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Visage, corps, articulations et concentration.{% else %}Face, body, joints, and focus.{% endif %}{% endif %}</h3>
-          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}Utilisez-le comme rituel r&eacute;gulier centr&eacute; sur le confort du cuir chevelu, la constance et l'apparence de cheveux plus sains.{% else %}Use it as a regular ritual focused on scalp comfort, consistency, and the appearance of healthier-looking hair.{% endif %}{% elsif is_mask %}{% if is_fr %}Le masque tient seul sur le visage. Vous pouvez le porter en m&eacute;ditant, en &eacute;coutant un podcast ou pendant une pause du soir.{% else %}The mask stays in place on its own. Wear it while meditating, listening to a podcast, or during an evening pause.{% endif %}{% elsif is_foot %}{% if is_fr %}Utilisez-le apr&egrave;s la marche, le sport, les journ&eacute;es debout ou les moments o&ugrave; vos pieds demandent du repos.{% else %}Use it after walking, training, standing days, or moments when your feet are asking for rest.{% endif %}{% elsif is_knee %}{% if is_fr %}Utilisez-la apr&egrave;s la marche, le sport, les journ&eacute;es debout ou les moments o&ugrave; votre genou demande du repos.{% else %}Use it after walking, training, standing days, or moments when your knee is asking for rest.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Le tapis est enti&egrave;rement recouvert de billes d'ions n&eacute;gatifs et de pierres de cristal, pour compl&eacute;ter la session de lumi&egrave;re, chaleur et PEMF.{% else %}The mat is fully covered with negative ion balls and crystal stones, rounding out the light, heat, and PEMF session.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Utilisez-le pour la r&eacute;cup&eacute;ration musculaire, le soutien de la peau, l'&eacute;nergie, la d&eacute;tente et une routine de sommeil plus r&eacute;guli&egrave;re.{% else %}Use it for muscle recovery, skin support, energy, relaxation, and a more consistent sleep routine.{% endif %}{% endif %}</p>
-        </div>
-      </div>
-      <div class='cl-feature-tile cl-feature-tile--light'>
-        <div class='cl-feature-tile__bg'></div>
-        <div class='cl-feature-tile__content'>
-          <p class='cl-feature-tile__kicker'>{% if request.locale.iso_code contains 'fr' %}Confiance{% else %}Confidence{% endif %}</p>
-          <h3 class='cl-feature-tile__title'>{% if is_cap %}{% if is_fr %}Un format premium, simple &agrave; porter.{% else %}Premium build, simple to wear.{% endif %}{% elsif is_mask %}{% if is_fr %}Silicone souple, 375 g.{% else %}Flexible silicone, 375g.{% endif %}{% elsif is_foot %}{% if is_fr %}Un format souple, simple &agrave; enfiler.{% else %}A soft format, simple to wear.{% endif %}{% elsif is_knee %}{% if is_fr %}Un format souple, simple &agrave; enfiler.{% else %}A soft format, simple to wear.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Construction premium, &eacute;co-responsable.{% else %}Premium, eco-conscious build.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Conception de qualit&eacute; clinique.{% else %}Clinical-grade build.{% endif %}{% endif %}</h3>
-          <p class='cl-feature-tile__body'>{% if is_cap %}{% if is_fr %}Con&ccedil;u pour une utilisation &agrave; domicile avec commandes claires, port confortable, garantie incluse et essai de 14 jours.{% else %}Designed for home use with clear controls, comfortable wear, warranty coverage, and a 14-day home trial.{% endif %}{% elsif is_mask %}{% if is_fr %}Un corps en silicone de 640 x 220 x 5,8 mm, souple et l&eacute;ger, con&ccedil;u pour &eacute;pouser le visage sans point de pression. Garantie incluse et essai de 14 jours.{% else %}A 640 x 220 x 5.8mm silicone body, flexible and light, shaped to follow the face without pressure points. Warranty coverage and a 14-day home trial included.{% endif %}{% elsif is_foot %}{% if is_fr %}Con&ccedil;u pour une utilisation &agrave; domicile avec contr&ocirc;leur simple, port confortable, garantie incluse et essai de 14 jours.{% else %}Designed for at-home use with simple control, comfortable wear, warranty coverage, and a 14-day home trial.{% endif %}{% elsif is_knee %}{% if is_fr %}Con&ccedil;u pour une utilisation &agrave; domicile avec commande simple, port confortable, garantie incluse et essai de 14 jours.{% else %}Designed for at-home use with simple control, comfortable wear, warranty coverage, and a 14-day home trial.{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}Ext&eacute;rieur en PU sans solvant, structure en bois de pin, fil chauffant en fibre de carbone. Garantie incluse et essai de 14 jours.{% else %}Solvent-free PU exterior, pine wood frame, carbon fiber heating wire. Warranty coverage and a 14-day home trial included.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Inclut lunettes de protection, syst&egrave;me de support, garantie et essai &agrave; domicile de 14 jours.{% else %}Includes safety goggles, support system, warranty coverage, and a 14-day home trial.{% endif %}{% else %}{% if request.locale.iso_code contains 'fr' %}Inclut lunettes de protection, support de bureau, garantie et essai &agrave; domicile de 14 jours.{% else %}Includes safety goggles, desk stand, warranty coverage, and a 14-day home trial.{% endif %}{% endif %}</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <div class='cl-product-wrap' id='cl-buy-area'>
 
     <div class='cl-col-left'>
@@ -1048,9 +841,9 @@
           </div>
           <p class='cl-section-label'>{% if request.locale.iso_code contains 'fr' %}Choisissez votre pack{% else %}Choose your package{% endif %}</p>
           <div class='cl-bundles'>
-            <div class='cl-bundle is-selected' data-qty='1'><div class='cl-bundle__row'><span class='cl-bundle__num'>1</span><span class='cl-bundle__unit'>{% if is_cap %}{% if is_fr %}Casquette{% else %}Cap{% endif %}{% elsif is_mask %}{% if is_fr %}Masque{% else %}Mask{% endif %}{% elsif is_foot %}{% if is_fr %}Botte{% else %}Foot boot{% endif %}{% elsif is_knee %}{% if is_fr %}Genouill&egrave;re{% else %}Knee sleeve{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}D&ocirc;me{% else %}Dome{% endif %}{% else %}Panel{% endif %}</span></div><span class='cl-bundle__save'>&nbsp;</span></div>
-            <div class='cl-bundle' data-qty='2'><span class='cl-bundle__badge'>{% if is_fr %}POPULAIRE{% else %}POPULAR{% endif %}</span><div class='cl-bundle__row'><span class='cl-bundle__num'>2</span><span class='cl-bundle__unit'>{% if is_cap %}{% if is_fr %}Casquettes &#8212; Offre duo{% else %}Caps &#8212; Duo Offer{% endif %}{% elsif is_mask %}{% if is_fr %}Masques &#8212; Offre duo{% else %}Masks &#8212; Duo Offer{% endif %}{% elsif is_foot %}{% if is_fr %}Bottes &#8212; Offre duo{% else %}Foot boots &#8212; Duo Offer{% endif %}{% elsif is_knee %}{% if is_fr %}Genouill&egrave;res &#8212; Offre duo{% else %}Knee sleeves &#8212; Duo Offer{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}D&ocirc;mes &#8212; Offre duo{% else %}Domes &#8212; Duo Offer{% endif %}{% else %}{% if is_fr %}Panneaux &#8212; Offre duo{% else %}Panels &#8212; Duo Offer{% endif %}{% endif %}</span></div><span class='cl-bundle__save'>{% if is_fr %}&Eacute;conomisez 10%{% else %}Save 10%{% endif %}</span></div>
-            <div class='cl-bundle' data-qty='3'><span class='cl-bundle__badge'>{% if is_fr %}MEILLEURE OFFRE{% else %}BEST VALUE{% endif %}</span><div class='cl-bundle__row'><span class='cl-bundle__num'>3</span><span class='cl-bundle__unit'>{% if is_cap %}{% if is_fr %}Casquettes &#8212; Famille{% else %}Caps &#8212; Family{% endif %}{% elsif is_mask %}{% if is_fr %}Masques &#8212; Famille{% else %}Masks &#8212; Family{% endif %}{% elsif is_foot %}{% if is_fr %}Bottes &#8212; Famille{% else %}Foot boots &#8212; Family{% endif %}{% elsif is_knee %}{% if is_fr %}Genouill&egrave;res &#8212; Famille{% else %}Knee sleeves &#8212; Family{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}D&ocirc;mes &#8212; Famille{% else %}Domes &#8212; Family{% endif %}{% else %}{% if is_fr %}Panneaux &#8212; Famille et amis{% else %}Panels &#8212; Family &amp; Friends{% endif %}{% endif %}</span></div><span class='cl-bundle__save'>{% if is_fr %}&Eacute;conomisez 15%{% else %}Save 15%{% endif %}</span></div>
+            <div class='cl-bundle is-selected' data-qty='1' data-t='{{ product.price | money }}'><div class='cl-bundle__row'><span class='cl-bundle__num'>1</span><span class='cl-bundle__unit'>{% if is_cap %}{% if is_fr %}Casquette{% else %}Cap{% endif %}{% elsif is_mask %}{% if is_fr %}Masque{% else %}Mask{% endif %}{% elsif is_foot %}{% if is_fr %}Botte{% else %}Foot boot{% endif %}{% elsif is_knee %}{% if is_fr %}Genouill&egrave;re{% else %}Knee sleeve{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}D&ocirc;me{% else %}Dome{% endif %}{% else %}Panel{% endif %}</span></div><span class='cl-bundle__save'>&nbsp;</span></div>
+            <div class='cl-bundle' data-qty='2' data-t='{{ product.price | times: 2 | times: 90 | divided_by: 100 | money }}'><span class='cl-bundle__badge'>{% if is_fr %}POPULAIRE{% else %}POPULAR{% endif %}</span><div class='cl-bundle__row'><span class='cl-bundle__num'>2</span><span class='cl-bundle__unit'>{% if is_cap %}{% if is_fr %}Casquettes &#8212; Offre duo{% else %}Caps &#8212; Duo Offer{% endif %}{% elsif is_mask %}{% if is_fr %}Masques &#8212; Offre duo{% else %}Masks &#8212; Duo Offer{% endif %}{% elsif is_foot %}{% if is_fr %}Bottes &#8212; Offre duo{% else %}Foot boots &#8212; Duo Offer{% endif %}{% elsif is_knee %}{% if is_fr %}Genouill&egrave;res &#8212; Offre duo{% else %}Knee sleeves &#8212; Duo Offer{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}D&ocirc;mes &#8212; Offre duo{% else %}Domes &#8212; Duo Offer{% endif %}{% else %}{% if is_fr %}Panneaux &#8212; Offre duo{% else %}Panels &#8212; Duo Offer{% endif %}{% endif %}</span></div><span class='cl-bundle__save'>{% if is_fr %}&Eacute;conomisez 10%{% else %}Save 10%{% endif %}</span></div>
+            <div class='cl-bundle' data-qty='3' data-t='{{ product.price | times: 3 | times: 85 | divided_by: 100 | money }}'><span class='cl-bundle__badge'>{% if is_fr %}MEILLEURE OFFRE{% else %}BEST VALUE{% endif %}</span><div class='cl-bundle__row'><span class='cl-bundle__num'>3</span><span class='cl-bundle__unit'>{% if is_cap %}{% if is_fr %}Casquettes &#8212; Famille{% else %}Caps &#8212; Family{% endif %}{% elsif is_mask %}{% if is_fr %}Masques &#8212; Famille{% else %}Masks &#8212; Family{% endif %}{% elsif is_foot %}{% if is_fr %}Bottes &#8212; Famille{% else %}Foot boots &#8212; Family{% endif %}{% elsif is_knee %}{% if is_fr %}Genouill&egrave;res &#8212; Famille{% else %}Knee sleeves &#8212; Family{% endif %}{% elsif is_sauna_dome %}{% if is_fr %}D&ocirc;mes &#8212; Famille{% else %}Domes &#8212; Family{% endif %}{% else %}{% if is_fr %}Panneaux &#8212; Famille et amis{% else %}Panels &#8212; Family &amp; Friends{% endif %}{% endif %}</span></div><span class='cl-bundle__save'>{% if is_fr %}&Eacute;conomisez 15%{% else %}Save 15%{% endif %}</span></div>
           </div>
           <button type='submit' class='cl-atc' {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
             <svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><circle cx='9' cy='21' r='1'/><circle cx='20' cy='21' r='1'/><path d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/></svg>
@@ -1095,6 +888,174 @@
     </div>
 
   </div>
+
+  {%- if is_foot -%}
+  <section class='cl-foot-intro' aria-label='{% if is_fr %}Pr&eacute;sentation Antared Foot{% else %}Antared Foot introduction{% endif %}'>
+    <div class='cl-foot-intro__media'>
+      {%- if foot_image_4 -%}
+        <img src='{{ foot_image_4 | image_url: width: 1400 }}' alt='{{ foot_image_4.alt | escape }}' loading='lazy' width='1400' height='788'>
+      {%- elsif product.featured_image -%}
+        <img src='{{ product.featured_image | image_url: width: 1400 }}' alt='{{ product.featured_image.alt | escape }}' loading='lazy' width='1400' height='788'>
+      {%- endif -%}
+    </div>
+    <div class='cl-foot-intro__copy'>
+      <p class='cl-eyebrow'>{% if is_fr %}Pieds et chevilles{% else %}Feet and ankles{% endif %}</p>
+      <h2>{% if is_fr %}Un rituel cibl&eacute; pour les pieds qui portent toute votre journ&eacute;e.{% else %}A targeted ritual for the feet that carry your day.{% endif %}</h2>
+      <p>{% if is_fr %}Antared Foot rapproche la lumi&egrave;re rouge et proche infrarouge des zones qui travaillent le plus : plante du pied, talon et cheville. Enfilez la botte, lancez votre session, puis laissez le rituel se faire pendant que vous vous reposez.{% else %}Antared Foot brings red and near-infrared light close to the areas that work hardest: sole, heel, and ankle. Wear the boot, start your session, then let the ritual run while you rest.{% endif %}</p>
+      <div class='cl-foot-intro__chips'>
+        <span>{% if is_fr %}Confort local{% else %}Local comfort{% endif %}</span>
+        <span>660nm</span>
+        <span>850nm</span>
+        <span>{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}</span>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- if is_knee -%}
+  <section class='cl-foot-intro' aria-label='{% if is_fr %}Pr&eacute;sentation Antared Knee{% else %}Antared Knee introduction{% endif %}'>
+    <div class='cl-foot-intro__media'>
+      <img src='{{ "Cytolight_-_Knee_1.jpg" | file_url }}' alt='{% if is_fr %}Genouill&egrave;re Antared Knee avec lumi&egrave;re rouge et proche infrarouge activ&eacute;e{% else %}Antared Knee sleeve with red and near-infrared light active{% endif %}' loading='lazy' width='1400' height='788'>
+    </div>
+    <div class='cl-foot-intro__copy'>
+      <p class='cl-eyebrow'>{% if is_fr %}Genou et articulation{% else %}Knee and joint{% endif %}</p>
+      <h2>{% if is_fr %}Un rituel cibl&eacute; pour l'articulation qui porte tout votre poids.{% else %}A targeted ritual for the joint that carries your weight.{% endif %}</h2>
+      <p>{% if is_fr %}Antared Knee rapproche la lumi&egrave;re rouge et proche infrarouge de l'articulation. Enfilez, lancez la session, reposez-vous.{% else %}Antared Knee brings red and near-infrared light close to the joint. Wrap it on, start the session, and rest.{% endif %}</p>
+      <div class='cl-foot-intro__chips'>
+        <span>{% if is_fr %}Confort articulaire{% else %}Joint comfort{% endif %}</span>
+        <span>660nm</span>
+        <span>850nm</span>
+        <span>{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}</span>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- if is_sauna_dome -%}
+  <section class='cl-foot-intro' aria-label='{% if is_fr %}Pr&eacute;sentation Antared Sauna Dome{% else %}Antared Sauna Dome introduction{% endif %}'>
+    <div class='cl-foot-intro__media'>
+      <img src='{{ "Cytolight_Sauna_Dome_2.jpg" | file_url }}' alt='{% if is_fr %}Antared Sauna Dome dans un salon moderne, lumi&egrave;re rouge activ&eacute;e{% else %}Antared Sauna Dome in a modern living room, red light active{% endif %}' loading='lazy' width='1400' height='788'>
+    </div>
+    <div class='cl-foot-intro__copy'>
+      <p class='cl-eyebrow'>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</p>
+      <h2>{% if is_fr %}Un rituel complet, sans quitter la maison.{% else %}A complete ritual, without leaving home.{% endif %}</h2>
+      <p>{% if is_fr %}Antared Sauna Dome combine lumi&egrave;re rouge et proche infrarouge, th&eacute;rapie PEMF, chaleur infrarouge et un tapis &eacute;nerg&eacute;tique en une seule session. Installez-vous, lancez la session, laissez le rituel se faire.{% else %}Antared Sauna Dome combines red and near-infrared light, PEMF therapy, infrared heat, and an energy stone mat into a single session. Settle in, start the session, and let the ritual run.{% endif %}</p>
+      <div class='cl-foot-intro__chips'>
+        <span>{% if is_fr %}PEMF{% else %}PEMF{% endif %}</span>
+        <span>660nm</span>
+        <span>850nm</span>
+        <span>{% if is_fr %}3 zones{% else %}3 zones{% endif %}</span>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- if is_mask -%}
+  <section class='cl-mask-intro' aria-label='{% if is_fr %}Pr&eacute;sentation Antared Mask{% else %}Antared Mask introduction{% endif %}'>
+    <div class='cl-mask-intro__media'>
+      <img src='{{ "01_CytoLight_Mask_Product.png" | file_url }}' alt='{% if is_fr %}Masque LED Antared Mask en silicone souple pour le visage{% else %}Antared Mask flexible silicone LED face mask{% endif %}' loading='lazy' width='900' height='720'>
+    </div>
+    <div class='cl-mask-intro__copy'>
+      <p class='cl-eyebrow'>{% if is_fr %}Visage et beaut&eacute;{% else %}Face and beauty{% endif %}</p>
+      <h2>{% if is_fr %}Dix minutes de lumi&egrave;re, pos&eacute;es sur le visage.{% else %}Ten minutes of light, worn on the face.{% endif %}</h2>
+      <p>{% if is_fr %}Antared Mask &eacute;pouse les contours du visage gr&acirc;ce &agrave; un silicone souple de 5,8 mm d'&eacute;paisseur. Ses 288 LED diffusent le bleu 460nm, le rouge 630nm et le proche infrarouge 850nm au plus pr&egrave;s de la peau, sans fil, pour une routine beaut&eacute; courte et r&eacute;guli&egrave;re.{% else %}Antared Mask follows the contours of the face with a 5.8mm flexible silicone body. Its 288 LEDs deliver 460nm blue, 630nm red, and 850nm near-infrared light close to the skin, cordless, for a short and consistent beauty routine.{% endif %}</p>
+      <div class='cl-mask-intro__chips'>
+        <span>460nm</span>
+        <span>630nm</span>
+        <span>850nm</span>
+        <span>{% if is_fr %}288 LED{% else %}288 LEDs{% endif %}</span>
+        <span>{% if is_fr %}375 g{% else %}375g{% endif %}</span>
+        <span>{% if is_fr %}Sans fil{% else %}Cordless{% endif %}</span>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {%- comment -%}
+    Section d'introduction des quatre fiches qui n'en avaient pas : cap, pano-ultra,
+    desk et pano-plus tombaient du hero directement dans les fonctionnalites, la ou
+    mask, foot, knee et sauna ouvrent sur une presentation.
+
+    Le composant .cl-foot-intro est reutilise tel quel, sans une regle de CSS en
+    plus. Le visuel est la deuxieme image du produit quand elle existe, l'image
+    principale sinon : aucun nom de fichier ecrit en dur, donc aucun 404 possible.
+
+    Chaque chiffre cite ici figure deja dans le tableau technique de la meme fiche.
+  {%- endcomment -%}
+  {%- unless is_mask or is_foot or is_knee or is_sauna_dome -%}
+  {%- assign intro_image = product.images[1] | default: product.featured_image -%}
+  <section class='cl-foot-intro' aria-label='{% if is_fr %}Pr&eacute;sentation de {{ product.title }}{% else %}{{ product.title }} introduction{% endif %}'>
+    <div class='cl-foot-intro__media'>
+      {%- if intro_image -%}
+        <img src='{{ intro_image | image_url: width: 1400 }}' alt='{{ intro_image.alt | escape }}' loading='lazy' width='{{ intro_image.width }}' height='{{ intro_image.height }}'>
+      {%- endif -%}
+    </div>
+    <div class='cl-foot-intro__copy'>
+      <p class='cl-eyebrow'>{% if is_cap %}{% if is_fr %}Cheveux et cuir chevelu{% else %}Hair and scalp{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Corps entier{% else %}Full body{% endif %}{% else %}{% if is_fr %}Sept longueurs d'onde{% else %}Seven wavelengths{% endif %}{% endif %}</p>
+      <h2>{% if is_cap %}{% if is_fr %}Une routine cuir chevelu qui tient dans un seul geste.{% else %}A scalp routine that fits into a single gesture.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}Une surface lumineuse &agrave; la mesure du corps entier.{% else %}A light surface built for the whole body.{% endif %}{% else %}{% if is_fr %}Sept longueurs d'onde, pilot&eacute;es une par une.{% else %}Seven wavelengths, each one under your control.{% endif %}{% endif %}</h2>
+      <p>{% if is_cap %}{% if is_fr %}ANTARED cap int&egrave;gre 150 LED 3-en-1 dans la casquette pour garder la lumi&egrave;re rouge 660nm et le proche infrarouge 850nm au contact du cuir chevelu, sans rien tenir. Posez-la, choisissez votre dur&eacute;e, puis laissez la s&eacute;ance se faire pendant que vous faites autre chose. L'intensit&eacute;, le minuteur, la pulsation et la s&eacute;lection des longueurs d'onde se r&egrave;glent depuis le contr&ocirc;leur.{% else %}ANTARED cap builds 150 3-in-1 LEDs into the cap so 660nm red and 850nm near-infrared light stay close to the scalp, with nothing to hold. Put it on, choose your session length, then let it run while you do something else. Intensity, timer, pulsing, and wavelength selection are all set from the controller.{% endif %}{% elsif is_pano_ultra %}{% if is_fr %}PANO ULTRA d&eacute;ploie les sept longueurs d'onde Antared, de l'ambre 590nm &agrave; l'infrarouge profond 940nm, sur un panneau vertical grand format. R&eacute;glez la dur&eacute;e, la luminosit&eacute; et les pulsations depuis l'&eacute;cran tactile ou l'application, puis installez-vous devant : la s&eacute;ance couvre le corps sans que vous ayez &agrave; d&eacute;placer l'appareil.{% else %}PANO ULTRA spreads all seven Antared wavelengths, from 590nm amber to 940nm deep infrared, across a large vertical panel. Set the duration, brightness, and pulsing from the touch screen or the app, then stand in front of it: the session covers the body without moving the device.{% endif %}{% else %}{% if is_fr %}De l'ambre 590nm &agrave; l'infrarouge profond 940nm, chaque longueur d'onde se r&egrave;gle ind&eacute;pendamment en luminosit&eacute; et en pulsation, depuis l'&eacute;cran tactile couleur ou l'application Antared. Enregistrez la s&eacute;ance qui vous convient, puis retrouvez-la d'un geste &#8212; minuteur, r&eacute;veil et biblioth&egrave;que de sc&egrave;nes compris.{% else %}From 590nm amber to 940nm deep infrared, every wavelength is adjusted independently for brightness and pulsing, from the full-colour touch screen or the Antared App. Save the session that suits you, then bring it back in one gesture &#8212; timer, alarm clock, and scene library included.{% endif %}{% endif %}</p>
+      <div class='cl-foot-intro__chips'>
+        {%- if is_cap -%}
+          <span>{% if is_fr %}Mains libres{% else %}Hands-free{% endif %}</span>
+          <span>{% if is_fr %}150 LED{% else %}150 LEDs{% endif %}</span>
+          <span>660nm</span>
+          <span>850nm</span>
+        {%- elsif is_pano_ultra -%}
+          <span>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</span>
+          <span>{% if is_fr %}7 longueurs d'onde{% else %}7 wavelengths{% endif %}</span>
+          <span>590-940nm</span>
+          <span>1-40 Hz</span>
+        {%- else -%}
+          <span>{% if is_fr %}7 longueurs d'onde{% else %}7 wavelengths{% endif %}</span>
+          <span>590-940nm</span>
+          <span>Bluetooth + Wi-Fi</span>
+          <span>1-40 Hz</span>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+  {%- endunless -%}
+
+  {%- if is_knee -%}
+  <section class='cl-persona-section' aria-label='{% if is_fr %}Adapt&eacute; &agrave; votre pratique{% else %}Built for your activity{% endif %}'>
+    <div class='cl-persona-inner'>
+      <div class='cl-persona-header'>
+        <p class='cl-persona-eyebrow'>{% if is_fr %}Pour chaque pratique{% else %}For every activity{% endif %}</p>
+        <h2 class='cl-persona-title'>{% if is_fr %}Sportif ou non, votre genou m&eacute;rite une routine adapt&eacute;e.{% else %}Athlete or not, your knee deserves a routine that fits.{% endif %}</h2>
+      </div>
+      <div class='cl-persona-grid'>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Salle de sport{% else %}Gym{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Apr&egrave;s la s&eacute;ance, avant la raideur.{% else %}After the session, before the stiffness.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Squats, fentes, leg press : le genou encaisse beaucoup. Une routine courte en sortant de la salle.{% else %}Squats, lunges, leg press &#8212; the knee takes a lot of load. A short routine on your way out of the gym.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Padel{% else %}Padel{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Freinages et pivots, match apr&egrave;s match.{% else %}Sharp stops and pivots, match after match.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Le padel multiplie les appuis brusques. Une session apr&egrave;s le match pour rester pr&ecirc;t pour le prochain.{% else %}Padel means constant sharp stops and turns. A post-match session to stay ready for the next one.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Tennis{% else %}Tennis{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Entre deux sets, entre deux matchs.{% else %}Between sets, between matches.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Les appuis lat&eacute;raux sollicitent fortement l'articulation. Une routine courte pour tenir tout le tournoi.{% else %}Lateral footwork puts real strain on the joint. A short routine to last the whole tournament.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Football{% else %}Soccer{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Pour tenir toute la saison.{% else %}To last the whole season.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Sprints, contacts, changements de direction : une routine de r&eacute;cup&eacute;ration entre deux matchs.{% else %}Sprints, contact, sharp turns &#8212; a recovery routine between matches.{% endif %}</p>
+        </div>
+        <div class='cl-persona-card cl-persona-card--senior'>
+          <span class='cl-persona-card__kicker'>{% if is_fr %}Seniors{% else %}Older Adults{% endif %}</span>
+          <p class='cl-persona-card__title'>{% if is_fr %}Une routine douce, &agrave; tout &acirc;ge.{% else %}A gentle routine, at any age.{% endif %}</p>
+          <p class='cl-persona-card__body'>{% if is_fr %}Assis chez soi, sans effort ni contorsion : une session simple pens&eacute;e pour une articulation qui a bien servi, jour apr&egrave;s jour.{% else %}Seated at home, no effort or awkward positions &#8212; a simple session built for a joint that has done a lot of work, day after day.{% endif %}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  {%- endif -%}
+
+  {% render 'product-highlights', is_cap: is_cap, is_mask: is_mask, is_foot: is_foot, is_knee: is_knee, is_sauna_dome: is_sauna_dome, is_pano_ultra: is_pano_ultra, is_fr: is_fr, foot_image_1: foot_image_1, foot_image_3: foot_image_3, foot_image_4: foot_image_4 %}
+
 
   {% render 'cytolight-notice-section', is_cap: is_cap, is_mask: is_mask, is_foot: is_foot, is_knee: is_knee, is_sauna_dome: is_sauna_dome, is_pano_ultra: is_pano_ultra, is_fr: is_fr %}
 
@@ -1832,7 +1793,9 @@
   }
   var bundles=document.querySelectorAll('.cl-bundle');
   var qtyInput=document.getElementById('cl-qty-input');
-  bundles.forEach(function(b){b.addEventListener('click',function(){bundles.forEach(function(x){x.classList.remove('is-selected');});this.classList.add('is-selected');if(qtyInput)qtyInput.value=this.dataset.qty;});});
+  var atcPrice=document.querySelector('.cl-atc__price');
+  var stickyPrice=document.querySelector('.cl-sticky-atc__meta span');
+  bundles.forEach(function(b){b.addEventListener('click',function(){bundles.forEach(function(x){x.classList.remove('is-selected');});this.classList.add('is-selected');if(qtyInput)qtyInput.value=this.dataset.qty;if(atcPrice)atcPrice.textContent=this.dataset.t;if(stickyPrice)stickyPrice.textContent=this.dataset.t;});});
   var stickyBtn=document.getElementById('cl-sticky-atc-button');
   var productForm=document.getElementById('cl-product-form');
   if(stickyBtn&&productForm){
@@ -1843,16 +1806,14 @@
     });
   }
   var stickyBar=document.getElementById('cl-sticky-atc');
-  var buyArea=document.getElementById('cl-buy-area');
-  function updateSticky(){
-    if(!stickyBar||!buyArea)return;
-    var buyTop=buyArea.getBoundingClientRect().top + window.pageYOffset;
-    var showAt=Math.max(420,buyTop-180);
-    stickyBar.classList.toggle('is-visible',window.pageYOffset>showAt);
+  var mainAtc=productForm?productForm.querySelector('.cl-atc'):null;
+  if(stickyBar&&mainAtc){
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(e){stickyBar.classList.toggle('is-visible',!e[0].isIntersecting&&e[0].boundingClientRect.top<0);},{threshold:0}).observe(mainAtc);
+    }else{
+      stickyBar.classList.add('is-visible');
+    }
   }
-  window.addEventListener('scroll',updateSticky,{passive:true});
-  window.addEventListener('resize',updateSticky);
-  updateSticky();
 })();
 
 /* ===== SHADER BACKGROUND: "7 wavelengths" section ===== */

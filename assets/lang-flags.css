@@ -30,7 +30,9 @@
   transition: border-color .15s ease, background .15s ease;
 }
 .site-header__lang-toggle::-webkit-details-marker { display: none; }
-.site-header__lang-toggle:hover { border-color: rgba(0, 0, 0, .3); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__lang-toggle:hover { border-color: rgba(0, 0, 0, .3); }
+}
 .site-header__lang-toggle:focus-visible { outline: 2px solid var(--color-accent, #d20d2f); outline-offset: 2px; }
 
 .site-header__lang-code {
@@ -83,7 +85,9 @@
   text-align: left;
   color: var(--color-muted, #6b625c);
 }
-.site-header__lang-option:hover { background: rgba(210, 13, 47, .08); color: var(--color-accent-deep, #a80a26); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__lang-option:hover { background: rgba(210, 13, 47, .08); color: var(--color-accent-deep, #a80a26); }
+}
 .site-header__lang-option.is-active { color: var(--color-accent-deep, #a80a26); }
 .site-header__lang-option:focus-visible { outline: 2px solid var(--color-accent, #d20d2f); outline-offset: -2px; }
 

@@ -8,4 +8,6 @@
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
 }
-.site-header__util-link--highlight:hover { color: var(--color-accent, #d20d2f); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__util-link--highlight:hover { color: var(--color-accent, #d20d2f); }
+}

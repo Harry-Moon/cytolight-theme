@@ -88,9 +88,11 @@
   color: #fff;
   border-color: rgba(255,255,255,.5);
 }
-.error-404__ghost:hover {
-  background: #fff;
-  color: #080808;
+@media (hover: hover) and (pointer: fine) {
+  .error-404__ghost:hover {
+    background: #fff;
+    color: #080808;
+  }
 }
 
 @media (max-width: 640px) {

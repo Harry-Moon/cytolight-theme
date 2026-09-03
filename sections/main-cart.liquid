@@ -9,10 +9,6 @@
   if shipping_remaining_cents < 0
     assign shipping_remaining_cents = 0
   endif
-  assign shipping_progress = subtotal_cents | times: 100 | divided_by: free_shipping_cents
-  if shipping_progress > 100
-    assign shipping_progress = 100
-  endif
 
   assign cross_sell_handles = 'cytolight-desk,cytolight-cap,cytolight-mask,cytolight-sauna-dome,cytolight-pano-plus,antared-pano-ultra' | split: ','
   assign cross_sell_shown = 0
@@ -57,14 +53,13 @@
         <form action="{{ routes.cart_url }}" method="post" novalidate class="cart__form">
           <h1>{% if is_fr %}Votre panier{% else %}Your cart{% endif %}</h1>
 
-          <div class="cart-shipping-bar" aria-live="polite">
-            {% if shipping_remaining_cents > 0 %}
-              <p>{% if is_fr %}Plus que <strong>{{ shipping_remaining_cents | money }}</strong> pour la livraison offerte !{% else %}You're <strong>{{ shipping_remaining_cents | money }}</strong> away from free shipping!{% endif %}</p>
-            {% else %}
-              <p>{% if is_fr %}&#10003; Livraison offerte d&eacute;bloqu&eacute;e !{% else %}&#10003; You've unlocked free shipping!{% endif %}</p>
-            {% endif %}
-            <div class="cart-shipping-bar__track"><div class="cart-shipping-bar__fill" style="width:{{ shipping_progress }}%;"></div></div>
-          </div>
+          <p class="cart-shipping-note{% if shipping_remaining_cents == 0 %} cart-shipping-note--done{% endif %}" aria-live="polite">
+            {%- if shipping_remaining_cents > 0 -%}
+              {% if is_fr %}Livraison offerte d&egrave;s 125 &euro;{% else %}Free shipping on orders over &euro;125{% endif %}
+            {%- else -%}
+              &#10003; {% if is_fr %}Livraison offerte{% else %}Free shipping{% endif %}
+            {%- endif -%}
+          </p>
 
           <div class="cart__items">
             {% for item in cart.items %}
@@ -91,7 +86,7 @@
                     <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line-key="{{ item.key }}">
                     <button type="button" data-qty-step="1">+</button>
                   </div>
-                  <a href="{{ item.url_to_remove }}" style="font-size:.8rem; color: var(--color-muted); margin-top:8px; display:inline-block;">{% if is_fr %}Retirer{% else %}Remove{% endif %}</a>
+                  <a href="{{ item.url_to_remove }}" data-cart-remove data-line-key="{{ item.key }}" style="font-size:.8rem; color: var(--color-muted); margin-top:8px; display:inline-block;">{% if is_fr %}Retirer{% else %}Remove{% endif %}</a>
                 </div>
                 <div class="cart-item__price">
                   {%- if item.original_line_price > item.final_line_price -%}
@@ -104,7 +99,14 @@
               </div>
             {% endfor %}
           </div>
-          <button type="submit" name="update" class="btn btn--ghost btn--sm" style="margin-top:16px;">{% if is_fr %}Mettre &agrave; jour le panier{% else %}Update cart{% endif %}</button>
+          {%- comment -%}
+            Bouton de repli, jamais affiche : chaque changement de quantite part
+            en direct via `/cart/change.js` (theme.js). Sans JavaScript, ou si
+            la requete echoue, c'est ce bouton qui sert de soumission implicite
+            au formulaire — d'ou le `tabindex="-1"` plutot qu'un `hidden`, qui
+            l'aurait retire de la soumission implicite dans certains navigateurs.
+          {%- endcomment -%}
+          <button type="submit" name="update" class="visually-hidden" tabindex="-1" aria-hidden="true">{% if is_fr %}Mettre &agrave; jour le panier{% else %}Update cart{% endif %}</button>
         </form>
 
         <div class="cart-crosssell">
@@ -128,14 +130,31 @@
                 {% break %}
               {% endif %}
               {% assign cross_sell_shown = cross_sell_shown | plus: 1 %}
+              {%- comment -%}
+                Nom court plutot que le titre complet de la fiche : sur une
+                carte de cette largeur, l'intitule long ("Antared DESK - 7-
+                Spectrum Red Light Therapy Panel") s'enroulait sur quatre
+                lignes et le bouton ADD atterrissait a une hauteur differente
+                d'une carte a l'autre. Meme procede que `main-product.liquid`
+                pour deriver un contenu depuis le handle.
+              {%- endcomment -%}
+              {%- assign cs_short_title = cs_product.title -%}
+              {%- case handle -%}
+                {%- when 'cytolight-desk' -%}{%- assign cs_short_title = 'Antared Desk' -%}
+                {%- when 'cytolight-cap' -%}{%- assign cs_short_title = 'Antared Cap' -%}
+                {%- when 'cytolight-mask' -%}{%- assign cs_short_title = 'Antared Mask' -%}
+                {%- when 'cytolight-foot' -%}{%- assign cs_short_title = 'Antared Foot' -%}
+                {%- when 'cytolight-knee' -%}{%- assign cs_short_title = 'Antared Knee' -%}
+                {%- when 'cytolight-pano-ultra' -%}{%- assign cs_short_title = 'Antared Pano Ultra' -%}
+              {%- endcase -%}
               <div class="cart-crosssell-card">
                 <a href="{{ cs_product.url }}" class="cart-crosssell-card__img">
                   {% if cs_product.featured_image != blank %}
-                    <img src="{{ cs_product.featured_image | image_url: width: 160 }}" alt="{{ cs_product.featured_image.alt | escape }}" width="64" height="64" loading="lazy">
+                    <img src="{{ cs_product.featured_image | image_url: width: 400 }}" alt="{{ cs_product.featured_image.alt | escape }}" width="400" height="400" loading="lazy">
                   {% endif %}
                 </a>
                 <div class="cart-crosssell-card__body">
-                  <a href="{{ cs_product.url }}" class="cart-crosssell-card__title">{{ cs_product.title }}</a>
+                  <a href="{{ cs_product.url }}" class="cart-crosssell-card__title" title="{{ cs_product.title | escape }}">{{ cs_short_title }}</a>
                   <p class="cart-crosssell-card__price">{{ cs_product.price | money }}</p>
                   {% form 'product', cs_product %}
                     <input type="hidden" name="id" value="{{ cs_product.selected_or_first_available_variant.id }}">
