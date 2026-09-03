@@ -1,0 +1,136 @@
+{%- comment -%}
+  Carte produit du catalogue (/collections/*), au visuel de la section
+  « Catalogue Antared » de l'accueil (cytolight-home.liquid, bloc .cy-range) :
+  media plein cadre, degrade sombre, nom court et repere de rayon en surimpression.
+
+  Le nom court, le rayon et la description ne sont repris que pour les huit
+  handles deja utilises par ce bloc sur l'accueil — copies verbatim, rien
+  d'invente. Un produit hors de cette liste retombe sur ses propres donnees
+  (product.title, product.featured_image), sans rayon ni description devines.
+
+  Usage: {% render 'catalogue-product-card', product: product %}
+{%- endcomment -%}
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign card_name = product.title
+  assign card_media_type = 'image'
+  assign card_media_src = product.featured_image | image_url: width: 900
+  assign card_media_alt = product.featured_image.alt | default: product.title
+  assign card_type_fr = blank
+  assign card_type_en = blank
+  assign card_desc_fr = blank
+  assign card_desc_en = blank
+
+  case product.handle
+    when 'cytolight-desk'
+      assign card_name = 'Antared DESK'
+      assign card_media_src = 'cytolight-desk-luxury.jpg' | file_url
+      assign card_type_fr = 'Personnel &middot; Bureau'
+      assign card_type_en = 'Personal &middot; Desktop'
+      assign card_desc_fr = 'Le panneau compact &agrave; 7 spectres pour votre routine quotidienne.'
+      assign card_desc_en = 'The compact 7-spectrum panel for your daily routine.'
+    when 'cytolight-cap'
+      assign card_name = 'Antared Redlight Cap'
+      assign card_media_type = 'video'
+      assign card_media_src = 'https://cdn.shopify.com/videos/c/o/v/6a9ef77bf5f84b87aa84e0f43685a21b.mp4'
+      assign card_type_fr = 'Cheveux &middot; Mains libres'
+      assign card_type_en = 'Hair &middot; Hands-free'
+      assign card_desc_fr = 'Routine cuir chevelu simple et facile &agrave; garder.'
+      assign card_desc_en = 'A simple scalp routine that is easy to keep.'
+    when 'cytolight-mask'
+      assign card_name = 'Antared Mask'
+      assign card_media_type = 'video'
+      assign card_media_src = 'https://cdn.shopify.com/videos/c/o/v/6e729ca4196441df8bb75480e0ddb070.mp4'
+      assign card_type_fr = 'Visage &middot; Beaut&eacute;'
+      assign card_type_en = 'Face &middot; Beauty'
+      assign card_desc_fr = 'Masque LED souple pour une routine visage courte.'
+      assign card_desc_en = 'A flexible LED mask for a short face routine.'
+    when 'cytolight-foot'
+      assign card_name = 'Antared Foot'
+      assign card_type_fr = 'Pieds &middot; R&eacute;cup&eacute;ration'
+      assign card_type_en = 'Feet &middot; Recovery'
+      assign card_desc_fr = 'Pour les pieds fatigu&eacute;s et les routines &agrave; domicile.'
+      assign card_desc_en = 'For tired feet and simple at-home routines.'
+      if product.featured_image == blank
+        assign card_media_src = 'cytolight-desk-luxury.jpg' | file_url
+        assign card_media_alt = 'Antared Foot Therapy'
+      endif
+    when 'cytolight-knee'
+      assign card_name = 'Antared Knee'
+      assign card_media_type = 'video'
+      assign card_media_src = 'https://cdn.shopify.com/videos/c/o/v/f85a0fc3a2d343cda06f2adf6c64775a.mp4'
+      assign card_type_fr = 'Genou &middot; R&eacute;cup&eacute;ration'
+      assign card_type_en = 'Knee &middot; Recovery'
+      assign card_desc_fr = "Pour l'articulation du genou et le confort &agrave; domicile."
+      assign card_desc_en = 'For the knee joint and simple at-home comfort.'
+    when 'cytolight-sauna-dome'
+      assign card_name = 'Antared Sauna Dome'
+      assign card_media_type = 'video'
+      assign card_media_src = 'https://cdn.shopify.com/videos/c/o/v/119a59c70e50438b858f9359d2d7529e.mp4'
+      assign card_type_fr = 'Corps entier &middot; R&eacute;cup&eacute;ration'
+      assign card_type_en = 'Full Body &middot; Recovery'
+      assign card_desc_fr = 'Lumi&egrave;re, chaleur et PEMF pour une session compl&egrave;te.'
+      assign card_desc_en = 'Light, heat, and PEMF for a complete session.'
+    when 'cytolight-pano-ultra', 'antared-pano-ultra'
+      # Ce produit vit sous 'antared-pano-ultra' sur au moins une boutique
+      # (le handle 'cytolight-pano-ultra' de cytolight-home.liquid y renvoie
+      # vers all_products[...] == blank). Les deux sont acceptes ici tant que
+      # ce n'est pas corrige a la source ; voir la tache signalee a ce sujet.
+      assign card_name = 'Antared PANO ULTRA'
+      assign card_media_src = 'cytolight-pano-ultra-luxury.jpg' | file_url
+      assign card_type_fr = 'Performance &middot; Professionnel'
+      assign card_type_en = 'Performance &middot; Professional'
+      assign card_desc_fr = 'Panneau grand format pour routines corps entier.'
+      assign card_desc_en = 'Large-format panel for full-body routines.'
+  endcase
+
+  assign card_rating = product.metafields.reviews.rating.value.rating
+  assign card_count = product.metafields.reviews.rating_count.value | plus: 0
+-%}
+<a class="catalogue-card" href="{{ product.url | within: collection }}">
+  <span class="catalogue-card__media">
+    {%- if card_media_type == 'video' -%}
+      <video src="{{ card_media_src }}" autoplay loop muted playsinline aria-hidden="true"></video>
+    {%- elsif card_media_src != blank -%}
+      <img src="{{ card_media_src }}" alt="{{ card_media_alt | escape }}" width="900" height="1100" loading="lazy">
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </span>
+  {%- if product.compare_at_price > product.price -%}
+    <span class="catalogue-card__badge">{% if is_fr %}&Eacute;conomisez{% else %}Save{% endif %} {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%</span>
+  {%- endif -%}
+  <span class="catalogue-card__content">
+    {%- assign card_type = card_type_en -%}
+    {%- if is_fr -%}{%- assign card_type = card_type_fr -%}{%- endif -%}
+    {%- if card_type != blank -%}<span class="catalogue-card__type">{{ card_type }}</span>{%- endif -%}
+    <h3>{{ card_name }}</h3>
+    {%- assign card_desc = card_desc_en -%}
+    {%- if is_fr -%}{%- assign card_desc = card_desc_fr -%}{%- endif -%}
+    {%- if card_desc != blank -%}<span class="catalogue-card__desc">{{ card_desc }}</span>{%- endif -%}
+    {%- if card_rating and card_count > 0 -%}
+      <span class="catalogue-card__rating">
+        <span aria-hidden="true">
+          {%- assign card_rounded = card_rating | round -%}
+          {%- for i in (1..5) -%}
+            {%- if i <= card_rounded %}&#9733;{% else %}&#9734;{% endif -%}
+          {%- endfor -%}
+        </span>
+        {{ card_rating }} ({{ card_count }})
+      </span>
+    {%- endif -%}
+    <span class="catalogue-card__meta">
+      <span class="catalogue-card__price">
+        {%- if product.compare_at_price > product.price -%}
+          <del>{{ product.compare_at_price | money }}</del>
+        {%- endif -%}
+        {{ product.price | money }}
+      </span>
+      <span class="catalogue-card__link">{% if is_fr %}Acheter{% else %}Shop now{% endif %} <span aria-hidden="true">&rarr;</span></span>
+    </span>
+  </span>
+</a>
