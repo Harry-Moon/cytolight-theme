@@ -190,20 +190,23 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  * s'annulant image par image que les deux laissent la page immobile.
  */
 /*
- * z-index: 70, pas 50. #shopify-section-header etablit son propre contexte
+ * z-index: 90, pas 50. #shopify-section-header etablit son propre contexte
  * d'empilement (position: sticky + z-index) : tout ce qu'il contient, y
  * compris le panneau de sous-menu au survol (.site-header__panel, z-index
  * 60 en interne), reste plafonne au rang de cette enveloppe face a un
  * element hors du header. La popin d'achat collante des fiches produit
  * (.cl-sticky-atc, sections/main-product.liquid) est a z-index 60 : sous 50,
  * le panneau de sous-menu passait donc sous elle au survol, quel que soit
- * son propre z-index interne. 70 remet tout le header, sous-menu compris,
- * au-dessus.
+ * son propre z-index interne. `isolation: isolate` force le contexte
+ * d'empilement independamment du z-index (utile si ce dernier venait a
+ * etre neutralise ailleurs), et la marge posee au-dessus de 60 laisse de
+ * la place pour un futur element intercale sans repasser sous le header.
  */
 #shopify-section-header {
   position: sticky;
   top: 0;
-  z-index: 70;
+  isolation: isolate;
+  z-index: 90;
   margin-bottom: 0;
 }
 #shopify-section-header.is-nav-hidden {
