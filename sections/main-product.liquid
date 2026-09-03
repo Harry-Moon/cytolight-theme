@@ -442,6 +442,24 @@
 .cl-faq-cta p{font-size:15px;color:#555;margin:0 0 16px;}
 .cl-faq-cta a{display:inline-flex;align-items:center;gap:8px;background:#0d0d0d;color:#fff;font-size:14px;font-weight:700;border-radius:10px;padding:12px 24px;text-decoration:none;transition:background .2s;}
 @media (hover: hover) and (pointer: fine) { .cl-faq-cta a:hover{background:#333;} }
+/* ===== COMPARISON ===== */
+.cl-compare-section{max-width:1400px;margin:0 auto;padding:56px 40px 72px;border-top:1px solid #f0f0f0;}
+.cl-compare-header{text-align:center;margin-bottom:32px;}
+.cl-compare-header__eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#d20d2f;margin:0 0 10px;}
+.cl-compare-header__title{font-size:32px;font-weight:900;color:#0d0d0d;margin:0 0 10px;letter-spacing:-.02em;}
+.cl-compare-header__sub{font-size:15px;color:#888;margin:0 auto;max-width:640px;line-height:1.6;}
+.cl-compare-table-wrap{overflow-x:auto;border-radius:16px;border:1px solid #eee;-webkit-overflow-scrolling:touch;}
+.cl-compare-table{width:100%;min-width:820px;border-collapse:collapse;background:#fff;}
+.cl-compare-table th,.cl-compare-table td{padding:16px 18px;border-bottom:1px solid #f0f0f0;text-align:left;font-size:13.5px;color:#444;vertical-align:top;}
+.cl-compare-table thead th{background:#0d0d0d;color:#fff;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;}
+.cl-compare-table thead th.cl-compare-current{background:#d20d2f;}
+.cl-compare-table tbody th{font-weight:800;color:#0d0d0d;white-space:nowrap;background:#fafafa;font-size:12.5px;}
+.cl-compare-table tbody tr:last-child th,.cl-compare-table tbody tr:last-child td{border-bottom:none;}
+.cl-compare-table td.cl-compare-current{background:#fff5f5;box-shadow:inset 1px 0 0 rgba(210,13,47,.18),inset -1px 0 0 rgba(210,13,47,.18);}
+.cl-compare-badge{display:block;font-size:9.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#ff9d9d;margin-bottom:2px;}
+.cl-compare-link{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#0d0d0d;color:#fff;font-size:12px;font-weight:700;text-decoration:none;transition:background .2s;white-space:nowrap;}
+@media (hover: hover) and (pointer: fine) { .cl-compare-link:hover{background:#d20d2f;} }
+.cl-compare-current-tag{display:inline-flex;align-items:center;padding:8px 14px;border-radius:999px;background:#fff;border:1.5px solid #d20d2f;color:#d20d2f;font-size:12px;font-weight:800;white-space:nowrap;}
 /* ===== RESPONSIVE ===== */
 @media(max-width:900px){
   .cl-launch-hero{min-height:620px;}
@@ -534,6 +552,8 @@
   .cl-faq-section{padding:40px 16px;}
   .cl-faq-grid{grid-template-columns:1fr;}
   .cl-faq-header__title{font-size:24px;}
+  .cl-compare-section{padding:40px 16px;}
+  .cl-compare-header__title{font-size:24px;}
 }
 @media (max-width:420px){
 }
@@ -1763,6 +1783,160 @@
     </div>
   </div>
   <!-- /FAQ -->
+
+  <!-- ===== COMPARISON SECTION ===== -->
+  {%- comment -%}
+    Compare la fiche courante au reste de la gamme. La liste de base suit la
+    decision du 2026-09-03 de masquer Knee et Foot du catalogue
+    (sections/main-collection-product-grid.liquid) : elles n'apparaissent ici
+    que si c'est la fiche consultee, pour ne jamais laisser le produit courant
+    absent de son propre tableau.
+  {%- endcomment -%}
+  {%- assign compare_handles = 'antared-desk-red-light-therapy-panel,cap,mask,antared-sauna-dome-infrared-red-light-pemf,pano-plus,antared-pano-ultra' | split: ',' -%}
+  {%- unless compare_handles contains product.handle -%}
+    {%- if is_foot -%}
+      {%- assign extra_compare_handle = 'cytolight-foot' | split: ',' -%}
+      {%- assign compare_handles = compare_handles | concat: extra_compare_handle -%}
+    {%- elsif is_knee -%}
+      {%- assign extra_compare_handle = 'cytolight-knee' | split: ',' -%}
+      {%- assign compare_handles = compare_handles | concat: extra_compare_handle -%}
+    {%- endif -%}
+  {%- endunless -%}
+
+  {%- assign cl_cmp_zone = '' -%}
+  {%- assign cl_cmp_waves = '' -%}
+  {%- assign cl_cmp_format = '' -%}
+  {%- assign cl_cmp_price = '' -%}
+  {%- assign cl_cmp_action = '' -%}
+
+  <div class='cl-compare-section' id='cl-compare'>
+    <div class='cl-compare-header'>
+      <p class='cl-compare-header__eyebrow'>{% if is_fr %}Comparer la gamme{% else %}Compare the range{% endif %}</p>
+      <h2 class='cl-compare-header__title'>{% if is_fr %}Quel Antared pour vous ?{% else %}Which Antared is right for you?{% endif %}</h2>
+      <p class='cl-compare-header__sub'>{% if is_fr %}Chaque appareil Antared est pens&eacute; pour une zone et un moment pr&eacute;cis. Comparez le format, les longueurs d'onde et le prix avant de choisir.{% else %}Every Antared device is built around one area and one moment. Compare format, wavelengths, and price before you choose.{% endif %}</p>
+    </div>
+
+    <div class='cl-compare-table-wrap'>
+      <table class='cl-compare-table'>
+        <thead>
+          <tr>
+            <th></th>
+            {%- for h in compare_handles -%}
+              {%- assign cmp_product = all_products[h] -%}
+              {%- if cmp_product != blank -%}
+                {%- assign cmp_current = false -%}
+                {%- if h == product.handle -%}{%- assign cmp_current = true -%}{%- endif -%}
+                {%- assign cmp_class = '' -%}
+                {%- if cmp_current -%}{%- assign cmp_class = 'cl-compare-current' -%}{%- endif -%}
+
+                {%- case h -%}
+                  {%- when 'antared-desk-red-light-therapy-panel' -%}
+                    {%- assign cmp_name = 'DESK' -%}
+                    {%- assign cmp_zone_fr = 'Bureau, chambre' -%}
+                    {%- assign cmp_zone_en = 'Desk, bedroom' -%}
+                    {%- assign cmp_waves_fr = '7 spectres &middot; 590&#8211;940&nbsp;nm' -%}
+                    {%- assign cmp_waves_en = '7 spectra &middot; 590&#8211;940nm' -%}
+                    {%- assign cmp_format_fr = 'Panneau de bureau, support 360&deg;' -%}
+                    {%- assign cmp_format_en = 'Desk panel, 360&deg; stand' -%}
+                  {%- when 'cap' -%}
+                    {%- assign cmp_name = 'CAP' -%}
+                    {%- assign cmp_zone_fr = 'Cuir chevelu' -%}
+                    {%- assign cmp_zone_en = 'Scalp' -%}
+                    {%- assign cmp_waves_fr = '660 &middot; 850&nbsp;nm (150 LED)' -%}
+                    {%- assign cmp_waves_en = '660 &amp; 850nm (150 LEDs)' -%}
+                    {%- assign cmp_format_fr = 'Casquette, mains libres' -%}
+                    {%- assign cmp_format_en = 'Wearable cap, hands-free' -%}
+                  {%- when 'mask' -%}
+                    {%- assign cmp_name = 'MASK' -%}
+                    {%- assign cmp_zone_fr = 'Visage et cou' -%}
+                    {%- assign cmp_zone_en = 'Face and neck' -%}
+                    {%- assign cmp_waves_fr = '460 &middot; 630 &middot; 850&nbsp;nm (288 LED)' -%}
+                    {%- assign cmp_waves_en = '460, 630 &amp; 850nm (288 LEDs)' -%}
+                    {%- assign cmp_format_fr = 'Masque silicone, sans fil' -%}
+                    {%- assign cmp_format_en = 'Flexible silicone mask, cordless' -%}
+                  {%- when 'antared-sauna-dome-infrared-red-light-pemf' -%}
+                    {%- assign cmp_name = 'SAUNA DOME' -%}
+                    {%- assign cmp_zone_fr = 'Corps entier, &agrave; la maison' -%}
+                    {%- assign cmp_zone_en = 'Full body, at home' -%}
+                    {%- assign cmp_waves_fr = '660 &middot; 850&nbsp;nm (1&nbsp;120 LED) + PEMF' -%}
+                    {%- assign cmp_waves_en = '660 &amp; 850nm (1,120 LEDs) + PEMF' -%}
+                    {%- assign cmp_format_fr = 'D&ocirc;me sauna infrarouge' -%}
+                    {%- assign cmp_format_en = 'Infrared sauna dome' -%}
+                  {%- when 'pano-plus' -%}
+                    {%- assign cmp_name = 'PANO PLUS' -%}
+                    {%- assign cmp_zone_fr = 'Rituel quotidien &agrave; la maison' -%}
+                    {%- assign cmp_zone_en = 'Everyday at-home ritual' -%}
+                    {%- assign cmp_waves_fr = '7 spectres &middot; 590&#8211;940&nbsp;nm' -%}
+                    {%- assign cmp_waves_en = '7 spectra &middot; 590&#8211;940nm' -%}
+                    {%- assign cmp_format_fr = 'Panneau 7 spectres' -%}
+                    {%- assign cmp_format_en = '7-spectrum panel' -%}
+                  {%- when 'antared-pano-ultra' -%}
+                    {%- assign cmp_name = 'PANO ULTRA' -%}
+                    {%- assign cmp_zone_fr = 'Corps entier, studios' -%}
+                    {%- assign cmp_zone_en = 'Full body, studios' -%}
+                    {%- assign cmp_waves_fr = '7 spectres &middot; 590&#8211;940&nbsp;nm' -%}
+                    {%- assign cmp_waves_en = '7 spectra &middot; 590&#8211;940nm' -%}
+                    {%- assign cmp_format_fr = 'Panneau vertical grand format' -%}
+                    {%- assign cmp_format_en = 'Large vertical panel' -%}
+                  {%- when 'cytolight-foot' -%}
+                    {%- assign cmp_name = 'FOOT' -%}
+                    {%- assign cmp_zone_fr = 'Pied, talon, cheville' -%}
+                    {%- assign cmp_zone_en = 'Foot, heel, ankle' -%}
+                    {%- assign cmp_waves_fr = '660 &middot; 850&nbsp;nm' -%}
+                    {%- assign cmp_waves_en = '660 &amp; 850nm' -%}
+                    {%- assign cmp_format_fr = 'Botte enveloppante' -%}
+                    {%- assign cmp_format_en = 'Wraparound boot' -%}
+                  {%- when 'cytolight-knee' -%}
+                    {%- assign cmp_name = 'KNEE' -%}
+                    {%- assign cmp_zone_fr = 'Articulation du genou' -%}
+                    {%- assign cmp_zone_en = 'Knee joint' -%}
+                    {%- assign cmp_waves_fr = '660 &middot; 850&nbsp;nm (60 LED)' -%}
+                    {%- assign cmp_waves_en = '660 &amp; 850nm (60 LEDs)' -%}
+                    {%- assign cmp_format_fr = 'Genouill&egrave;re souple' -%}
+                    {%- assign cmp_format_en = 'Soft wraparound sleeve' -%}
+                {%- endcase -%}
+
+                {%- assign cmp_zone = cmp_zone_en -%}
+                {%- assign cmp_waves = cmp_waves_en -%}
+                {%- assign cmp_format = cmp_format_en -%}
+                {%- if is_fr -%}
+                  {%- assign cmp_zone = cmp_zone_fr -%}
+                  {%- assign cmp_waves = cmp_waves_fr -%}
+                  {%- assign cmp_format = cmp_format_fr -%}
+                {%- endif -%}
+                {%- assign cmp_price = cmp_product.price | money -%}
+
+                <th class="{{ cmp_class }}">{% if cmp_current %}<span class="cl-compare-badge">{% if is_fr %}Vous consultez{% else %}You are here{% endif %}</span>{% endif %}{{ cmp_name }}</th>
+                {%- assign cl_cmp_zone = cl_cmp_zone | append: '<td class="' | append: cmp_class | append: '">' | append: cmp_zone | append: '</td>' -%}
+                {%- assign cl_cmp_waves = cl_cmp_waves | append: '<td class="' | append: cmp_class | append: '">' | append: cmp_waves | append: '</td>' -%}
+                {%- assign cl_cmp_format = cl_cmp_format | append: '<td class="' | append: cmp_class | append: '">' | append: cmp_format | append: '</td>' -%}
+                {%- assign cl_cmp_price = cl_cmp_price | append: '<td class="' | append: cmp_class | append: '">' | append: cmp_price | append: '</td>' -%}
+
+                {%- if cmp_current -%}
+                  {%- capture cmp_action_cell -%}
+                    <td class="{{ cmp_class }}"><span class="cl-compare-current-tag">{% if is_fr %}Vous &ecirc;tes ici{% else %}You are here{% endif %}</span></td>
+                  {%- endcapture -%}
+                {%- else -%}
+                  {%- capture cmp_action_cell -%}
+                    <td class="{{ cmp_class }}"><a class="cl-compare-link" href="{{ cmp_product.url }}">{% if is_fr %}Voir la fiche{% else %}View product{% endif %} <span aria-hidden="true">&rarr;</span></a></td>
+                  {%- endcapture -%}
+                {%- endif -%}
+                {%- assign cl_cmp_action = cl_cmp_action | append: cmp_action_cell -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th>{% if is_fr %}Id&eacute;al pour{% else %}Best for{% endif %}</th>{{ cl_cmp_zone }}</tr>
+          <tr><th>{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}</th>{{ cl_cmp_waves }}</tr>
+          <tr><th>Format</th>{{ cl_cmp_format }}</tr>
+          <tr><th>{% if is_fr %}Prix{% else %}Price{% endif %}</th>{{ cl_cmp_price }}</tr>
+          <tr><th></th>{{ cl_cmp_action }}</tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- /COMPARISON SECTION -->
 
 </div>
 
