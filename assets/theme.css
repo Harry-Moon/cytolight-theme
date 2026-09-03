@@ -1174,7 +1174,7 @@ h1, h2, h3, h4,
   max-width: 920px;
   font-size: clamp(3.5rem, 8.2vw, 7.4rem);
   line-height: .88;
-  font-weight: 820;
+  font-weight: 400;
   letter-spacing: 0;
   text-wrap: balance;
   text-shadow: 0 18px 70px rgba(0,0,0,.48);
@@ -1197,10 +1197,33 @@ h1, h2, h3, h4,
 .collection-banner__tease div { min-height: 126px; padding: 24px; background: rgba(255,255,255,.07); backdrop-filter: blur(16px); }
 .collection-banner__tease strong { display: block; color: #fff; font-size: clamp(1.35rem, 2.4vw, 2rem); line-height: 1.05; }
 .collection-banner__tease span { display: block; max-width: 260px; margin-top: 12px; color: rgba(255,255,255,.7); font-size: .9rem; line-height: 1.5; }
-.collection-products { padding-top: 34px; }
-.collection-teaser { margin-top: -46px; position: relative; z-index: 2; padding: 26px; border: 1px solid rgba(0,0,0,.08); border-radius: var(--radius-md); background: #fff; box-shadow: 0 26px 70px rgba(0,0,0,.12); }
-.collection-teaser .eyebrow { color: var(--color-promo); }
-.collection-teaser__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 18px; background: rgba(0,0,0,.1); border: 1px solid rgba(0,0,0,.08); }
+/*
+ * Le corps de /collections/* reprend le canevas sombre de la section
+ * « Catalogue Antared » de l'accueil (cytolight-home.liquid, bloc .cy-range) :
+ * meme degrade radial rouge sur #080808, memes cartes plein cadre. La page
+ * n'est donc plus un bandeau sombre (.collection-banner) suivi d'une grille
+ * blanche : c'est un seul plan sombre continu, du hero jusqu'au bas de grille.
+ * .collection-products garde le `.container` centre a l'interieur.
+ */
+.collection-catalogue {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 76% 22%, rgba(210,13,47,.2), transparent 34%),
+    radial-gradient(circle at 16% 92%, rgba(255,60,82,.1), transparent 30%),
+    #080808;
+}
+.collection-catalogue::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 24%, rgba(0,0,0,.32));
+}
+.collection-catalogue .collection-products { position: relative; z-index: 1; padding-top: 34px; }
+.collection-teaser { margin-top: -46px; position: relative; z-index: 2; padding: 26px; border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius-md); background: rgba(17,17,17,.72); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 26px 70px rgba(0,0,0,.35); }
+.collection-teaser .eyebrow { color: #ff3f58; }
+.collection-teaser__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 18px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.12); }
 .collection-teaser__item {
   position: relative;
   min-height: 210px;
@@ -1237,10 +1260,69 @@ h1, h2, h3, h4,
 .collection-teaser__item--body::before { background-position: 64% center; }
 .collection-teaser__grid strong { display: block; font-size: 1.35rem; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,.35); }
 .collection-teaser__grid span { display: block; max-width: 280px; margin-top: 12px; color: rgba(255,255,255,.76); line-height: 1.55; text-shadow: 0 2px 18px rgba(0,0,0,.35); }
-.collection-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 30px 0 20px; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid rgba(0,0,0,.08); }
-.collection-toolbar span { font-weight: 650; }
-.collection-toolbar select { padding: 11px 38px 11px 16px; border-radius: 999px; border: 1px solid rgba(0,0,0,.16); background: #fff; font-size: .9rem; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='%23000'%3E%3Cpath d='M6 8L2 4h8z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 12px; }
-.collection-grid-products { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; padding: 34px 0 90px; }
+.collection-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 30px 0 20px; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid rgba(255,255,255,.14); }
+.collection-toolbar span { font-weight: 650; color: rgba(255,255,255,.86); }
+.collection-toolbar select { padding: 11px 38px 11px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.22); background: #111; color: #fff; font-size: .9rem; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='%23fff'%3E%3Cpath d='M6 8L2 4h8z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; background-size: 12px; }
+.collection-grid-products { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; padding: 34px 0 90px; }
+
+/*
+ * Carte catalogue : meme mecanique que .cy-product sur l'accueil (media en
+ * fond de carte, degrade sombre, contenu en surimpression bas de carte). Les
+ * classes sont dupliquees plutot que reutilisees telles quelles : .cy-product
+ * vit dans cytolight-cinematic.css, charge uniquement par l'accueil, et ses
+ * regles dependent de variables (--cy-ease, --cy-red) declarees sous .cy-home.
+ * Les reprendre ici sous /collections/* sans ce parent les aurait laissees
+ * indefinies.
+ */
+.catalogue-card {
+  position: relative;
+  display: block;
+  min-height: 460px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 6px;
+  background: #111;
+  color: #fff;
+  box-shadow: 0 26px 66px rgba(0,0,0,.16);
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s cubic-bezier(.2,.8,.2,1);
+}
+.catalogue-card:hover { transform: translateY(-4px); box-shadow: 0 34px 88px rgba(210,10,45,.22); }
+.catalogue-card__media { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: hidden; background: #111; }
+.catalogue-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 82% 12%, rgba(210,10,45,.28), transparent 34%),
+    linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(9,0,2,.24) 38%, rgba(5,5,5,.92) 100%);
+}
+.catalogue-card__media img, .catalogue-card__media video { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(1.08) saturate(1.08) contrast(1.04); transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+.catalogue-card:hover .catalogue-card__media img, .catalogue-card:hover .catalogue-card__media video { transform: scale(1.045); }
+.catalogue-card__badge { position: absolute; top: 14px; left: 14px; z-index: 2; background: var(--color-promo); color: #fff; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 6px 10px; border-radius: 4px; }
+.catalogue-card__content { position: absolute; inset: auto 0 0; z-index: 1; display: block; padding: 26px 24px; }
+.catalogue-card__type { display: block; color: #ff4058; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.catalogue-card__content h3 {
+  margin: 14px 0 0; color: #fff; font-family: "Instrument Serif", Georgia, serif;
+  font-size: 27px; line-height: 1.06; font-weight: 400; letter-spacing: -.012em; text-shadow: 0 12px 34px rgba(0,0,0,.45);
+}
+.catalogue-card__desc { display: block; margin: 10px 0 0; color: rgba(255,255,255,.78); font-size: 13px; line-height: 1.55; text-shadow: 0 10px 28px rgba(0,0,0,.55); }
+.catalogue-card__rating { display: flex; align-items: center; gap: 6px; margin-top: 8px; color: rgba(255,255,255,.7); font-size: 12px; }
+.catalogue-card__rating span[aria-hidden] { color: var(--color-rating); }
+.catalogue-card__meta { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.18); }
+.catalogue-card__price { font-size: 15px; font-weight: 650; }
+.catalogue-card__price del { margin-right: 6px; color: rgba(255,255,255,.5); font-weight: 400; }
+.catalogue-card__link { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-size: 13px; font-weight: 650; }
+.catalogue-card__link > span[aria-hidden] { display: inline-block; transition: transform .34s cubic-bezier(.2,.8,.2,1); }
+@media (prefers-reduced-motion: no-preference) {
+  .catalogue-card:hover .catalogue-card__link > span[aria-hidden] { transform: translateX(7px); }
+}
+
+/* Pagination Shopify par defaut (`default_pagination`), recoloree pour le fond sombre. */
+.collection-catalogue .pagination { display: inline-flex; align-items: center; gap: 10px; font-size: .9rem; }
+.collection-catalogue .pagination a { color: rgba(255,255,255,.78); }
+.collection-catalogue .pagination a:hover { color: #fff; }
+.collection-catalogue .pagination .page.current span { color: var(--cta-red); font-weight: 700; }
+
 @media (max-width: 900px) {
   .collection-banner__inner { grid-template-columns: 1fr; align-items: start; }
   .collection-banner__tease { grid-template-columns: repeat(3, 1fr); }
@@ -1252,7 +1334,7 @@ h1, h2, h3, h4,
   .collection-banner__actions { flex-direction: column; align-items: stretch; }
   .collection-banner__actions .btn { justify-content: center; width: 100%; }
   .collection-banner__tease { grid-template-columns: 1fr; }
-  .collection-products { padding-top: 24px; }
+  .collection-catalogue .collection-products { padding-top: 24px; }
   .collection-teaser { margin-top: -34px; padding: 20px; }
   .collection-grid-products { grid-template-columns: 1fr; }
 }
