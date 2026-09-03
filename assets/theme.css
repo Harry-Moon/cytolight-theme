@@ -1444,7 +1444,7 @@ h1, h2, h3, h4,
 .cart-shipping-note { margin: -4px 0 24px; font-size: .88rem; color: var(--color-muted); }
 .cart-shipping-note--done { color: var(--color-accent-deep); font-weight: 600; }
 .cart-crosssell { margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(0,0,0,.08); }
-.cart-crosssell h2 { font-size: 1.1rem; margin: 0 0 16px; }
+.cart-crosssell h2 { font-family: "Instrument Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 1.3rem; font-weight: 550; letter-spacing: 0; margin: 0 0 16px; }
 .cart-crosssell__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 /* Carte verticale — image, puis un titre sur une seule ligne, le prix, et le
    bouton ADD toujours colle en bas via `margin-top: auto` sur le formulaire :
