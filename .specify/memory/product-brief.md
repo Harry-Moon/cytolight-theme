@@ -84,9 +84,9 @@ l'éduquer d'abord — ce qui change tout le rôle de l'espace Learn.
 
 ## Concurrence
 
-Le marché de la luminothérapie rouge croît fortement (~10 %/an) mais reste dominé par un modèle DTC mono-marque, majoritairement américain (Joovv, Mito Red Light, Bestqool, Lumebox — premium à budget) et canadien (Rouge). BON CHARGE occupe le créneau lifestyle généraliste. Aucun de ces acteurs n'opère de stock UE, ce qui les expose à la TVA dès le premier euro et aux droits de douane côté acheteur français. Novaa(Lab), malgré un storytelling fondateur français, opère entièrement en anglais depuis un entrepôt en Utah — aucun vrai service au marché francophone.
+Le marché de la luminothérapie rouge croît fortement (~10 %/an) mais reste dominé par un modèle DTC mono-marque, très majoritairement nord-américain, du premium au budget, avec un acteur généraliste positionné lifestyle. Aucun de ces acteurs n'opère de stock UE, ce qui les expose à la TVA dès le premier euro et aux droits de douane côté acheteur français. Certains discours fondateurs se présentent comme français tout en opérant entièrement en anglais depuis un entrepôt hors UE — aucun vrai service au marché francophone.
 
-Le marché francophone est structurellement pauvre, avec peu d'acteur, comme CytoLED (Pays-Bas, fondée 2019). Des prix en EUR (299–1 699 €) et une clientèle française documentée depuis 2022-2023 (influenceurs, avis, reventes d'occasion). Son positionnement — rigueur scientifique, mesures d'irradiance vérifiées, anti-marketing mensonger — est celui que Cytolight viserait naturellement.
+Le marché francophone est structurellement pauvre, avec peu d'acteurs établis — l'un d'eux basé aux Pays-Bas et fondé en 2019, avec des prix en EUR (299–1 699 €) et une clientèle française documentée depuis 2022-2023 (influenceurs, avis, reventes d'occasion). Son positionnement — rigueur scientifique, mesures d'irradiance vérifiées, anti-marketing mensonger — est celui qu'Antared viserait naturellement.
 
 Axes de différenciation pour un lancement à zéro :
 
@@ -97,17 +97,15 @@ Positionnement prix « smart-value » entre premium et budget
 Garantie légale FR (2 ans) et rétractation (14 j) comme réassurance native
 Canal B2B via l'écosystème Pareto Physio (kinés, spas, salles de sport)
 
-**Référence explicite dans le code** : `assets/theme.css` porte le commentaire
-`BON CHARGE-Inspired Shopify Theme · Warm wellness-luxe palette`. La direction artistique
-actuelle est un dérivé assumé de BON CHARGE. (à modifier dans le futur)
+**Référence dans le code, retirée** : `assets/theme.css` portait un commentaire nommant un
+concurrent comme source d'inspiration de la palette. Retiré le 2026-09-03 — la direction
+artistique est documentée ci-dessous, sans référence à un tiers nommé.
 
-Concurrents suivis, et sur quel axe on les bat.
-
-Repères du secteur, à confirmer ou corriger : Joovv (référence premium US, discours
-scientifique, noir et rouge), BON CHARGE (lifestyle wellness, crème et chaleureux, forte
-présence Instagram), Mito Red Light, Rouge, Bestqool, Lumebox, Novaa. Sur le marché
-francophone, l'offre est nettement moins structurée — c'est probablement là que se trouve
-l'espace.
+Repères du secteur, à confirmer ou corriger : un acteur premium nord-américain au discours
+scientifique, en noir et rouge ; un acteur généraliste positionné lifestyle, crème et chaleureux,
+à forte présence Instagram ; plusieurs acteurs premium-à-budget nord-américains ; un acteur
+canadien. Sur le marché francophone, l'offre est nettement moins structurée — c'est probablement
+là que se trouve l'espace.
 
 ## Direction artistique
 
@@ -125,10 +123,11 @@ C'est la trajectoire naturelle des derniers commits (`feat/universal-glow-effect
 | `--color-background-soft` | `#faede3` | Fond alterné |
 | `--color-foreground` | `#171110` | Texte et fonds sombres |
 | `--color-muted` | `#7a6f66` | Texte secondaire |
-| `--color-accent` | `#c7996e` | Caramel — accent chaud |
+| `--color-accent` | `#c7996e` | Ambre — 3ᵉ couleur assumée (survol de certains liens du header, badge panier), pas un accent principal |
 | `--color-accent-soft` | `#ebdbcb` | Fond d'accent |
-| `--color-accent-deep` | `#644839` | Accent appuyé |
+| `--color-accent-deep` | `#a80a26` | Rouge d'accent — survol/état actif du header, prix remisés du panier (corrigé le 2026-09-03 : valait `#644839`, un brun jamais voulu par le code qui l'entoure — chaque repli CSS `var(--color-accent-deep, #a80a26)` du thème visait déjà cette valeur) |
 | `--color-promo` | `#D81126` | Rouge — promotion, et désormais le glow signature |
+| `--cta-red` (`assets/theme.css`) | `#d20d2f` | Le rouge de marque — CTA, prix, alertes. Unifié le 2026-09-03 sur la fiche produit, qui portait `#c8102e` en dur. |
 
 **Typographie** : Instrument Serif (titres, 400) + Instrument Sans (corps, 400–700),
 auto-hébergées en woff2 sous-ensemble latin (64 Ko), déclarées dans `layout/theme.liquid`.

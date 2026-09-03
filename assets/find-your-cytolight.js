@@ -15,12 +15,10 @@
   const resultStepIndex = steps.findIndex((s) => s.dataset.fycKind === 'result');
   const PRIORITY = [
     'cytolight-desk',
-    'cytolight-pano-ultra',
+    'antared-pano-ultra',
     'cytolight-sauna-dome',
     'cytolight-cap',
-    'cytolight-mask',
-    'cytolight-knee',
-    'cytolight-foot'
+    'cytolight-mask'
   ];
 
   let current = 0;

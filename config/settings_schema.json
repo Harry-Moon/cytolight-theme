@@ -26,7 +26,7 @@
       { "type": "header", "content": "Accents" },
       { "type": "color", "id": "color_accent", "label": "Accent (caramel)", "default": "#c7996e" },
       { "type": "color", "id": "color_accent_soft", "label": "Accent soft", "default": "#ebdbcb" },
-      { "type": "color", "id": "color_accent_deep", "label": "Accent deep", "default": "#644839" },
+      { "type": "color", "id": "color_accent_deep", "label": "Accent deep", "default": "#a80a26" },
       { "type": "color", "id": "color_promo", "label": "Promo / sale red", "default": "#D81126" }
     ]
   },

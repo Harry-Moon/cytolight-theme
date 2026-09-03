@@ -111,11 +111,6 @@
 {{ 'header-highlight.css' | asset_url | stylesheet_tag }}
 
 <header class="site-header">
-  <div class="site-header__proof" aria-label="{% if is_fr %}Avantages boutique{% else %}Store benefits{% endif %}">
-    <span>{% if is_fr %}Essai 14 j{% else %}14-day trial{% endif %}</span>
-    <span>{% if is_fr %}Garantie 2 ans{% else %}2-year warranty{% endif %}</span>
-  </div>
-
   <div class="container site-header__bar">
     <div class="site-header__utils site-header__utils--start">
       <a class="site-header__util-link site-header__util-link--highlight" href="{{ locale_root }}/pages/find-your-cytolight">{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}</a>
@@ -161,13 +156,11 @@
               <div class="site-header__drawer-group-body">
                 <a class="site-header__drawer-all" href="{{ url_shop }}">{% if is_fr %}Tous les produits{% else %}All Products{% endif %}</a>
                 <a href="{{ locale_root }}/products/cytolight-mask">{% if is_fr %}Masque{% else %}Mask{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-knee">{% if is_fr %}Genou{% else %}Knee{% endif %}</a>
                 <a href="{{ locale_root }}/products/cytolight-desk">Desk</a>
                 <a href="{{ col_panels }}">{% if is_fr %}Panneaux{% else %}Panels{% endif %}</a>
                 <a href="{{ locale_root }}/products/cytolight-sauna-dome">{% if is_fr %}D&ocirc;me{% else %}Dome{% endif %}</a>
                 <a href="{{ locale_root }}/pages/bundles">{% if is_fr %}Packs{% else %}Bundles{% endif %}</a>
                 <a href="{{ locale_root }}/products/cytolight-cap">{% if is_fr %}Casquette{% else %}Cap{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-foot">{% if is_fr %}Pieds{% else %}Foot{% endif %}</a>
               </div>
             </details>
 
@@ -360,9 +353,7 @@
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Appareils{% else %}Devices{% endif %}</p>
                 <a href="{{ locale_root }}/products/cytolight-mask">{% if is_fr %}Masque{% else %}Mask{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-knee">{% if is_fr %}Genou{% else %}Knee{% endif %}</a>
                 <a href="{{ locale_root }}/products/cytolight-cap">{% if is_fr %}Casquette{% else %}Cap{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-foot">{% if is_fr %}Pieds{% else %}Foot{% endif %}</a>
               </div>
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Grand format{% else %}Large format{% endif %}</p>
@@ -413,9 +404,9 @@
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
-               product_handle: 'cytolight-knee',
-               image_file: 'cytolight-goal-recovery-pano-athlete.jpg',
-               label: 'Antared Knee',
+               product_handle: 'antared-pano-ultra',
+               image_file: 'cytolight-pano-ultra-athlete.jpg',
+               label: 'Antared Protocols', label_fr: 'Protocoles Antared',
                caption: 'All protocols', caption_fr: 'Tous les protocoles',
                url: url_protocols %}
             <div class="site-header__panel-groups">
@@ -479,7 +470,7 @@
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
-               product_handle: 'cytolight-pano-ultra',
+               product_handle: 'antared-pano-ultra',
                image_file: 'cytolight-pano-ultra-luxury.jpg',
                label: 'Antared PANO ULTRA',
                caption: 'Antared for professionals', caption_fr: 'Antared pour les pros',

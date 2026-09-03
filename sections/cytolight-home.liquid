@@ -30,28 +30,16 @@
     assign cap_url = cap_product.url
   endif
 
-  assign pano_ultra_product = all_products['cytolight-pano-ultra']
-  assign pano_ultra_url = locale_root | append: '/products/cytolight-pano-ultra'
+  assign pano_ultra_product = all_products['antared-pano-ultra']
+  assign pano_ultra_url = locale_root | append: '/products/antared-pano-ultra'
   if pano_ultra_product != blank
     assign pano_ultra_url = pano_ultra_product.url
-  endif
-
-  assign foot_product = all_products['cytolight-foot']
-  assign foot_url = locale_root | append: '/products/cytolight-foot'
-  if foot_product != blank
-    assign foot_url = foot_product.url
   endif
 
   assign mask_product = all_products['cytolight-mask']
   assign mask_url = locale_root | append: '/products/cytolight-mask'
   if mask_product != blank
     assign mask_url = mask_product.url
-  endif
-
-  assign knee_product = all_products['cytolight-knee']
-  assign knee_url = locale_root | append: '/products/cytolight-knee'
-  if knee_product != blank
-    assign knee_url = knee_product.url
   endif
 
   assign academy_url = pages['academy'].url
@@ -76,7 +64,7 @@
     </div>
     <div class="cy-hero__content">
       <div class="cy-shell">
-        <p class="cy-hero__brand">Antared</p>
+        <img class="cy-hero__logo" src="{{ 'LOGO_ANTARED_transparent.png' | file_url }}" alt="Antared" width="140" height="140" loading="eager">
         <h1 id="cy-home-title">
           {%- if is_fr -%}
             {{ section.settings.hero_heading_fr | default: 'La lumi&egrave;re qui transforme votre quotidien.' }}
@@ -210,11 +198,58 @@
     </div>
   </section>
 
+  <section class="cy-wl-section cy-reveal">
+    <div class="cy-shell cy-wl-inner">
+      <div class="cy-wl-copy">
+        <p class="cy-wl-eyebrow">{% if is_fr %}De la science, pas du hasard{% else %}Science, not guesswork{% endif %}</p>
+        <h2 class="cy-wl-title">{% if is_fr %}7 longueurs d&apos;onde, ma&icirc;tris&eacute;es une par une.{% else %}7 wavelengths, individually mastered.{% endif %}</h2>
+        <p class="cy-wl-body">{% if is_fr %}Les panneaux g&eacute;n&eacute;riques utilisent souvent une approche unique. Antared propose <strong>sept longueurs d&apos;onde calibr&eacute;es</strong>, chacune avec un r&ocirc;le diff&eacute;rent et un contr&ocirc;le ind&eacute;pendant via l&apos;&eacute;cran tactile ou l&apos;application.{% else %}Generic panels flood you with a single wavelength at full power. Antared gives you <strong>seven precisely calibrated wavelengths</strong> &#8212; each targeting a different biological mechanism, each independently controllable via touch screen or app.{% endif %}</p>
+      </div>
+      <div class="cy-wl-cards">
+        <div class="cy-wl-card">
+          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#c07800 0%,#1a0d00 100%);"></div>
+          <div class="cy-wl-card__nm">590nm</div>
+          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Ambre{% else %}Amber{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Activation mitochondriale, fonction cognitive{% else %}Mitochondrial activation, cognitive function{% endif %}</span></div>
+        </div>
+        <div class="cy-wl-card">
+          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#b81020 0%,#1a0004 100%);"></div>
+          <div class="cy-wl-card__nm">630nm</div>
+          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Rouge{% else %}Red{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Surface de la peau, collag&egrave;ne, cicatrisation{% else %}Surface skin, collagen, wound healing{% endif %}</span></div>
+        </div>
+        <div class="cy-wl-card">
+          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#960c22 0%,#160006 100%);"></div>
+          <div class="cy-wl-card__nm">660nm</div>
+          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Rouge profond{% else %}Deep Red{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Couches profondes de la peau, stimulation des fibroblastes{% else %}Deep skin layers, fibroblast stimulation{% endif %}</span></div>
+        </div>
+        <div class="cy-wl-card">
+          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#5b3080 0%,#0e0018 100%);"></div>
+          <div class="cy-wl-card__nm">810nm</div>
+          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}R&eacute;cup&eacute;ration musculaire, confort articulaire{% else %}Muscle recovery, joint inflammation{% endif %}</span></div>
+        </div>
+        <div class="cy-wl-card">
+          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#4e2872 0%,#0c0014 100%);"></div>
+          <div class="cy-wl-card__nm">830nm</div>
+          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Soutien nerveux, circulation{% else %}Nerve regeneration, circulation{% endif %}</span></div>
+        </div>
+        <div class="cy-wl-card">
+          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#3e1e64 0%,#090010 100%);"></div>
+          <div class="cy-wl-card__nm">850nm</div>
+          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Tissus profonds, r&eacute;cup&eacute;ration, rythme du sommeil{% else %}Deep tissue, bone health, sleep regulation{% endif %}</span></div>
+        </div>
+        <div class="cy-wl-card">
+          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#2a1250 0%,#05000c 100%);"></div>
+          <div class="cy-wl-card__nm">940nm</div>
+          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Infrarouge profond{% else %}Deep Infrared{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}P&eacute;n&eacute;tration la plus profonde, soutien global{% else %}Deepest penetration, systemic benefits{% endif %}</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="cy-intro cy-reveal">
     <div class="cy-shell cy-intro__top">
       <div>
-        <p class="cy-kicker">{% if is_fr %}Le bien-&ecirc;tre, redessin&eacute;{% else %}Wellness, redesigned{% endif %}</p>
-        <h2 class="cy-heading">{% if is_fr %}Une technologie avanc&eacute;e. Une exp&eacute;rience remarquablement simple.{% else %}Advanced technology. A remarkably simple experience.{% endif %}</h2>
+        <p class="cy-kicker">{% if is_fr %}Contr&ocirc;le spectral{% else %}Spectral control{% endif %}</p>
+        <h2 class="cy-heading">{% if is_fr %}Chaque longueur d'onde se r&egrave;gle ind&eacute;pendamment.{% else %}Every wavelength adjusts on its own.{% endif %}</h2>
       </div>
       <div class="cy-intro__aside">
         <p>{% if is_fr %}Antared r&eacute;unit puissance, contr&ocirc;le spectral et design pour faire de la luminoth&eacute;rapie un rituel que vous avez vraiment envie de garder.{% else %}Antared brings together power, spectral control, and considered design to make light therapy a ritual you will actually keep.{% endif %}</p>
@@ -275,48 +310,6 @@
           </span>
         </a>
 
-        <a class="cy-product cy-reveal" href="{{ foot_url }}">
-          <span class="cy-product__media">
-            {%- comment -%}
-              `!= blank`, et pas seulement la presence : quand le produit
-              n'existe pas dans la boutique, `all_products[handle]` rend un
-              EmptyDrop, et `.featured_image` en rend un autre — qui est VRAI
-              dans un `if`, puisque seuls nil et false sont faux en Liquid. La
-              condition passait donc, `image_url` recevait un objet vide et
-              rendait « Liquid error: invalid url input » dans le `src`. La
-              carte affichait une image cassee sur la page d'accueil.
-              `!= blank` reconnait l'EmptyDrop et bascule sur le visuel de repli.
-            {%- endcomment -%}
-            {%- if foot_product.featured_image != blank -%}
-              <img src="{{ foot_product.featured_image | image_url: width: 900 }}" alt="{{ foot_product.featured_image.alt | escape }}" width="900" height="1100" loading="lazy">
-            {%- else -%}
-              <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="Antared Foot Therapy" width="900" height="1100" loading="lazy">
-            {%- endif -%}
-          </span>
-          <span class="cy-product__content">
-            <span class="cy-product__type">{% if is_fr %}Pieds &middot; R&eacute;cup&eacute;ration{% else %}Feet &middot; Recovery{% endif %}</span>
-            <h3>Antared Foot</h3>
-            <span class="cy-product__desc">{% if is_fr %}Pour les pieds fatigu&eacute;s et les routines &agrave; domicile.{% else %}For tired feet and simple at-home routines.{% endif %}</span>
-            <span class="cy-product__meta">
-              <span class="cy-product__price">{% if foot_product != blank %}{{ foot_product.price | money }}{% else %}220 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
-            </span>
-          </span>
-        </a>
-
-        <a class="cy-product cy-reveal" href="{{ knee_url }}">
-          <span class="cy-product__media"><video src="https://cdn.shopify.com/videos/c/o/v/f85a0fc3a2d343cda06f2adf6c64775a.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
-          <span class="cy-product__content">
-            <span class="cy-product__type">{% if is_fr %}Genou &middot; R&eacute;cup&eacute;ration{% else %}Knee &middot; Recovery{% endif %}</span>
-            <h3>Antared Knee</h3>
-            <span class="cy-product__desc">{% if is_fr %}Pour l'articulation du genou et le confort &agrave; domicile.{% else %}For the knee joint and simple at-home comfort.{% endif %}</span>
-            <span class="cy-product__meta">
-              <span class="cy-product__price">{% if knee_product != blank %}{{ knee_product.price | money }}{% else %}250 EUR{% endif %}</span>
-              <span class="cy-link">{% if is_fr %}D&eacute;couvrir{% else %}Discover{% endif %} <span aria-hidden="true">&rarr;</span></span>
-            </span>
-          </span>
-        </a>
-
         <a class="cy-product cy-reveal" href="{{ sauna_dome_url }}">
           <span class="cy-product__media"><video src="https://cdn.shopify.com/videos/c/o/v/119a59c70e50438b858f9359d2d7529e.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
           <span class="cy-product__content">
@@ -361,7 +354,7 @@
               assign goal_alt = 'Antared desk ritual'
               case forloop.index
                 when 1
-                  assign goal_image = 'cytolight-goal-recovery-pano-athlete.jpg'
+                  assign goal_image = 'cytolight-pano-ultra-recovery.jpg'
                   assign goal_alt = 'Antared recovery routine'
                 when 2
                   assign goal_image = 'cytolight-goal-skin-red-halo.jpg'
@@ -377,17 +370,16 @@
             <a class="cy-use__item cy-reveal" href="{{ block.settings.url | default: desk_url }}" {{ block.shopify_attributes }}>
               <span class="cy-use__media"><img src="{{ goal_image | file_url }}" alt="{{ goal_alt }}" width="900" height="720" loading="lazy"></span>
               <span class="cy-use__content">
-                <span class="cy-use__num">0{{ forloop.index }}</span>
                 <h3>{% if is_fr %}{{ block.settings.title_fr }}{% else %}{{ block.settings.title_en }}{% endif %}</h3>
                 <p>{% if is_fr %}{{ block.settings.text_fr }}{% else %}{{ block.settings.text_en }}{% endif %}</p>
               </span>
             </a>
           {%- endfor -%}
         {%- else -%}
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-recovery-pano-athlete.jpg' | file_url }}" alt="{% if is_fr %}Routine de r&eacute;cup&eacute;ration Antared{% else %}Antared recovery routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">01</span><h3>{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</h3><p>{% if is_fr %}Pour les muscles, articulations et routines apr&egrave;s effort.{% else %}For muscles, joints, and post-effort routines.{% endif %}</p></span></a>
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-skin-red-halo.jpg' | file_url }}" alt="{% if is_fr %}Routine peau Antared{% else %}Antared skin routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">02</span><h3>{% if is_fr %}Peau{% else %}Skin{% endif %}</h3><p>{% if is_fr %}Pour une routine r&eacute;guli&egrave;re orient&eacute;e teint, texture et &eacute;clat.{% else %}For a consistent routine focused on tone, texture, and radiance.{% endif %}</p></span></a>
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="{% if is_fr %}Rituel de concentration Antared{% else %}Antared focus ritual{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">03</span><h3>{% if is_fr %}Focus{% else %}Focus{% endif %}</h3><p>{% if is_fr %}Pour installer un rituel lumineux autour du travail profond.{% else %}For building a short light ritual around deep work.{% endif %}</p></span></a>
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-sleep-pano-bedroom.jpg' | file_url }}" alt="{% if is_fr %}Routine du soir Antared{% else %}Antared evening routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><span class="cy-use__num">04</span><h3>{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</h3><p>{% if is_fr %}Pour cr&eacute;er un signal calme et r&eacute;p&eacute;table en fin de journ&eacute;e.{% else %}For creating a repeatable calm signal at the end of the day.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-pano-ultra-recovery.jpg' | file_url }}" alt="{% if is_fr %}Routine de r&eacute;cup&eacute;ration Antared{% else %}Antared recovery routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><h3>{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</h3><p>{% if is_fr %}Pour les muscles, articulations et routines apr&egrave;s effort.{% else %}For muscles, joints, and post-effort routines.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-skin-red-halo.jpg' | file_url }}" alt="{% if is_fr %}Routine peau Antared{% else %}Antared skin routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><h3>{% if is_fr %}Peau{% else %}Skin{% endif %}</h3><p>{% if is_fr %}Pour une routine r&eacute;guli&egrave;re orient&eacute;e teint, texture et &eacute;clat.{% else %}For a consistent routine focused on tone, texture, and radiance.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="{% if is_fr %}Rituel de concentration Antared{% else %}Antared focus ritual{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><h3>{% if is_fr %}Focus{% else %}Focus{% endif %}</h3><p>{% if is_fr %}Pour installer un rituel lumineux autour du travail profond.{% else %}For building a short light ritual around deep work.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-sleep-pano-bedroom.jpg' | file_url }}" alt="{% if is_fr %}Routine du soir Antared{% else %}Antared evening routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><h3>{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</h3><p>{% if is_fr %}Pour cr&eacute;er un signal calme et r&eacute;p&eacute;table en fin de journ&eacute;e.{% else %}For creating a repeatable calm signal at the end of the day.{% endif %}</p></span></a>
         {%- endif -%}
       </div>
     </div>
@@ -397,7 +389,7 @@
     <div class="cy-shell cy-proof__grid">
       <div class="cy-reveal">
         <p class="cy-kicker">{% if is_fr %}La confiance est une fonctionnalit&eacute;{% else %}Confidence is a feature{% endif %}</p>
-        <h2 class="cy-heading">{% if is_fr %}Con&ccedil;u pour &ecirc;tre utilis&eacute;. Con&ccedil;u pour durer.{% else %}Built to be used. Built to last.{% endif %}</h2>
+        <h2 class="cy-heading">{% if is_fr %}Certifi&eacute; sur treize normes internationales.{% else %}Certified against thirteen international standards.{% endif %}</h2>
         <p class="cy-copy">{% if is_fr %}Un design de qualit&eacute; clinique, des commandes simples et une politique d'essai claire pour vous permettre de juger Antared dans votre propre routine.{% else %}Clinical-grade design, clear controls, and a straightforward home trial so you can judge Antared in your own routine.{% endif %}</p>
       </div>
       <div class="cy-proof__stats">
@@ -440,12 +432,12 @@
       </div>
       <div class="cy-table-wrap cy-reveal">
         <table class="cy-table">
-          <thead><tr><th>{% if is_fr %}Mod&egrave;le{% else %}Model{% endif %}</th><th class="cy-table__desk"><span class="cy-table__badge">{% if is_fr %}Populaire{% else %}Popular{% endif %}</span>DESK</th><th>CAP</th><th>MASK</th><th>FOOT</th><th>KNEE</th><th>SAUNA DOME</th><th>PANO ULTRA</th></tr></thead>
+          <thead><tr><th>{% if is_fr %}Mod&egrave;le{% else %}Model{% endif %}</th><th class="cy-table__desk"><span class="cy-table__badge">{% if is_fr %}Populaire{% else %}Popular{% endif %}</span>DESK</th><th>CAP</th><th>MASK</th><th>SAUNA DOME</th><th>PANO ULTRA</th></tr></thead>
           <tbody>
-            <tr><td><span class="cy-table__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4.4-3.6-7-7-7-10.5a7 7 0 0 1 14 0c0 3.5-2.6 6.9-7 10.5z"/><circle cx="12" cy="10.5" r="2.4"/></svg>{% if is_fr %}Espace id&eacute;al{% else %}Best space{% endif %}</span></td><td class="cy-table__desk">{% if is_fr %}Bureau, chambre{% else %}Desk, bedroom{% endif %}</td><td>{% if is_fr %}Salon, lecture, routine cheveux{% else %}Living room, reading, hair routine{% endif %}</td><td>{% if is_fr %}Salle de bain, voyage, routine beaut&eacute;{% else %}Bathroom, travel, beauty routine{% endif %}</td><td>{% if is_fr %}Canap&eacute;, soir&eacute;e, r&eacute;cup&eacute;ration pieds{% else %}Sofa, evening, foot recovery{% endif %}</td><td>{% if is_fr %}Canap&eacute;, sac de sport, apr&egrave;s l'entra&icirc;nement{% else %}Sofa, gym bag, after training{% endif %}</td><td>{% if is_fr %}Chambre, salle bien-&ecirc;tre{% else %}Bedroom, wellness room{% endif %}</td><td>{% if is_fr %}Studio, salle wellness{% else %}Studio, wellness room{% endif %}</td></tr>
-            <tr><td><span class="cy-table__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r=".6" fill="currentColor"/></svg>{% if is_fr %}Couverture{% else %}Coverage{% endif %}</span></td><td class="cy-table__desk">{% if is_fr %}Cibl&eacute;e{% else %}Targeted{% endif %}</td><td>{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</td><td>{% if is_fr %}Visage et cou{% else %}Face and neck{% endif %}</td><td>{% if is_fr %}Pied et cheville{% else %}Foot and ankle{% endif %}</td><td>{% if is_fr %}Articulation du genou{% else %}Knee joint{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td></tr>
-            <tr><td><span class="cy-table__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="14" cy="6" r="2.2" fill="currentColor" stroke="none"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="8" cy="12" r="2.2" fill="currentColor" stroke="none"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="16" cy="18" r="2.2" fill="currentColor" stroke="none"/></svg>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}</span></td><td class="cy-table__desk">{% if is_fr %}7 spectres ind&eacute;pendants{% else %}7 independent spectra{% endif %}</td><td>{% if is_fr %}Minuteur, intensit&eacute;, pulsation{% else %}Timer, intensity, pulsing{% endif %}</td><td>{% if is_fr %}3 modes, intensit&eacute; variable, sans fil{% else %}3 modes, dimmable, cordless{% endif %}</td><td>{% if is_fr %}Port confortable et minuterie{% else %}Comfort fit and timer{% endif %}</td><td>{% if is_fr %}Batterie magn&eacute;tique, contr&ocirc;le simple{% else %}Magnetic battery, simple control{% endif %}</td><td>{% if is_fr %}Chaleur 3 zones, bo&icirc;tier PEMF{% else %}3-zone heat, PEMF box{% endif %}</td><td>{% if is_fr %}Format avanc&eacute; grand panneau{% else %}Advanced large-panel format{% endif %}</td></tr>
-            <tr><td><span class="cy-table__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>{% if is_fr %}Lien achat{% else %}Buy link{% endif %}</span></td><td class="cy-table__desk"><a href="{{ desk_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ cap_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ mask_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ foot_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ knee_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ sauna_dome_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ pano_ultra_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td></tr>
+            <tr><td><span class="cy-table__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4.4-3.6-7-7-7-10.5a7 7 0 0 1 14 0c0 3.5-2.6 6.9-7 10.5z"/><circle cx="12" cy="10.5" r="2.4"/></svg>{% if is_fr %}Espace id&eacute;al{% else %}Best space{% endif %}</span></td><td class="cy-table__desk">{% if is_fr %}Bureau, chambre{% else %}Desk, bedroom{% endif %}</td><td>{% if is_fr %}Salon, lecture, routine cheveux{% else %}Living room, reading, hair routine{% endif %}</td><td>{% if is_fr %}Salle de bain, voyage, routine beaut&eacute;{% else %}Bathroom, travel, beauty routine{% endif %}</td><td>{% if is_fr %}Chambre, salle bien-&ecirc;tre{% else %}Bedroom, wellness room{% endif %}</td><td>{% if is_fr %}Studio, salle wellness{% else %}Studio, wellness room{% endif %}</td></tr>
+            <tr><td><span class="cy-table__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.2"/><circle cx="12" cy="12" r=".6" fill="currentColor"/></svg>{% if is_fr %}Couverture{% else %}Coverage{% endif %}</span></td><td class="cy-table__desk">{% if is_fr %}Cibl&eacute;e{% else %}Targeted{% endif %}</td><td>{% if is_fr %}Cuir chevelu{% else %}Scalp{% endif %}</td><td>{% if is_fr %}Visage et cou{% else %}Face and neck{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td><td>{% if is_fr %}Corps entier{% else %}Full body{% endif %}</td></tr>
+            <tr><td><span class="cy-table__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="14" cy="6" r="2.2" fill="currentColor" stroke="none"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="8" cy="12" r="2.2" fill="currentColor" stroke="none"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="16" cy="18" r="2.2" fill="currentColor" stroke="none"/></svg>{% if is_fr %}Contr&ocirc;le{% else %}Control{% endif %}</span></td><td class="cy-table__desk">{% if is_fr %}7 spectres ind&eacute;pendants{% else %}7 independent spectra{% endif %}</td><td>{% if is_fr %}Minuteur, intensit&eacute;, pulsation{% else %}Timer, intensity, pulsing{% endif %}</td><td>{% if is_fr %}3 modes, intensit&eacute; variable, sans fil{% else %}3 modes, dimmable, cordless{% endif %}</td><td>{% if is_fr %}Chaleur 3 zones, bo&icirc;tier PEMF{% else %}3-zone heat, PEMF box{% endif %}</td><td>{% if is_fr %}Format avanc&eacute; grand panneau{% else %}Advanced large-panel format{% endif %}</td></tr>
+            <tr><td><span class="cy-table__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>{% if is_fr %}Lien achat{% else %}Buy link{% endif %}</span></td><td class="cy-table__desk"><a href="{{ desk_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ cap_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ mask_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ sauna_dome_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td><td><a href="{{ pano_ultra_url }}">{% if is_fr %}Acheter{% else %}Buy now{% endif %}</a></td></tr>
           </tbody>
         </table>
       </div>

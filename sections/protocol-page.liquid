@@ -73,7 +73,7 @@
   {%- liquid
     assign est_index = false
     assign ondes_set = 'profond'
-    assign produits = 'cytolight-pano-ultra,cytolight-desk,cytolight-knee'
+    assign produits = 'antared-pano-ultra,cytolight-desk,cytolight-sauna-dome'
 
     assign crumb_fr = 'Avant l&apos;effort'
     assign crumb_en = 'Pre-workout'
@@ -108,7 +108,7 @@
 {%- when 'post-workout' -%}
   {%- liquid
     assign ondes_set = 'profond'
-    assign produits = 'cytolight-pano-ultra,cytolight-knee,cytolight-foot'
+    assign produits = 'antared-pano-ultra,cytolight-sauna-dome,cytolight-desk'
 
     assign crumb_fr = 'Apr&egrave;s l&apos;effort'
     assign crumb_en = 'Post-workout'
@@ -143,7 +143,7 @@
 {%- when 'daily-recovery' -%}
   {%- liquid
     assign ondes_set = 'mixte'
-    assign produits = 'cytolight-desk,cytolight-pano-ultra,cytolight-foot'
+    assign produits = 'cytolight-desk,antared-pano-ultra,cytolight-sauna-dome'
 
     assign crumb_fr = 'R&eacute;cup&eacute;ration quotidienne'
     assign crumb_en = 'Daily recovery'
@@ -178,7 +178,7 @@
 {%- when 'skin-routine' -%}
   {%- liquid
     assign ondes_set = 'surface'
-    assign produits = 'cytolight-mask,cytolight-desk,cytolight-pano-ultra'
+    assign produits = 'cytolight-mask,cytolight-desk,antared-pano-ultra'
 
     assign crumb_fr = 'Routine peau'
     assign crumb_en = 'Skin routine'
@@ -213,7 +213,7 @@
 {%- when 'full-body-routine' -%}
   {%- liquid
     assign ondes_set = 'mixte'
-    assign produits = 'cytolight-pano-ultra,cytolight-sauna-dome,cytolight-pano-plus'
+    assign produits = 'antared-pano-ultra,cytolight-sauna-dome,cytolight-pano-plus'
 
     assign crumb_fr = 'S&eacute;ance corps entier'
     assign crumb_en = 'Full-body session'
@@ -283,7 +283,7 @@
 {%- else -%}
   {%- liquid
     assign est_index = true
-    assign produits = 'cytolight-desk,cytolight-mask,cytolight-pano-ultra'
+    assign produits = 'cytolight-desk,cytolight-mask,antared-pano-ultra'
     assign crumb_fr = 'Protocoles'
     assign crumb_en = 'Protocols'
     assign kicker_fr = 'Six moments, une m&ecirc;me m&eacute;thode'
