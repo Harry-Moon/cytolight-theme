@@ -208,6 +208,14 @@
   filter: brightness(1.04) saturate(1.1) contrast(1.03);
   will-change: opacity;
 }
+/* DESK seule est agrandie au-dela du reglage commun (.88) : sa photo laissait
+   un bandeau du fond de la scene visible a gauche et a droite. Le plafond
+   reste 1 au maximum du zoom de scroll (.95 + .05) pour ne jamais depasser le
+   cadrage "contain" et retomber dans le rognage vertical que ce choix
+   evitait deja (voir l'entete de .cy-cinema__world). */
+#cy-science .cy-cinema__world img {
+  transform: translate3d(0, calc(var(--cy-p, 0) * -1.6%), 0) scale(calc(.95 + var(--cy-zoom, 0) * .05));
+}
 /*
  * La lumiere posee sur l'image prend la couleur de la longueur d'onde en
  * cours. Elle ne glisse pas : elle CHANGE de teinte, en fondu, quand le scroll
@@ -351,7 +359,7 @@
 .cy-spectrum span.is-lit { color: #cfcfcf; }
 .cy-spectrum span.is-lit::before {
   opacity: .85;
-  box-shadow: 0 0 2px color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent);
+  box-shadow: 0 0 3px color-mix(in srgb, var(--wave-color, #c8102e) 70%, transparent);
 }
 .cy-spectrum span.is-current { color: #fff; }
 /* Un petit halo, pas un sursaut : la brique passe de son opacite de repos au
@@ -364,7 +372,7 @@
    tache diffuse, decrochee de la brique -- pas comme un halo qui la colle. */
 .cy-spectrum span.is-current::before {
   opacity: 1;
-  box-shadow: 0 0 3px 1px color-mix(in srgb, var(--wave-color, #c8102e) 75%, transparent);
+  box-shadow: 0 0 4px 2px color-mix(in srgb, var(--wave-color, #c8102e) 90%, transparent);
 }
 .cy-spectrum span.is-current strong { text-shadow: 0 0 26px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent); }
 /* Antared Redlight Cap: real two-plane parallax. The background room
