@@ -56,6 +56,18 @@
 @media (hover: hover) and (pointer: fine) {
   .cy-link:hover { color: var(--cy-red-dark); }
 }
+/* Meme glissement de fleche que "Voir tous les produits" (.cy-range .cy-link
+   plus bas) : ce lien-ci n'est pas porte par une carte, le survol se prend
+   donc directement sur le lien. */
+.cy-intro .cy-link > span[aria-hidden] {
+  display: inline-block;
+  transition: transform .34s var(--cy-ease);
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .cy-intro .cy-link:hover > span[aria-hidden] {
+    transform: translateX(7px);
+  }
+}
 .cy-button {
   min-height: 52px; display: inline-flex; align-items: center; justify-content: center;
   padding: 0 26px; border: 1px solid transparent; border-radius: 6px; background: var(--cy-red);
@@ -133,7 +145,15 @@
 
 .cy-intro, .cy-use, .cy-compare, .cy-faq { padding: 124px 0; background: #fff; }
 .cy-intro__top, .cy-range__head, .cy-compare__top, .cy-faq__top { display: flex; justify-content: space-between; gap: 64px; align-items: flex-end; }
+/* Sans largeur fixe sur la colonne de titre, l'aside demarrait a des abscisses
+   differentes d'une section a l'autre : `justify-content: space-between`
+   pousse l'aside a droite du bloc titre, dont la largeur suit la longueur du
+   texte du h2. Le bloc titre est donc mis en `flex: 1 1 auto` pour absorber
+   tout l'espace restant, et l'aside en largeur fixe : les deux CTA de bas de
+   bloc s'alignent alors sur la meme colonne. */
+.cy-intro__top > div:first-child, .cy-range__head > div:first-child { flex: 1 1 auto; min-width: 0; }
 .cy-intro__aside, .cy-range__aside, .cy-faq__aside { width: min(390px, 100%); padding-bottom: 8px; }
+.cy-intro__aside, .cy-range__aside { flex: 0 0 min(390px, 100%); }
 .cy-intro__aside p, .cy-range__aside p, .cy-faq__aside p { margin: 0 0 22px; color: var(--cy-muted); font-size: 16px; line-height: 1.7; }
 
 .cy-cinema {
@@ -845,6 +865,10 @@
 @media (max-width: 980px) {
   .cy-shell { width: min(100% - 40px, 1280px); }
   .cy-intro__top, .cy-range__head, .cy-compare__top, .cy-faq__top { align-items: flex-start; flex-direction: column; }
+  /* `flex-basis` porte sur l'axe principal : une fois la colonne empilee,
+     la largeur fixe posee plus haut se lirait comme une hauteur. */
+  .cy-intro__top > div:first-child, .cy-range__head > div:first-child,
+  .cy-intro__aside, .cy-range__aside { flex-basis: auto; }
   .cy-products { grid-template-columns: 1fr 1fr; }
   .cy-product:first-child { grid-column: 1 / -1; }
   .cy-use__grid, .cy-faq__grid { grid-template-columns: 1fr 1fr; }
