@@ -99,6 +99,15 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  * Le deplacement est enferme dans `prefers-reduced-motion: no-preference`.
  * Sans lui, le survol change quand meme de couleur et perd son ombre : l'etat
  * reste signale, il ne bouge simplement pas.
+ *
+ * Le survol lui-meme est enferme dans `(hover: hover) and (pointer: fine)` —
+ * partout dans ce fichier et dans les autres feuilles du theme, pas
+ * seulement ici. Un ecran tactile n'a pas de survol : un doigt qui appuie ne
+ * "passe" jamais dessus avant de cliquer, il declenche directement l'etat.
+ * Sans ce garde-fou, certains navigateurs mobiles appliquaient quand meme
+ * :hover apres un tap et l'y laissaient colle jusqu'au tap suivant — un
+ * bouton qui reste rouge, une carte qui reste soulevee, sans raison
+ * visible pour qui vient de relacher le doigt.
  */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -107,17 +116,19 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   box-shadow: var(--cta-shadow);
   transition: transform .18s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease, opacity .15s ease;
 }
-.btn:hover {
-  background: var(--cta-red);
-  color: #fff;
-  border-color: var(--cta-red);
-  box-shadow: none;
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: var(--cta-red);
+    color: #fff;
+    border-color: var(--cta-red);
+    box-shadow: none;
+  }
 }
 .btn:active { opacity: .5; }
 /* Un bouton mort ne se souleve pas : sans cela, une carte produit epuisee
    gardait son ombre rouge sous un libelle grise. */
 .btn:disabled, .btn--disabled, .product-card__cta--disabled { box-shadow: none; }
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .btn:hover { transform: translateY(var(--cta-press)); }
   .btn:disabled:hover, .btn--disabled:hover, .product-card__cta--disabled:hover { transform: none; }
 }
@@ -250,7 +261,9 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   color: var(--color-muted);
   white-space: nowrap;
 }
-.site-header__util-link:hover { color: var(--color-accent-deep); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__util-link:hover { color: var(--color-accent-deep); }
+}
 .site-header__icon {
   display: inline-flex;
   align-items: center;
@@ -261,7 +274,9 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   color: var(--color-foreground);
   transition: background .2s ease, color .2s ease;
 }
-.site-header__icon:hover { background: rgba(210,13,47,.08); color: var(--color-accent-deep); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__icon:hover { background: rgba(210,13,47,.08); color: var(--color-accent-deep); }
+}
 .site-header__logo { justify-self: center; }
 .site-header__logo img { display: block; max-height: 52px; width: auto; object-fit: contain; }
 
@@ -330,10 +345,15 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  * clavier, ce focus-la epinglait la rangee pour de bon — apres un clic dans
  * le menu, plus rien ne se masquait.
  */
-.site-header__nav:has(.site-header__nav-item:hover),
 .site-header__nav:has(.site-header__nav-item:focus-within) {
   max-height: calc(var(--nav-row-h, 60px) + 1px);
   opacity: 1;
+}
+@media (hover: hover) and (pointer: fine) {
+  .site-header__nav:has(.site-header__nav-item:hover) {
+    max-height: calc(var(--nav-row-h, 60px) + 1px);
+    opacity: 1;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .nav-collapse-ready #shopify-section-header,
@@ -379,20 +399,24 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   transform: scaleX(0);
   transition: transform .24s ease;
 }
-.site-header__nav-item:hover .site-header__nav-link,
 .site-header__nav-item:focus-within .site-header__nav-link,
 .site-header__nav-item.is-open .site-header__nav-link { color: var(--color-accent-deep); }
-.site-header__nav-item:hover .site-header__nav-link::after,
 .site-header__nav-item:focus-within .site-header__nav-link::after,
 .site-header__nav-item.is-open .site-header__nav-link::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__nav-item:hover .site-header__nav-link { color: var(--color-accent-deep); }
+  .site-header__nav-item:hover .site-header__nav-link::after { transform: scaleX(1); }
+}
 
 /* Onglet de la page courante : le meme trait, mais attenue, pour qu'il se lise
    comme un reperage et non comme un survol. Le survol le ramene a plein. */
 .site-header__nav-link[aria-current="page"] { color: var(--color-accent-deep); }
 .site-header__nav-link[aria-current="page"]::after { transform: scaleX(1); opacity: .4; }
-.site-header__nav-item:hover .site-header__nav-link[aria-current="page"]::after,
 .site-header__nav-item:focus-within .site-header__nav-link[aria-current="page"]::after,
 .site-header__nav-item.is-open .site-header__nav-link[aria-current="page"]::after { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__nav-item:hover .site-header__nav-link[aria-current="page"]::after { opacity: 1; }
+}
 
 .site-header__panel {
   position: absolute;
@@ -409,13 +433,20 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   transition: opacity .18s ease, transform .18s ease, visibility .18s;
   z-index: 60;
 }
-.site-header__nav-item:hover .site-header__panel,
 .site-header__nav-item:focus-within .site-header__panel,
 .site-header__nav-item.is-open .site-header__panel {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
   transform: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .site-header__nav-item:hover .site-header__panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+  }
 }
 .site-header__panel-inner {
   display: grid;
@@ -431,7 +462,9 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   background: var(--color-background-soft);
 }
 .site-header__panel-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-.site-header__panel-media:hover .site-header__panel-thumb img { transform: scale(1.04); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__panel-media:hover .site-header__panel-thumb img { transform: scale(1.04); }
+}
 .site-header__panel-caption { display: block; margin-top: 14px; font-size: .9rem; font-weight: 700; }
 .site-header__panel-cta {
   display: inline-block;
@@ -476,8 +509,10 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   transform-origin: left;
   transition: transform .2s ease;
 }
-.site-header__panel-group a:hover { color: var(--color-accent-deep); }
-.site-header__panel-group a:hover::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__panel-group a:hover { color: var(--color-accent-deep); }
+  .site-header__panel-group a:hover::after { transform: scaleX(1); }
+}
 
 .site-header__language-form { display: inline-flex; align-items: center; }
 .site-header__language-select,
@@ -500,7 +535,9 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   background-size: 9px 5px;
 }
 .site-header__language-static { padding: 7px 11px; opacity: .74; cursor: default; }
-.site-header__language-select:hover { border-color: rgba(0,0,0,.32); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header__language-select:hover { border-color: rgba(0,0,0,.32); }
+}
 .site-header__language-select:focus { outline: 2px solid rgba(200,16,46,.3); outline-offset: 2px; }
 .site-header__cart-count {
   background: var(--color-accent);
@@ -568,10 +605,14 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 
 /* ---------- Product card ---------- */
 .product-card { display: flex; flex-direction: column; background: #fff; border: 1px solid rgba(0,0,0,.08); border-radius: var(--radius-md); overflow: hidden; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-.product-card:hover { transform: translateY(-4px); border-color: rgba(210,13,47,.2); box-shadow: 0 24px 70px -30px rgba(0,0,0,.36); }
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover { transform: translateY(-4px); border-color: rgba(210,13,47,.2); box-shadow: 0 24px 70px -30px rgba(0,0,0,.36); }
+}
 .product-card__media { position: relative; aspect-ratio: 4/5; background: var(--color-background-soft); overflow: hidden; }
 .product-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-.product-card:hover .product-card__media img { transform: scale(1.04); }
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .product-card__media img { transform: scale(1.04); }
+}
 .product-card__badge { position: absolute; top: 14px; left: 14px; background: var(--color-promo); color: #fff; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 6px 10px; border-radius: 4px; }
 .product-card__body { flex: 1; padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 7px; }
 .product-card__rating { font-size: .8rem; color: var(--color-muted); display: flex; gap: 4px; align-items: center; }
@@ -598,7 +639,9 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .collection-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
 .collection-tile { position: relative; aspect-ratio: 4/5; border-radius: var(--radius-md); overflow: hidden; background: var(--color-background-soft); }
 .collection-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
-.collection-tile:hover img { transform: scale(1.05); }
+@media (hover: hover) and (pointer: fine) {
+  .collection-tile:hover img { transform: scale(1.05); }
+}
 .collection-tile__label { position: absolute; left: 16px; bottom: 16px; right: 16px; color: #fff; font-family: var(--font-display); font-size: 1.4rem; text-shadow: 0 2px 12px rgba(0,0,0,.35); }
 
 /* ---------- Bundle showcase ---------- */
@@ -661,7 +704,9 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   .site-footer::before { transition: opacity .4s ease; }
 }
 .site-footer a { color: inherit; opacity: .82; }
-.site-footer a:hover { opacity: 1; color: var(--color-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .site-footer a:hover { opacity: 1; color: var(--color-accent); }
+}
 /* Rangee de tete : le logo a gauche, l'inscription newsletter a sa droite, sur
    le meme niveau. `align-items: center` cale le bloc newsletter — trois lignes
    de haut — sur le milieu du lettrage plutot que sur son sommet. Le filet du
@@ -944,8 +989,10 @@ h1, h2, h3, h4,
    l'ombre portee cede la place au halo neon plutot qu'a rien : c'est la
    signature de ce bloc, et la perdre ferait un bouton different des autres
    pour de mauvaises raisons. */
-.site-footer__news-button:hover { background: #e8153a; box-shadow: 0 0 18px rgba(210, 13, 47, .55); }
-@media (prefers-reduced-motion: no-preference) {
+@media (hover: hover) and (pointer: fine) {
+  .site-footer__news-button:hover { background: #e8153a; box-shadow: 0 0 18px rgba(210, 13, 47, .55); }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .site-footer__news-button:hover { transform: translateY(var(--cta-press)); }
 }
 .site-footer__news-button:active { opacity: .5; }
@@ -1006,9 +1053,13 @@ h1, h2, h3, h4,
     transform: translateX(-110%);
     opacity: 0;
   }
-  .site-footer__news-button:hover::after,
   .site-footer__news-button:focus-visible::after {
     animation: antared-neon-sweep .85s ease forwards;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .site-footer__news-button:hover::after {
+      animation: antared-neon-sweep .85s ease forwards;
+    }
   }
 }
 
@@ -1102,7 +1153,12 @@ h1, h2, h3, h4,
   .site-footer__col h4 { margin-bottom: 14px; }
 }
 @media (max-width: 480px) {
-  .site-footer .site-footer__logo img { width: 140px; }
+  /* Seul sur sa ligne (la rangee newsletter est trop large pour partager la
+     sienne), le logo restait cale a gauche par l'espacement herite du bureau
+     -- ici il porte tout le poids visuel de la rangee de tete, en plus
+     grand et centre. */
+  .site-footer__masthead { justify-content: center; padding-bottom: 14px; }
+  .site-footer .site-footer__logo img { width: 190px; }
   .site-footer__col ul li { margin-bottom: 6px; }
   .site-footer__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
   .site-footer__news-field { flex-wrap: wrap; border-radius: 22px; padding: 6px; }
@@ -1231,7 +1287,9 @@ h1, h2, h3, h4,
   z-index: -1;
   background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.38) 48%, rgba(0,0,0,.76));
 }
-.collection-teaser__item:hover::before { transform: scale(1.07); }
+@media (hover: hover) and (pointer: fine) {
+  .collection-teaser__item:hover::before { transform: scale(1.07); }
+}
 .collection-teaser__item--desk::before { background-position: 58% center; }
 .collection-teaser__item--hair::before { background-position: 38% center; }
 .collection-teaser__item--body::before { background-position: 64% center; }
@@ -1351,7 +1409,9 @@ h1, h2, h3, h4,
 }
 .shopify-policy__body strong { color: var(--color-foreground); font-weight: 700; }
 .shopify-policy__body a { color: #d20d2f; text-decoration: underline; text-underline-offset: 3px; }
-.shopify-policy__body a:hover { color: #9d0a23; }
+@media (hover: hover) and (pointer: fine) {
+  .shopify-policy__body a:hover { color: #9d0a23; }
+}
 .shopify-policy__body br { content: ""; display: block; margin-top: 14px; }
 .shopify-policy__body h1 + br,
 .shopify-policy__body h2 + br,
@@ -1409,10 +1469,12 @@ h1, h2, h3, h4,
   border-color: var(--color-foreground) !important;
   color: var(--color-background) !important;
 }
-#shopify-pc__banner__btn-accept:hover,
-#shopify-pc__prefs__header-accept:hover {
-  background: #d20d2f !important;
-  border-color: #d20d2f !important;
+@media (hover: hover) and (pointer: fine) {
+  #shopify-pc__banner__btn-accept:hover,
+  #shopify-pc__prefs__header-accept:hover {
+    background: #d20d2f !important;
+    border-color: #d20d2f !important;
+  }
 }
 
 /* Refuser et Enregistrer mes choix : meme poids visuel que le bouton
@@ -1424,17 +1486,21 @@ h1, h2, h3, h4,
   border-color: var(--color-foreground) !important;
   color: var(--color-foreground) !important;
 }
-#shopify-pc__banner__btn-decline:hover,
-#shopify-pc__prefs__header-decline:hover,
-#shopify-pc__prefs__header-save:hover {
-  background: var(--color-foreground) !important;
-  color: var(--color-background) !important;
+@media (hover: hover) and (pointer: fine) {
+  #shopify-pc__banner__btn-decline:hover,
+  #shopify-pc__prefs__header-decline:hover,
+  #shopify-pc__prefs__header-save:hover {
+    background: var(--color-foreground) !important;
+    color: var(--color-background) !important;
+  }
 }
 
 #shopify-pc__banner__btn-manage-prefs {
   color: var(--color-accent-deep) !important;
 }
-#shopify-pc__banner__btn-manage-prefs:hover { color: #d20d2f !important; }
+@media (hover: hover) and (pointer: fine) {
+  #shopify-pc__banner__btn-manage-prefs:hover { color: #d20d2f !important; }
+}
 
 .shopify-pc__prefs__option:first-child { border-top-color: var(--color-accent-soft) !important; }
 .shopify-pc__prefs__option label { color: var(--color-foreground) !important; }

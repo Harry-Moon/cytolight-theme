@@ -43,8 +43,10 @@
     line-height: 1.5;
   }
   .ln-field textarea { min-height: 180px; resize: vertical; }
-  .ln-field input:hover,
-  .ln-field textarea:hover { border-color: var(--ln-muted); }
+  @media (hover: hover) and (pointer: fine) {
+    .ln-field input:hover,
+    .ln-field textarea:hover { border-color: var(--ln-muted); }
+  }
   .ln-form .ln-button { justify-self: start; cursor: pointer; }
   .ln-formnote {
     padding: 18px 20px;

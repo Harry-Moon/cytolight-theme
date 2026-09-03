@@ -53,7 +53,9 @@
 }
 .cy-copy { max-width: 710px; margin: 24px 0 0; color: var(--cy-muted); font-size: 18px; line-height: 1.72; }
 .cy-link { display: inline-flex; align-items: center; gap: 8px; color: var(--cy-red); font-size: 15px; font-weight: 650; }
-.cy-link:hover { color: var(--cy-red-dark); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-link:hover { color: var(--cy-red-dark); }
+}
 .cy-button {
   min-height: 52px; display: inline-flex; align-items: center; justify-content: center;
   padding: 0 26px; border: 1px solid transparent; border-radius: 6px; background: var(--cy-red);
@@ -68,16 +70,18 @@
 /* Le blanc sur rouge vaut pour les trois variantes. `!important` parce que les
    couleurs de repos en portent un : sans lui, le libelle du bouton clair
    resterait noir sur le rouge du survol. */
-.cy-button:hover,
-.cy-button--light:hover,
-.cy-button--line:hover {
-  background: var(--cy-red);
-  color: #fff !important;
-  border-color: var(--cy-red);
-  box-shadow: none;
+@media (hover: hover) and (pointer: fine) {
+  .cy-button:hover,
+  .cy-button--light:hover,
+  .cy-button--line:hover {
+    background: var(--cy-red);
+    color: #fff !important;
+    border-color: var(--cy-red);
+    box-shadow: none;
+  }
 }
 .cy-button:active { opacity: .5; }
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .cy-button:hover { transform: translateY(var(--cta-press, 3px)); }
 }
 .cy-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
@@ -290,21 +294,17 @@
 .cy-spectrum span::before {
   /* Le tube neon d'une brique : une longueur FIXE, jamais etiree. S'allumer
      est un changement d'intensite et de halo, jamais une croissance -- un
-     tube ne coulisse pas le long du mur, il s'allume. */
+     tube ne coulisse pas le long du mur, il s'allume. Le halo est une
+     SURCOUCHE du trait (box-shadow, qui epouse sa forme exacte) : pas de
+     calque separe, pas de rectangle visible autour de la brique.
+     `border-radius` arrondit le trait lui-meme (en pilule) : le halo suit
+     cette forme, jamais celle -- anguleuse -- d'un rectangle brut. */
   content: ''; position: absolute; top: -1px; left: 0; width: 22px; height: 2px;
+  border-radius: 999px;
   background: var(--wave-color, #c8102e);
   opacity: .38;
   box-shadow: 0 0 0 transparent;
   transition: opacity .4s var(--cy-ease), box-shadow .4s var(--cy-ease);
-}
-.cy-spectrum span::after {
-  /* Le halo : un aplat radial derriere la brique, cache au repos et amene en
-     fondu au moment ou la brique s'allume -- jamais en glissement, et sans
-     lien avec la position de scroll au-dela de cet instant precis. */
-  content: ''; position: absolute; top: -18px; left: -10px; width: 64px; height: 42px;
-  background: radial-gradient(ellipse at 0% 0%, color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent), transparent 72%);
-  opacity: 0; pointer-events: none;
-  transition: opacity .4s var(--cy-ease);
 }
 .cy-spectrum.is-visible span { opacity: 1; transform: translateY(0); }
 .cy-spectrum.is-visible span:nth-child(1) { transition-delay: .05s; }
@@ -314,7 +314,9 @@
 .cy-spectrum.is-visible span:nth-child(5) { transition-delay: .33s; }
 .cy-spectrum.is-visible span:nth-child(6) { transition-delay: .4s; }
 .cy-spectrum.is-visible span:nth-child(7) { transition-delay: .47s; }
-.cy-spectrum span:hover { color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .cy-spectrum span:hover { color: #fff; }
+}
 /* Le halo reprend la teinte de la longueur d'onde, derivee d'elle plutot que
    ressaisie : --wave-glow etait une seconde ecriture de la meme couleur, en
    rgba, qu'aucun mecanisme ne tenait d'accord avec la premiere. */
@@ -323,7 +325,9 @@
   text-shadow: 0 0 18px color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent);
   transition: text-shadow .3s ease;
 }
-.cy-spectrum span:hover strong { text-shadow: 0 0 22px color-mix(in srgb, var(--wave-color, #c8102e) 70%, transparent); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-spectrum span:hover strong { text-shadow: 0 0 22px color-mix(in srgb, var(--wave-color, #c8102e) 70%, transparent); }
+}
 /*
  * Le neon, brique par brique.
  *
@@ -333,11 +337,11 @@
  * chose que la lumiere posee sur l'image, au meme moment.
  *
  * L'allumage ne bouge rien : chaque brique garde sa taille, du repos au
- * plein regime. Seuls son intensite (opacity), son halo (box-shadow) et
- * l'aplat radial derriere elle (::after) changent, par transition sur
- * classe -- jamais par une valeur derivee du scroll en continu. Une brique
- * qui grandirait avec la lecture de --cy-p se lirait comme un curseur qui
- * coulisse ; une brique qui s'allume se lit comme une brique qui s'allume.
+ * plein regime. Seuls son intensite (opacity) et son halo (box-shadow, une
+ * surcouche du trait lui-meme) changent, par transition sur classe -- jamais
+ * par une valeur derivee du scroll en continu. Une brique qui grandirait
+ * avec la lecture de --cy-p se lirait comme un curseur qui coulisse ; une
+ * brique qui s'allume se lit comme une brique qui s'allume.
  *
  * Les deux classes sont posees par cytolight-cinematic.js, une seule fois par
  * changement de longueur d'onde. Sans le script, aucune brique n'est marquee
@@ -347,33 +351,22 @@
 .cy-spectrum span.is-lit { color: #cfcfcf; }
 .cy-spectrum span.is-lit::before {
   opacity: .85;
-  box-shadow: 0 0 9px color-mix(in srgb, var(--wave-color, #c8102e) 45%, transparent);
+  box-shadow: 0 0 2px color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent);
 }
 .cy-spectrum span.is-current { color: #fff; }
+/* Un petit halo, pas un sursaut : la brique passe de son opacite de repos au
+   plein regime par un simple fondu (la transition deja posee sur ::before,
+   .4s) -- aucune animation separee ne rejoue par-dessus. Une amorce qui
+   clignote plusieurs fois avant de tenir se lit comme un flash, pas comme un
+   halo qui s'allume.
+   Le flou reste court (3px) et porte un leger etalement (1px) plutot que
+   l'inverse : un grand flou sans etalement finit par se lire comme une
+   tache diffuse, decrochee de la brique -- pas comme un halo qui la colle. */
 .cy-spectrum span.is-current::before {
   opacity: 1;
-  box-shadow:
-    0 0 16px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent),
-    0 0 38px color-mix(in srgb, var(--wave-color, #c8102e) 45%, transparent);
+  box-shadow: 0 0 3px 1px color-mix(in srgb, var(--wave-color, #c8102e) 75%, transparent);
 }
-.cy-spectrum span.is-current::after { opacity: 1; }
 .cy-spectrum span.is-current strong { text-shadow: 0 0 26px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent); }
-
-/* L'amorce : un tube neon ne monte pas en fondu, il accroche, bat une fois,
-   puis tient. L'animation ne porte que sur l'opacite du trait et de son
-   halo — elle est relancee a chaque fois que les classes sont reposees. */
-@media (prefers-reduced-motion: no-preference) {
-  .cy-spectrum span.is-current::before,
-  .cy-spectrum span.is-current::after { animation: antared-wave-ignite .52s var(--cy-ease); }
-}
-@keyframes antared-wave-ignite {
-  0%   { opacity: .25; }
-  16%  { opacity: 1; }
-  27%  { opacity: .38; }
-  44%  { opacity: 1; }
-  58%  { opacity: .66; }
-  100% { opacity: 1; }
-}
 /* Antared Redlight Cap: real two-plane parallax. The background room
    plate and the transparent product cutout are separate elements that
    drift at different scroll-linked speeds (see --cy-p multipliers
@@ -477,8 +470,10 @@
 .cy-cap-points.is-visible span:nth-child(1) { transition-delay: .05s; }
 .cy-cap-points.is-visible span:nth-child(2) { transition-delay: .15s; }
 .cy-cap-points.is-visible span:nth-child(3) { transition-delay: .25s; }
-.cy-cap-points span:hover { color: #fff; }
-.cy-cap-points span:hover::before { width: 100%; }
+@media (hover: hover) and (pointer: fine) {
+  .cy-cap-points span:hover { color: #fff; }
+  .cy-cap-points span:hover::before { width: 100%; }
+}
 /* PANO herite du cadrage contenu : plus d'origine ni d'overscan a corriger,
    seul le halo est recentre sur le panneau, qui se tient plus a droite que
    celui de DESK. */
@@ -528,7 +523,9 @@
   border: 1px solid rgba(255,255,255,.1); border-radius: 6px; background: #111; color: #fff;
   box-shadow: 0 26px 66px rgba(0,0,0,.16); transition: transform .28s var(--cy-ease), box-shadow .28s var(--cy-ease);
 }
-.cy-product:hover { transform: translateY(-4px); box-shadow: 0 34px 88px rgba(210,10,45,.22); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-product:hover { transform: translateY(-4px); box-shadow: 0 34px 88px rgba(210,10,45,.22); }
+}
 .cy-product__media { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: hidden; background: #111; }
 .cy-product__media::after {
   content: ""; position: absolute; inset: 0;
@@ -537,7 +534,9 @@
     linear-gradient(180deg, rgba(0,0,0,.1) 0%, rgba(9,0,2,.24) 38%, rgba(5,5,5,.92) 100%);
 }
 .cy-product__media img, .cy-product__media video { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(1.08) saturate(1.08) contrast(1.04); transition: transform .45s var(--cy-ease); }
-.cy-product:hover .cy-product__media img, .cy-product:hover .cy-product__media video { transform: scale(1.045); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-product:hover .cy-product__media img, .cy-product:hover .cy-product__media video { transform: scale(1.045); }
+}
 .cy-product__content { position: absolute; inset: auto 0 0; z-index: 1; display: block; padding: 26px 24px; }
 .cy-product__type { display: block; color: #ff4058; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
 .cy-product__content h3 {
@@ -572,7 +571,7 @@
   display: inline-block;
   transition: transform .34s var(--cy-ease);
 }
-@media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .cy-range .cy-product:hover .cy-link > span[aria-hidden],
   .cy-range .cy-link:hover > span[aria-hidden] {
     transform: translateX(7px);
@@ -600,9 +599,11 @@
   box-shadow: 0 26px 66px rgba(0,0,0,.16);
   transition: transform .28s var(--cy-ease), box-shadow .28s var(--cy-ease);
 }
-.cy-use__item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 34px 88px rgba(210,10,45,.22);
+@media (hover: hover) and (pointer: fine) {
+  .cy-use__item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 34px 88px rgba(210,10,45,.22);
+  }
 }
 .cy-use__media {
   position: absolute;
@@ -631,7 +632,9 @@
   filter: brightness(1.08) saturate(1.08) contrast(1.04);
   transition: transform .45s var(--cy-ease);
 }
-.cy-use__item:hover .cy-use__media img { transform: scale(1.045); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-use__item:hover .cy-use__media img { transform: scale(1.045); }
+}
 .cy-use__content {
   position: absolute;
   inset: auto 0 0;
@@ -672,7 +675,9 @@
   width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.25);
   color: #fff; background: transparent; font-size: 20px;
 }
-.cy-rail__button:hover { background: rgba(255,255,255,.08); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-rail__button:hover { background: rgba(255,255,255,.08); }
+}
 .cy-rail__track {
   display: grid; grid-auto-flow: column; grid-auto-columns: minmax(300px, 360px);
   gap: 18px; margin-top: 48px; overflow-x: auto; overscroll-behavior-x: contain;
@@ -704,8 +709,10 @@
 .cy-proof__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #d6d6d0; border-radius: 14px; overflow: hidden; }
 .cy-proof__stat { position: relative; min-height: 116px; padding: 20px 22px 18px; background: #efefec; transition: background .3s var(--cy-ease), transform .3s var(--cy-ease); }
 .cy-proof__stat::before { content: ''; position: absolute; top: 0; left: 22px; width: 26px; height: 2px; background: var(--cy-red); transition: width .4s var(--cy-ease); }
-.cy-proof__stat:hover { background: #fff; transform: translateY(-2px); }
-.cy-proof__stat:hover::before { width: 42px; }
+@media (hover: hover) and (pointer: fine) {
+  .cy-proof__stat:hover { background: #fff; transform: translateY(-2px); }
+  .cy-proof__stat:hover::before { width: 42px; }
+}
 .cy-proof__stat strong { display: block; margin-top: 13px; font-size: 28px; font-weight: 650; letter-spacing: -.01em; }
 .cy-proof__stat span { display: block; margin-top: 5px; color: var(--cy-muted); font-size: 12.5px; line-height: 1.45; }
 .cy-proof__certs { grid-column: 1 / -1; margin-top: 56px; padding-top: 40px; border-top: 1px solid #bbb; }
@@ -733,16 +740,24 @@
 .cy-table__label { display: flex; align-items: center; gap: 10px; }
 .cy-table__label svg { flex-shrink: 0; width: 17px; height: 17px; color: var(--cy-red); }
 .cy-table tbody tr { opacity: 0; transition: background .25s ease; }
-.cy-table tbody tr:hover { background: rgba(210, 13, 47, .035); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-table tbody tr:hover { background: rgba(210, 13, 47, .035); }
+}
 .cy-table tbody tr:last-child td { border-bottom: none; }
 .cy-table .cy-table__desk { background: rgba(210, 13, 47, .05); font-weight: 600; box-shadow: inset 1px 0 0 rgba(210, 13, 47, .14), inset -1px 0 0 rgba(210, 13, 47, .14); }
 .cy-table thead .cy-table__desk { background: var(--cy-red); color: #fff; border-bottom: 2px solid var(--cy-red-dark); }
-.cy-table tbody tr:hover .cy-table__desk { background: rgba(210, 13, 47, .1); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-table tbody tr:hover .cy-table__desk { background: rgba(210, 13, 47, .1); }
+}
 .cy-table__badge { display: block; margin-bottom: 4px; color: rgba(255, 255, 255, .82); font-size: 9.5px; font-weight: 650; letter-spacing: .12em; }
 .cy-table td a { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 999px; background: var(--cy-ink); color: #fff !important; font-size: 12.5px; font-weight: 650; letter-spacing: .01em; transition: background .25s var(--cy-ease), transform .25s var(--cy-ease), box-shadow .25s var(--cy-ease); }
-.cy-table td a:hover { background: var(--cy-red); transform: translateY(-1px); box-shadow: 0 10px 22px rgba(210, 13, 47, .3); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-table td a:hover { background: var(--cy-red); transform: translateY(-1px); box-shadow: 0 10px 22px rgba(210, 13, 47, .3); }
+}
 .cy-table td.cy-table__desk a { background: #fff; color: var(--cy-red) !important; }
-.cy-table td.cy-table__desk a:hover { background: var(--cy-ink); color: #fff !important; box-shadow: 0 10px 22px rgba(0, 0, 0, .28); }
+@media (hover: hover) and (pointer: fine) {
+  .cy-table td.cy-table__desk a:hover { background: var(--cy-ink); color: #fff !important; box-shadow: 0 10px 22px rgba(0, 0, 0, .28); }
+}
 @keyframes cy-row-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 .cy-table-wrap.is-visible tbody tr { animation: cy-row-in .6s var(--cy-ease) forwards; }
 .cy-table-wrap.is-visible tbody tr:nth-child(1) { animation-delay: .08s; }
@@ -857,6 +872,21 @@
      et ne change plus. */
   .cy-home .cy-cinema__beam { opacity: .34; }
   .cy-home .cy-cinema__beam > span { background-color: var(--cy-wave-660); }
+  /* Meme logique pour la liste des longueurs d'onde : sans defilement
+     fiable, l'allumage brique par brique n'a plus de sens a suivre. Elle
+     reste dans son etat de repos, jamais dans son halo, et l'amorce ne se
+     rejoue plus. */
+  .cy-home .cy-spectrum span.is-lit,
+  .cy-home .cy-spectrum span.is-current { color: #a8a8a8; }
+  .cy-home .cy-spectrum span.is-lit::before,
+  .cy-home .cy-spectrum span.is-current::before {
+    opacity: .38;
+    box-shadow: 0 0 0 transparent;
+    animation: none;
+  }
+  .cy-home .cy-spectrum span.is-current strong {
+    text-shadow: 0 0 18px color-mix(in srgb, var(--wave-color, #c8102e) 55%, transparent);
+  }
   .cy-home .cy-cinema--cap .cy-cinema__foreground,
   .cy-home .cy-cinema--cap .cy-cinema__glow {
     top: 0; right: 0; bottom: auto; left: 0;
@@ -901,7 +931,12 @@
   .cy-product:first-child { grid-column: auto; }
   .cy-product { min-height: 380px; }
   .cy-cap-points { grid-template-columns: 1fr; }
-  .cy-spectrum { grid-template-columns: repeat(4, 1fr); gap: 18px 4px; }
+  /* Les sept briques tiennent sur une seule ligne meme en mobile : les
+     empiler sur deux rangees inegales (7 = 4+3) cassait la lecture en
+     spectre continu que la rangee unique porte sur desktop. */
+  .cy-spectrum { grid-template-columns: repeat(7, 1fr); gap: 0 3px; margin-top: 26px; }
+  .cy-spectrum span { padding: 12px 2px 0 0; font-size: 8.5px; }
+  .cy-spectrum strong { font-size: 10px; margin-bottom: 3px; }
   .cy-rail__top { align-items: flex-start; flex-direction: column; }
   .cy-rail__track { grid-auto-columns: minmax(278px, 82vw); }
   .cy-use__item { min-height: 340px; }
