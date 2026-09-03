@@ -17,7 +17,7 @@
     "color_muted": "#7a6f66",
     "color_accent": "#c7996e",
     "color_accent_soft": "#ebdbcb",
-    "color_accent_deep": "#644839",
+    "color_accent_deep": "#a80a26",
     "color_promo": "#D81126",
     "font_body": "Instrument Sans",
     "font_display": "Instrument Serif",
@@ -50,7 +50,7 @@
       "color_muted": "#7a6f66",
       "color_accent": "#c7996e",
       "color_accent_soft": "#ebdbcb",
-      "color_accent_deep": "#644839",
+      "color_accent_deep": "#a80a26",
       "color_promo": "#D81126",
       "font_body": "Instrument Sans",
       "font_display": "Instrument Serif"

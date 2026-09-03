@@ -1,0 +1,187 @@
+{%- comment -%}
+  Coquille commune a quatre pages du panneau « Pourquoi Antared » — la marque
+  (our-approach, our-story) et le produit (quality, technology) — qui
+  derivent leur contenu depuis `page.handle`, exactement comme
+  protocol-page.liquid et pro-page.liquid le font pour leurs propres familles.
+  Quatre gabarits d'une ligne, une seule mise en page a maintenir.
+
+  Contenu traduit depuis l'anglais qui vivait dans le corps de page (admin)
+  avant ce chantier — rien d'invente. Une seule correction de fond : ces
+  quatre pages annoncaient un essai de 30 jours, alors que main-cart.liquid,
+  learn-how-it-works.liquid et chaque fiche produit disent 14 jours partout
+  ailleurs (essai) et 2 ans (garantie). Les chiffres ici suivent desormais ce
+  qui fait foi sur le reste du site, comme le veut la regle deja en place pour
+  Protocoles, Objectifs et Pro.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign url_values = pages['nos-valeurs'].url
+  if url_values == blank
+    assign url_values = locale_root | append: '/pages/nos-valeurs'
+  endif
+  assign url_approach = pages['our-approach'].url
+  if url_approach == blank
+    assign url_approach = locale_root | append: '/pages/our-approach'
+  endif
+  assign url_faq = pages['faq'].url
+  if url_faq == blank
+    assign url_faq = locale_root | append: '/pages/faq'
+  endif
+  assign url_wavelengths = pages['wavelengths'].url
+  if url_wavelengths == blank
+    assign url_wavelengths = locale_root | append: '/pages/wavelengths'
+  endif
+
+  assign handle = page.handle
+-%}
+
+<section class="ln-hero">
+    <div class="ln-shell ln-shell--narrow">
+      <p class="ln-crumbs">
+        <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
+        <span aria-hidden="true">/</span>
+        {% if is_fr %}Pourquoi Antared{% else %}Why Antared{% endif %}
+      </p>
+      <p class="ln-kicker">
+        {%- case handle -%}
+          {%- when 'our-approach' -%}{% if is_fr %}Notre approche{% else %}Our Approach{% endif %}
+          {%- when 'our-story' -%}{% if is_fr %}Notre histoire{% else %}Our Story{% endif %}
+          {%- when 'quality' -%}{% if is_fr %}Qualit&eacute;{% else %}Quality{% endif %}
+          {%- when 'technology' -%}{% if is_fr %}Technologie{% else %}Technology{% endif %}
+        {%- endcase -%}
+      </p>
+      <h1 class="ln-title">
+        {%- case handle -%}
+          {%- when 'our-approach' -%}
+            {%- if is_fr -%}
+              Sous-promettre, et laisser les caract&eacute;ristiques parler.
+            {%- else -%}
+              Underpromise, and let the specifications speak for themselves.
+            {%- endif -%}
+          {%- when 'our-story' -%}
+            {%- if is_fr -%}
+              N&eacute;e d'une frustration simple.
+            {%- else -%}
+              Started with a simple frustration.
+            {%- endif -%}
+          {%- when 'quality' -%}
+            {%- if is_fr -%}
+              Ce &agrave; quoi nous tenons chaque appareil Antared.
+            {%- else -%}
+              What we hold every Antared device to.
+            {%- endif -%}
+          {%- when 'technology' -%}
+            {%- if is_fr -%}
+              Une seule d&eacute;cision, r&eacute;p&eacute;t&eacute;e appareil apr&egrave;s appareil.
+            {%- else -%}
+              One decision, repeated device after device.
+            {%- endif -%}
+        {%- endcase -%}
+      </h1>
+    </div>
+  </section>
+
+  <section class="ln-section">
+    <div class="ln-shell ln-shell--narrow">
+      <div class="ln-prose">
+
+        {%- case handle -%}
+
+          {%- when 'our-approach' -%}
+            <p>
+              {%- if is_fr -%}
+                La plupart des discours marketing en luminoth&eacute;rapie rouge en promettent trop. Nous pr&eacute;f&eacute;rons sous-promettre et laisser les caract&eacute;ristiques techniques parler d'elles-m&ecirc;mes.
+              {%- else -%}
+                Most red light therapy marketing overpromises. We'd rather underpromise and let the specifications speak for themselves.
+              {%- endif -%}
+            </p>
+            <h2>{% if is_fr %}Ce que cela veut dire concr&egrave;tement{% else %}What that means in practice{% endif %}</h2>
+            <ul>
+              <li>{%- if is_fr -%}Nous n'affirmons pas que les appareils Antared diagnostiquent, traitent, gu&eacute;rissent ou pr&eacute;viennent une maladie &mdash; nous d&eacute;crivons l'usage de la lumi&egrave;re et vous laissons juger si cela correspond &agrave; votre routine.{%- else -%}We don't claim Antared devices diagnose, treat, cure, or prevent any disease &mdash; we describe what the light is used for and let you decide if it fits your routine.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Nous publions les caract&eacute;ristiques r&eacute;elles sur chaque fiche produit, pas des approximations flatteuses.{%- else -%}We publish real specifications on every product page, not marketing-friendly approximations.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Nous concevons pour la r&eacute;gularit&eacute; &mdash; un appareil facile &agrave; garder compte plus qu'une fiche technique impressionnante que personne n'utilise vraiment.{%- else -%}We design for consistency &mdash; a device that's easy to keep using matters more than one with an impressive spec sheet nobody actually uses.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Nous proposons un essai honn&ecirc;te de 14 jours plut&ocirc;t que des techniques de pression, parce qu'une routine s'int&egrave;gre &agrave; une vie ou ne s'y int&egrave;gre pas.{%- else -%}We offer an honest 14-day trial rather than pressure tactics, because a routine either fits your life or it doesn't.{%- endif -%}</li>
+            </ul>
+            <p><a class="ln-link" href="{{ url_values }}">{% if is_fr %}En savoir plus sur nos valeurs{% else %}Read more about our values{% endif %} <span aria-hidden="true">&rarr;</span></a></p>
+
+          {%- when 'our-story' -%}
+            <p>
+              {%- if is_fr -%}
+                Antared est n&eacute;e d'une frustration simple&nbsp;: la plupart des appareils de luminoth&eacute;rapie rouge et proche infrarouge du march&eacute; dissimulent leurs caract&eacute;ristiques derri&egrave;re un discours marketing vague, ou enterrent une vraie ing&eacute;nierie sous un prix gonfl&eacute;. Nous avons voulu construire une gamme qui ne fasse ni l'un ni l'autre &mdash; des appareils aux longueurs d'onde et au nombre de LED annonc&eacute;s clairement, pens&eacute;s pour les routines que les gens tiennent vraiment, &agrave; un prix qui refl&egrave;te le mat&eacute;riel plut&ocirc;t que le budget marketing derri&egrave;re.
+              {%- else -%}
+                Antared started with a simple frustration: most red and near-infrared light therapy devices on the market either hide their specifications behind vague marketing language, or bury real engineering under an inflated price tag. We set out to build a range that does neither &mdash; devices with disclosed wavelengths and LED counts, built for the routines people actually keep, at a price that reflects the hardware rather than the marketing budget behind it.
+              {%- endif -%}
+            </p>
+            <p>
+              {%- if is_fr -%}
+                C'est toujours ce qui guide chaque appareil que nous ajoutons &agrave; la gamme&nbsp;: des caract&eacute;ristiques r&eacute;elles, un format que les gens utiliseront vraiment, et aucune promesse que nous ne pouvons pas tenir.
+              {%- else -%}
+                That's still what guides every device we add to the range: real specifications, a format people will actually use, and no claims we can't stand behind.
+              {%- endif -%}
+            </p>
+            <p><a class="ln-link" href="{{ url_approach }}">{% if is_fr %}En savoir plus sur notre approche{% else %}Read more about our approach{% endif %} <span aria-hidden="true">&rarr;</span></a></p>
+
+          {%- when 'quality' -%}
+            <p>
+              {%- if is_fr -%}
+                La qualit&eacute; de fabrication varie &eacute;norm&eacute;ment d'un appareil de luminoth&eacute;rapie &agrave; l'autre. Voici ce &agrave; quoi nous tenons chaque appareil Antared.
+              {%- else -%}
+                Light therapy devices vary enormously in build quality. Here's what we hold every Antared device to.
+              {%- endif -%}
+            </p>
+            <ul>
+              <li>{%- if is_fr -%}Certifi&eacute;s CE sur toute la gamme.{%- else -%}CE certified across the range.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Appareils list&eacute;s FDA.{%- else -%}FDA listed devices.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Garantie de 2 ans contre les d&eacute;fauts de fabrication et les pannes mat&eacute;rielles, sur chaque appareil.{%- else -%}2-year warranty covering manufacturing defects and hardware failures on every device.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Essai &agrave; domicile de 14 jours &mdash; jugez-le dans votre propre routine avant de d&eacute;cider.{%- else -%}14-day home trial &mdash; try it in your own routine before deciding.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Z&eacute;ro &eacute;mission UV &mdash; chaque appareil n'utilise que les longueurs d'onde rouge et proche infrarouge.{%- else -%}Zero UV output &mdash; every device uses red and near-infrared wavelengths only.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Nous publions les caract&eacute;ristiques r&eacute;elles &mdash; longueurs d'onde, nombre de LED, irradiance quand elle est disponible &mdash; sur chaque fiche produit, plut&ocirc;t qu'un discours marketing vague.{%- else -%}We publish real specifications &mdash; wavelengths, LED counts, irradiance where available &mdash; on every product page, rather than vague marketing language.{%- endif -%}</li>
+            </ul>
+            <p><a class="ln-link" href="{{ url_faq }}">{% if is_fr %}Voir les questions fr&eacute;quentes{% else %}See frequently asked questions{% endif %} <span aria-hidden="true">&rarr;</span></a></p>
+
+          {%- when 'technology' -%}
+            <p>
+              {%- if is_fr -%}
+                Chaque appareil Antared est construit autour de la m&ecirc;me d&eacute;cision de fond&nbsp;: quelles longueurs d'onde, dans quelle combinaison, &agrave; quelle puissance &mdash; et rien laiss&eacute; vague.
+              {%- else -%}
+                Every Antared device is built around the same core decision: which wavelengths, in what combination, at what output &mdash; and nothing left vague.
+              {%- endif -%}
+            </p>
+            <h2>{% if is_fr %}Ce qui entre dans chaque appareil{% else %}What goes into each device{% endif %}</h2>
+            <ul>
+              <li>{%- if is_fr -%}Longueurs d'onde calibr&eacute;es &mdash; de 460&nbsp;nm (bleu) &agrave; 940&nbsp;nm (infrarouge profond), chacune choisie pour un r&ocirc;le pr&eacute;cis plut&ocirc;t qu'une seule longueur d'onde &agrave; puissance maximale.{%- else -%}Calibrated wavelengths &mdash; from 460nm blue to 940nm deep infrared, each chosen for a specific role rather than a single wavelength at maximum power.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Caract&eacute;ristiques r&eacute;elles et publi&eacute;es &mdash; nombre de LED, irradiance et combinaisons de longueurs d'onde sont indiqu&eacute;s sur chaque fiche produit, pas dissimul&eacute;s derri&egrave;re un discours marketing.{%- else -%}Real, disclosed specifications &mdash; LED counts, irradiance, and wavelength combinations are published on every product page, not hidden behind marketing language.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Contr&ocirc;le ind&eacute;pendant &mdash; sur les appareils multi-spectres comme DESK, chaque longueur d'onde se r&egrave;gle ind&eacute;pendamment plut&ocirc;t que de fonctionner sur un seul r&eacute;glage fixe.{%- else -%}Independent control &mdash; on multi-spectrum devices like DESK, each wavelength can be adjusted independently rather than running as one fixed setting.{%- endif -%}</li>
+              <li>{%- if is_fr -%}Pens&eacute; pour la r&eacute;p&eacute;tabilit&eacute; &mdash; formats port&eacute;s, batteries magn&eacute;tiques et commandes simples existent pour qu'une s&eacute;ance soit facile &agrave; r&eacute;p&eacute;ter, pas seulement possible une fois.{%- else -%}Built for repeatability &mdash; wearable formats, magnetic batteries, and simple controls exist to make a session easy to repeat, not just possible once.{%- endif -%}</li>
+            </ul>
+            <p><a class="ln-link" href="{{ url_wavelengths }}">{% if is_fr %}Voir ce que fait chaque longueur d'onde{% else %}See what each wavelength does{% endif %} <span aria-hidden="true">&rarr;</span></a></p>
+
+        {%- endcase -%}
+
+      </div>
+    </div>
+  </section>
+
+  {% render 'learn-product-cta', handles: 'cytolight-desk,cytolight-cap,antared-pano-ultra' %}
+
+{% schema %}
+{
+  "name": "Why Antared — page",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Rendu par les gabarits page.our-approach, page.our-story, page.quality et page.technology. Le contenu se derive du handle de la page — pas de reglage a modifier ici."
+    }
+  ]
+}
+{% endschema %}

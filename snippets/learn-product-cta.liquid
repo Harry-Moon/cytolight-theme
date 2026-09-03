@@ -22,7 +22,7 @@
     assign is_fr = true
   endif
 
-  assign handle_list = handles | default: 'cytolight-desk,cytolight-mask,cytolight-pano-ultra' | split: ','
+  assign handle_list = handles | default: 'cytolight-desk,cytolight-mask,antared-pano-ultra' | split: ','
 -%}
 
 <section class="ln-cta"{% if id %} id="{{ id }}"{% endif %}>
@@ -75,7 +75,7 @@
                 assign pick_type_en = 'Foot &middot; Wraparound'
                 assign pick_text_fr = "Botte souple qui enveloppe pied, talon et cheville pour une routine calme apr&egrave;s l'effort."
                 assign pick_text_en = 'Soft boot wrapping the foot, heel, and ankle for a calm routine after training or long days.'
-              when 'cytolight-pano-ultra'
+              when 'antared-pano-ultra'
                 assign pick_type_fr = 'Corps entier &middot; Grand format'
                 assign pick_type_en = 'Full body &middot; Large format'
                 assign pick_text_fr = 'Panneau grand format pour les routines corps entier, les studios et la r&eacute;cup&eacute;ration sportive.'

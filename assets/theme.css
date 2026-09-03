@@ -9,7 +9,7 @@
  */
 
 /* ============================================================
-   BON CHARGE-Inspired Shopify Theme
+   Antared Shopify Theme
    Warm wellness-luxe palette · cream + tan + black + serif/sans
    ============================================================ */
 
@@ -63,10 +63,24 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  *
  * `--cta-red` est le rouge de la marque, celui que chaque famille de boutons
  * ecrit deja de son cote (--cy-red sur l'accueil, --ln-red sur les pages
- * Learn, #c8102e sur la fiche produit). Il n'est PAS derive de
- * `--color-accent` : ce reglage vaut #c7996e, un sable herite d'une palette
- * anterieure, qui sert encore aux liens et aux pastilles. Un survol calcule
- * dessus donnait un bouton beige, et une ombre beige sous un bouton rouge.
+ * Learn, #d20d2f sur la fiche produit — les quatre s'alignent desormais sur
+ * la meme valeur). Il n'est PAS derive de `--color-accent`.
+ *
+ * La palette porte trois couleurs, pas une seule :
+ *   --cta-red (#d20d2f)         le rouge principal — CTA, prix, alertes.
+ *   --color-accent-deep (#a80a26)  un rouge plus sombre, la couleur d'ACCENT :
+ *                                survol et etat actif du header (liens
+ *                                utilitaires, icones, onglet du mega-menu,
+ *                                selecteur de langue), lignes de reduction du
+ *                                panier.
+ *   --color-accent (#c7996e)    l'ambre — une troisieme couleur deliberee,
+ *                                pas un reliquat : petit point d'indicateur
+ *                                du nav, soulignement au survol des liens du
+ *                                header, badge du panier, fond au repos des
+ *                                CTA du questionnaire Find Your Antared.
+ * Un survol du header calcule sur `--color-accent` (l'ambre) donnait un
+ * bouton beige plutot que rouge — c'est `--color-accent-deep` qui porte le
+ * rouge d'accent, l'ambre reste reserve a ces quelques usages nommes.
  */
 :root {
   --cta-red: #d20d2f;
@@ -211,31 +225,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   background: #fff;
   border-bottom: 1px solid rgba(0,0,0,.08);
   box-shadow: 0 18px 50px rgba(0,0,0,.05);
-}
-.site-header__proof {
-  display: flex;
-  justify-content: center;
-  gap: clamp(16px, 4vw, 42px);
-  padding: 7px 16px;
-  background: #111;
-  color: rgba(255,255,255,.82);
-  font-size: .69rem;
-  font-weight: 800;
-  letter-spacing: .12em;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-.site-header__proof span { position: relative; white-space: nowrap; }
-.site-header__proof span + span::before {
-  content: "";
-  position: absolute;
-  left: calc(clamp(16px, 4vw, 42px) / -2);
-  top: 50%;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  transform: translate(-50%, -50%);
 }
 /*
  * Barre utilitaire : logo centre, utilitaires de part et d'autre, puis une
@@ -555,8 +544,6 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 }
 @media (max-width: 1300px) {
   .site-header__nav { display: none; }
-  .site-header__proof { overflow-x: auto; justify-content: flex-start; padding: 7px 20px; scrollbar-width: none; }
-  .site-header__proof::-webkit-scrollbar { display: none; }
   /*
    * La barre garde ses trois colonnes `1fr auto 1fr`. En passant a
    * `auto 1fr auto`, le logo etait centre dans la place qui restait entre le
@@ -577,19 +564,7 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   .site-header__util-link { display: none; }
   .site-header__icon { width: 36px; height: 36px; }
 }
-@media (max-width: 800px) {
-  /*
-   * Le bandeau de reassurance disparait sur mobile. Il n'y tenait pas sur une
-   * ligne : il devenait une bande noire a defilement horizontal, dont le
-   * second argument restait hors champ. Un argument qu'on ne lit pas ne
-   * rassure personne, et il coutait une hauteur de barre sur l'ecran le plus
-   * etroit. Les memes engagements sont repris dans le tiroir, sur la fiche
-   * produit et dans le panier.
-   */
-  .site-header__proof { display: none; }
-}
 @media (max-width: 420px) {
-  .site-header__proof { font-size: .62rem; }
   .site-header__lang-code { display: none; }
 }
 
