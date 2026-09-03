@@ -14,11 +14,11 @@
   const resultCards = Array.from(root.querySelectorAll('[data-fyc-product]'));
   const resultStepIndex = steps.findIndex((s) => s.dataset.fycKind === 'result');
   const PRIORITY = [
-    'cytolight-desk',
+    'antared-desk-red-light-therapy-panel',
     'antared-pano-ultra',
-    'cytolight-sauna-dome',
-    'cytolight-cap',
-    'cytolight-mask'
+    'antared-sauna-dome-infrared-red-light-pemf',
+    'cap',
+    'mask'
   ];
 
   let current = 0;

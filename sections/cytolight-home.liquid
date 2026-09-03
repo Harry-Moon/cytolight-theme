@@ -15,17 +15,17 @@
 
   assign desk_product = section.settings.featured_product
   if desk_product == blank
-    assign desk_product = all_products['cytolight-desk']
+    assign desk_product = all_products['antared-desk-red-light-therapy-panel']
   endif
 
-  assign desk_url = locale_root | append: '/products/cytolight-desk'
+  assign desk_url = locale_root | append: '/products/antared-desk-red-light-therapy-panel'
   if desk_product != blank
     assign desk_url = desk_product.url
   endif
 
 
-  assign cap_product = all_products['cytolight-cap']
-  assign cap_url = locale_root | append: '/products/cytolight-cap'
+  assign cap_product = all_products['cap']
+  assign cap_url = locale_root | append: '/products/cap'
   if cap_product != blank
     assign cap_url = cap_product.url
   endif
@@ -36,8 +36,8 @@
     assign pano_ultra_url = pano_ultra_product.url
   endif
 
-  assign mask_product = all_products['cytolight-mask']
-  assign mask_url = locale_root | append: '/products/cytolight-mask'
+  assign mask_product = all_products['mask']
+  assign mask_url = locale_root | append: '/products/mask'
   if mask_product != blank
     assign mask_url = mask_product.url
   endif
@@ -47,8 +47,8 @@
     assign academy_url = locale_root | append: '/pages/academy'
   endif
 
-  assign sauna_dome_product = all_products['cytolight-sauna-dome']
-  assign sauna_dome_url = locale_root | append: '/products/cytolight-sauna-dome'
+  assign sauna_dome_product = all_products['antared-sauna-dome-infrared-red-light-pemf']
+  assign sauna_dome_url = locale_root | append: '/products/antared-sauna-dome-infrared-red-light-pemf'
   if sauna_dome_product != blank
     assign sauna_dome_url = sauna_dome_product.url
   endif

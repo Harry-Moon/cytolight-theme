@@ -12,11 +12,21 @@
     assign is_fr = true
   endif
 
-  assign desk_product = all_products['cytolight-desk']
-  assign cap_product = all_products['cytolight-cap']
-  assign mask_product = all_products['cytolight-mask']
-  assign sauna_dome_product = all_products['cytolight-sauna-dome']
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign desk_product = all_products['antared-desk-red-light-therapy-panel']
+  assign desk_url = desk_product.url | default: locale_root | append: '/products/antared-desk-red-light-therapy-panel'
+  assign cap_product = all_products['cap']
+  assign cap_url = cap_product.url | default: locale_root | append: '/products/cap'
+  assign mask_product = all_products['mask']
+  assign mask_url = mask_product.url | default: locale_root | append: '/products/mask'
+  assign sauna_dome_product = all_products['antared-sauna-dome-infrared-red-light-pemf']
+  assign sauna_dome_url = sauna_dome_product.url | default: locale_root | append: '/products/antared-sauna-dome-infrared-red-light-pemf'
   assign pano_ultra_product = all_products['antared-pano-ultra']
+  assign pano_ultra_url = pano_ultra_product.url | default: locale_root | append: '/products/antared-pano-ultra'
 -%}
 
 {{ 'find-your-cytolight.css' | asset_url | stylesheet_tag }}
@@ -42,40 +52,40 @@
         <div class="fyc-step" data-fyc-step data-fyc-kind="question">
           <p class="fyc-question">{% if is_fr %}O&ugrave; l'utiliserez-vous le plus souvent&nbsp;?{% else %}Where will you use it most?{% endif %}</p>
           <div class="fyc-options" role="group">
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-sauna-dome":2,"cytolight-mask":1,"cytolight-cap":1,"cytolight-desk":1}'>{% if is_fr %}Maison{% else %}Home{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":3}'>{% if is_fr %}Bureau{% else %}Office{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-sauna-dome":2,"antared-pano-ultra":2}'>{% if is_fr %}Salle de sport{% else %}Gym{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-cap":2,"cytolight-mask":1}'>{% if is_fr %}En d&eacute;placement{% else %}On the go{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-sauna-dome-infrared-red-light-pemf":2,"mask":1,"cap":1,"antared-desk-red-light-therapy-panel":1}'>{% if is_fr %}Maison{% else %}Home{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-desk-red-light-therapy-panel":3}'>{% if is_fr %}Bureau{% else %}Office{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-sauna-dome-infrared-red-light-pemf":2,"antared-pano-ultra":2}'>{% if is_fr %}Salle de sport{% else %}Gym{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cap":2,"mask":1}'>{% if is_fr %}En d&eacute;placement{% else %}On the go{% endif %}</button>
           </div>
         </div>
 
         <div class="fyc-step" data-fyc-step data-fyc-kind="question">
           <p class="fyc-question">{% if is_fr %}Quel est votre objectif principal&nbsp;?{% else %}What's your main focus?{% endif %}</p>
           <div class="fyc-options" role="group">
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-sauna-dome":3,"antared-pano-ultra":2,"cytolight-desk":1}'>{% if is_fr %}R&eacute;cup&eacute;ration &amp; muscles{% else %}Recovery &amp; muscles{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":2,"cytolight-sauna-dome":2,"cytolight-mask":1}'>{% if is_fr %}Sommeil &amp; d&eacute;tente{% else %}Sleep &amp; relaxation{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-mask":4}'>{% if is_fr %}Peau &amp; &eacute;clat{% else %}Skin &amp; glow{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-cap":4}'>{% if is_fr %}Cheveux &amp; cuir chevelu{% else %}Hair &amp; scalp{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-sauna-dome":4,"antared-pano-ultra":2}'>{% if is_fr %}R&eacute;initialisation corps entier{% else %}Full-body reset{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-sauna-dome-infrared-red-light-pemf":3,"antared-pano-ultra":2,"antared-desk-red-light-therapy-panel":1}'>{% if is_fr %}R&eacute;cup&eacute;ration &amp; muscles{% else %}Recovery &amp; muscles{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-desk-red-light-therapy-panel":2,"antared-sauna-dome-infrared-red-light-pemf":2,"mask":1}'>{% if is_fr %}Sommeil &amp; d&eacute;tente{% else %}Sleep &amp; relaxation{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"mask":4}'>{% if is_fr %}Peau &amp; &eacute;clat{% else %}Skin &amp; glow{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cap":4}'>{% if is_fr %}Cheveux &amp; cuir chevelu{% else %}Hair &amp; scalp{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-sauna-dome-infrared-red-light-pemf":4,"antared-pano-ultra":2}'>{% if is_fr %}R&eacute;initialisation corps entier{% else %}Full-body reset{% endif %}</button>
           </div>
         </div>
 
         <div class="fyc-step" data-fyc-step data-fyc-kind="question">
           <p class="fyc-question">{% if is_fr %}Quel est votre niveau avec la luminoth&eacute;rapie&nbsp;?{% else %}How familiar are you with light therapy?{% endif %}</p>
           <div class="fyc-options" role="group">
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-cap":1,"cytolight-mask":1}'>{% if is_fr %}D&eacute;butant{% else %}New to it{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":1,"cytolight-cap":1,"cytolight-mask":1}'>{% if is_fr %}Je l'ai d&eacute;j&agrave; essay&eacute;e{% else %}I've tried it before{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":2,"antared-pano-ultra":1}'>{% if is_fr %}Je l'utilise r&eacute;guli&egrave;rement{% else %}I use it regularly{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-pano-ultra":3,"cytolight-sauna-dome":2,"cytolight-desk":1}'>{% if is_fr %}Utilisateur avanc&eacute; ou professionnel{% else %}Advanced or professional user{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cap":1,"mask":1}'>{% if is_fr %}D&eacute;butant{% else %}New to it{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-desk-red-light-therapy-panel":1,"cap":1,"mask":1}'>{% if is_fr %}Je l'ai d&eacute;j&agrave; essay&eacute;e{% else %}I've tried it before{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-desk-red-light-therapy-panel":2,"antared-pano-ultra":1}'>{% if is_fr %}Je l'utilise r&eacute;guli&egrave;rement{% else %}I use it regularly{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-pano-ultra":3,"antared-sauna-dome-infrared-red-light-pemf":2,"antared-desk-red-light-therapy-panel":1}'>{% if is_fr %}Utilisateur avanc&eacute; ou professionnel{% else %}Advanced or professional user{% endif %}</button>
           </div>
         </div>
 
         <div class="fyc-step" data-fyc-step data-fyc-kind="question">
           <p class="fyc-question">{% if is_fr %}Comment souhaitez-vous l'utiliser&nbsp;?{% else %}How do you want to use it?{% endif %}</p>
           <div class="fyc-options" role="group">
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-cap":3,"cytolight-mask":2}'>{% if is_fr %}Mains libres, pendant une autre activit&eacute;{% else %}Hands-free, while I do something else{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-desk":3,"antared-pano-ultra":2}'>{% if is_fr %}Assis, avec un panneau{% else %}Sit and unwind with a panel{% endif %}</button>
-            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cytolight-sauna-dome":3,"antared-pano-ultra":2}'>{% if is_fr %}Une session immersive compl&egrave;te{% else %}A full immersive session{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"cap":3,"mask":2}'>{% if is_fr %}Mains libres, pendant une autre activit&eacute;{% else %}Hands-free, while I do something else{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-desk-red-light-therapy-panel":3,"antared-pano-ultra":2}'>{% if is_fr %}Assis, avec un panneau{% else %}Sit and unwind with a panel{% endif %}</button>
+            <button type="button" class="fyc-option" data-fyc-option data-scores='{"antared-sauna-dome-infrared-red-light-pemf":3,"antared-pano-ultra":2}'>{% if is_fr %}Une session immersive compl&egrave;te{% else %}A full immersive session{% endif %}</button>
           </div>
         </div>
 
@@ -86,7 +96,7 @@
 
           <div class="fyc-results" data-fyc-results>
 
-            <div class="fyc-result-card" data-fyc-product="cytolight-desk" hidden>
+            <div class="fyc-result-card" data-fyc-product="antared-desk-red-light-therapy-panel" hidden>
               <span class="fyc-result-card__media"><img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="Antared DESK" width="900" height="700" loading="lazy"></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Personnel &middot; Bureau{% else %}Personal &middot; Desktop{% endif %}</span>
@@ -94,12 +104,12 @@
                 <p>{% if is_fr %}Le panneau compact &agrave; 7 spectres pour la r&eacute;cup&eacute;ration, la concentration, le sommeil et la peau au quotidien.{% else %}The compact 7-spectrum panel for daily recovery, focus, sleep, and skin.{% endif %}</p>
                 {%- if desk_product != blank -%}
                   <span class="fyc-result-card__price">{{ desk_product.price | money }}</span>
-                  <a class="fyc-result-card__cta" href="{{ desk_product.url }}">{% if is_fr %}D&eacute;couvrir Antared DESK{% else %}Discover Antared DESK{% endif %}</a>
                 {%- endif -%}
+                <a class="fyc-result-card__cta" href="{{ desk_url }}">{% if is_fr %}D&eacute;couvrir Antared DESK{% else %}Discover Antared DESK{% endif %}</a>
               </div>
             </div>
 
-            <div class="fyc-result-card" data-fyc-product="cytolight-cap" hidden>
+            <div class="fyc-result-card" data-fyc-product="cap" hidden>
               <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/6a9ef77bf5f84b87aa84e0f43685a21b.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Cheveux &middot; Mains libres{% else %}Hair &middot; Hands-free{% endif %}</span>
@@ -107,12 +117,12 @@
                 <p>{% if is_fr %}Une casquette de luminoth&eacute;rapie rouge et proche infrarouge pour une routine cuir chevelu simple et mains libres.{% else %}A wearable red and near-infrared cap for an easy, hands-free scalp routine.{% endif %}</p>
                 {%- if cap_product != blank -%}
                   <span class="fyc-result-card__price">{{ cap_product.price | money }}</span>
-                  <a class="fyc-result-card__cta" href="{{ cap_product.url }}">{% if is_fr %}D&eacute;couvrir la casquette{% else %}Discover the cap{% endif %}</a>
                 {%- endif -%}
+                <a class="fyc-result-card__cta" href="{{ cap_url }}">{% if is_fr %}D&eacute;couvrir la casquette{% else %}Discover the cap{% endif %}</a>
               </div>
             </div>
 
-            <div class="fyc-result-card" data-fyc-product="cytolight-mask" hidden>
+            <div class="fyc-result-card" data-fyc-product="mask" hidden>
               <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/6e729ca4196441df8bb75480e0ddb070.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Visage &middot; Beaut&eacute;{% else %}Face &middot; Beauty{% endif %}</span>
@@ -120,12 +130,12 @@
                 <p>{% if is_fr %}Un masque LED souple pour une routine visage courte et sans fil.{% else %}A flexible LED mask for a short, cordless face routine.{% endif %}</p>
                 {%- if mask_product != blank -%}
                   <span class="fyc-result-card__price">{{ mask_product.price | money }}</span>
-                  <a class="fyc-result-card__cta" href="{{ mask_product.url }}">{% if is_fr %}D&eacute;couvrir le masque{% else %}Discover the mask{% endif %}</a>
                 {%- endif -%}
+                <a class="fyc-result-card__cta" href="{{ mask_url }}">{% if is_fr %}D&eacute;couvrir le masque{% else %}Discover the mask{% endif %}</a>
               </div>
             </div>
 
-            <div class="fyc-result-card" data-fyc-product="cytolight-sauna-dome" hidden>
+            <div class="fyc-result-card" data-fyc-product="antared-sauna-dome-infrared-red-light-pemf" hidden>
               <span class="fyc-result-card__media"><video src="https://cdn.shopify.com/videos/c/o/v/9d2bd3a6903d47e59681aa03932a88fa.mp4" autoplay loop muted playsinline aria-hidden="true"></video></span>
               <div class="fyc-result-card__body">
                 <span class="fyc-result-card__type">{% if is_fr %}Corps entier &middot; R&eacute;cup&eacute;ration{% else %}Full Body &middot; Recovery{% endif %}</span>
@@ -133,8 +143,8 @@
                 <p>{% if is_fr %}Un d&ocirc;me infrarouge complet combinant lumi&egrave;re, chaleur et PEMF en une seule session.{% else %}A full-body infrared dome combining light, heat, and PEMF into one complete session.{% endif %}</p>
                 {%- if sauna_dome_product != blank -%}
                   <span class="fyc-result-card__price">{{ sauna_dome_product.price | money }}</span>
-                  <a class="fyc-result-card__cta" href="{{ sauna_dome_product.url }}">{% if is_fr %}D&eacute;couvrir Antared Sauna Dome{% else %}Discover Antared Sauna Dome{% endif %}</a>
                 {%- endif -%}
+                <a class="fyc-result-card__cta" href="{{ sauna_dome_url }}">{% if is_fr %}D&eacute;couvrir Antared Sauna Dome{% else %}Discover Antared Sauna Dome{% endif %}</a>
               </div>
             </div>
 
@@ -146,8 +156,8 @@
                 <p>{% if is_fr %}Un panneau grand format pour une couverture corps entier en studio ou salle de sport.{% else %}A large-format panel for full-body coverage in studios, gyms, and wellness rooms.{% endif %}</p>
                 {%- if pano_ultra_product != blank -%}
                   <span class="fyc-result-card__price">{{ pano_ultra_product.price | money }}</span>
-                  <a class="fyc-result-card__cta" href="{{ pano_ultra_product.url }}">{% if is_fr %}D&eacute;couvrir PANO ULTRA{% else %}Discover PANO ULTRA{% endif %}</a>
                 {%- endif -%}
+                <a class="fyc-result-card__cta" href="{{ pano_ultra_url }}">{% if is_fr %}D&eacute;couvrir PANO ULTRA{% else %}Discover PANO ULTRA{% endif %}</a>
               </div>
             </div>
 

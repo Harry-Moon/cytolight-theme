@@ -155,12 +155,12 @@
               <summary class="site-header__drawer-group-toggle">{% if is_fr %}Boutique{% else %}Shop{% endif %}</summary>
               <div class="site-header__drawer-group-body">
                 <a class="site-header__drawer-all" href="{{ url_shop }}">{% if is_fr %}Tous les produits{% else %}All Products{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-mask">{% if is_fr %}Masque{% else %}Mask{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-desk">Desk</a>
+                <a href="{{ locale_root }}/products/mask">{% if is_fr %}Masque{% else %}Mask{% endif %}</a>
+                <a href="{{ locale_root }}/products/antared-desk-red-light-therapy-panel">Desk</a>
                 <a href="{{ col_panels }}">{% if is_fr %}Panneaux{% else %}Panels{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-sauna-dome">{% if is_fr %}D&ocirc;me{% else %}Dome{% endif %}</a>
+                <a href="{{ locale_root }}/products/antared-sauna-dome-infrared-red-light-pemf">{% if is_fr %}D&ocirc;me{% else %}Dome{% endif %}</a>
                 <a href="{{ locale_root }}/pages/bundles">{% if is_fr %}Packs{% else %}Bundles{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-cap">{% if is_fr %}Casquette{% else %}Cap{% endif %}</a>
+                <a href="{{ locale_root }}/products/cap">{% if is_fr %}Casquette{% else %}Cap{% endif %}</a>
               </div>
             </details>
 
@@ -344,7 +344,7 @@
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
-               product_handle: 'cytolight-desk',
+               product_handle: 'antared-desk-red-light-therapy-panel',
                image_file: 'cytolight-desk-luxury.jpg',
                label: 'Antared DESK',
                caption: 'See the range', caption_fr: 'Voir la gamme',
@@ -352,14 +352,14 @@
             <div class="site-header__panel-groups">
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Appareils{% else %}Devices{% endif %}</p>
-                <a href="{{ locale_root }}/products/cytolight-mask">{% if is_fr %}Masque{% else %}Mask{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-cap">{% if is_fr %}Casquette{% else %}Cap{% endif %}</a>
+                <a href="{{ locale_root }}/products/mask">{% if is_fr %}Masque{% else %}Mask{% endif %}</a>
+                <a href="{{ locale_root }}/products/cap">{% if is_fr %}Casquette{% else %}Cap{% endif %}</a>
               </div>
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Grand format{% else %}Large format{% endif %}</p>
-                <a href="{{ locale_root }}/products/cytolight-desk">Desk</a>
+                <a href="{{ locale_root }}/products/antared-desk-red-light-therapy-panel">Desk</a>
                 <a href="{{ col_panels }}">{% if is_fr %}Panneaux{% else %}Panels{% endif %}</a>
-                <a href="{{ locale_root }}/products/cytolight-sauna-dome">{% if is_fr %}D&ocirc;me{% else %}Dome{% endif %}</a>
+                <a href="{{ locale_root }}/products/antared-sauna-dome-infrared-red-light-pemf">{% if is_fr %}D&ocirc;me{% else %}Dome{% endif %}</a>
               </div>
               <div class="site-header__panel-group">
                 <p class="site-header__panel-heading">{% if is_fr %}Tout parcourir{% else %}Browse{% endif %}</p>
@@ -377,7 +377,7 @@
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
-               product_handle: 'cytolight-mask',
+               product_handle: 'mask',
                image_file: 'cytolight-goal-skin-red-halo.jpg',
                label: 'Antared Mask',
                caption: 'Skin &amp; Glow', caption_fr: 'Peau &amp; &Eacute;clat',
@@ -501,7 +501,7 @@
         <div class="site-header__panel">
           <div class="container site-header__panel-inner">
             {% render 'header-panel-media',
-               product_handle: 'cytolight-cap',
+               product_handle: 'cap',
                image_file: 'cytolight-cap-cinema-face.jpg',
                label: 'Our approach', label_fr: 'Notre approche',
                caption: 'What we refuse to do', caption_fr: 'Ce que nous refusons de faire',

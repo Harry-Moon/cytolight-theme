@@ -73,7 +73,7 @@
   {%- liquid
     assign est_index = false
     assign ondes_set = 'profond'
-    assign produits = 'antared-pano-ultra,cytolight-desk,cytolight-sauna-dome'
+    assign produits = 'antared-pano-ultra,antared-desk-red-light-therapy-panel,antared-sauna-dome-infrared-red-light-pemf'
 
     assign crumb_fr = 'Avant l&apos;effort'
     assign crumb_en = 'Pre-workout'
@@ -108,7 +108,7 @@
 {%- when 'post-workout' -%}
   {%- liquid
     assign ondes_set = 'profond'
-    assign produits = 'antared-pano-ultra,cytolight-sauna-dome,cytolight-desk'
+    assign produits = 'antared-pano-ultra,antared-sauna-dome-infrared-red-light-pemf,antared-desk-red-light-therapy-panel'
 
     assign crumb_fr = 'Apr&egrave;s l&apos;effort'
     assign crumb_en = 'Post-workout'
@@ -143,7 +143,7 @@
 {%- when 'daily-recovery' -%}
   {%- liquid
     assign ondes_set = 'mixte'
-    assign produits = 'cytolight-desk,antared-pano-ultra,cytolight-sauna-dome'
+    assign produits = 'antared-desk-red-light-therapy-panel,antared-pano-ultra,antared-sauna-dome-infrared-red-light-pemf'
 
     assign crumb_fr = 'R&eacute;cup&eacute;ration quotidienne'
     assign crumb_en = 'Daily recovery'
@@ -178,7 +178,7 @@
 {%- when 'skin-routine' -%}
   {%- liquid
     assign ondes_set = 'surface'
-    assign produits = 'cytolight-mask,cytolight-desk,antared-pano-ultra'
+    assign produits = 'mask,antared-desk-red-light-therapy-panel,antared-pano-ultra'
 
     assign crumb_fr = 'Routine peau'
     assign crumb_en = 'Skin routine'
@@ -213,7 +213,7 @@
 {%- when 'full-body-routine' -%}
   {%- liquid
     assign ondes_set = 'mixte'
-    assign produits = 'antared-pano-ultra,cytolight-sauna-dome,cytolight-pano-plus'
+    assign produits = 'antared-pano-ultra,antared-sauna-dome-infrared-red-light-pemf,pano-plus'
 
     assign crumb_fr = 'S&eacute;ance corps entier'
     assign crumb_en = 'Full-body session'
@@ -248,7 +248,7 @@
 {%- when 'workday-routine' -%}
   {%- liquid
     assign ondes_set = 'mixte'
-    assign produits = 'cytolight-desk,cytolight-cap,cytolight-pano-plus'
+    assign produits = 'antared-desk-red-light-therapy-panel,cap,pano-plus'
 
     assign crumb_fr = 'Journ&eacute;e de travail'
     assign crumb_en = 'Workday'
@@ -283,7 +283,7 @@
 {%- else -%}
   {%- liquid
     assign est_index = true
-    assign produits = 'cytolight-desk,cytolight-mask,antared-pano-ultra'
+    assign produits = 'antared-desk-red-light-therapy-panel,mask,antared-pano-ultra'
     assign crumb_fr = 'Protocoles'
     assign crumb_en = 'Protocols'
     assign kicker_fr = 'Six moments, une m&ecirc;me m&eacute;thode'

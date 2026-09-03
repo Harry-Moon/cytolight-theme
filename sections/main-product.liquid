@@ -572,7 +572,7 @@
     {%- assign is_fr = true -%}
   {%- endif -%}
   {%- assign is_cap = false -%}
-  {%- if product.handle == 'cytolight-cap' -%}
+  {%- if product.handle == 'cap' -%}
     {%- assign is_cap = true -%}
   {%- endif -%}
   {%- assign is_pano_ultra = false -%}
@@ -584,7 +584,7 @@
     {%- assign is_foot = true -%}
   {%- endif -%}
   {%- assign is_mask = false -%}
-  {%- if product.handle == 'cytolight-mask' -%}
+  {%- if product.handle == 'mask' -%}
     {%- assign is_mask = true -%}
   {%- endif -%}
   {%- assign is_knee = false -%}
@@ -592,8 +592,12 @@
     {%- assign is_knee = true -%}
   {%- endif -%}
   {%- assign is_sauna_dome = false -%}
-  {%- if product.handle == 'cytolight-sauna-dome' -%}
+  {%- if product.handle == 'antared-sauna-dome-infrared-red-light-pemf' -%}
     {%- assign is_sauna_dome = true -%}
+  {%- endif -%}
+  {%- assign is_desk = false -%}
+  {%- if product.handle == 'antared-desk-red-light-therapy-panel' -%}
+    {%- assign is_desk = true -%}
   {%- endif -%}
 
   {%- comment -%}
@@ -982,7 +986,7 @@
 
     Chaque chiffre cite ici figure deja dans le tableau technique de la meme fiche.
   {%- endcomment -%}
-  {%- unless is_mask or is_foot or is_knee or is_sauna_dome -%}
+  {%- unless is_mask or is_foot or is_knee or is_sauna_dome or is_desk -%}
   {%- assign intro_image = product.images[1] | default: product.featured_image -%}
   <section class='cl-foot-intro' aria-label='{% if is_fr %}Pr&eacute;sentation de {{ product.title }}{% else %}{{ product.title }} introduction{% endif %}'>
     <div class='cl-foot-intro__media'>
@@ -1333,7 +1337,7 @@
         </div>
       </div>
       {%- else -%}
-      {% render 'cytolight-why-cards', is_cap: is_cap, is_mask: is_mask, is_foot: is_foot, is_knee: is_knee, is_sauna_dome: is_sauna_dome, is_pano_ultra: is_pano_ultra, is_fr: is_fr, foot_image_1: foot_image_1, foot_image_2: foot_image_2, foot_image_3: foot_image_3, foot_image_4: foot_image_4 %}
+      {% render 'cytolight-why-cards', is_cap: is_cap, is_mask: is_mask, is_foot: is_foot, is_knee: is_knee, is_sauna_dome: is_sauna_dome, is_pano_ultra: is_pano_ultra, is_desk: is_desk, is_fr: is_fr, foot_image_1: foot_image_1, foot_image_2: foot_image_2, foot_image_3: foot_image_3, foot_image_4: foot_image_4 %}
       {%- endif -%}
     </div>
   </div>
@@ -1491,6 +1495,11 @@
             <tr><th>{% if is_fr %}Sortie UV{% else %}UV Output{% endif %}</th><td>{% if is_fr %}Z&eacute;ro : sans UV, adapt&eacute; &agrave; une utilisation quotidienne sur peau nue{% else %}Zero &#8212; completely UV-free and safe for daily bare-skin use{% endif %}</td></tr>
             <tr><th>{% if is_fr %}Niveau sonore{% else %}Noise Level{% endif %}</th><td>{% if is_fr %}Syst&egrave;me thermique quasi silencieux{% else %}Near-silent thermal management system{% endif %}</td></tr>
             <tr><th>{% if is_fr %}Alimentation{% else %}Power Supply{% endif %}</th><td>{% if is_fr %}Adaptateur universel inclus (100&#8211;240V, utilisable dans le monde entier){% else %}Universal adapter included (100&#8211;240V, works worldwide){% endif %}</td></tr>
+            {%- if is_desk -%}
+            <tr><th>{% if is_fr %}Tension d'entr&eacute;e{% else %}Input Voltage{% endif %}</th><td>100&#8211;240V AC</td></tr>
+            <tr><th>{% if is_fr %}Fr&eacute;quence{% else %}Frequency{% endif %}</th><td>50/60Hz</td></tr>
+            <tr><th>{% if is_fr %}T&eacute;l&eacute;commande{% else %}Remote Controller{% endif %}</th><td>{% if is_fr %}T&eacute;l&eacute;commande radio 2,4G incluse{% else %}2.4G remote controller supported{% endif %}</td></tr>
+            {%- endif -%}
             <tr><th>Certifications</th><td>{% if is_fr %}Certifi&eacute; CE &middot; FDA Listed{% else %}CE Certified &middot; FDA Listed{% endif %}</td></tr>
             <tr><th>{% if is_fr %}Garantie{% else %}Warranty{% endif %}</th><td>{% if is_fr %}2 ans : couvre les d&eacute;fauts de fabrication et pannes mat&eacute;rielles{% else %}2 years &#8212; covers all manufacturing defects and hardware failures{% endif %}</td></tr>
             <tr><th>{% if is_fr %}P&eacute;riode d'essai{% else %}Trial Period{% endif %}</th><td>{% if is_fr %}Garantie satisfait ou rembours&eacute; 14 jours, sans condition{% else %}14-day money-back guarantee, unconditional{% endif %}</td></tr>

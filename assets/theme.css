@@ -189,10 +189,21 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  * du max-height de la rangee — meme duree, meme courbe — puisque c'est en
  * s'annulant image par image que les deux laissent la page immobile.
  */
+/*
+ * z-index: 70, pas 50. #shopify-section-header etablit son propre contexte
+ * d'empilement (position: sticky + z-index) : tout ce qu'il contient, y
+ * compris le panneau de sous-menu au survol (.site-header__panel, z-index
+ * 60 en interne), reste plafonne au rang de cette enveloppe face a un
+ * element hors du header. La popin d'achat collante des fiches produit
+ * (.cl-sticky-atc, sections/main-product.liquid) est a z-index 60 : sous 50,
+ * le panneau de sous-menu passait donc sous elle au survol, quel que soit
+ * son propre z-index interne. 70 remet tout le header, sous-menu compris,
+ * au-dessus.
+ */
 #shopify-section-header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 70;
   margin-bottom: 0;
 }
 #shopify-section-header.is-nav-hidden {

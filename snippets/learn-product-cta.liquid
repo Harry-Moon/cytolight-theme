@@ -22,7 +22,7 @@
     assign is_fr = true
   endif
 
-  assign handle_list = handles | default: 'cytolight-desk,cytolight-mask,antared-pano-ultra' | split: ','
+  assign handle_list = handles | default: 'antared-desk-red-light-therapy-panel,mask,antared-pano-ultra' | split: ','
 -%}
 
 <section class="ln-cta"{% if id %} id="{{ id }}"{% endif %}>
@@ -50,17 +50,17 @@
         {%- if item != blank -%}
           {%- liquid
             case handle
-              when 'cytolight-desk'
+              when 'antared-desk-red-light-therapy-panel'
                 assign pick_type_fr = 'Personnel &middot; Bureau'
                 assign pick_type_en = 'Personal &middot; Desktop'
                 assign pick_text_fr = 'Panneau compact &agrave; 7 spectres, du rouge au proche infrarouge, pour une s&eacute;ance quotidienne pos&eacute;e sur le bureau.'
                 assign pick_text_en = 'Compact 7-spectrum panel, red through near-infrared, for a daily session that sits on your desk.'
-              when 'cytolight-mask'
+              when 'mask'
                 assign pick_type_fr = 'Visage &middot; Sans fil'
                 assign pick_type_en = 'Face &middot; Cordless'
                 assign pick_text_fr = 'Masque silicone souple, 288 LED sur 4 canaux dont le rouge 630 nm et le proche infrarouge 850 nm.'
                 assign pick_text_en = 'Flexible silicone mask, 288 LEDs across 4 channels including 630 nm red and 850 nm near-infrared.'
-              when 'cytolight-cap'
+              when 'cap'
                 assign pick_type_fr = 'Cuir chevelu &middot; Mains libres'
                 assign pick_type_en = 'Scalp &middot; Hands-free'
                 assign pick_text_fr = 'Casquette &agrave; 150 LED 3-en-1, pour la routine cuir chevelu la plus simple &agrave; tenir dans la dur&eacute;e.'
