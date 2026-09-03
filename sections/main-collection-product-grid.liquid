@@ -3,6 +3,20 @@
   {%- assign is_fr = true -%}
 {%- endif -%}
 
+{%- comment -%}
+  Knee et Foot sont masques du catalogue pour l'instant (a la demande du
+  2026-09-03) : les fiches restent accessibles par lien direct, elles ne
+  s'affichent plus dans /collections/*.
+{%- endcomment -%}
+{%- assign hidden_handles = 'cytolight-knee,cytolight-foot' | split: ',' -%}
+{%- assign visible_products_count = collection.products_count -%}
+{%- for hidden_handle in hidden_handles -%}
+  {%- assign hidden_match = collection.products | where: 'handle', hidden_handle -%}
+  {%- if hidden_match.size > 0 -%}
+    {%- assign visible_products_count = visible_products_count | minus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
 <section class="collection-catalogue" id="collection-products">
   <div class="container collection-products">
     <div class="collection-teaser">
@@ -15,7 +29,7 @@
     </div>
 
     <div class="collection-toolbar">
-      <span>{{ collection.products_count }} {% if is_fr %}produits disponibles{% else %}products available{% endif %}</span>
+      <span>{{ visible_products_count }} {% if is_fr %}produits disponibles{% else %}products available{% endif %}</span>
       <form>
         <select name="sort_by" onchange="this.form.submit()" aria-label="{% if is_fr %}Trier par{% else %}Sort by{% endif %}">
           {%- assign sort_options = 'manual,best-selling,title-ascending,title-descending,price-ascending,price-descending,created-ascending,created-descending' | split: ',' -%}
@@ -34,7 +48,9 @@
     <div class="collection-grid-products">
       {% paginate collection.products by section.settings.products_per_page %}
         {% for product in collection.products %}
-          {% render 'catalogue-product-card', product: product %}
+          {% unless hidden_handles contains product.handle %}
+            {% render 'catalogue-product-card', product: product %}
+          {% endunless %}
         {% else %}
           <p>{% if request.locale.iso_code contains 'fr' %}Aucun produit pour le moment. Revenez bient&ocirc;t.{% else %}No products yet. Check back soon.{% endif %}</p>
         {% endfor %}
