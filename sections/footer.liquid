@@ -13,6 +13,7 @@
   assign facebook_url = section.settings.facebook | default: settings.social_facebook_url
   assign tiktok_url = section.settings.tiktok | default: settings.social_tiktok_url
   assign youtube_url = section.settings.youtube | default: settings.social_youtube_url
+  assign whatsapp_url = settings.social_whatsapp_url
   assign pinterest_url = settings.social_pinterest_url
   assign linkedin_url = settings.social_linkedin_url
 
@@ -122,6 +123,7 @@
           {% if facebook_url != blank %}<a href="{{ facebook_url }}" rel="me noopener" target="_blank" aria-label="Facebook">{% render 'icon', name: 'facebook' %}</a>{% endif %}
           {% if tiktok_url != blank %}<a href="{{ tiktok_url }}" rel="me noopener" target="_blank" aria-label="TikTok">{% render 'icon', name: 'tiktok' %}</a>{% endif %}
           {% if youtube_url != blank %}<a href="{{ youtube_url }}" rel="me noopener" target="_blank" aria-label="YouTube">{% render 'icon', name: 'youtube' %}</a>{% endif %}
+          {% if whatsapp_url != blank %}<a href="{{ whatsapp_url }}" rel="me noopener" target="_blank" aria-label="WhatsApp">{% render 'icon', name: 'whatsapp' %}</a>{% endif %}
           {% if pinterest_url != blank %}<a href="{{ pinterest_url }}" rel="me noopener" target="_blank" aria-label="Pinterest">{% render 'icon', name: 'pinterest' %}</a>{% endif %}
           {% if linkedin_url != blank %}<a href="{{ linkedin_url }}" rel="me noopener" target="_blank" aria-label="LinkedIn">{% render 'icon', name: 'linkedin' %}</a>{% endif %}
         </div>
