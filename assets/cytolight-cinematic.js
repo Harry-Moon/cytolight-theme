@@ -196,6 +196,11 @@
     if (!canvas || canvas.dataset.cyShaderInit === 'true') return;
     canvas.dataset.cyShaderInit = 'true';
 
+    // Meme lignes rouges animees que sur la fiche produit : trop couteuses
+    // en GPU pour valoir la peine en vue mobile, ou la section passe deja
+    // en une colonne (voir .cy-wl-inner a 900px dans cytolight-cinematic.css).
+    if (window.matchMedia('(max-width: 900px)').matches) { canvas.style.display = 'none'; return; }
+
     var gl = canvas.getContext('webgl');
     if (!gl) { canvas.style.display = 'none'; return; }
 
