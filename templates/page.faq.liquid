@@ -10,6 +10,13 @@
   jours annonces partout ailleurs (main-cart.liquid, learn-how-it-works.liquid,
   chaque fiche produit). Essai, garantie et duree de seance suivent ici les
   valeurs qui font foi sur le reste du site, pas l'inverse.
+
+  La grille de cartes reprend la mecanique .cl-faq-* de main-product.liquid
+  (puce ronde, bordure rouge a l'ouverture) sous les classes .ln-faq-card,
+  pour que cette page partage le langage visuel de la FAQ produit. Les
+  questions specifiques a un format d'appareil (distance au panneau,
+  application Bluetooth) restent explicitement rattachees aux appareils
+  concernes plutot que generalisees a toute la gamme.
 {%- endcomment -%}
 
 {%- liquid
@@ -32,6 +39,11 @@
   if url_goals == blank
     assign url_goals = locale_root | append: '/pages/goals'
   endif
+
+  assign url_wavelengths = pages['wavelengths'].url
+  if url_wavelengths == blank
+    assign url_wavelengths = locale_root | append: '/pages/wavelengths'
+  endif
 -%}
 
 {{ 'learn.css' | asset_url | stylesheet_tag }}
@@ -39,7 +51,7 @@
 
 <div class="ln-page" data-learn>
 
-  <section class="ln-hero">
+  <section class="ln-hero ln-hero--compact">
     <div class="ln-shell ln-shell--narrow">
       <p class="ln-crumbs">
         <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
@@ -52,78 +64,146 @@
   </section>
 
   <section class="ln-section">
-    <div class="ln-shell ln-shell--narrow">
-      <div class="ln-faq">
-        <details class="ln-faq__item">
-          <summary class="ln-faq__q">{% if is_fr %}Combien de temps doit durer une s&eacute;ance&nbsp;?{% else %}How long should a session be?{% endif %}</summary>
-          <p class="ln-faq__a">
+    <div class="ln-shell">
+      <div class="ln-faq-grid">
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Combien de temps doit durer une s&eacute;ance&nbsp;?{% else %}How long should each session be?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
             {%- if is_fr -%}
-              Les protocoles convergent autour de 10 &agrave; 20 minutes par zone, selon l'appareil. La r&eacute;gularit&eacute; compte plus que la dur&eacute;e&nbsp;: une s&eacute;ance courte et quotidienne l'emporte sur une s&eacute;ance longue et occasionnelle.
+              Pour la plupart des personnes, 10 &agrave; 20 minutes par s&eacute;ance est une bonne base. Les d&eacute;butants peuvent commencer par 5 &agrave; 10 minutes puis augmenter progressivement. La constance compte plus que la dur&eacute;e&nbsp;: une s&eacute;ance courte et quotidienne l'emporte sur une s&eacute;ance longue et occasionnelle.
             {%- else -%}
-              Protocols converge around 10 to 20 minutes per area, depending on the device. Consistency matters more than session length &mdash; a short daily session outperforms an occasional long one.
+              For most people, 10&#8211;20 minutes per session is a good baseline. Beginners can start with 5&#8211;10 minutes and increase gradually. Consistency matters more than session length &mdash; a short daily session outperforms an occasional long one.
             {%- endif -%}
-          </p>
+          </p></div>
         </details>
-        <details class="ln-faq__item">
-          <summary class="ln-faq__q">{% if is_fr %}Antared est-il s&ucirc;r en usage quotidien&nbsp;?{% else %}Is Antared safe to use every day?{% endif %}</summary>
-          <p class="ln-faq__a">
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}&Agrave; quelle distance dois-je m'installer d'un panneau&nbsp;?{% else %}How far should I sit from a panel device?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
+            {%- if is_fr -%}
+              Pour nos panneaux (DESK, PANO PLUS, PANO ULTRA), la distance recommand&eacute;e est de 15 &agrave; 30&nbsp;cm&nbsp;: c'est l&agrave; que l'appareil d&eacute;livre son maximum d'irradiance. Si vous ressentez trop de chaleur, reculez-le simplement &mdash; l'int&eacute;r&ecirc;t reste r&eacute;el jusqu'&agrave; environ 50&nbsp;cm. Les appareils port&eacute;s (casquette, masque, genouill&egrave;re) sont con&ccedil;us pour un contact direct avec la peau.
+            {%- else -%}
+              For our panel devices (DESK, PANO PLUS, PANO ULTRA), the recommended distance is 15&#8211;30&nbsp;cm (6&#8211;12 inches) &mdash; that's where the device delivers peak irradiance. If you feel too much warmth, simply move it further away; it stays worthwhile up to about 50&nbsp;cm. Wearable devices (cap, mask, knee sleeve) are designed for direct skin contact instead.
+            {%- endif -%}
+          </p></div>
+        </details>
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Antared est-il s&ucirc;r en usage quotidien&nbsp;?{% else %}Is Antared safe to use every day?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
             {%- if is_fr -%}
               Oui. La luminoth&eacute;rapie rouge et proche infrarouge est non thermique, non ionisante et sans UV. Comme pour toute routine de bien-&ecirc;tre, commencez doucement et ajustez selon votre confort.
             {%- else -%}
               Yes. Red and near-infrared light therapy is non-thermal, non-ionising, and UV-free. As with any wellness routine, start gently and adjust based on your comfort.
             {%- endif -%}
-          </p>
+          </p></div>
         </details>
-        <details class="ln-faq__item">
-          <summary class="ln-faq__q">{% if is_fr %}Antared produit-il des UV&nbsp;?{% else %}Does Antared produce UV light?{% endif %}</summary>
-          <p class="ln-faq__a">
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Quels appareils incluent l'application Bluetooth&nbsp;?{% else %}Which devices include the Bluetooth app?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
             {%- if is_fr -%}
-              Non. Les appareils Antared utilisent uniquement les longueurs d'onde rouge et proche infrarouge &mdash; aucune &eacute;mission UV.
+              Nos panneaux DESK, PANO PLUS et PANO ULTRA s'associent &agrave; l'application Antared (iOS et Android) via Bluetooth&nbsp;5.0&nbsp;: r&eacute;glage de chaque longueur d'onde, minuteurs, modes pr&eacute;r&eacute;gl&eacute;s et pulsation configurable. Le reste de la gamme se pilote directement sur l'appareil, sans application.
             {%- else -%}
-              No. Antared devices use red and near-infrared wavelengths only &mdash; zero UV output.
+              Our DESK, PANO PLUS, and PANO ULTRA panels pair with the Antared App (iOS and Android) over Bluetooth&nbsp;5.0 &mdash; adjust each wavelength, set timers, use preset modes, and configure pulsing. The rest of the range is controlled directly on the device, with no app required.
             {%- endif -%}
-          </p>
+          </p></div>
         </details>
-        <details class="ln-faq__item">
-          <summary class="ln-faq__q">{% if is_fr %}Que couvre l'essai de 14 jours&nbsp;?{% else %}What's included in the 14-day trial?{% endif %}</summary>
-          <p class="ln-faq__a">
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Quelle diff&eacute;rence entre rouge et proche infrarouge&nbsp;?{% else %}What is the difference between red and near-infrared light?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
+            {%- if is_fr -%}
+              La lumi&egrave;re rouge (590&#8211;660&nbsp;nm) agit surtout dans les couches de surface de la peau &mdash; la plage utilis&eacute;e dans les routines orient&eacute;es teint, texture et &eacute;clat. Le proche infrarouge (810&#8211;940&nbsp;nm) p&eacute;n&egrave;tre plus profond&eacute;ment et atteint muscles, articulations et tendons &mdash; la plage retenue pour les routines de r&eacute;cup&eacute;ration. Voir <a href="{{ url_wavelengths }}">les longueurs d'onde</a> pour la correspondance appareil par appareil.
+            {%- else -%}
+              Red light (590&#8211;660nm) works mainly in the surface layers of the skin &mdash; the range used in routines focused on tone, texture, and radiance. Near-infrared light (810&#8211;940nm) penetrates deeper, reaching muscles, joints, and tendons &mdash; the range used in recovery routines. See <a href="{{ url_wavelengths }}">wavelengths</a> for the full device-by-device breakdown.
+            {%- endif -%}
+          </p></div>
+        </details>
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Produit-il de la chaleur ou des UV&nbsp;?{% else %}Does it produce heat or UV radiation?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
+            {%- if is_fr -%}
+              Aucun appareil Antared ne produit de rayonnement UV. Vous pouvez ressentir une chaleur douce &agrave; courte distance, surtout avec le proche infrarouge, mais c'est une chaleur infrarouge, pas une chaleur UV. Le Sauna Dome fait exception&nbsp;: sa chaleur infrarouge r&eacute;glable jusqu'&agrave; 90&nbsp;&deg;C est une fonction d&eacute;di&eacute;e, pas un effet secondaire.
+            {%- else -%}
+              No Antared device produces UV radiation. You may feel a mild warmth at close range, mostly from the near-infrared wavelengths, but this is infrared warmth, not UV heat. The Sauna Dome is the exception &mdash; its infrared heat, adjustable up to 90&nbsp;&deg;C, is a dedicated feature, not a side effect.
+            {%- endif -%}
+          </p></div>
+        </details>
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Puis-je l'utiliser &agrave; travers les v&ecirc;tements&nbsp;?{% else %}Can I use it through clothing?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
+            {%- if is_fr -%}
+              Pour un effet optimal, utilisez votre appareil Antared directement sur peau nue. La plupart des tissus absorbent ou dispersent une partie de la lumi&egrave;re, ce qui r&eacute;duit la dose re&ccedil;ue. Un v&ecirc;tement fin et clair laisse passer une partie du proche infrarouge, mais le r&eacute;sultat reste nettement diminu&eacute;.
+            {%- else -%}
+              For the best effect, use your Antared device directly on bare skin. Most fabrics absorb or scatter part of the light, reducing the dose that reaches you. Thin, light-coloured clothing lets some near-infrared through, but the result is still noticeably reduced.
+            {%- endif -%}
+          </p></div>
+        </details>
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Que couvre l'essai de 14 jours&nbsp;?{% else %}What's included in the 14-day trial?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
             {%- if is_fr -%}
               Vous pouvez essayer n'importe quel appareil Antared chez vous pendant 14 jours. S'il ne convient pas, contactez le support pour organiser un retour selon la politique de la boutique.
             {%- else -%}
               You can try any Antared device at home for 14 days. If it isn't right for you, contact support to arrange a return under the store policy.
             {%- endif -%}
-          </p>
+          </p></div>
         </details>
-        <details class="ln-faq__item">
-          <summary class="ln-faq__q">{% if is_fr %}Quelle garantie est incluse&nbsp;?{% else %}What warranty is included?{% endif %}</summary>
-          <p class="ln-faq__a">
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Quelle garantie est incluse&nbsp;?{% else %}What warranty is included?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
             {%- if is_fr -%}
               Chaque appareil Antared est couvert par une garantie de 2 ans, contre les d&eacute;fauts de fabrication et les pannes mat&eacute;rielles.
             {%- else -%}
               Every Antared device includes a 2-year warranty covering manufacturing defects and hardware failures.
             {%- endif -%}
-          </p>
+          </p></div>
         </details>
-        <details class="ln-faq__item">
-          <summary class="ln-faq__q">{% if is_fr %}Les appareils Antared sont-ils certifi&eacute;s&nbsp;?{% else %}Are Antared devices certified?{% endif %}</summary>
-          <p class="ln-faq__a">
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Les appareils Antared sont-ils certifi&eacute;s&nbsp;?{% else %}Are Antared devices certified?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
             {%- if is_fr -%}
               Oui &mdash; certifi&eacute;s CE et list&eacute;s FDA, avec une qualit&eacute; de fabrication de niveau clinique sur toute la gamme.
             {%- else -%}
               Yes &mdash; CE certified and FDA listed, with clinical-grade build quality across the range.
             {%- endif -%}
-          </p>
+          </p></div>
         </details>
-        <details class="ln-faq__item">
-          <summary class="ln-faq__q">{% if is_fr %}Quel appareil me convient&nbsp;?{% else %}Which device is right for me?{% endif %}</summary>
-          <p class="ln-faq__a">
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Au bout de combien de temps voit-on des r&eacute;sultats&nbsp;?{% else %}How long before I see results?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
+            {%- if is_fr -%}
+              Les r&eacute;sultats d&eacute;pendent de l'objectif et de la r&eacute;gularit&eacute;, et varient d'une personne &agrave; l'autre. La constance compte davantage que la dur&eacute;e&nbsp;: des s&eacute;ances courtes et r&eacute;guli&egrave;res valent mieux que de longues s&eacute;ances espac&eacute;es. Gardez le m&ecirc;me rendez-vous plusieurs fois par semaine, puis jugez sur plusieurs semaines plut&ocirc;t que sur une s&eacute;ance.
+            {%- else -%}
+              Results depend on the goal and on consistency, and they vary from person to person. Consistency matters more than duration: short, regular sessions beat long, infrequent ones. Keep the same slot several times a week, then judge over several weeks rather than on a single session.
+            {%- endif -%}
+          </p></div>
+        </details>
+
+        <details class="ln-faq-card">
+          <summary class="ln-faq-card__q">{% if is_fr %}Quel appareil me convient&nbsp;?{% else %}Which device is right for me?{% endif %}<span class="ln-faq-toggle">+</span></summary>
+          <div class="ln-faq-card__a"><p>
             {%- if is_fr -%}
               Consultez <a href="{{ url_protocols }}">nos protocoles</a> pour des routines construites autour d'objectifs pr&eacute;cis, ou parcourez <a href="{{ url_goals }}">par objectif</a>.
             {%- else -%}
               See our <a href="{{ url_protocols }}">protocols</a> for routines built around specific goals, or browse <a href="{{ url_goals }}">by goal</a>.
             {%- endif -%}
-          </p>
+          </p></div>
         </details>
+
+      </div>
+
+      <div class="ln-faq-cta">
+        <p>{% if is_fr %}Encore une question&nbsp;? Notre &eacute;quipe est l&agrave; pour vous aider.{% else %}Still have questions? Our team is here to help.{% endif %}</p>
+        <a href="mailto:contact@antared.care" class="ln-button ln-button--ink">{% if is_fr %}Contacter le support{% else %}Contact support{% endif %}</a>
       </div>
     </div>
   </section>
