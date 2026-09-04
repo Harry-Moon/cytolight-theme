@@ -767,6 +767,60 @@
 .ln-section--dark .ln-faq__a { color: rgba(255, 255, 255, .68); }
 .ln-faq__a a { color: var(--ln-red); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
+/* ---------- FAQ en grille (page.faq) ----------
+   Meme mecanique que .cl-faq-* sur main-product.liquid (carte, puce ronde,
+   bordure rouge a l'ouverture) : la page FAQ reprend ce langage visuel plutot
+   que la liste .ln-faq utilisee ailleurs (learn-how-it-works, goal-page),
+   qui reste inchangee pour ne pas perturber ces pages. */
+
+.ln-faq-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: clamp(36px, 4vw, 54px); }
+.ln-faq-card { border: 1.5px solid var(--ln-line); border-radius: var(--ln-radius-lg); overflow: hidden; transition: border-color .2s var(--ln-ease); }
+.ln-faq-card[open] { border-color: var(--ln-red); }
+.ln-faq-card__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.4;
+  list-style: none;
+}
+.ln-faq-card__q::-webkit-details-marker { display: none; }
+.ln-faq-toggle {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ln-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ln-red);
+  transition: background .2s var(--ln-ease), transform .2s var(--ln-ease);
+}
+.ln-faq-card[open] .ln-faq-toggle { background: var(--ln-red-soft); transform: rotate(45deg); }
+.ln-faq-card__a { margin: 0; padding: 0 22px 20px; border-top: 1px solid var(--ln-soft); padding-top: 14px; font-size: 14px; line-height: 1.75; color: var(--ln-muted); }
+.ln-faq-card__a a { color: var(--ln-red); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+.ln-faq-cta { text-align: center; margin-top: 32px; padding: 28px; background: var(--ln-soft); border-radius: var(--ln-radius-lg); }
+.ln-faq-cta p { margin: 0 0 16px; font-size: 15px; color: var(--ln-muted); }
+.ln-faq-cta a { display: inline-flex; align-items: center; gap: 8px; }
+
+/* ---------- hero compact (page.faq) ----------
+   Le hero standard (padding + titre pleine taille) occupe l'ecran entier sur
+   mobile avant meme la premiere question. La FAQ n'a pas besoin de cette
+   respiration : ce modificateur reste local a cette page. */
+
+.ln-hero--compact { padding: clamp(56px, 7vw, 96px) 0 clamp(40px, 5vw, 64px); }
+.ln-hero--compact .ln-crumbs { margin-bottom: 18px; font-size: 11px; }
+.ln-hero--compact .ln-title { font-size: clamp(32px, 4.2vw, 56px); }
+
 /* ---------- bande produits ---------- */
 
 .ln-cta { padding: clamp(64px, 8vw, 104px) 0; background: var(--ln-black); color: #fff; }
@@ -902,6 +956,7 @@
   .ln-depth__row { grid-template-columns: 1fr; gap: 10px; }
   .ln-value { padding: 30px 24px; }
   .ln-timeline__spark { display: none; }
+  .ln-faq-grid { grid-template-columns: minmax(0, 1fr); }
 }
 
 /*
