@@ -1,0 +1,52 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "general": {
+    "meta": {
+      "tags": "Balises : « {{ tags }} »",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "title": "Rechercher",
+      "placeholder": "Rechercher dans la boutique",
+      "no_results": "Aucun résultat pour \"{{ terms }}\""
+    },
+    "404": {
+      "title": "Page introuvable",
+      "subtext": "La page que vous recherchez n'existe pas."
+    },
+    "newsletter": {
+      "label": "Courriel",
+      "submit": "S'abonner",
+      "success": "Merci de vous être abonné !"
+    }
+  },
+  "accessibility": {
+    "skip_to_text": "Aller au contenu",
+    "close": "Fermer",
+    "menu": "Menu"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Ajouter au panier",
+      "sold_out": "Épuisé",
+      "unavailable": "Indisponible"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Votre panier",
+      "empty": "Votre panier est vide",
+      "subtotal": "Sous-total",
+      "checkout": "Paiement",
+      "continue_shopping": "Continuer les achats"
+    }
+  }
+}
