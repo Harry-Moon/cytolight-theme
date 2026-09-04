@@ -448,30 +448,6 @@
     </div>
   </section>
 
-  <section class="cy-faq">
-    <div class="cy-shell cy-faq__grid">
-      <div class="cy-reveal">
-        <p class="cy-kicker">FAQ</p>
-        <h2 class="cy-heading">{% if is_fr %}Les questions avant de commencer.{% else %}Questions before you begin.{% endif %}</h2>
-      </div>
-      <div class="cy-faq__items cy-reveal">
-        {%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
-        {%- if faq_blocks.size > 0 -%}
-          {%- for block in faq_blocks -%}
-            <details class="cy-faq__item" {{ block.shopify_attributes }}>
-              <summary>{% if is_fr %}{{ block.settings.question_fr }}{% else %}{{ block.settings.question_en }}{% endif %}</summary>
-              <p>{% if is_fr %}{{ block.settings.answer_fr }}{% else %}{{ block.settings.answer_en }}{% endif %}</p>
-            </details>
-          {%- endfor -%}
-        {%- else -%}
-          <details class="cy-faq__item"><summary>{% if is_fr %}Combien de temps dure une s&eacute;ance ?{% else %}How long is a session?{% endif %}</summary><p>{% if is_fr %}La plupart des routines commencent autour de 10 minutes. Ajustez toujours selon votre confort et les recommandations du guide.{% else %}Most routines start around 10 minutes. Always adjust based on comfort and the quick-start guide.{% endif %}</p></details>
-          <details class="cy-faq__item"><summary>{% if is_fr %}Dois-je utiliser l'application ?{% else %}Do I need the app?{% endif %}</summary><p>{% if is_fr %}Non. L'&eacute;cran tactile permet de piloter l'appareil directement; l'application ajoute des pr&eacute;r&eacute;glages et de la programmation.{% else %}No. The touchscreen controls the device directly; the app adds presets and scheduling.{% endif %}</p></details>
-          <details class="cy-faq__item"><summary>{% if is_fr %}Est-ce adapt&eacute; &agrave; un bureau ?{% else %}Is it suited to a desk?{% endif %}</summary><p>{% if is_fr %}Oui. DESK a &eacute;t&eacute; pens&eacute; pour rester compact, proche et simple &agrave; utiliser pendant la journ&eacute;e.{% else %}Yes. DESK is designed to stay compact, close, and easy to use during the day.{% endif %}</p></details>
-        {%- endif -%}
-      </div>
-    </div>
-  </section>
-
   <section class="cy-final">
     <div class="cy-final__media">
       <img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="" width="1600" height="900" loading="lazy">
@@ -562,16 +538,6 @@
         { "type": "text", "id": "value", "label": "Value", "default": "14 days" },
         { "type": "text", "id": "label_en", "label": "Label EN", "default": "money-back home trial" },
         { "type": "text", "id": "label_fr", "label": "Label FR", "default": "d'essai satisfait ou rembours&eacute;" }
-      ]
-    },
-    {
-      "type": "faq",
-      "name": "FAQ",
-      "settings": [
-        { "type": "text", "id": "question_en", "label": "Question EN", "default": "How long is a session?" },
-        { "type": "text", "id": "question_fr", "label": "Question FR", "default": "Combien de temps dure une s&eacute;ance ?" },
-        { "type": "textarea", "id": "answer_en", "label": "Answer EN", "default": "Most routines start around 10 minutes. Always adjust based on comfort and the quick-start guide." },
-        { "type": "textarea", "id": "answer_fr", "label": "Answer FR", "default": "La plupart des routines commencent autour de 10 minutes. Ajustez toujours selon votre confort et les recommandations du guide." }
       ]
     }
   ],

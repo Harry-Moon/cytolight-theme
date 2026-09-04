@@ -2055,6 +2055,10 @@
 (function(){
   var canvas = document.getElementById('cl-shader-bg');
   if(!canvas) return;
+  /* Lignes rouges animees : trop couteuses en GPU pour valoir la peine en
+     vue mobile, ou la section repasse deja en une colonne (voir max-width:900px
+     plus haut dans ce fichier pour .cl-spectrum-science). */
+  if(window.matchMedia('(max-width: 900px)').matches){ canvas.style.display='none'; return; }
   var gl = canvas.getContext('webgl');
   if(!gl){ canvas.style.display='none'; return; }
 
