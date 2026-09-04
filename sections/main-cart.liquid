@@ -64,37 +64,43 @@
           <div class="cart__items">
             {% for item in cart.items %}
               <div class="cart-item" data-line="{{ forloop.index }}">
-                <a href="{{ item.url }}" class="cart-item__img">
-                  {% if item.image != blank %}
-                    <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}" width="120" height="120" loading="lazy">
-                  {% endif %}
-                </a>
-                <div>
-                  <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>
-                  {% unless item.product.has_only_default_variant %}
-                    <div class="cart-item__variant">{{ item.variant.title }}</div>
-                  {% endunless %}
-                  {%- if item.line_level_discount_allocations.size > 0 -%}
-                    <ul class="cart-item__discounts">
-                      {%- for allocation in item.line_level_discount_allocations -%}
-                        <li>{{ allocation.discount_application.title }} &middot; &minus;{{ allocation.amount | money }}</li>
-                      {%- endfor -%}
-                    </ul>
-                  {%- endif -%}
-                  <div class="product__qty" style="margin-top:10px;">
+                <div class="cart-item__row">
+                  <a href="{{ item.url }}" class="cart-item__img">
+                    {% if item.image != blank %}
+                      <img src="{{ item.image | image_url: width: 240 }}" alt="{{ item.title | escape }}" width="120" height="120" loading="lazy">
+                    {% endif %}
+                  </a>
+                  <div class="cart-item__head">
+                    <div class="cart-item__info">
+                      <a href="{{ item.url }}" class="cart-item__title">{{ item.product.title }}</a>
+                      {% unless item.product.has_only_default_variant %}
+                        <div class="cart-item__variant">{{ item.variant.title }}</div>
+                      {% endunless %}
+                      {%- if item.line_level_discount_allocations.size > 0 -%}
+                        <ul class="cart-item__discounts">
+                          {%- for allocation in item.line_level_discount_allocations -%}
+                            <li>{{ allocation.discount_application.title }} &middot; &minus;{{ allocation.amount | money }}</li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </div>
+                    <div class="cart-item__price">
+                      {%- if item.original_line_price > item.final_line_price -%}
+                        <s class="cart-item__price-was">{{ item.original_line_price | money }}</s>
+                        <span class="cart-item__price-now">{{ item.final_line_price | money }}</span>
+                      {%- else -%}
+                        {{ item.final_line_price | money }}
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+                <div class="cart-item__footer">
+                  <div class="product__qty">
                     <button type="button" data-qty-step="-1">&minus;</button>
                     <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line-key="{{ item.key }}">
                     <button type="button" data-qty-step="1">+</button>
                   </div>
-                  <a href="{{ item.url_to_remove }}" data-cart-remove data-line-key="{{ item.key }}" style="font-size:.8rem; color: var(--color-muted); margin-top:8px; display:inline-block;">{% if is_fr %}Retirer{% else %}Remove{% endif %}</a>
-                </div>
-                <div class="cart-item__price">
-                  {%- if item.original_line_price > item.final_line_price -%}
-                    <s class="cart-item__price-was">{{ item.original_line_price | money }}</s>
-                    <span class="cart-item__price-now">{{ item.final_line_price | money }}</span>
-                  {%- else -%}
-                    {{ item.final_line_price | money }}
-                  {%- endif -%}
+                  <a href="{{ item.url_to_remove }}" data-cart-remove data-line-key="{{ item.key }}" class="cart-item__remove">{% if is_fr %}Retirer{% else %}Remove{% endif %}</a>
                 </div>
               </div>
             {% endfor %}
