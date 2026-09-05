@@ -583,6 +583,13 @@
 
 /* ---------- spectre / longueurs d'onde ---------- */
 
+/*
+ * .ln-spectrum / .ln-waves / .ln-wave restent utilisees telles quelles par
+ * protocol-page.liquid et goal-page.liquid (listes de 3-4 longueurs d'onde,
+ * grille simple). La frise ci-dessous, propre a la page Longueurs d'onde,
+ * vit dans .ln-tl-* et pose ses cartes en PLUS de .ln-wave (jamais a la
+ * place) pour ne rien casser ailleurs.
+ */
 .ln-spectrum { margin-top: clamp(40px, 5vw, 62px); }
 .ln-spectrum__bar {
   position: relative;
@@ -617,6 +624,113 @@
 @media (hover: hover) and (pointer: fine) {
   .ln-wave:hover { transform: translateY(-3px); border-color: rgba(210, 13, 47, .34); }
 }
+
+/* ---------- frise des longueurs d'onde (page Longueurs d'onde) ---------- */
+
+/*
+ * Prefixe .ln-wlt- et non .ln-tl- : .ln-tl est deja pris par les jalons de
+ * learn-science.liquid et de la frise Longevite de goal-page.liquid (nœud,
+ * annee, .ln-tl__body...), un composant sans rapport avec celui-ci. Reprendre
+ * .ln-tl aurait heritee sa mise en page en deux colonnes a partir de 900px.
+ *
+ * Mobile-first : une seule liste de cartes .ln-wave.ln-wlt-card empilees,
+ * chacune bordee de la couleur de sa longueur d'onde via --wave (posee en
+ * inline-style depuis learn-wavelengths.liquid). L'axe, les puces et les
+ * tiges de raccordement n'existent qu'a partir de 1280px, et pas avant :
+ * .ln-shell plafonne a cette largeur (voir plus haut), donc la colonne y est
+ * de taille fixe. En dessous, la largeur de colonne varie encore avec le
+ * viewport (860px ne laisse que ~100px par carte, un texte qui repasse alors
+ * sur 5-6 lignes) — une hauteur fixe calee sur ce point n'aurait plus rien
+ * de commun avec la hauteur reelle une fois la fenetre agrandie. Le seuil
+ * releve garantit une seule valeur valable partout ou la grille s'affiche.
+ */
+.ln-wlt { margin-top: clamp(40px, 5vw, 62px); }
+
+.ln-wlt-grid { display: block; }
+
+.ln-wlt-axis,
+.ln-wlt-dot,
+.ln-wlt-stem { display: none; }
+
+.ln-wave.ln-wlt-card {
+  display: block;
+  margin-top: 14px;
+  border-color: var(--wave, var(--ln-line));
+}
+.ln-wlt-grid > .ln-wave.ln-wlt-card:first-child { margin-top: 0; }
+.ln-section--dark .ln-wave.ln-wlt-card { border-color: var(--wave, var(--ln-line-dark)); }
+@media (hover: hover) and (pointer: fine) {
+  .ln-wave.ln-wlt-card:hover { border-color: var(--wave, rgba(210, 13, 47, .34)); }
+}
+
+@media (min-width: 1280px) {
+  .ln-wlt-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: auto 26px auto 26px auto;
+    column-gap: 10px;
+  }
+
+  .ln-wlt-axis,
+  .ln-wlt-dot,
+  .ln-wlt-stem { display: block; }
+
+  .ln-wlt-axis {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    align-self: center;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #ffb547 0%, #ff5f3a 16.667%, #ea1f36 33.333%, #d20d2f 50%, #a3122c 66.667%, #6d1224 83.333%, #35101a 100%);
+    box-shadow: 0 0 34px rgba(210, 13, 47, .4);
+  }
+
+  .ln-wlt-dot {
+    grid-row: 3;
+    align-self: center;
+    justify-self: center;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--wave);
+    box-shadow: 0 0 0 4px var(--ln-surface);
+    z-index: 2;
+  }
+  .ln-section--dark .ln-wlt-dot { box-shadow: 0 0 0 4px var(--ln-black); }
+
+  .ln-wlt-stem {
+    justify-self: center;
+    width: 2px;
+    background: var(--wave);
+    opacity: .5;
+  }
+  .ln-wlt-stem--up { grid-row: 2; align-self: end; height: 100%; }
+  .ln-wlt-stem--down { grid-row: 4; align-self: start; height: 100%; }
+
+  .ln-wlt-card {
+    margin-top: 0;
+    padding: 20px 16px;
+    /*
+     * Hauteur fixe : les sept textes ne font pas la meme longueur, et la
+     * frise perd son effet de rythme si les cartes montent et descendent a
+     * des hauteurs differentes. 375px couvre le texte le plus long observe
+     * a 1280px (~358px) avec de la marge ; le reste de la carte se remplit
+     * de vide plutot que de tronquer un texte plus court.
+     */
+    height: 375px;
+  }
+  .ln-wlt-card--up { grid-row: 1; align-self: end; }
+  .ln-wlt-card--down { grid-row: 5; align-self: start; }
+
+  .ln-wlt-col-1 { grid-column: 1; }
+  .ln-wlt-col-2 { grid-column: 2; }
+  .ln-wlt-col-3 { grid-column: 3; }
+  .ln-wlt-col-4 { grid-column: 4; }
+  .ln-wlt-col-5 { grid-column: 5; }
+  .ln-wlt-col-6 { grid-column: 6; }
+  .ln-wlt-col-7 { grid-column: 7; }
+}
+
 .ln-wave__nm {
   display: flex;
   align-items: baseline;

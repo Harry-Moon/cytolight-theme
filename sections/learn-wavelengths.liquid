@@ -87,17 +87,13 @@
       </div>
     </div>
 
-    <div class="ln-spectrum ln-reveal">
-      <div class="ln-spectrum__bar" role="img" aria-label="{% if is_fr %}Spectre continu de 590 &agrave; 940 nanom&egrave;tres, de l'ambre au proche infrarouge profond{% else %}Continuous spectrum from 590 to 940 nanometres, amber through deep near-infrared{% endif %}"></div>
-      <div class="ln-spectrum__scale">
-        <span>590 nm &middot; {% if is_fr %}ambre{% else %}amber{% endif %}</span>
-        <span>{% if is_fr %}rouge{% else %}red{% endif %}</span>
-        <span>{% if is_fr %}proche infrarouge{% else %}near-infrared{% endif %}</span>
-        <span>940 nm</span>
-      </div>
+    <div class="ln-wlt ln-reveal">
+      <div class="ln-wlt-grid">
+        <div class="ln-wlt-axis" role="img" aria-label="{% if is_fr %}Spectre continu de 590 &agrave; 940 nanom&egrave;tres, de l'ambre au proche infrarouge profond{% else %}Continuous spectrum from 590 to 940 nanometres, amber through deep near-infrared{% endif %}"></div>
 
-      <div class="ln-waves">
-        <article class="ln-wave">
+        <span class="ln-wlt-dot ln-wlt-col-1" style="--wave: #ff9a3c;" aria-hidden="true"></span>
+        <span class="ln-wlt-stem ln-wlt-stem--up ln-wlt-col-1" style="--wave: #ff9a3c;" aria-hidden="true"></span>
+        <article class="ln-wave ln-wlt-card ln-wlt-card--up ln-wlt-col-1" style="--wave: #ff9a3c;">
           <p class="ln-wave__nm">590 <i>nm</i></p>
           <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ffb547, #ff9a3c);" aria-hidden="true"></span>
           <p class="ln-wave__label">{% if is_fr %}Ambre &mdash; surface{% else %}Amber &mdash; surface{% endif %}</p>
@@ -106,7 +102,9 @@
           </p>
         </article>
 
-        <article class="ln-wave">
+        <span class="ln-wlt-dot ln-wlt-col-2" style="--wave: #ea1f36;" aria-hidden="true"></span>
+        <span class="ln-wlt-stem ln-wlt-stem--down ln-wlt-col-2" style="--wave: #ea1f36;" aria-hidden="true"></span>
+        <article class="ln-wave ln-wlt-card ln-wlt-card--down ln-wlt-col-2" style="--wave: #ea1f36;">
           <p class="ln-wave__nm">630 <i>nm</i></p>
           <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ff5f3a, #ea1f36);" aria-hidden="true"></span>
           <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; peau{% else %}Red &mdash; skin{% endif %}</p>
@@ -115,7 +113,9 @@
           </p>
         </article>
 
-        <article class="ln-wave">
+        <span class="ln-wlt-dot ln-wlt-col-3" style="--wave: #d20d2f;" aria-hidden="true"></span>
+        <span class="ln-wlt-stem ln-wlt-stem--up ln-wlt-col-3" style="--wave: #d20d2f;" aria-hidden="true"></span>
+        <article class="ln-wave ln-wlt-card ln-wlt-card--up ln-wlt-col-3" style="--wave: #d20d2f;">
           <p class="ln-wave__nm">660 <i>nm</i></p>
           <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #ea1f36, #d20d2f);" aria-hidden="true"></span>
           <p class="ln-wave__label">{% if is_fr %}Rouge &mdash; derme{% else %}Red &mdash; dermis{% endif %}</p>
@@ -124,7 +124,9 @@
           </p>
         </article>
 
-        <article class="ln-wave">
+        <span class="ln-wlt-dot ln-wlt-col-4" style="--wave: #7a1226;" aria-hidden="true"></span>
+        <span class="ln-wlt-stem ln-wlt-stem--down ln-wlt-col-4" style="--wave: #7a1226;" aria-hidden="true"></span>
+        <article class="ln-wave ln-wlt-card ln-wlt-card--down ln-wlt-col-4" style="--wave: #7a1226;">
           <p class="ln-wave__nm">810 <i>nm</i></p>
           <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #a3122c, #7a1226);" aria-hidden="true"></span>
           <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; invisible{% else %}Near-infrared &mdash; invisible{% endif %}</p>
@@ -133,7 +135,9 @@
           </p>
         </article>
 
-        <article class="ln-wave">
+        <span class="ln-wlt-dot ln-wlt-col-5" style="--wave: #5c1020;" aria-hidden="true"></span>
+        <span class="ln-wlt-stem ln-wlt-stem--up ln-wlt-col-5" style="--wave: #5c1020;" aria-hidden="true"></span>
+        <article class="ln-wave ln-wlt-card ln-wlt-card--up ln-wlt-col-5" style="--wave: #5c1020;">
           <p class="ln-wave__nm">830 <i>nm</i></p>
           <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #7a1226, #5c1020);" aria-hidden="true"></span>
           <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; tissus{% else %}Near-infrared &mdash; tissue{% endif %}</p>
@@ -142,7 +146,9 @@
           </p>
         </article>
 
-        <article class="ln-wave">
+        <span class="ln-wlt-dot ln-wlt-col-6" style="--wave: #45101c;" aria-hidden="true"></span>
+        <span class="ln-wlt-stem ln-wlt-stem--down ln-wlt-col-6" style="--wave: #45101c;" aria-hidden="true"></span>
+        <article class="ln-wave ln-wlt-card ln-wlt-card--down ln-wlt-col-6" style="--wave: #45101c;">
           <p class="ln-wave__nm">850 <i>nm</i></p>
           <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #5c1020, #45101c);" aria-hidden="true"></span>
           <p class="ln-wave__label">{% if is_fr %}Proche infrarouge &mdash; profondeur{% else %}Near-infrared &mdash; depth{% endif %}</p>
@@ -151,7 +157,9 @@
           </p>
         </article>
 
-        <article class="ln-wave">
+        <span class="ln-wlt-dot ln-wlt-col-7" style="--wave: #2b0d15;" aria-hidden="true"></span>
+        <span class="ln-wlt-stem ln-wlt-stem--up ln-wlt-col-7" style="--wave: #2b0d15;" aria-hidden="true"></span>
+        <article class="ln-wave ln-wlt-card ln-wlt-card--up ln-wlt-col-7" style="--wave: #2b0d15;">
           <p class="ln-wave__nm">940 <i>nm</i></p>
           <span class="ln-wave__swatch" style="background: linear-gradient(90deg, #45101c, #2b0d15);" aria-hidden="true"></span>
           <p class="ln-wave__label">{% if is_fr %}Bord de fen&ecirc;tre{% else %}Edge of the window{% endif %}</p>
