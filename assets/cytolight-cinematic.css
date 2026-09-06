@@ -112,7 +112,7 @@
   box-shadow: inset 0 -360px 260px -120px #080808;
 }
 .cy-hero__content { position: relative; z-index: 1; width: 100%; padding: 128px 0 74px; }
-.cy-hero__logo { display: block; width: clamp(220px, 22vw, 360px); height: auto; margin: 0 0 26px; }
+.cy-hero__logo { display: block; width: clamp(220px, 22vw, 360px); height: auto; margin: 0 0 26px auto; }
 @media (max-width: 640px) { .cy-hero__logo { width: 190px; } }
 .cy-hero h1 { max-width: 930px; margin: 0; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(54px, 8vw, 116px); line-height: .94; font-weight: 400; letter-spacing: -.02em; }
 .cy-hero__sub { max-width: 670px; margin: 26px 0 0; color: rgba(255,255,255,.84); font-size: clamp(17px, 2vw, 22px); line-height: 1.55; }
