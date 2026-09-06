@@ -1640,3 +1640,21 @@ h1, h2, h3, h4,
 .shopify-pc__prefs__option label input[aria-readonly="true"] ~ span svg path { fill: var(--color-muted) !important; }
 
 #shopify-pc__prefs__header-close svg path { fill: var(--color-foreground) !important; }
+
+/* Red glow on the cookie consent banner's buttons when hovered or
+   keyboard-focused, matching the site's red accent. The glow itself is
+   the visible focus indicator, so the native outline is safe to drop. */
+#shopify-pc__banner__btn-accept,
+#shopify-pc__banner__btn-decline,
+#shopify-pc__banner__btn-manage-prefs {
+  transition: box-shadow .2s ease;
+}
+#shopify-pc__banner__btn-accept:hover,
+#shopify-pc__banner__btn-accept:focus-visible,
+#shopify-pc__banner__btn-decline:hover,
+#shopify-pc__banner__btn-decline:focus-visible,
+#shopify-pc__banner__btn-manage-prefs:hover,
+#shopify-pc__banner__btn-manage-prefs:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(168, 10, 38, .18), 0 0 22px rgba(168, 10, 38, .6);
+}
