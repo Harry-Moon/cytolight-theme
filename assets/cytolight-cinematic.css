@@ -600,11 +600,15 @@
    except the small solid dots that stand for the LED array -- so they
    read as part of the same visual system, never as a decoration bolted
    on. They inherit the span's own color transition, so hovering a point
-   turns its icon red exactly as the underline does. */
+   turns its icon red exactly as the underline does. A soft ambient red
+   drop-shadow (the brand's own red-light colour) sits under them at
+   rest and blooms a little further on hover, alongside that colour
+   change -- a quiet nod to "red light" rather than a bright neon glow. */
 .cy-cap-points__icon {
   width: 22px; height: 22px; margin-bottom: 11px;
   color: rgba(255,255,255,.55);
-  transition: color .3s ease;
+  filter: drop-shadow(0 0 5px rgba(210,13,47,.45));
+  transition: color .3s ease, filter .3s ease;
 }
 .cy-cap-points.is-visible span { opacity: 1; transform: translateY(0); }
 .cy-cap-points.is-visible span:nth-child(1) { transition-delay: .05s; }
@@ -613,7 +617,7 @@
 @media (hover: hover) and (pointer: fine) {
   .cy-cap-points span:hover { color: #fff; }
   .cy-cap-points span:hover::before { width: 100%; }
-  .cy-cap-points span:hover .cy-cap-points__icon { color: var(--cy-red); }
+  .cy-cap-points span:hover .cy-cap-points__icon { color: var(--cy-red); filter: drop-shadow(0 0 10px rgba(210,13,47,.75)); }
 }
 /* PANO herite du cadrage contenu : plus d'origine ni d'overscan a corriger,
    seul le halo est recentre sur le panneau, qui se tient plus a droite que
