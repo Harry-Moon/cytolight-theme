@@ -80,9 +80,6 @@
           {%- endif -%}
         </p>
         <div class="cy-actions">
-          <a class="cy-button cy-button--light" href="{{ section.settings.primary_cta_url | default: desk_url }}">
-            {%- if is_fr -%}{{ section.settings.primary_cta_fr | default: 'D&eacute;couvrir Antared DESK' }}{%- else -%}{{ section.settings.primary_cta_en | default: 'Discover Antared DESK' }}{%- endif -%}
-          </a>
           <a class="cy-button cy-button--line" href="{{ section.settings.secondary_cta_url | default: '#cy-range' }}">
             {%- if is_fr -%}{{ section.settings.secondary_cta_fr | default: 'Voir la gamme' }}{%- else -%}{{ section.settings.secondary_cta_en | default: 'Explore the range' }}{%- endif -%}
           </a>
