@@ -226,6 +226,16 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .nav-collapse-ready .site-header__nav {
   transition: max-height .26s cubic-bezier(.2, .8, .2, 1), opacity .2s ease, border-color .26s ease;
 }
+.site-header__proof {
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  padding: 9px 16px; background: var(--color-foreground); color: #fff;
+  font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+}
+.site-header__proof span:not(:last-child) { position: relative; padding-right: 18px; }
+.site-header__proof span:not(:last-child)::after {
+  content: ''; position: absolute; top: 50%; right: 0; width: 3px; height: 3px;
+  border-radius: 50%; background: rgba(255,255,255,.5); transform: translateY(-50%);
+}
 .site-header {
   /* Repere de positionnement des panneaux de mega-menu, qui s'etendent sur
      toute la largeur plutot que sous leur seul onglet. */
