@@ -420,24 +420,33 @@
  * peak for the left-to-right pass, one for the return trip) computed so
  * that, read together on one shared 3.6s timeline, they light up in
  * sequence left-to-right then right-to-left -- one continuous back and
- * forth cycle every ~3.6s, matching the requested 3-4s.
+ * forth cycle every ~3.6s, matching the requested 3-4s. Ramps are wide
+ * enough (5% rise / 9% fall) that neighbouring bricks overlap slightly,
+ * so the sweep reads as one continuous travelling glow, not isolated
+ * blips -- and it runs from the moment the page paints, independent of
+ * scroll: it does not wait on and is never re-triggered by it.
  *
- * Only `filter` (brightness + drop-shadow) is animated here, never
- * opacity/box-shadow/text-shadow -- those stay exactly as the
- * scroll-driven system above controls them, so the idle shimmer layers
- * on top without ever fighting or overriding a lit/current state.
+ * The brick's own `filter` (brightness + drop-shadow) is animated here,
+ * never opacity/box-shadow/text-shadow -- those stay exactly as the
+ * scroll-driven system above controls them, so this shimmer layers on
+ * top without ever fighting or overriding a lit/current state. A
+ * dedicated `::after` bloom (below) carries the obvious halo instead of
+ * leaning on the brick's own opacity, which the scroll-driven system
+ * holds very low (.38) until a wavelength is "lit" -- animating the
+ * brick's real opacity/box-shadow would both fight that system *and*
+ * make the ambient scan look faint (or scroll-dependent) at rest.
  *
  * Respects prefers-reduced-motion via the site-wide rule further down
  * that forces every animation-duration to .001ms for that preference;
  * no separate override is needed here.
  */
-@keyframes cy-spectrum-scan-1 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 0.571% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 3.571% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 8.571% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 93.429% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 96.429% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
-@keyframes cy-spectrum-scan-2 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 7.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 10.714% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 15.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 86.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 89.286% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 94.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
-@keyframes cy-spectrum-scan-3 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 14.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 17.857% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 22.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 79.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 82.143% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 87.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
-@keyframes cy-spectrum-scan-4 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 22% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 25% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 30% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 72% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 75% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 80% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
-@keyframes cy-spectrum-scan-5 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 29.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 32.143% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 37.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 64.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 67.857% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 72.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
-@keyframes cy-spectrum-scan-6 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 36.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 39.286% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 44.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 57.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 60.714% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 65.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
-@keyframes cy-spectrum-scan-7 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 43.429% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 46.429% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 50.571% { filter: brightness(calc(1 + 0.1714 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(0.1714 * var(--scan-halo, 6px)) var(--wave-color)); } 51.429% { filter: brightness(calc(1 + 0.2857 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(0.2857 * var(--scan-halo, 6px)) var(--wave-color)); } 53.571% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 58.571% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-1 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 3.571% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 12.571% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 91.429% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 96.429% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-2 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 5.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 10.714% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 19.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 84.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 89.286% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 98.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-3 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 12.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 17.857% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 26.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 77.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 82.143% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 91.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-4 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 20% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 25% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 34% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 70% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 75% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 84% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-5 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 27.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 32.143% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 41.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 62.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 67.857% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 76.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-6 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 34.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 39.286% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 48.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 55.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 60.714% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 69.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-7 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 41.429% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 46.429% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 48.571% { filter: brightness(calc(1 + 0.7619 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(0.7619 * var(--scan-halo, 10px)) var(--wave-color)); } 53.571% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 10px)) var(--wave-color)); } 55.429% { filter: brightness(calc(1 + 0.7937 * (var(--scan-peak, 1.9) - 1))) drop-shadow(0 0 calc(0.7937 * var(--scan-halo, 10px)) var(--wave-color)); } 62.571% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
 
 .cy-spectrum span:nth-child(1)::before { animation: cy-spectrum-scan-1 3.6s var(--cy-ease) infinite; }
 .cy-spectrum span:nth-child(2)::before { animation: cy-spectrum-scan-2 3.6s var(--cy-ease) infinite; }
@@ -448,15 +457,39 @@
 .cy-spectrum span:nth-child(7)::before { animation: cy-spectrum-scan-7 3.6s var(--cy-ease) infinite; }
 
 /* Same shared timing, applied to the number itself for a subtler
-   brightness-only lift (no halo -- `--scan-halo: 0` keeps the
-   drop-shadow invisible) as the scan passes each column. */
-.cy-spectrum span:nth-child(1) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-1 3.6s var(--cy-ease) infinite; }
-.cy-spectrum span:nth-child(2) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-2 3.6s var(--cy-ease) infinite; }
-.cy-spectrum span:nth-child(3) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-3 3.6s var(--cy-ease) infinite; }
-.cy-spectrum span:nth-child(4) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-4 3.6s var(--cy-ease) infinite; }
-.cy-spectrum span:nth-child(5) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-5 3.6s var(--cy-ease) infinite; }
-.cy-spectrum span:nth-child(6) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-6 3.6s var(--cy-ease) infinite; }
-.cy-spectrum span:nth-child(7) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-7 3.6s var(--cy-ease) infinite; }
+   brightness lift plus a light halo as the scan passes each column. */
+.cy-spectrum span:nth-child(1) strong { --scan-peak: 1.3; --scan-halo: 5px; animation: cy-spectrum-scan-1 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(2) strong { --scan-peak: 1.3; --scan-halo: 5px; animation: cy-spectrum-scan-2 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(3) strong { --scan-peak: 1.3; --scan-halo: 5px; animation: cy-spectrum-scan-3 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(4) strong { --scan-peak: 1.3; --scan-halo: 5px; animation: cy-spectrum-scan-4 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(5) strong { --scan-peak: 1.3; --scan-halo: 5px; animation: cy-spectrum-scan-5 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(6) strong { --scan-peak: 1.3; --scan-halo: 5px; animation: cy-spectrum-scan-6 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(7) strong { --scan-peak: 1.3; --scan-halo: 5px; animation: cy-spectrum-scan-7 3.6s var(--cy-ease) infinite; }
+
+/* Dedicated bloom layer for the obvious halo: a second pseudo-element,
+   untouched by the is-lit/is-current rules above, so its opacity swing
+   (0 -> 1 -> 0) is never diluted by the brick's own low resting opacity
+   (.38) and never depends on scroll state. Same shape/position as the
+   brick, static full-strength box-shadow, only opacity is animated. */
+.cy-spectrum span::after {
+  content: ''; position: absolute; top: -1px; left: 0; width: 22px; height: 2px;
+  border-radius: 999px; pointer-events: none; opacity: 0;
+  box-shadow: 0 0 20px 4px var(--wave-color, #c8102e);
+}
+@keyframes cy-spectrum-glow-1 { 0% { opacity: 0; } 3.571% { opacity: 1; } 12.571% { opacity: 0; } 91.429% { opacity: 0; } 96.429% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes cy-spectrum-glow-2 { 0% { opacity: 0; } 5.714% { opacity: 0; } 10.714% { opacity: 1; } 19.714% { opacity: 0; } 84.286% { opacity: 0; } 89.286% { opacity: 1; } 98.286% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes cy-spectrum-glow-3 { 0% { opacity: 0; } 12.857% { opacity: 0; } 17.857% { opacity: 1; } 26.857% { opacity: 0; } 77.143% { opacity: 0; } 82.143% { opacity: 1; } 91.143% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes cy-spectrum-glow-4 { 0% { opacity: 0; } 20% { opacity: 0; } 25% { opacity: 1; } 34% { opacity: 0; } 70% { opacity: 0; } 75% { opacity: 1; } 84% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes cy-spectrum-glow-5 { 0% { opacity: 0; } 27.143% { opacity: 0; } 32.143% { opacity: 1; } 41.143% { opacity: 0; } 62.857% { opacity: 0; } 67.857% { opacity: 1; } 76.857% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes cy-spectrum-glow-6 { 0% { opacity: 0; } 34.286% { opacity: 0; } 39.286% { opacity: 1; } 48.286% { opacity: 0; } 55.714% { opacity: 0; } 60.714% { opacity: 1; } 69.714% { opacity: 0; } 100% { opacity: 0; } }
+@keyframes cy-spectrum-glow-7 { 0% { opacity: 0; } 41.429% { opacity: 0; } 46.429% { opacity: 1; } 48.571% { opacity: 0.7619; } 53.571% { opacity: 1; } 55.429% { opacity: 0.7937; } 62.571% { opacity: 0; } 100% { opacity: 0; } }
+.cy-spectrum span:nth-child(1)::after { animation: cy-spectrum-glow-1 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(2)::after { animation: cy-spectrum-glow-2 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(3)::after { animation: cy-spectrum-glow-3 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(4)::after { animation: cy-spectrum-glow-4 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(5)::after { animation: cy-spectrum-glow-5 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(6)::after { animation: cy-spectrum-glow-6 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(7)::after { animation: cy-spectrum-glow-7 3.6s var(--cy-ease) infinite; }
 /* Antared Redlight Cap: real two-plane parallax. The background room
    plate and the transparent product cutout are separate elements that
    drift at different scroll-linked speeds (see --cy-p multipliers
