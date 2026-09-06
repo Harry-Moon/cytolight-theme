@@ -408,6 +408,55 @@
   box-shadow: 0 0 4px 2px color-mix(in srgb, var(--wave-color, #c8102e) 90%, transparent);
 }
 .cy-spectrum span.is-current strong { text-shadow: 0 0 26px color-mix(in srgb, var(--wave-color, #c8102e) 80%, transparent); }
+
+/*
+ * Ambient KITT/Cylon-style scanner, always on -- independent of the
+ * scroll-driven is-lit/is-current system above.
+ *
+ * It deliberately follows the same philosophy stated above ("a brick
+ * that lights up, not one that slides"): a real scanner is built from
+ * discrete lights with staggered timing, not one element sliding along
+ * the strip. Each of the 7 bricks gets its own two-peak keyframe (one
+ * peak for the left-to-right pass, one for the return trip) computed so
+ * that, read together on one shared 3.6s timeline, they light up in
+ * sequence left-to-right then right-to-left -- one continuous back and
+ * forth cycle every ~3.6s, matching the requested 3-4s.
+ *
+ * Only `filter` (brightness + drop-shadow) is animated here, never
+ * opacity/box-shadow/text-shadow -- those stay exactly as the
+ * scroll-driven system above controls them, so the idle shimmer layers
+ * on top without ever fighting or overriding a lit/current state.
+ *
+ * Respects prefers-reduced-motion via the site-wide rule further down
+ * that forces every animation-duration to .001ms for that preference;
+ * no separate override is needed here.
+ */
+@keyframes cy-spectrum-scan-1 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 0.571% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 3.571% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 8.571% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 93.429% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 96.429% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-2 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 7.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 10.714% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 15.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 86.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 89.286% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 94.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-3 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 14.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 17.857% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 22.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 79.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 82.143% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 87.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-4 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 22% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 25% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 30% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 72% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 75% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 80% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-5 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 29.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 32.143% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 37.143% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 64.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 67.857% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 72.857% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-6 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 36.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 39.286% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 44.286% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 57.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 60.714% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 65.714% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+@keyframes cy-spectrum-scan-7 { 0% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 43.429% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 46.429% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 50.571% { filter: brightness(calc(1 + 0.1714 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(0.1714 * var(--scan-halo, 6px)) var(--wave-color)); } 51.429% { filter: brightness(calc(1 + 0.2857 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(0.2857 * var(--scan-halo, 6px)) var(--wave-color)); } 53.571% { filter: brightness(calc(1 + 1 * (var(--scan-peak, 1.55) - 1))) drop-shadow(0 0 calc(1 * var(--scan-halo, 6px)) var(--wave-color)); } 58.571% { filter: brightness(1) drop-shadow(0 0 0 transparent); } 100% { filter: brightness(1) drop-shadow(0 0 0 transparent); } }
+
+.cy-spectrum span:nth-child(1)::before { animation: cy-spectrum-scan-1 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(2)::before { animation: cy-spectrum-scan-2 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(3)::before { animation: cy-spectrum-scan-3 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(4)::before { animation: cy-spectrum-scan-4 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(5)::before { animation: cy-spectrum-scan-5 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(6)::before { animation: cy-spectrum-scan-6 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(7)::before { animation: cy-spectrum-scan-7 3.6s var(--cy-ease) infinite; }
+
+/* Same shared timing, applied to the number itself for a subtler
+   brightness-only lift (no halo -- `--scan-halo: 0` keeps the
+   drop-shadow invisible) as the scan passes each column. */
+.cy-spectrum span:nth-child(1) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-1 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(2) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-2 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(3) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-3 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(4) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-4 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(5) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-5 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(6) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-6 3.6s var(--cy-ease) infinite; }
+.cy-spectrum span:nth-child(7) strong { --scan-peak: 1.15; --scan-halo: 0px; animation: cy-spectrum-scan-7 3.6s var(--cy-ease) infinite; }
 /* Antared Redlight Cap: real two-plane parallax. The background room
    plate and the transparent product cutout are separate elements that
    drift at different scroll-linked speeds (see --cy-p multipliers
