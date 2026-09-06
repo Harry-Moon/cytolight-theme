@@ -164,9 +164,18 @@
         </div>
         <p class="cy-cinema__body">{% if is_fr %}Le principal frein d'une routine cuir chevelu, c'est de devoir s'arr&ecirc;ter pour la faire. Port&eacute;e pendant que vous lisez, travaillez ou regardez un film, Antared Redlight Cap laisse la lumi&egrave;re agir sans vous voler une minute &#8212; donc vous ne sautez plus de s&eacute;ance.{% else %}The biggest obstacle to a scalp routine is having to stop everything for it. Worn while you read, work, or watch something, Antared Redlight Cap lets the light do its work without taking any extra time &#8212; so you stop skipping sessions.{% endif %}</p>
         <div class="cy-cap-points cy-reveal" aria-label="{% if is_fr %}B&eacute;n&eacute;fices Antared Cap{% else %}Antared Cap benefits{% endif %}">
-          <span>{% if is_fr %}Format mains libres{% else %}Hands-free format{% endif %}</span>
-          <span>660nm + 850nm</span>
-          <span>{% if is_fr %}150 LED 3-en-1{% else %}150 3-in-1 LEDs{% endif %}</span>
+          <span>
+            <svg class="cy-cap-points__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3.5 13.5C3.5 8 7.5 4 12 4s8.5 4 8.5 9.5"/><path d="M3.5 13.5h13.2c2.4 0 4.6 1.2 5.8 3.2"/><circle cx="12" cy="4" r=".6" fill="currentColor" stroke="none"/></svg>
+            {% if is_fr %}Format mains libres{% else %}Hands-free format{% endif %}
+          </span>
+          <span>
+            <svg class="cy-cap-points__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12c1.6-4.5 3.2-4.5 4.8 0s3.2 4.5 4.8 0 3.2-4.5 4.8 0 3.2 4.5 4.8 0"/></svg>
+            660nm + 850nm
+          </span>
+          <span>
+            <svg class="cy-cap-points__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="6" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="18" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="6" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="6" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="18" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>
+            {% if is_fr %}150 LED 3-en-1{% else %}150 3-in-1 LEDs{% endif %}
+          </span>
         </div>
         <div class="cy-actions">
           <a class="cy-button cy-button--light" href="{{ cap_url }}">{% if is_fr %}D&eacute;couvrir la casquette{% else %}Discover the cap{% endif %}</a>
