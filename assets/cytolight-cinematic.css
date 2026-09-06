@@ -113,7 +113,19 @@
 }
 .cy-hero__content { position: relative; z-index: 1; width: 100%; padding: 128px 0 74px; }
 .cy-hero__logo { display: block; width: clamp(220px, 22vw, 360px); height: auto; margin: 0 0 26px auto; }
-@media (max-width: 640px) { .cy-hero__logo { width: 140px; } }
+@media (max-width: 640px) {
+  /* On mobile the logo moves to the top-center of the hero instead of
+     sitting right-aligned just above the heading: .cy-hero__content is
+     pinned to the box's own edges so the logo can anchor to its actual
+     top independent of where the flex-end-aligned text block lands,
+     with the heading/sub/CTA still pushed to the bottom as a group via
+     justify-content. */
+  .cy-hero__content { position: absolute; inset: 0; padding: 22px 0 40px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .cy-hero__logo {
+    position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
+    width: 96px; margin: 0;
+  }
+}
 .cy-hero h1 { max-width: 930px; margin: 0; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(54px, 8vw, 116px); line-height: .94; font-weight: 400; letter-spacing: -.02em; }
 .cy-hero__sub { max-width: 670px; margin: 26px 0 0; color: rgba(255,255,255,.84); font-size: clamp(17px, 2vw, 22px); line-height: 1.55; }
 .cy-hero__facts {
