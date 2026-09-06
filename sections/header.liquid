@@ -122,6 +122,10 @@
 {{ 'header-highlight.css' | asset_url | stylesheet_tag }}
 
 <header class="site-header">
+  <div class="site-header__proof" aria-label="{% if is_fr %}Avantages de la boutique{% else %}Store benefits{% endif %}">
+    <span>{% if is_fr %}Essai 14 j{% else %}14-Day Trial{% endif %}</span>
+    <span>{% if is_fr %}Garantie 2 ans{% else %}2-Year Warranty{% endif %}</span>
+  </div>
   <div class="container site-header__bar">
     <div class="site-header__utils site-header__utils--start">
       <a class="site-header__util-link site-header__util-link--highlight" href="{{ locale_root }}/pages/find-your-cytolight">{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}</a>

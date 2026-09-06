@@ -915,21 +915,12 @@
  * laisseraient les titres a opacite 0. Ils sont forces visibles.
  */
 @media (max-width: 900px) {
-  .cy-home .cy-hero { min-height: 0; display: block; }
-  .cy-home .cy-hero__media {
-    position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 16 / 9;
-    background: var(--cy-bg);
-  }
-  .cy-home .cy-hero__media video { object-fit: contain; }
-  .cy-home .cy-hero__media::after {
-    /* Same warm red-to-black mood as the desktop overlay (.cy-hero__media::after
-       above), just tuned for the shorter 16:9 contain box mobile uses instead
-       of a full-bleed cover background: without this, the fade to the solid
-       black content box below was a flat black gradient with no red tint. */
-    background: linear-gradient(180deg, rgba(126,0,24,.22) 0%, rgba(80,0,16,.16) 34%, rgba(8,8,8,.62) 82%, #080808 100%);
-    box-shadow: none;
-  }
-  .cy-home .cy-hero__content { padding: 34px 0 56px; background: var(--cy-bg); }
+  /* The hero intentionally keeps the desktop overlay treatment here
+     (video full-bleed behind the content, logo/heading on top, same
+     red gradient) rather than the stacked video-then-black-box layout
+     used below for .cy-cinema — the hero's video is atmospheric people,
+     not a product that needs to stay uncropped, so cover+overlay reads
+     fine at any width and matches desktop. */
 
   .cy-home .cy-cinema { min-height: 0; }
   .cy-home .cy-cinema__stage {
