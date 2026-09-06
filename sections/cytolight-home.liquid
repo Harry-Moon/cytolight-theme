@@ -408,7 +408,7 @@
           <div class="cy-proof__stat cy-reveal" style="transition-delay:180ms"><strong><span class="cy-proof__stat-num" data-count-to="14" data-suffix=" {% if is_fr %}jours{% else %}days{% endif %}">0</span></strong><span>{% if is_fr %}d'essai satisfait ou rembours&eacute;{% else %}money-back home trial{% endif %}</span></div>
         {%- endif -%}
       </div>
-      <div class="cy-proof__certs cy-proof__certs--photo cy-reveal" style="background-image:url({{ 'cytolight-goal-skin-red-halo.jpg' | file_url }});">
+      <div class="cy-proof__certs cy-proof__certs--photo cy-reveal">
         <p class="cy-proof__certs-label">{% if is_fr %}Conformit&eacute; internationale{% else %}International compliance{% endif %}</p>
         <div class="cy-proof__certs-row">
           {%- assign cert_logos = "01_MDSAP.png,02_BSI_ISO_13485.png,03_MDL.png,04_TGA.png,05_510K_K233114.png,06_UL_IEC60601.png,07_ETL_Intertek.png,08_Global_Mark.png,09_UKCA.png,10_SGS.png,11_RoHS.png,12_FCC.png,13_CE.png" | split: "," -%}
