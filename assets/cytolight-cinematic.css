@@ -59,12 +59,12 @@
 /* Meme glissement de fleche que "Voir tous les produits" (.cy-range .cy-link
    plus bas) : ce lien-ci n'est pas porte par une carte, le survol se prend
    donc directement sur le lien. */
-.cy-intro .cy-link > span[aria-hidden] {
+.cy-redlight-science .cy-link > span[aria-hidden] {
   display: inline-block;
   transition: transform .34s var(--cy-ease);
 }
 @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-  .cy-intro .cy-link:hover > span[aria-hidden] {
+  .cy-redlight-science .cy-link:hover > span[aria-hidden] {
     transform: translateX(7px);
   }
 }
@@ -155,18 +155,64 @@
   .cy-hero__facts::after { animation: none; opacity: .6; }
 }
 
-.cy-intro, .cy-use, .cy-compare { padding: 124px 0; background: #fff; }
-.cy-intro__top, .cy-range__head, .cy-compare__top { display: flex; justify-content: space-between; gap: 64px; align-items: flex-end; }
+.cy-redlight-science, .cy-use, .cy-compare { padding: 124px 0; background: #fff; }
+.cy-range__head, .cy-compare__top { display: flex; justify-content: space-between; gap: 64px; align-items: flex-end; }
 /* Sans largeur fixe sur la colonne de titre, l'aside demarrait a des abscisses
    differentes d'une section a l'autre : `justify-content: space-between`
    pousse l'aside a droite du bloc titre, dont la largeur suit la longueur du
    texte du h2. Le bloc titre est donc mis en `flex: 1 1 auto` pour absorber
    tout l'espace restant, et l'aside en largeur fixe : les deux CTA de bas de
    bloc s'alignent alors sur la meme colonne. */
-.cy-intro__top > div:first-child, .cy-range__head > div:first-child { flex: 1 1 auto; min-width: 0; }
-.cy-intro__aside, .cy-range__aside { width: min(390px, 100%); padding-bottom: 8px; }
-.cy-intro__aside, .cy-range__aside { flex: 0 0 min(390px, 100%); }
-.cy-intro__aside p, .cy-range__aside p { margin: 0 0 22px; color: var(--cy-muted); font-size: 16px; line-height: 1.7; }
+.cy-range__head > div:first-child { flex: 1 1 auto; min-width: 0; }
+.cy-range__aside { width: min(390px, 100%); padding-bottom: 8px; }
+.cy-range__aside { flex: 0 0 min(390px, 100%); }
+.cy-range__aside p { margin: 0 0 22px; color: var(--cy-muted); font-size: 16px; line-height: 1.7; }
+/* Science explainer: a real two-column read (article + features on the
+   left, a large infographic video on the right), not the short-blurb
+   layout above -- so it gets its own grid instead of reusing
+   cy-intro__top/aside, whose fixed 390px aside and giant cy-heading
+   left a wall of empty space above a short title next to a small
+   video. `align-items: start` keeps both columns flush at the top. */
+.cy-redlight-science__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 460px); gap: 56px; align-items: stretch; }
+.cy-redlight-science__heading {
+  max-width: 640px; margin: 0 0 20px; font-size: clamp(26px, 3vw, 38px);
+  font-family: "Instrument Serif", Georgia, serif; line-height: 1.15; font-weight: 400; letter-spacing: -.01em;
+}
+.cy-redlight-science__text { max-width: 560px; margin: 0 0 32px; color: var(--cy-muted); font-size: 16px; line-height: 1.7; }
+.cy-redlight-science__hl { color: var(--cy-red); font-weight: 700; }
+.cy-redlight-science__features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; margin-bottom: 36px; }
+.cy-redlight-science__feature { display: flex; align-items: center; gap: 12px; }
+.cy-redlight-science__feature svg { flex: 0 0 auto; width: 22px; height: 22px; color: var(--cy-red); }
+.cy-redlight-science__feature span { font-size: 14px; font-weight: 650; line-height: 1.3; }
+.cy-redlight-science__subhead {
+  margin: 0 0 18px; color: var(--cy-ink); font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.cy-redlight-science__personas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-bottom: 36px; }
+.cy-redlight-science__persona { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.cy-redlight-science__persona svg { flex: 0 0 auto; width: 24px; height: 24px; color: var(--cy-red); }
+.cy-redlight-science__persona span { font-size: 13px; font-weight: 650; line-height: 1.3; }
+/* The video is an infographic (title and depth labels reach right to its
+   edges), so it must never be cropped -- object-fit: contain, never
+   cover. The box itself stretches to the full height of the text column
+   (align-items: stretch above) so the video fills that height as far as
+   its own ratio allows, rather than sitting short with dead space below
+   it or floating small next to a much taller article. */
+.cy-redlight-science__media {
+  width: 100%; height: 100%; border-radius: 14px; overflow: hidden; background: #0d0d0d;
+}
+.cy-redlight-science__media video { width: 100%; height: 100%; object-fit: contain; display: block; }
+@media (max-width: 900px) {
+  .cy-redlight-science__layout { grid-template-columns: 1fr; gap: 32px; align-items: start; }
+  .cy-redlight-science__media { order: -1; height: auto; }
+  .cy-redlight-science__media video { height: auto; }
+  .cy-redlight-science__personas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cy-redlight-science__features { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .cy-redlight-science__features { grid-template-columns: 1fr; }
+  .cy-redlight-science__personas { grid-template-columns: 1fr 1fr; }
+}
 
 .cy-cinema {
   /* La course de la scene collante : 170vh, soit 70 % d'ecran de defilement
@@ -995,11 +1041,10 @@
 }
 @media (max-width: 980px) {
   .cy-shell { width: min(100% - 40px, 1280px); }
-  .cy-intro__top, .cy-range__head, .cy-compare__top { align-items: flex-start; flex-direction: column; }
+  .cy-range__head, .cy-compare__top { align-items: flex-start; flex-direction: column; }
   /* `flex-basis` porte sur l'axe principal : une fois la colonne empilee,
      la largeur fixe posee plus haut se lirait comme une hauteur. */
-  .cy-intro__top > div:first-child, .cy-range__head > div:first-child,
-  .cy-intro__aside, .cy-range__aside { flex-basis: auto; }
+  .cy-range__head > div:first-child, .cy-range__aside { flex-basis: auto; }
   .cy-products { grid-template-columns: 1fr 1fr; }
   .cy-product:first-child { grid-column: 1 / -1; }
   .cy-use__grid { grid-template-columns: 1fr 1fr; }
@@ -1111,7 +1156,7 @@
   .cy-hero__fact:nth-child(-n+2) { border-bottom: 1px solid rgba(255,255,255,.12); }
   .cy-hero__fact strong { font-size: 22px; overflow-wrap: anywhere; }
   .cy-hero__fact span { font-size: 11.5px; }
-  .cy-intro, .cy-range, .cy-use, .cy-rail, .cy-proof, .cy-compare { padding: 82px 0; }
+  .cy-redlight-science, .cy-range, .cy-use, .cy-rail, .cy-proof, .cy-compare { padding: 82px 0; }
   .cy-products, .cy-use__grid { grid-template-columns: 1fr; }
   .cy-product:first-child { grid-column: auto; }
   .cy-product { min-height: 380px; }
