@@ -179,6 +179,7 @@
   font-family: "Instrument Serif", Georgia, serif; line-height: 1.15; font-weight: 400; letter-spacing: -.01em;
 }
 .cy-redlight-science__text { max-width: 560px; margin: 0 0 32px; color: var(--cy-muted); font-size: 16px; line-height: 1.7; }
+.cy-redlight-science__hl { color: var(--cy-red); font-weight: 700; }
 .cy-redlight-science__features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 24px; margin-bottom: 36px; }
 .cy-redlight-science__feature { display: flex; align-items: center; gap: 12px; }
 .cy-redlight-science__feature svg { flex: 0 0 auto; width: 22px; height: 22px; color: var(--cy-red); }
