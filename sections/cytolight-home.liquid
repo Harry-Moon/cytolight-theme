@@ -267,11 +267,14 @@
   <section class="cy-intro cy-reveal">
     <div class="cy-shell cy-intro__top">
       <div>
-        <p class="cy-kicker">{% if is_fr %}Contr&ocirc;le spectral{% else %}Spectral control{% endif %}</p>
-        <h2 class="cy-heading">{% if is_fr %}Chaque longueur d'onde se r&egrave;gle ind&eacute;pendamment.{% else %}Every wavelength adjusts on its own.{% endif %}</h2>
+        <p class="cy-kicker">{% if is_fr %}La science de la lumi&egrave;re rouge{% else %}The science of red light{% endif %}</p>
+        <h2 class="cy-heading">{% if is_fr %}Comment la photobiomodulation agit, longueur d'onde par longueur d'onde.{% else %}How photobiomodulation works, wavelength by wavelength.{% endif %}</h2>
       </div>
       <div class="cy-intro__aside">
-        <p>{% if is_fr %}Antared r&eacute;unit puissance, contr&ocirc;le spectral et design pour faire de la luminoth&eacute;rapie un rituel que vous avez vraiment envie de garder.{% else %}Antared brings together power, spectral control, and considered design to make light therapy a ritual you will actually keep.{% endif %}</p>
+        <div class="cy-intro__media" aria-hidden="true">
+          <video src="{% if is_fr %}https://cdn.shopify.com/videos/c/o/v/0f8d73263ee34ba8bc8915afa70369b6.mp4{% else %}https://cdn.shopify.com/videos/c/o/v/f7039ae2ca8c429d84361d12d18c9761.mp4{% endif %}" autoplay loop muted playsinline preload="metadata"></video>
+        </div>
+        <p>{% if is_fr %}La lumi&egrave;re rouge et proche infrarouge p&eacute;n&egrave;tre la peau et les tissus, o&ugrave; elle est capt&eacute;e par les mitochondries pour soutenir la production d'&eacute;nergie cellulaire. Chaque longueur d'onde a un r&ocirc;le diff&eacute;rent : le rouge agit en surface, sur la peau et sa texture ; le proche infrarouge atteint plus profond&eacute;ment les muscles et les articulations. Le syst&egrave;me Antared r&eacute;unit ces longueurs d'onde dans un seul appareil, avec un r&eacute;glage ind&eacute;pendant pour chacune &mdash; pour adapter chaque s&eacute;ance &agrave; votre objectif du jour.{% else %}Red and near-infrared light penetrate skin and tissue, where they are absorbed by mitochondria to support cellular energy production. Each wavelength plays a different role: red light acts on the surface, supporting skin and texture, while near-infrared reaches deeper into muscle and joint tissue. The Antared system brings these wavelengths together in a single device, with independent control over each one, so every session can match what you actually need that day.{% endif %}</p>
         <a class="cy-link" href="{{ academy_url }}">{% if is_fr %}Comprendre la technologie{% else %}Understand the technology{% endif %} <span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
