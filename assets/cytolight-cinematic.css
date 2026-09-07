@@ -173,7 +173,7 @@
    cy-intro__top/aside, whose fixed 390px aside and giant cy-heading
    left a wall of empty space above a short title next to a small
    video. `align-items: start` keeps both columns flush at the top. */
-.cy-redlight-science__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 460px); gap: 56px; align-items: start; }
+.cy-redlight-science__layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 460px); gap: 56px; align-items: stretch; }
 .cy-redlight-science__heading {
   max-width: 640px; margin: 0 0 20px; font-size: clamp(26px, 3vw, 38px);
   font-family: "Instrument Serif", Georgia, serif; line-height: 1.15; font-weight: 400; letter-spacing: -.01em;
@@ -184,21 +184,34 @@
 .cy-redlight-science__feature { display: flex; align-items: center; gap: 12px; }
 .cy-redlight-science__feature svg { flex: 0 0 auto; width: 22px; height: 22px; color: var(--cy-red); }
 .cy-redlight-science__feature span { font-size: 14px; font-weight: 650; line-height: 1.3; }
-/* No forced aspect-ratio/object-fit:cover here on purpose -- this video is
-   an infographic (title and depth labels reach right to its edges), so
-   cropping it to fit a box cuts off real content. Letting the video keep
-   its own intrinsic ratio (width 100%, height auto) shows it in full. */
-.cy-redlight-science__media {
-  width: 100%; border-radius: 14px; overflow: hidden; background: #0d0d0d;
+.cy-redlight-science__subhead {
+  margin: 0 0 18px; color: var(--cy-ink); font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
 }
-.cy-redlight-science__media video { width: 100%; height: auto; display: block; }
+.cy-redlight-science__personas { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin-bottom: 36px; }
+.cy-redlight-science__persona { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.cy-redlight-science__persona svg { flex: 0 0 auto; width: 24px; height: 24px; color: var(--cy-red); }
+.cy-redlight-science__persona span { font-size: 13px; font-weight: 650; line-height: 1.3; }
+/* The video is an infographic (title and depth labels reach right to its
+   edges), so it must never be cropped -- object-fit: contain, never
+   cover. The box itself stretches to the full height of the text column
+   (align-items: stretch above) so the video fills that height as far as
+   its own ratio allows, rather than sitting short with dead space below
+   it or floating small next to a much taller article. */
+.cy-redlight-science__media {
+  width: 100%; height: 100%; border-radius: 14px; overflow: hidden; background: #0d0d0d;
+}
+.cy-redlight-science__media video { width: 100%; height: 100%; object-fit: contain; display: block; }
 @media (max-width: 900px) {
-  .cy-redlight-science__layout { grid-template-columns: 1fr; gap: 32px; }
-  .cy-redlight-science__media { order: -1; }
+  .cy-redlight-science__layout { grid-template-columns: 1fr; gap: 32px; align-items: start; }
+  .cy-redlight-science__media { order: -1; height: auto; }
+  .cy-redlight-science__media video { height: auto; }
+  .cy-redlight-science__personas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cy-redlight-science__features { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 520px) {
   .cy-redlight-science__features { grid-template-columns: 1fr; }
+  .cy-redlight-science__personas { grid-template-columns: 1fr 1fr; }
 }
 
 .cy-cinema {
