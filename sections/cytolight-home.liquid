@@ -264,18 +264,40 @@
     </div>
   </section>
 
-  <section class="cy-intro cy-reveal">
-    <div class="cy-shell cy-intro__top">
-      <div>
-        <p class="cy-kicker">{% if is_fr %}La science de la lumi&egrave;re rouge{% else %}The science of red light{% endif %}</p>
-        <h2 class="cy-heading">{% if is_fr %}Comment la photobiomodulation agit, longueur d'onde par longueur d'onde.{% else %}How photobiomodulation works, wavelength by wavelength.{% endif %}</h2>
-      </div>
-      <div class="cy-intro__aside">
-        <div class="cy-intro__media" aria-hidden="true">
+  <section class="cy-redlight-science cy-reveal">
+    <div class="cy-shell">
+      <p class="cy-kicker">{% if is_fr %}La science de la lumi&egrave;re rouge{% else %}The science of red light{% endif %}</p>
+      <div class="cy-redlight-science__layout">
+        <div class="cy-redlight-science__content">
+          <h2 class="cy-redlight-science__heading">{% if is_fr %}Comment la photobiomodulation agit, longueur d'onde par longueur d'onde.{% else %}How photobiomodulation works, wavelength by wavelength.{% endif %}</h2>
+          <p class="cy-redlight-science__text">{% if is_fr %}La lumi&egrave;re rouge et proche infrarouge p&eacute;n&egrave;tre la peau et les tissus, o&ugrave; elle est capt&eacute;e par les mitochondries pour soutenir la production d'&eacute;nergie cellulaire. Le syst&egrave;me Antared r&egrave;gle chaque longueur d'onde ind&eacute;pendamment, pour adapter chaque s&eacute;ance &agrave; votre objectif du jour.{% else %}Red and near-infrared light penetrate skin and tissue, where they are absorbed by mitochondria to support cellular energy production. The Antared system adjusts each wavelength independently, so every session can match what you actually need that day.{% endif %}</p>
+          <div class="cy-redlight-science__features">
+            <div class="cy-redlight-science__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="4" y1="9" x2="20" y2="9"/></svg>
+              <span>{% if is_fr %}630nm &mdash; Peau &amp; texture{% else %}630nm &mdash; Skin &amp; texture{% endif %}</span>
+            </div>
+            <div class="cy-redlight-science__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="4" y1="15" x2="20" y2="15"/></svg>
+              <span>{% if is_fr %}850nm &mdash; Muscles &amp; articulations{% else %}850nm &mdash; Muscle &amp; joints{% endif %}</span>
+            </div>
+            <div class="cy-redlight-science__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              <span>{% if is_fr %}&Eacute;nergie mitochondriale{% else %}Mitochondrial energy{% endif %}</span>
+            </div>
+            <div class="cy-redlight-science__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+              <span>{% if is_fr %}R&eacute;glage ind&eacute;pendant{% else %}Independent control{% endif %}</span>
+            </div>
+            <div class="cy-redlight-science__feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg>
+              <span>{% if is_fr %}S&eacute;ance personnalis&eacute;e{% else %}Personalized session{% endif %}</span>
+            </div>
+          </div>
+          <a class="cy-link" href="{{ academy_url }}">{% if is_fr %}Comprendre la technologie{% else %}Understand the technology{% endif %} <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="cy-redlight-science__media" aria-hidden="true">
           <video src="{% if is_fr %}https://cdn.shopify.com/videos/c/o/v/0f8d73263ee34ba8bc8915afa70369b6.mp4{% else %}https://cdn.shopify.com/videos/c/o/v/f7039ae2ca8c429d84361d12d18c9761.mp4{% endif %}" autoplay loop muted playsinline preload="metadata"></video>
         </div>
-        <p>{% if is_fr %}La lumi&egrave;re rouge et proche infrarouge p&eacute;n&egrave;tre la peau et les tissus, o&ugrave; elle est capt&eacute;e par les mitochondries pour soutenir la production d'&eacute;nergie cellulaire. Chaque longueur d'onde a un r&ocirc;le diff&eacute;rent : le rouge agit en surface, sur la peau et sa texture ; le proche infrarouge atteint plus profond&eacute;ment les muscles et les articulations. Le syst&egrave;me Antared r&eacute;unit ces longueurs d'onde dans un seul appareil, avec un r&eacute;glage ind&eacute;pendant pour chacune &mdash; pour adapter chaque s&eacute;ance &agrave; votre objectif du jour.{% else %}Red and near-infrared light penetrate skin and tissue, where they are absorbed by mitochondria to support cellular energy production. Each wavelength plays a different role: red light acts on the surface, supporting skin and texture, while near-infrared reaches deeper into muscle and joint tissue. The Antared system brings these wavelengths together in a single device, with independent control over each one, so every session can match what you actually need that day.{% endif %}</p>
-        <a class="cy-link" href="{{ academy_url }}">{% if is_fr %}Comprendre la technologie{% else %}Understand the technology{% endif %} <span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
   </section>
