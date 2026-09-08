@@ -10,6 +10,21 @@
   une precaution decorative, c'est la condition pour publier cette page.
 
   Ne jamais ajouter ici une reference sans DOI ou identifiant verifiable.
+
+  Trois choses a ne pas defaire dans ce fichier :
+
+  1. Antared ne conduit aucun essai clinique et ne revendique aucune des
+     etudes citees. Ce n'est pas une precaution de style, c'est la position
+     de la marque : nous distribuons du materiel et nous reglons nos
+     appareils sur les parametres publies dans cette litterature. Toute
+     formulation laissant entendre un essai mene sur un appareil Antared est
+     a corriger, ou qu'elle apparaisse.
+  2. La source lumineuse -- laser ou LED -- est precisee des qu'elle change
+     la lecture d'un resultat. Une bonne partie de la litterature historique
+     est du laser ; les appareils vendus sont des LED.
+  3. La FAQ et le JSON-LD FAQPage partagent une source unique (faq_raw). Ne
+     pas dupliquer les reponses : Google refuse un FAQPage qui ne correspond
+     pas au texte visible.
 {%- endcomment -%}
 
 {%- liquid
@@ -32,6 +47,28 @@
   if values_url == blank
     assign values_url = locale_root | append: '/pages/nos-valeurs'
   endif
+
+  assign wave_url = pages['wavelengths'].url
+  if wave_url == blank
+    assign wave_url = locale_root | append: '/pages/wavelengths'
+  endif
+
+  assign pre_url = pages['pre-workout'].url
+  if pre_url == blank
+    assign pre_url = locale_root | append: '/pages/pre-workout'
+  endif
+
+  assign learn_url = pages['academy'].url
+  if learn_url == blank
+    assign learn_url = locale_root | append: '/pages/academy'
+  endif
+
+  comment
+    Date de derniere revision de fond. Elle alimente a la fois la mention
+    visible du resume et le dateModified du JSON-LD : un seul endroit a
+    changer. La mettre a jour quand le contenu change, pas a chaque commit.
+  endcomment
+  assign page_updated = '2026-09-08'
 -%}
 
 <section class="ln-hero">
@@ -78,8 +115,106 @@
       </div>
       <div class="ln-hero__fact">
         <strong>0</strong>
-        <span>{% if is_fr %}de ces &eacute;tudes n'a &eacute;t&eacute; men&eacute;e sur un appareil Antared{% else %}of these studies were run on a Antared device{% endif %}</span>
+        <span>{% if is_fr %}de ces &eacute;tudes n'a &eacute;t&eacute; men&eacute;e sur un appareil Antared{% else %}of these studies were run on an Antared device{% endif %}</span>
       </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Resume de tete. Il repond a la question posee par le titre en une phrase,
+  puis en six faits autoportants : chacun doit rester vrai et comprehensible
+  sorti de la page, parce que c'est sous cette forme qu'un moteur de reponse
+  le citera. Aucun de ces faits n'est nouveau : ils resument la frise et les
+  fiches d'etudes qui suivent. Si un chiffre change plus bas, il change ici.
+{%- endcomment -%}
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">{% if is_fr %}En r&eacute;sum&eacute;{% else %}In short{% endif %}</h2>
+      <p class="ln-copy">
+        {%- if is_fr -%}
+          La photobiomodulation &mdash; lumi&egrave;re rouge et proche infrarouge de faible puissance
+          &mdash; est &eacute;tudi&eacute;e depuis 1967 et compte plusieurs m&eacute;ta-analyses d'essais
+          randomis&eacute;s. Les r&eacute;sultats les mieux &eacute;tablis portent sur la douleur, la
+          r&eacute;cup&eacute;ration musculaire, la peau et les cheveux. Ils restent
+          h&eacute;t&eacute;rog&egrave;nes : doses, distances et dur&eacute;es varient d'un essai
+          &agrave; l'autre.
+        {%- else -%}
+          Photobiomodulation &mdash; low-power red and near-infrared light &mdash; has been studied since
+          1967 and now has several meta-analyses of randomised trials behind it. The best-established
+          results concern pain, muscle recovery, skin and hair. They remain heterogeneous: doses,
+          distances and durations vary from one trial to the next.
+        {%- endif -%}
+      </p>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            Le point de d&eacute;part est un accident de laboratoire : Budapest, 1967, des souris dont les
+            poils repoussent plus vite apr&egrave;s exposition &agrave; un laser de faible puissance.
+          {%- else -%}
+            The starting point is a lab accident: Budapest, 1967, mice whose hair grows back faster after
+            exposure to a low-power laser.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            La m&eacute;ta-analyse la plus cit&eacute;e sur la douleur cervicale porte sur
+            <strong>820 patients</strong> et a &eacute;t&eacute; publi&eacute;e par <cite>The Lancet</cite>
+            en 2009.
+          {%- else -%}
+            The most-cited meta-analysis on neck pain covers <strong>820 patients</strong> and was published
+            by <cite>The Lancet</cite> in 2009.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            La dose n'est pas lin&eacute;aire. Une revue syst&eacute;matique de 2026 portant sur six essais
+            <strong>LED</strong> rel&egrave;ve que l'essai le plus dos&eacute;, &agrave;
+            <strong>126 J/cm&sup2;</strong>, ne montre aucun b&eacute;n&eacute;fice, l&agrave; o&ugrave; des
+            doses plus faibles en montrent.
+          {%- else -%}
+            Dose is not linear. A 2026 systematic review of six <strong>LED</strong> trials notes that the
+            highest-dose trial, at <strong>126 J/cm&sup2;</strong>, showed no benefit, where lower doses did.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Une grande partie de cette litt&eacute;rature utilise un <strong>laser</strong>, pas une
+            <strong>LED</strong>. Les deux ne sont pas interchangeables, et nous le signalons chaque fois
+            que c'est le cas.
+          {%- else -%}
+            A large share of this literature uses a <strong>laser</strong>, not an <strong>LED</strong>.
+            The two are not interchangeable, and we flag it every time it applies.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Antared ne m&egrave;ne aucun essai clinique.</strong> Nous r&eacute;glons nos appareils
+            sur les param&egrave;tres publi&eacute;s dans cette litt&eacute;rature, et nous les affichons.
+          {%- else -%}
+            <strong>Antared runs no clinical trials.</strong> We set our devices to the parameters published
+            in this literature, and we display them.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucune</strong> des &eacute;tudes cit&eacute;es sur cette page n'a &eacute;t&eacute;
+            men&eacute;e sur un appareil Antared.
+          {%- else -%}
+            <strong>None</strong> of the studies cited on this page was run on an Antared device.
+          {%- endif -%}
+        </li>
+      </ul>
+      <p class="ln-study__ref">
+        {%- if is_fr -%}
+          Page revue le {{ page_updated | date: '%d/%m/%Y' }}. Les appareils Antared sont des produits de
+          bien-&ecirc;tre : ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie.
+        {%- else -%}
+          Page reviewed on {{ page_updated | date: '%d/%m/%Y' }}. Antared devices are wellness products:
+          they do not diagnose, treat or cure any disease.
+        {%- endif -%}
+      </p>
     </div>
   </div>
 </section>
@@ -94,7 +229,7 @@
       <div>
         <p class="ln-kicker">{% if is_fr %}De l'accident de laboratoire &agrave; l'essai contr&ocirc;l&eacute;{% else %}From lab accident to controlled trial{% endif %}</p>
         <h2 class="ln-title ln-title--wide">
-          {%- if is_fr -%}Cent vingt ans, quinze moments qui comptent.{%- else -%}One hundred and twenty years, fifteen moments that matter.{%- endif -%}
+          {%- if is_fr -%}Cent vingt-trois ans, seize moments qui comptent.{%- else -%}One hundred and twenty-three years, sixteen moments that matter.{%- endif -%}
         </h2>
       </div>
       <div class="ln-head__aside">
@@ -435,6 +570,35 @@
       <li class="ln-tl">
         <span class="ln-tl__node" aria-hidden="true"></span>
         <div class="ln-tl__body">
+          <span class="ln-tl__year">2026</span>
+          <h3 class="ln-tl__title">{% if is_fr %}Une revue syst&eacute;matique qui ne regarde que les LED{% else %}A systematic review that looks only at LEDs{% endif %}</h3>
+          <p class="ln-tl__text">
+            {%- if is_fr -%}
+              Six essais randomis&eacute;s, des plaies chroniques du membre inf&eacute;rieur, des longueurs
+              d'onde de 620 &agrave; 950&nbsp;nm et des doses de 2,4 &agrave; 126&nbsp;J/cm&sup2; : une
+              synth&egrave;se qui &eacute;carte le laser pour n'examiner que les LED, celles dont sont faits
+              les appareils grand public. Les auteurs concluent &agrave; un niveau de preuve
+              <strong>tr&egrave;s faible</strong> au sens GRADE, et rel&egrave;vent que l'essai le plus
+              dos&eacute; &mdash; 126&nbsp;J/cm&sup2; &mdash; ne montre aucun b&eacute;n&eacute;fice. C'est
+              le jalon le plus proche de ce que nous vendons, et c'est aussi le plus prudent.
+            {%- else -%}
+              Six randomised trials, chronic lower-limb wounds, wavelengths from 620 to 950&nbsp;nm and
+              doses from 2.4 to 126&nbsp;J/cm&sup2;: a review that sets the laser aside to look only at
+              LEDs &mdash; what consumer devices are actually made of. The authors grade the evidence as
+              <strong>very low</strong> under GRADE, and note that the highest-dose trial &mdash;
+              126&nbsp;J/cm&sup2; &mdash; shows no benefit. It is the milestone closest to what we sell,
+              and also the most cautious.
+            {%- endif -%}
+          </p>
+          <a class="ln-tl__source" href="https://doi.org/10.1007/s10103-026-04928-y" target="_blank" rel="noopener">
+            Miranda MB et al., <cite>Lasers Med Sci</cite> (2026) <em>&#8599;</em>
+          </a>
+        </div>
+      </li>
+
+      <li class="ln-tl">
+        <span class="ln-tl__node" aria-hidden="true"></span>
+        <div class="ln-tl__body">
           <span class="ln-tl__year">{% if is_fr %}Aujourd'hui{% else %}Today{% endif %}</span>
           <h3 class="ln-tl__title">{% if is_fr %}Beaucoup d'&eacute;tudes, peu de protocoles communs{% else %}Plenty of studies, few shared protocols{% endif %}</h3>
           <p class="ln-tl__text">
@@ -466,7 +630,7 @@
       <div>
         <p class="ln-kicker">{% if is_fr %}Ce que mesurent les essais{% else %}What the trials measured{% endif %}</p>
         <h2 class="ln-title ln-title--wide">
-          {%- if is_fr -%}Huit domaines, huit publications.{%- else -%}Eight domains, eight papers.{%- endif -%}
+          {%- if is_fr -%}Onze publications, et ce qu'elles mesurent vraiment.{%- else -%}Eleven papers, and what they actually measured.{%- endif -%}
         </h2>
       </div>
       <div class="ln-head__aside">
@@ -474,10 +638,14 @@
           {%- if is_fr -%}
             Nous indiquons la taille de l'&eacute;chantillon et ce qui a &eacute;t&eacute;
             mesur&eacute; &mdash; pas seulement la conclusion. Un essai sur vingt personnes et une
-            m&eacute;ta-analyse sur huit cents ne pesent pas le m&ecirc;me poids.
+            m&eacute;ta-analyse sur huit cents ne pesent pas le m&ecirc;me poids. L'&eacute;tiquette en
+            t&ecirc;te de chaque fiche indique le niveau de preuve, et la source lumineuse employ&eacute;e
+            &mdash; laser ou LED &mdash; est pr&eacute;cis&eacute;e quand elle change la lecture.
           {%- else -%}
             We give the sample size and what was actually measured &mdash; not just the conclusion. A trial
-            on twenty people and a meta-analysis on eight hundred do not carry the same weight.
+            on twenty people and a meta-analysis on eight hundred do not carry the same weight. The label at
+            the top of each card gives the level of evidence, and the light source used &mdash; laser or LED
+            &mdash; is stated whenever it changes how the result should be read.
           {%- endif -%}
         </p>
       </div>
@@ -486,6 +654,7 @@
     <div class="ln-evidence">
       <article class="ln-study ln-reveal">
         <span class="ln-study__tag">{% if is_fr %}Peau{% else %}Skin{% endif %}</span>
+        <span class="ln-grade ln-grade--rct">{% if is_fr %}Essai randomis&eacute;{% else %}Randomised trial{% endif %}</span>
         <h3 class="ln-study__claim">{% if is_fr %}Rugosit&eacute; en baisse, collag&egrave;ne en hausse{% else %}Roughness down, collagen up{% endif %}</h3>
         <p class="ln-study__detail">
           {%- if is_fr -%}
@@ -505,6 +674,7 @@
 
       <article class="ln-study ln-reveal">
         <span class="ln-study__tag">{% if is_fr %}Cheveux{% else %}Hair{% endif %}</span>
+        <span class="ln-grade ln-grade--rct">{% if is_fr %}Essai randomis&eacute;{% else %}Randomised trial{% endif %}</span>
         <h3 class="ln-study__claim">{% if is_fr %}+37 % de cheveux compt&eacute;s chez la femme{% else %}+37 % counted hairs in women{% endif %}</h3>
         <p class="ln-study__detail">
           {%- if is_fr -%}
@@ -525,6 +695,7 @@
 
       <article class="ln-study ln-reveal">
         <span class="ln-study__tag">{% if is_fr %}Douleur{% else %}Pain{% endif %}</span>
+        <span class="ln-grade ln-grade--meta">{% if is_fr %}M&eacute;ta-analyse{% else %}Meta-analysis{% endif %}</span>
         <h3 class="ln-study__claim">{% if is_fr %}20 mm de douleur en moins, jusqu'&agrave; 22 semaines{% else %}20 mm less pain, up to 22 weeks{% endif %}</h3>
         <p class="ln-study__detail">
           {%- if is_fr -%}
@@ -544,6 +715,7 @@
 
       <article class="ln-study ln-reveal">
         <span class="ln-study__tag">{% if is_fr %}Performance{% else %}Performance{% endif %}</span>
+        <span class="ln-grade ln-grade--meta">{% if is_fr %}M&eacute;ta-analyse{% else %}Meta-analysis{% endif %}</span>
         <h3 class="ln-study__claim">{% if is_fr %}Plus de r&eacute;p&eacute;titions, si la lumi&egrave;re pr&eacute;c&egrave;de l'effort{% else %}More repetitions, if the light comes first{% endif %}</h3>
         <p class="ln-study__detail">
           {%- if is_fr -%}
@@ -564,6 +736,7 @@
 
       <article class="ln-study ln-reveal">
         <span class="ln-study__tag">{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</span>
+        <span class="ln-grade ln-grade--meta">{% if is_fr %}M&eacute;ta-analyse{% else %}Meta-analysis{% endif %}</span>
         <h3 class="ln-study__claim">{% if is_fr %}Cr&eacute;atine kinase mieux contenue apr&egrave;s l'effort{% else %}Creatine kinase better contained after exercise{% endif %}</h3>
         <p class="ln-study__detail">
           {%- if is_fr -%}
@@ -583,6 +756,7 @@
 
       <article class="ln-study ln-reveal">
         <span class="ln-study__tag">{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</span>
+        <span class="ln-grade ln-grade--signal">{% if is_fr %}Petit &eacute;chantillon{% else %}Small sample{% endif %}</span>
         <h3 class="ln-study__claim">{% if is_fr %}Score de sommeil et m&eacute;latonine en hausse{% else %}Sleep score and melatonin both up{% endif %}</h3>
         <p class="ln-study__detail">
           {%- if is_fr -%}
@@ -604,6 +778,7 @@
 
       <article class="ln-study ln-reveal">
         <span class="ln-study__tag">{% if is_fr %}Articulations{% else %}Joints{% endif %}</span>
+        <span class="ln-grade ln-grade--meta">{% if is_fr %}M&eacute;ta-analyse{% else %}Meta-analysis{% endif %}</span>
         <h3 class="ln-study__claim">{% if is_fr %}Meilleur que l'exercice seul, en compl&eacute;ment{% else %}Better than exercise alone, as an adjunct{% endif %}</h3>
         <p class="ln-study__detail">
           {%- if is_fr -%}
@@ -623,6 +798,7 @@
 
       <article class="ln-study ln-reveal">
         <span class="ln-study__tag">{% if is_fr %}M&eacute;canisme{% else %}Mechanism{% endif %}</span>
+        <span class="ln-grade ln-grade--mech">{% if is_fr %}Revue de m&eacute;canisme{% else %}Mechanism review{% endif %}</span>
         <h3 class="ln-study__claim">{% if is_fr %}Le photon, le monoxyde d'azote et l'ATP{% else %}The photon, nitric oxide and ATP{% endif %}</h3>
         <p class="ln-study__detail">
           {%- if is_fr -%}
@@ -640,6 +816,218 @@
           <a href="https://doi.org/10.1109/JSTQE.2016.2561201" target="_blank" rel="noopener">DOI</a>
         </p>
       </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}Cicatrisation &mdash; laser{% else %}Wound healing &mdash; laser{% endif %}</span>
+        <span class="ln-grade ln-grade--meta">{% if is_fr %}M&eacute;ta-analyse{% else %}Meta-analysis{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}18 essais, 670 plaies, moins de douleur{% else %}18 trials, 670 wounds, less pain{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            M&eacute;ta-analyse de 18 essais randomis&eacute;s totalisant 670 plaies cutan&eacute;es.
+            R&eacute;duction de la surface de plaie et taux de cicatrisation compl&egrave;te tous deux
+            significativement sup&eacute;rieurs sous lumi&egrave;re, douleur plus basse sur l'&eacute;chelle
+            visuelle analogique (diff&eacute;rence moyenne, IC 95&nbsp;% : &minus;2,52 &agrave; &minus;0,19).
+            <strong>Ces essais utilisent un laser de faible puissance, pas des LED</strong> &mdash; la
+            m&ecirc;me r&eacute;serve que pour le jalon NASA de 2003. Les auteurs demandent eux-m&ecirc;mes
+            des essais de meilleure qualit&eacute;.
+          {%- else -%}
+            Meta-analysis of 18 randomised trials covering 670 skin wounds. Both wound-area reduction and
+            complete healing rate were significantly higher under light, and pain was lower on the visual
+            analogue scale (mean difference, 95&nbsp;% CI: &minus;2.52 to &minus;0.19).
+            <strong>These trials use a low-level laser, not LEDs</strong> &mdash; the same caveat as the
+            2003 NASA milestone. The authors themselves call for higher-quality trials.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Taha N et al. <cite>Cureus</cite> 2024;16(10):e72542.
+          <a href="https://doi.org/10.7759/cureus.72542" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}Cicatrisation &mdash; LED{% else %}Wound healing &mdash; LED{% endif %}</span>
+        <span class="ln-grade ln-grade--signal">{% if is_fr %}Preuve tr&egrave;s faible (GRADE){% else %}Very low certainty (GRADE){% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}De 620 &agrave; 950 nm, de 2,4 &agrave; 126 J/cm&sup2;{% else %}From 620 to 950 nm, from 2.4 to 126 J/cm&sup2;{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            Revue syst&eacute;matique de six essais randomis&eacute;s sur des plaies chroniques du membre
+            inf&eacute;rieur &mdash; la seule publication de cette page qui ne retienne que des
+            <strong>LED</strong>. R&eacute;duction de surface, qualit&eacute; du lit de plaie et
+            microcirculation en am&eacute;lioration, surtout sur l'ulc&egrave;re du pied diab&eacute;tique.
+            Mais le niveau de preuve est jug&eacute; <strong>tr&egrave;s faible</strong> au sens GRADE :
+            param&egrave;tres h&eacute;t&eacute;rog&egrave;nes, effectifs r&eacute;duits. L'essai le plus
+            dos&eacute;, &agrave; 126 J/cm&sup2;, ne montre aucun b&eacute;n&eacute;fice.
+          {%- else -%}
+            Systematic review of six randomised trials on chronic lower-limb wounds &mdash; the only paper
+            on this page that keeps <strong>LEDs</strong> alone. Wound-area reduction, wound-bed quality and
+            microcirculation all improved, particularly in diabetic foot ulcers. But the evidence is graded
+            <strong>very low</strong> under GRADE: heterogeneous parameters, small samples. The
+            highest-dose trial, at 126 J/cm&sup2;, showed no benefit at all.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Miranda MB et al. <cite>Lasers Med Sci</cite> 2026;41(1).
+          <a href="https://doi.org/10.1007/s10103-026-04928-y" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+
+      <article class="ln-study ln-reveal">
+        <span class="ln-study__tag">{% if is_fr %}M&eacute;canisme{% else %}Mechanism{% endif %}</span>
+        <span class="ln-grade ln-grade--mech">{% if is_fr %}Revue de m&eacute;canisme{% else %}Mechanism review{% endif %}</span>
+        <h3 class="ln-study__claim">{% if is_fr %}Une cellule stress&eacute;e ne r&eacute;pond pas comme une cellule saine{% else %}A stressed cell does not respond like a healthy one{% endif %}</h3>
+        <p class="ln-study__detail">
+          {%- if is_fr -%}
+            Revue de la signalisation redox mitochondriale, qui compl&egrave;te celle de 2016 sur deux
+            points qu'elle n'aborde pas : la lumi&egrave;re produit des effets apparemment
+            <strong>oppos&eacute;s</strong> selon que la cellule est saine ou stress&eacute;e, et elle peut
+            agir en <strong>pr&eacute;conditionnement</strong> &mdash; avant l'effort plut&ocirc;t
+            qu'apr&egrave;s. C'est l'argument m&eacute;canistique derri&egrave;re une s&eacute;ance
+            <a href="{{ pre_url }}">avant l'entra&icirc;nement</a>.
+          {%- else -%}
+            A review of mitochondrial redox signalling, filling in two things the 2016 review does not
+            cover: light produces apparently <strong>opposite</strong> effects depending on whether the cell
+            is healthy or stressed, and it can act as <strong>preconditioning</strong> &mdash; before
+            exercise rather than after. This is the mechanistic argument behind a
+            <a href="{{ pre_url }}">pre-workout session</a>.
+          {%- endif -%}
+        </p>
+        <p class="ln-study__ref">
+          Hamblin MR. <cite>Photochem Photobiol</cite> 2018;94(2):199&ndash;212.
+          <a href="https://doi.org/10.1111/php.12864" target="_blank" rel="noopener">DOI</a>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Position de marque. Le point regulierement mal compris par un visiteur qui
+  vient de lire vingt sources : ces sources ne sont pas les notres. Antared
+  distribue des appareils, ne conduit aucun essai et ne revendique aucune
+  etude. Ce bloc l'ecrit avant que la page produit ne le suggere.
+
+  Les trois lignes cochees decrivent ce que nous faisons reellement ; les deux
+  lignes barrees sont la condition pour que la page reste du bon cote du
+  principe II. Ne pas transformer une ligne barree en argument positif.
+{%- endcomment -%}
+<section class="ln-section ln-section--dark ln-section--tight">
+  <div class="ln-shell">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Notre place dans tout &ccedil;a{% else %}Where we stand in all this{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Nous vendons des appareils. Nous ne produisons pas de preuves.{%- else -%}We sell devices. We do not produce evidence.{%- endif -%}
+        </h2>
+      </div>
+      <div class="ln-head__aside">
+        <p>
+          {%- if is_fr -%}
+            Cette distinction n'est pas de la modestie, c'est la seule fa&ccedil;on de lire correctement
+            tout ce qui pr&eacute;c&egrave;de.
+          {%- else -%}
+            That distinction is not modesty. It is the only way to read everything above correctly.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+
+    <div class="ln-pledge ln-reveal">
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark" aria-hidden="true">&#10003;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Nous r&eacute;glons nos appareils sur les param&egrave;tres publi&eacute;s{% else %}We set our devices to the published parameters{% endif %}</p>
+          <p class="ln-pledge__text">
+            {%- if is_fr -%}
+              Longueur d'onde, irradiance et dur&eacute;e sont choisies dans les fourchettes que l'on
+              retrouve dans la litt&eacute;rature cit&eacute;e sur cette page &mdash; la revue LED de 2026
+              d&eacute;crit par exemple des essais entre 620 et 950&nbsp;nm. Le d&eacute;tail du spectre est
+              sur <a href="{{ wave_url }}">les longueurs d'onde</a>, celui de la dose sur
+              <a href="{{ how_url }}">comment &ccedil;a marche</a>.
+            {%- else -%}
+              Wavelength, irradiance and duration are chosen within the ranges found in the literature cited
+              on this page &mdash; the 2026 LED review, for instance, describes trials between 620 and
+              950&nbsp;nm. The spectrum is detailed on <a href="{{ wave_url }}">wavelengths</a>, the dose on
+              <a href="{{ how_url }}">how it works</a>.
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark" aria-hidden="true">&#10003;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Nous affichons ces param&egrave;tres, pas des promesses{% else %}We display those parameters, not promises{% endif %}</p>
+          <p class="ln-pledge__text">
+            {%- if is_fr -%}
+              Chaque fiche produit indique la longueur d'onde, l'irradiance avec sa distance de mesure et la
+              dur&eacute;e de s&eacute;ance. C'est ce qui vous permet de comparer un appareil &agrave; un
+              essai publi&eacute; &mdash; et de comparer deux appareils entre eux.
+            {%- else -%}
+              Every product page states the wavelength, the irradiance with its measurement distance and the
+              session duration. That is what lets you compare a device against a published trial &mdash; and
+              two devices against each other.
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark" aria-hidden="true">&#10003;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Notre m&eacute;tier est le rapport qualit&eacute;/prix{% else %}Our job is the quality-to-price ratio{% endif %}</p>
+          <p class="ln-pledge__text">
+            {%- if is_fr -%}
+              Nous s&eacute;lectionnons et distribuons du mat&eacute;riel de luminoth&eacute;rapie rouge.
+              Notre travail consiste &agrave; mettre les meilleurs appareils au meilleur prix entre vos
+              mains, pas &agrave; produire de la science. Les <a href="{{ values_url }}">r&egrave;gles que
+              nous nous imposons</a> sont &eacute;crites noir sur blanc.
+            {%- else -%}
+              We select and distribute red light therapy equipment. Our job is to put the best devices in
+              your hands at the best price &mdash; not to produce science. The
+              <a href="{{ values_url }}">rules we hold ourselves to</a> are written down.
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Nous ne menons aucun essai clinique{% else %}We run no clinical trials{% endif %}</p>
+          <p class="ln-pledge__text">
+            {%- if is_fr -%}
+              Antared n'est pas un laboratoire. Aucune des onze publications cit&eacute;es ici n'a
+              &eacute;t&eacute; conduite sur un appareil Antared, et nous n'en revendiquons aucune. Une
+              marque qui vous annonce &laquo;&nbsp;cliniquement prouv&eacute;&nbsp;&raquo; sans
+              r&eacute;f&eacute;rence d'essai portant sur son propre produit vous annonce autre chose.
+            {%- else -%}
+              Antared is not a laboratory. None of the eleven papers cited here was run on an Antared
+              device, and we claim none of them. A brand telling you its product is
+              &ldquo;clinically proven&rdquo; without a trial reference on that product is telling you
+              something else.
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
+
+      <div class="ln-pledge__row">
+        <span class="ln-pledge__mark ln-pledge__mark--no" aria-hidden="true">&#10007;</span>
+        <div>
+          <p class="ln-pledge__title">{% if is_fr %}Nous ne transformons pas une &eacute;tude en promesse{% else %}We do not turn a study into a promise{% endif %}</p>
+          <p class="ln-pledge__text">
+            {%- if is_fr -%}
+              Un r&eacute;sultat obtenu au laser sur une plaie chronique ne dit rien de ce que fera un
+              panneau LED sur votre s&eacute;ance du soir. Les &eacute;tudes de cette page d&eacute;crivent
+              un champ de recherche&nbsp;; elles ne d&eacute;crivent pas un r&eacute;sultat que vous
+              obtiendrez.
+            {%- else -%}
+              A result obtained with a laser on a chronic wound says nothing about what an LED panel will do
+              in your evening session. The studies on this page describe a research field; they do not
+              describe a result you will get.
+            {%- endif -%}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -661,8 +1049,20 @@
             portent sur la photobiomodulation en g&eacute;n&eacute;ral, avec des dispositifs, des doses et
             des protocoles propres &agrave; chaque essai.
           {%- else -%}
-            <strong>None of them was run on a Antared device.</strong> They concern photobiomodulation in
+            <strong>None of them was run on an Antared device.</strong> They concern photobiomodulation in
             general, with devices, doses and protocols specific to each trial.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Une partie de ces travaux porte sur un laser, pas sur des LED.</strong> C'est le cas de
+            la d&eacute;couverte de 1967 et de la m&eacute;ta-analyse de 2024 sur la cicatrisation. Les
+            deux sources produisent de la lumi&egrave;re autrement : un r&eacute;sultat obtenu avec l'une
+            ne se transpose pas tel quel &agrave; l'autre.
+          {%- else -%}
+            <strong>Part of this work concerns a laser, not LEDs.</strong> That is the case for the 1967
+            discovery and for the 2024 meta-analysis on wound healing. The two sources produce light
+            differently: a result obtained with one does not transfer as-is to the other.
           {%- endif -%}
         </li>
         <li>
@@ -702,6 +1102,71 @@
   </div>
 </section>
 
+{%- comment -%}
+  FAQ. Source unique : les questions et les reponses sont ecrites une seule
+  fois ci-dessous, puis rendues deux fois -- en <details> visibles, et en
+  JSON-LD FAQPage en bas de fichier. Les ecrire deux fois garantirait qu'elles
+  divergent, et Google refuse un balisage FAQPage qui ne correspond pas au
+  texte visible de la page.
+
+  Convention du depot, celle des pages Protocoles : « | » separe les items,
+  « ~ » separe la question de la reponse. Aucun texte ne doit contenir l'un ou
+  l'autre. Une question par ligne physique.
+
+  Accents en UTF-8 brut ici, et non en entites HTML comme dans le reste du
+  fichier : le contenu d'un <script type="application/ld+json"> n'est pas
+  decode par le parseur JSON, « &eacute; » y apparaitrait litteralement dans
+  le resultat indexe. Ne pas « corriger » ces accents en entites.
+
+  Cette FAQ ne double pas celle de /pages/faq, qui traite l'essai, la garantie
+  et les certifications. Ici, uniquement des questions sur l'etat des preuves.
+{%- endcomment -%}
+{%- if is_fr -%}
+  {%- capture faq_raw -%}
+La luminothérapie rouge est-elle prouvée scientifiquement ?~Le niveau de preuve dépend du domaine. Il est le plus solide sur la douleur, avec une méta-analyse de 820 patients publiée par The Lancet en 2009, et sur l'arthrose du genou en complément de l'exercice, avec dix essais randomisés en 2021. Il est le plus faible sur les plaies chroniques, où une revue de six essais LED conclut en 2026 à une preuve très faible au sens GRADE.
+|Quelle différence entre laser et LED dans ces études ?~Une grande partie de la littérature historique utilise un laser. En 2003, l'équipe de Harry Whelan a montré que des LED développées par la NASA activaient les gènes de la régénération tissulaire, ce qui a ouvert la voie aux appareils grand public. Les deux sources ne sont pas interchangeables pour autant : sur cette page, la source lumineuse est précisée pour chaque publication.
+|Quelles doses les essais utilisent-ils ?~La revue LED de 2026 décrit des essais entre 620 et 950 nm, pour des doses allant de 2,4 à 126 J/cm². Cette fourchette est large parce que les protocoles ne sont pas standardisés d'un essai à l'autre. Les repères de dose que nous appliquons sont détaillés sur <a href="{{ how_url }}">comment ça marche</a>, et le spectre sur <a href="{{ wave_url }}">les longueurs d'onde</a>.
+|Antared a-t-il mené ses propres essais cliniques ?~Non. Antared sélectionne et distribue des appareils de luminothérapie rouge : nous ne sommes pas un laboratoire et nous ne conduisons aucun essai clinique. Aucune des onze publications citées sur cette page n'a été menée sur un appareil Antared. Nous réglons nos appareils sur les paramètres publiés dans cette littérature, et nous affichons ces paramètres.
+|Pourquoi un appareil plus puissant n'est-il pas forcément meilleur ?~Parce que la réponse à la dose est biphasique : trop peu d'énergie ne produit rien, trop d'énergie réduit l'effet au lieu de l'amplifier. La revue LED de 2026 en donne une illustration directe. L'essai le plus dosé, à 126 J/cm², ne montre aucun bénéfice, là où des doses plus faibles en montrent.
+|Combien de temps durent les essais avant de mesurer un effet ?~Cela va de deux semaines à quatre mois selon ce qui est mesuré : quatorze jours pour un score de sommeil et la mélatonine sérique sur 20 athlètes, trente séances pour la densité de collagène sur 136 volontaires, seize semaines pour un comptage de cheveux sur 42 femmes. Dans tous les cas, les protocoles reposent sur des séances répétées, jamais sur une séance isolée.
+|Ces études rapportent-elles des effets indésirables ?~L'essai en double aveugle sur la repousse des cheveux, mené sur 42 femmes pendant seize semaines, ne rapporte aucun effet indésirable. Ce constat porte sur cet essai précis, pas sur l'usage en général. Les appareils Antared sont des produits de bien-être : ils ne diagnostiquent, ne traitent et ne guérissent aucune maladie. En cas de symptôme, de traitement en cours ou de grossesse, l'avis d'un professionnel de santé prévaut.
+  {%- endcapture -%}
+{%- else -%}
+  {%- capture faq_raw -%}
+Is red light therapy scientifically proven?~The level of evidence depends on the domain. It is strongest for pain, with a meta-analysis of 820 patients published by The Lancet in 2009, and for knee osteoarthritis as an adjunct to exercise, with ten randomised trials in 2021. It is weakest for chronic wounds, where a 2026 review of six LED trials grades the evidence as very low under GRADE.
+|What is the difference between laser and LED in these studies?~A large share of the historical literature uses a laser. In 2003, Harry Whelan's team showed that LEDs developed by NASA upregulated tissue-regeneration genes, which opened the way to consumer devices. The two sources are still not interchangeable: on this page, the light source is stated for every paper.
+|What doses do the trials use?~The 2026 LED review describes trials between 620 and 950 nm, at doses ranging from 2.4 to 126 J/cm². That range is wide because protocols are not standardised from one trial to the next. The dose figures we work from are detailed on <a href="{{ how_url }}">how it works</a>, and the spectrum on <a href="{{ wave_url }}">wavelengths</a>.
+|Has Antared run its own clinical trials?~No. Antared selects and distributes red light therapy devices: we are not a laboratory and we run no clinical trials. None of the eleven papers cited on this page was run on an Antared device. We set our devices to the parameters published in this literature, and we display those parameters.
+|Why is a more powerful device not necessarily better?~Because the dose response is biphasic: too little energy does nothing, too much reduces the effect instead of amplifying it. The 2026 LED review illustrates this directly. Its highest-dose trial, at 126 J/cm², shows no benefit at all, where lower doses do.
+|How long do the trials run before an effect is measured?~From two weeks to four months, depending on what is measured: fourteen days for a sleep score and serum melatonin in 20 athletes, thirty sessions for collagen density in 136 volunteers, sixteen weeks for a hair count in 42 women. In every case the protocols rely on repeated sessions, never on a single one.
+|Do these studies report adverse effects?~The double-blind trial on hair regrowth, run on 42 women over sixteen weeks, reports no adverse events. That finding concerns that specific trial, not general use. Antared devices are wellness products: they do not diagnose, treat or cure any disease. If you have symptoms, an ongoing treatment or are pregnant, a healthcare professional's advice takes precedence.
+  {%- endcapture -%}
+{%- endif -%}
+{%- assign faq_items = faq_raw | strip | split: '|' -%}
+
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Les questions qui reviennent{% else %}The questions that keep coming up{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Sept questions, sept r&eacute;ponses chiffr&eacute;es.{%- else -%}Seven questions, seven answers with figures.{%- endif -%}
+        </h2>
+      </div>
+    </div>
+
+    <div class="ln-faq ln-reveal">
+      {%- for faq_item in faq_items -%}
+        {%- assign faq_parts = faq_item | split: '~' -%}
+        <details class="ln-faq__item">
+          <summary class="ln-faq__q">{{ faq_parts[0] | strip }}</summary>
+          <p class="ln-faq__a">{{ faq_parts[1] | strip }}</p>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
 {% render 'learn-product-cta',
    handles: 'antared-desk-red-light-therapy-panel,mask,antared-pano-ultra',
    heading_fr: 'Les param&egrave;tres des essais, sur un appareil que vous utiliserez vraiment.',
@@ -710,6 +1175,113 @@
    text_en: 'We publish wavelength, irradiance and duration for every product, so you can compare them against what you have just read.'
 %}
 
+{%- comment -%}
+  Donnees structurees de la page Science.
+
+  Trois types, et trois seulement :
+    Article         -- une page editoriale signee et datee, pas un produit.
+    BreadcrumbList  -- le meme fil d'Ariane que celui affiche dans le hero.
+    FAQPage         -- construit a partir de faq_items, la meme source que les
+                       <details> visibles plus haut.
+
+  Ne JAMAIS passer a MedicalWebPage, MedicalWebPage/MedicalCondition,
+  MedicalTherapy ou Drug. Ces types declarent a Google que la page porte une
+  information medicale sur un traitement, ce que le principe II interdit et ce
+  que les appareils vendus ne sont pas : des produits de bien-etre. Le gain de
+  rich result serait nul, le risque reglementaire reel.
+
+  citation[] liste les onze publications de la section « etat des preuves »
+  avec leur DOI. C'est ce qui rend la bibliographie lisible par une machine
+  sans qu'elle ait a analyser le HTML. Une fiche d'etude ajoutee plus haut
+  s'ajoute ici, sinon les deux listes divergent.
+
+  Accents en UTF-8 brut : voir la note du bloc FAQ.
+{%- endcomment -%}
+{%- liquid
+  if is_fr
+    assign sd_headline = 'La science de la luminotherapie rouge : un siecle de recherche, et ses limites'
+    assign sd_desc = 'Frise sourcee de la recherche en photobiomodulation, onze publications avec leur DOI, les doses employees dans les essais et ce que ces etudes ne disent pas.'
+    assign sd_home = 'Accueil'
+    assign sd_learn = 'Apprendre'
+  else
+    assign sd_headline = 'The science of red light therapy: a century of research, and its limits'
+    assign sd_desc = 'A sourced timeline of photobiomodulation research, eleven papers with their DOI, the doses used in the trials, and what these studies do not say.'
+    assign sd_home = 'Home'
+    assign sd_learn = 'Learn'
+  endif
+
+  assign sd_home_url = request.origin | append: routes.root_url
+  assign sd_learn_url = request.origin | append: learn_url
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": {{ canonical_url | append: '#article' | json }},
+      "url": {{ canonical_url | json }},
+      "mainEntityOfPage": {{ canonical_url | json }},
+      "headline": {{ sd_headline | json }},
+      "description": {{ sd_desc | json }},
+      "inLanguage": {{ request.locale.iso_code | json }},
+      "dateModified": {{ page_updated | json }},
+      "author": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "about": [
+        { "@type": "Thing", "name": "Photobiomodulation" },
+        { "@type": "Thing", "name": {% if is_fr %}"Luminotherapie rouge"{% else %}"Red light therapy"{% endif %} },
+        { "@type": "Thing", "name": {% if is_fr %}"Lumiere proche infrarouge"{% else %}"Near-infrared light"{% endif %} }
+      ],
+      "citation": [
+        { "@type": "ScholarlyArticle", "name": "Wunsch A, Matuschka K. Photomed Laser Surg 2014;32(2):93-100", "identifier": "https://doi.org/10.1089/pho.2013.3616" },
+        { "@type": "ScholarlyArticle", "name": "Lanzafame RJ et al. Lasers Surg Med 2014;46(8):601-607", "identifier": "https://doi.org/10.1002/lsm.22277" },
+        { "@type": "ScholarlyArticle", "name": "Chow RT et al. The Lancet 2009;374(9705):1897-1908", "identifier": "https://doi.org/10.1016/S0140-6736(09)61522-1" },
+        { "@type": "ScholarlyArticle", "name": "Leal-Junior ECP et al. Lasers Med Sci 2015;30(2):925-939", "identifier": "https://doi.org/10.1007/s10103-013-1465-4" },
+        { "@type": "ScholarlyArticle", "name": "Machado AF et al. Clin J Sport Med 2020;30(3):267-274", "identifier": "https://doi.org/10.1097/JSM.0000000000000606" },
+        { "@type": "ScholarlyArticle", "name": "Zhao J et al. J Athl Train 2012;47(6):673-678", "identifier": "https://doi.org/10.4085/1062-6050-47.6.08" },
+        { "@type": "ScholarlyArticle", "name": "Ahmad MA et al. Physiotherapy 2021;114:85-95", "identifier": "https://doi.org/10.1016/j.physio.2021.03.011" },
+        { "@type": "ScholarlyArticle", "name": "de Freitas LF, Hamblin MR. IEEE J Sel Top Quantum Electron 2016;22(3)", "identifier": "https://doi.org/10.1109/JSTQE.2016.2561201" },
+        { "@type": "ScholarlyArticle", "name": "Taha N et al. Cureus 2024;16(10):e72542", "identifier": "https://doi.org/10.7759/cureus.72542" },
+        { "@type": "ScholarlyArticle", "name": "Miranda MB et al. Lasers Med Sci 2026;41(1)", "identifier": "https://doi.org/10.1007/s10103-026-04928-y" },
+        { "@type": "ScholarlyArticle", "name": "Hamblin MR. Photochem Photobiol 2018;94(2):199-212", "identifier": "https://doi.org/10.1111/php.12864" }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ sd_home | json }}, "item": {{ sd_home_url | json }} },
+        { "@type": "ListItem", "position": 2, "name": {{ sd_learn | json }}, "item": {{ sd_learn_url | json }} },
+        { "@type": "ListItem", "position": 3, "name": "Science", "item": {{ canonical_url | json }} }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq_item in faq_items -%}
+          {%- assign faq_parts = faq_item | split: '~' -%}
+          {%- assign faq_q = faq_parts[0] | strip | strip_html | strip_newlines -%}
+          {%- assign faq_a = faq_parts[1] | strip | strip_html | strip_newlines -%}
+          {
+            "@type": "Question",
+            "name": {{ faq_q | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  ]
+}
+</script>
+
 {% schema %}
 {
   "name": "Learn — Science",
@@ -717,7 +1289,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Contenu editorial bilingue FR / EN ecrit en Liquid, comme le reste du theme. Les references scientifiques et leurs DOI se modifient dans sections/learn-science.liquid. Ne jamais ajouter une reference sans identifiant verifiable."
+      "content": "Contenu editorial bilingue FR / EN ecrit en Liquid, comme le reste du theme. Les references scientifiques et leurs DOI, la FAQ et les donnees structurees se modifient dans sections/learn-science.liquid. Ne jamais ajouter une reference sans identifiant verifiable, ni faire dire a cette page qu une etude a ete menee sur un appareil Antared."
     }
   ]
 }
