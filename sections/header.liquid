@@ -122,10 +122,13 @@
 {{ 'header-highlight.css' | asset_url | stylesheet_tag }}
 
 <header class="site-header">
-  <div class="site-header__proof" aria-label="{% if is_fr %}Avantages de la boutique{% else %}Store benefits{% endif %}">
-    <span>{% if is_fr %}Essai 14 j{% else %}14-Day Trial{% endif %}</span>
-    <span>{% if is_fr %}Garantie 2 ans{% else %}2-Year Warranty{% endif %}</span>
-  </div>
+  {%- comment -%}
+    Le bandeau de reassurance (&laquo; Essai 14 j &raquo; / &laquo; Garantie 2 ans &raquo;) qui coiffait le
+    header a ete retire : la barre logo remonte donc en haut de page. Les memes
+    engagements restent portes par le tiroir mobile, la fiche produit et le
+    panier. Rien ne compense sa hauteur en CSS — `--header-h` est mesuree par
+    theme.js, elle suit d'elle-meme.
+  {%- endcomment -%}
   <div class="container site-header__bar">
     <div class="site-header__utils site-header__utils--start">
       <a class="site-header__util-link site-header__util-link--highlight" href="{{ locale_root }}/pages/find-your-cytolight">{% if is_fr %}Trouvez votre Antared{% else %}Find Your Antared{% endif %}</a>
@@ -335,7 +338,25 @@
           {% render 'flag-icon', code: current_lang_code %}
         </span>
       {%- endif -%}
-      <a class="site-header__util-link" href="{{ locale_root }}/pages/contact">{% if is_fr %}Nous contacter{% else %}Contact us{% endif %}</a>
+      {%- comment -%}
+        &laquo; Nous contacter &raquo; : libelle entier quand la rangee d'onglets s'est
+        retiree, icone telephone seule quand elle est depliee — c'est-a-dire
+        l'etat par defaut, celui du haut de page (voir .is-nav-hidden, pose par
+        theme.js sur #shopify-section-header).
+
+        Le libelle reste dans le DOM dans les deux etats : c'est lui qui donne
+        son nom accessible au lien, et la commande vocale &laquo; cliquer sur Nous
+        contacter &raquo; continue de trouver la cible une fois le texte replie
+        (WCAG 2.5.3). Un aria-label pose sur le lien aurait fait doublon, et
+        masquer le texte en display:none l'aurait retire de l'arbre.
+
+        La destination ne change pas : c'est la meme page de contact dans les
+        deux etats, seul l'affichage bascule.
+      {%- endcomment -%}
+      <a class="site-header__util-link site-header__contact" href="{{ locale_root }}/pages/contact">
+        <span class="site-header__contact-label">{% if is_fr %}Nous contacter{% else %}Contact us{% endif %}</span>
+        <span class="site-header__contact-icon" aria-hidden="true">{% render 'icon', name: 'phone' %}</span>
+      </a>
       <a class="site-header__icon" href="{{ routes.account_url }}" aria-label="{% if is_fr %}Mon compte{% else %}Account{% endif %}">
         {% render 'icon', name: 'user' %}
       </a>
