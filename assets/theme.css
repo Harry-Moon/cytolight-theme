@@ -1540,6 +1540,12 @@ h1, h2, h3, h4,
 .cart-summary__total { font-size: 1.25rem; font-weight: 600; border-top: 1px solid rgba(0,0,0,.12); padding-top: 16px; margin-top: 8px; }
 .cart-summary__saved { margin: 4px 0 0; text-align: right; font-size: .82rem; font-weight: 600; color: var(--color-accent-deep); }
 .cart-summary .btn { width: 100%; margin-top: 16px; }
+/* Rouge dedie a ce CTA precis (#a80a27), plus soutenu que --cta-red (#d20d2f)
+   du reste des boutons du site — demande explicite, pas un alignement sur
+   --color-accent-deep malgre la proximite des deux valeurs. Le survol reste
+   #d20d2f comme toute la famille .btn : .btn:hover (0,2,0) l'emporte deja sur
+   cette regle (0,1,0), pas besoin de le repeter ici. */
+.cart-summary__checkout { background: #a80a27; font-weight: 800; }
 .cart-empty { text-align: center; padding: 80px 20px; }
 .cart-shipping-note { margin: -4px 0 24px; font-size: .88rem; color: var(--color-muted); }
 .cart-shipping-note--done { color: var(--color-accent-deep); font-weight: 600; }
@@ -1565,8 +1571,37 @@ h1, h2, h3, h4,
 .cart-crosssell--empty h2 { text-align: center; }
 .cart-trust { display: flex; flex-direction: column; gap: 6px; margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.1); font-size: .78rem; color: var(--color-muted); }
 @media (max-width: 800px) {
-  .cart { grid-template-columns: 1fr; }
+  /* padding-bottom : juste de quoi separer visuellement la carte du pied de
+     page, pas la hauteur de la barre (~80px). La barre est fixe : au bas de
+     la page, elle recouvre toujours les 80 derniers pixels de ce qu'il y a en
+     dessous, ici le pied de page — pas la carte recapitulatif elle-meme, qui
+     n'est jamais le dernier element de la page puisque le pied de page la
+     suit toujours. Reserver la pleine hauteur de la barre ici n'aurait donc
+     fait qu'ajouter un vide entre la carte et le pied de page. */
+  .cart { grid-template-columns: 1fr; padding-bottom: calc(24px + env(safe-area-inset-bottom)); }
   .cart-summary { position: static; }
+  /* Sans elle, le bouton de paiement tombe en bas de la carte recapitulatif,
+     elle-meme sous les articles et les ventes additionnelles : sur mobile il
+     fallait defiler toute la page pour l'atteindre. Colle a l'ecran plutot
+     qu'a la carte, avec le meme z-index-plage que .cl-sticky-atc (60-90, voir
+     la note au-dessus de #shopify-section-header). Le fond de la barre est
+     --color-background (le beige de la page, pas --color-background-soft de
+     la carte recapitulatif) : un bouton flottant sans rien dessous laissait
+     voir les articles et le pied de page defiler juste sous ses bords
+     arrondis — la barre est desormais un bandeau plein, pas une pilule qui
+     flotte. */
+  .cart-checkout-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 70;
+    background: var(--color-background);
+    border-top: 1px solid rgba(0,0,0,.08);
+    box-shadow: 0 -8px 24px rgba(0,0,0,.1);
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+  }
+  .cart-summary .cart-summary__checkout { width: 100%; margin-top: 0; }
 }
 @media (max-width: 700px) {
   .cart-crosssell__grid { grid-template-columns: 1fr; }

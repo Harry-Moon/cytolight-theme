@@ -218,7 +218,9 @@
           <p class="cart-summary__saved">{% if is_fr %}Vous &eacute;conomisez {{ total_saved | money }}{% else %}You save {{ total_saved | money }}{% endif %}</p>
         {%- endif -%}
         <p style="font-size:.8rem; color: var(--color-muted); margin: 8px 0 0;">{% if is_fr %}Taxes et livraison calcul&eacute;es au paiement.{% else %}Taxes and shipping calculated at checkout.{% endif %}</p>
-        <a href="{{ routes.cart_url }}/checkout" class="btn btn--primary">{% if is_fr %}Paiement{% else %}Checkout{% endif %} &rarr;</a>
+        <div class="cart-checkout-bar">
+          <a href="{{ routes.cart_url }}/checkout" class="btn btn--primary cart-summary__checkout">{% if is_fr %}Passer la commande{% else %}Checkout{% endif %} &rarr;</a>
+        </div>
         <p style="text-align:center; margin: 12px 0 0; font-size:.8rem;"><a href="{{ routes.all_products_collection_url }}">{% if is_fr %}Continuer mes achats{% else %}Continue shopping{% endif %}</a></p>
         <div class="cart-trust">
           <span>&#10003; {% if is_fr %}Essai satisfait ou rembours&eacute; de 14 jours{% else %}14-day money-back trial{% endif %}</span>
