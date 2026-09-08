@@ -49,6 +49,26 @@
     assign faq_url = locale_root | append: '/pages/faq'
   endif
 
+  assign benefits_url = pages['benefits'].url
+  if benefits_url == blank
+    assign benefits_url = locale_root | append: '/pages/benefits'
+  endif
+
+  assign protocols_url = pages['protocols'].url
+  if protocols_url == blank
+    assign protocols_url = locale_root | append: '/pages/protocols'
+  endif
+
+  assign quiz_url = pages['find-your-cytolight'].url
+  if quiz_url == blank
+    assign quiz_url = locale_root | append: '/pages/find-your-cytolight'
+  endif
+
+  comment
+    Date de derniere revision de fond : dateModified du JSON-LD.
+  endcomment
+  assign page_updated = '2026-09-09'
+
   assign learn_blog = blogs['journal']
   if learn_blog.url == blank
     assign learn_blog = blogs['news']
@@ -76,12 +96,14 @@
     </h1>
     <p class="ln-copy">
       {%- if is_fr -%}
-        Sept espaces&nbsp;: la recherche avec ses sources, le fonctionnement r&eacute;el des longueurs
-        d'onde, nos r&egrave;gles de s&eacute;lection, et un journal o&ugrave; nous publions nos lectures.
-        Aucun ne contient de promesse que nous ne puissions pas documenter.
+        Huit espaces&nbsp;: la recherche avec ses sources, ce que les essais ont r&eacute;ellement
+        mesur&eacute;, le comportement des longueurs d'onde, nos r&egrave;gles de s&eacute;lection, et un
+        journal o&ugrave; nous publions nos lectures. Aucun ne contient de promesse que nous ne puissions
+        pas documenter.
       {%- else -%}
-        Seven spaces: the research with its sources, how wavelengths actually behave, our selection rules,
-        and a journal where we publish what we read. None of them contains a promise we cannot document.
+        Eight spaces: the research with its sources, what the trials actually measured, how wavelengths
+        behave, our selection rules, and a journal where we publish what we read. None of them contains a
+        promise we cannot document.
       {%- endif -%}
     </p>
 
@@ -89,8 +111,8 @@
       <a class="ln-button ln-button--light" href="{{ science_url }}">
         {% if is_fr %}Commencer par la science{% else %}Start with the science{% endif %}
       </a>
-      <a class="ln-button ln-button--line" href="{{ routes.all_products_collection_url }}">
-        {% if is_fr %}Voir la gamme{% else %}See the range{% endif %}
+      <a class="ln-button ln-button--line" href="{{ quiz_url }}">
+        {% if is_fr %}Trouver mon appareil en 6 questions{% else %}Find my device in 6 questions{% endif %}
       </a>
     </div>
   </div>
@@ -100,7 +122,7 @@
   <div class="ln-shell">
     <div class="ln-head ln-reveal">
       <div>
-        <p class="ln-kicker">{% if is_fr %}Sept entr&eacute;es{% else %}Seven ways in{% endif %}</p>
+        <p class="ln-kicker">{% if is_fr %}Huit entr&eacute;es{% else %}Eight ways in{% endif %}</p>
         <h2 class="ln-title ln-title--wide">
           {%- if is_fr -%}Par o&ugrave; vous voulez commencer&nbsp;?{%- else -%}Where would you like to start?{%- endif -%}
         </h2>
@@ -118,35 +140,47 @@
       </div>
     </div>
 
+    {%- comment -%}
+      L'ordre des cartes est un parcours, pas un inventaire : la preuve
+      d'abord (Science, Bienfaits), le mecanisme ensuite (Comment ca marche,
+      Longueurs d'onde), la pratique apres (Mode d'emploi), puis la marque
+      (Nos valeurs), le support (FAQ) et le journal.
+
+      Les textes decrivent ce que la page contient reellement -- un compte de
+      jalons ou d'engagements se perime des qu'on enrichit la page cible, et
+      c'est ici qu'on s'en apercoit en dernier.
+    {%- endcomment -%}
     <div class="ln-hub">
       <a class="ln-hub__card ln-reveal" href="{{ science_url }}">
         <span class="ln-hub__num">01</span>
         <h3 class="ln-hub__title">Science</h3>
         <p class="ln-hub__text">
           {%- if is_fr -%}
-            Du prix Nobel de 1903 &agrave; l'essai randomis&eacute; de 2024 : quinze jalons, chacun li&eacute;
-            &agrave; sa publication d'origine. Avec un bloc entier sur ce que ces travaux ne prouvent pas.
+            Du prix Nobel de 1903 &agrave; la revue LED de 2026 : seize jalons et onze publications,
+            chacune li&eacute;e &agrave; son DOI. Avec un bloc entier sur ce que ces travaux ne prouvent
+            pas.
           {%- else -%}
-            From the 1903 Nobel Prize to a 2024 randomised trial: fifteen milestones, each linked to its
-            original paper. With a whole block on what this work does not prove.
+            From the 1903 Nobel Prize to the 2026 LED review: sixteen milestones and eleven papers, each
+            linked to its DOI. With a whole block on what this work does not prove.
           {%- endif -%}
         </p>
         <span class="ln-link">{% if is_fr %}Voir la frise{% else %}See the timeline{% endif %} <span aria-hidden="true">&rarr;</span></span>
       </a>
 
-      <a class="ln-hub__card ln-reveal" href="{{ blog_url }}">
+      <a class="ln-hub__card ln-reveal" href="{{ benefits_url }}">
         <span class="ln-hub__num">02</span>
-        <h3 class="ln-hub__title">Blog</h3>
+        <h3 class="ln-hub__title">{% if is_fr %}Les bienfaits{% else %}Benefits{% endif %}</h3>
         <p class="ln-hub__text">
           {%- if is_fr -%}
-            Nos lectures d'&eacute;tudes r&eacute;centes, nos protocoles de test, et les questions que nous
-            recevons le plus souvent. Publi&eacute; au fil de l'eau, sans calendrier &eacute;ditorial forc&eacute;.
+            Neuf r&eacute;sultats, chacun avec sa taille d'&eacute;chantillon et son niveau de preuve
+            affich&eacute; &agrave; c&ocirc;t&eacute; : de 820 patients pour la douleur &agrave; vingt
+            athl&egrave;tes pour le sommeil.
           {%- else -%}
-            Our readings of recent studies, our testing protocols, and the questions we get asked most.
-            Published as we go, with no forced editorial calendar.
+            Nine results, each with its sample size and its level of evidence shown next to it: from 820
+            patients for pain down to twenty athletes for sleep.
           {%- endif -%}
         </p>
-        <span class="ln-link">{% if is_fr %}Lire les articles{% else %}Read the articles{% endif %} <span aria-hidden="true">&rarr;</span></span>
+        <span class="ln-link">{% if is_fr %}Voir ce qui a &eacute;t&eacute; mesur&eacute;{% else %}See what was measured{% endif %} <span aria-hidden="true">&rarr;</span></span>
       </a>
 
       <a class="ln-hub__card ln-reveal" href="{{ how_url }}">
@@ -154,18 +188,49 @@
         <h3 class="ln-hub__title">{% if is_fr %}Comment &ccedil;a marche{% else %}How it works{% endif %}</h3>
         <p class="ln-hub__text">
           {%- if is_fr -%}
-            Le photon, la cytochrome c oxydase, l'ATP. Les sept longueurs d'onde et leur r&ocirc;le
-            respectif. La dose, la distance, et pourquoi doubler la s&eacute;ance ne double pas l'effet.
+            Le photon, la cytochrome c oxydase, l'ATP. La fen&ecirc;tre optique 600&ndash;950 nm. La dose,
+            la distance, et pourquoi doubler la s&eacute;ance ne double pas l'effet.
           {%- else -%}
-            The photon, cytochrome c oxidase, ATP. The seven wavelengths and what each one does. Dose,
-            distance, and why doubling the session does not double the effect.
+            The photon, cytochrome c oxidase, ATP. The 600&ndash;950 nm optical window. Dose, distance, and
+            why doubling the session does not double the effect.
           {%- endif -%}
         </p>
         <span class="ln-link">{% if is_fr %}Comprendre{% else %}Understand it{% endif %} <span aria-hidden="true">&rarr;</span></span>
       </a>
 
-      <a class="ln-hub__card ln-reveal" href="{{ values_url }}">
+      <a class="ln-hub__card ln-reveal" href="{{ wl_url }}">
         <span class="ln-hub__num">04</span>
+        <h3 class="ln-hub__title">{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}</h3>
+        <p class="ln-hub__text">
+          {%- if is_fr -%}
+            Les sept spectres de 460 &agrave; 940 nm, la profondeur relative de chacun, et sur quel
+            appareil de la gamme il se trouve. Sans jamais annoncer une profondeur en millim&egrave;tres.
+          {%- else -%}
+            The seven spectra from 460 to 940 nm, the relative depth of each, and which device in the range
+            carries it. Without ever quoting a depth in millimetres.
+          {%- endif -%}
+        </p>
+        <span class="ln-link">{% if is_fr %}Voir le spectre{% else %}See the spectrum{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="ln-hub__card ln-reveal" href="{{ howto_url }}">
+        <span class="ln-hub__num">05</span>
+        <h3 class="ln-hub__title">{% if is_fr %}Mode d'emploi{% else %}How to use{% endif %}</h3>
+        <p class="ln-hub__text">
+          {%- if is_fr -%}
+            Dur&eacute;e, distance et fr&eacute;quence pour chaque format d'appareil, panneau comme
+            accessoire port&eacute;. Les <a href="{{ protocols_url }}">protocoles</a> en donnent sept
+            versions dat&eacute;es dans la semaine.
+          {%- else -%}
+            Duration, distance and frequency for each device format, panels and wearables alike. The
+            <a href="{{ protocols_url }}">protocols</a> turn that into seven sessions placed in the week.
+          {%- endif -%}
+        </p>
+        <span class="ln-link">{% if is_fr %}Lire les consignes{% else %}Read the guidance{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+
+      <a class="ln-hub__card ln-reveal" href="{{ values_url }}">
+        <span class="ln-hub__num">06</span>
         <h3 class="ln-hub__title">{% if is_fr %}Nos valeurs{% else %}Our values{% endif %}</h3>
         <p class="ln-hub__text">
           {%- if is_fr -%}
@@ -178,24 +243,85 @@
         </p>
         <span class="ln-link">{% if is_fr %}Lire la m&eacute;thode{% else %}Read the method{% endif %} <span aria-hidden="true">&rarr;</span></span>
       </a>
-      <a class="ln-hub__card ln-reveal" href="{{ wl_url }}">
-        <span class="ln-hub__num">05</span>
-        <h3 class="ln-hub__title">{% if is_fr %}Longueurs d'onde{% else %}Wavelengths{% endif %}</h3>
-        <p class="ln-hub__text">{%- if is_fr -%}Les sept spectres de 460 &agrave; 940 nm, leur profondeur relative, et sur quel appareil de la gamme chacun se trouve.{%- else -%}The seven spectra from 460 to 940 nm, their relative depth, and which device in the range carries each one.{%- endif -%}</p>
-        <span class="ln-link">{% if is_fr %}Voir le spectre{% else %}See the spectrum{% endif %} <span aria-hidden="true">&rarr;</span></span>
-      </a>
-      <a class="ln-hub__card ln-reveal" href="{{ howto_url }}">
-        <span class="ln-hub__num">06</span>
-        <h3 class="ln-hub__title">{% if is_fr %}Mode d'emploi{% else %}How to use{% endif %}</h3>
-        <p class="ln-hub__text">{%- if is_fr -%}Dur&eacute;e, distance et fr&eacute;quence pour chaque format d'appareil, panneau comme accessoire port&eacute;.{%- else -%}Duration, distance and frequency for each device format, panels and wearables alike.{%- endif -%}</p>
-        <span class="ln-link">{% if is_fr %}Lire les consignes{% else %}Read the guidance{% endif %} <span aria-hidden="true">&rarr;</span></span>
-      </a>
+
       <a class="ln-hub__card ln-reveal" href="{{ faq_url }}">
         <span class="ln-hub__num">07</span>
-        <h3 class="ln-hub__title">{% if is_fr %}FAQ{% else %}FAQ{% endif %}</h3>
-        <p class="ln-hub__text">{%- if is_fr -%}Essai de 14 jours, garantie, certifications et les questions qui reviennent le plus souvent au support.{%- else -%}The 14-day trial, warranty, certifications and the questions support gets asked most.{%- endif -%}</p>
+        <h3 class="ln-hub__title">FAQ</h3>
+        <p class="ln-hub__text">
+          {%- if is_fr -%}
+            Essai de 14 jours, garantie de 2 ans, certifications, livraison : les questions qui reviennent
+            le plus souvent au support, et celles qu'on h&eacute;site &agrave; poser.
+          {%- else -%}
+            The 14-day trial, the 2-year warranty, certifications, delivery: the questions support gets
+            asked most, and the ones people hesitate to ask.
+          {%- endif -%}
+        </p>
         <span class="ln-link">{% if is_fr %}Voir la FAQ{% else %}See the FAQ{% endif %} <span aria-hidden="true">&rarr;</span></span>
       </a>
+
+      <a class="ln-hub__card ln-reveal" href="{{ blog_url }}">
+        <span class="ln-hub__num">08</span>
+        <h3 class="ln-hub__title">{% if is_fr %}Le journal{% else %}The journal{% endif %}</h3>
+        <p class="ln-hub__text">
+          {%- if is_fr -%}
+            Nos lectures d'&eacute;tudes r&eacute;centes, nos protocoles de test, et les questions que nous
+            recevons le plus souvent. Publi&eacute; au fil de l'eau, sans calendrier &eacute;ditorial
+            forc&eacute;.
+          {%- else -%}
+            Our readings of recent studies, our testing protocols, and the questions we get asked most.
+            Published as we go, with no forced editorial calendar.
+          {%- endif -%}
+        </p>
+        <span class="ln-link">{% if is_fr %}Lire les articles{% else %}Read the articles{% endif %} <span aria-hidden="true">&rarr;</span></span>
+      </a>
+    </div>
+
+    {%- comment -%}
+      Trois parcours nommes. Une grille de huit cartes repond a « qu'y a-t-il
+      ici » mais pas a « par ou je commence », qui est la vraie question d'un
+      index : ce bloc y repond en trois lignes, selon ce que le lecteur est
+      venu chercher.
+    {%- endcomment -%}
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">{% if is_fr %}Par o&ugrave; commencer, selon ce que vous cherchez{% else %}Where to start, depending on what you came for{% endif %}</h2>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            <strong>Vous vous demandez si &ccedil;a marche.</strong> Commencez par
+            <a href="{{ benefits_url }}">les bienfaits</a> : neuf r&eacute;sultats avec leur niveau de
+            preuve, du mieux &eacute;tabli au plus mince. Puis <a href="{{ science_url }}">la Science</a>
+            pour les sources compl&egrave;tes.
+          {%- else -%}
+            <strong>You are wondering whether it works.</strong> Start with
+            <a href="{{ benefits_url }}">the benefits</a>: nine results with their level of evidence, from
+            best established to thinnest. Then <a href="{{ science_url }}">Science</a> for the full sources.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Vous savez d&eacute;j&agrave; que vous en voulez un.</strong> Allez &agrave;
+            <a href="{{ how_url }}">comment &ccedil;a marche</a> pour la dose, puis aux
+            <a href="{{ wl_url }}">longueurs d'onde</a> pour la zone. Ces deux pages suffisent &agrave;
+            comparer deux appareils honn&ecirc;tement.
+          {%- else -%}
+            <strong>You already know you want one.</strong> Go to
+            <a href="{{ how_url }}">how it works</a> for the dose, then to
+            <a href="{{ wl_url }}">wavelengths</a> for the area. Those two pages are enough to compare two
+            devices honestly.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Vous vous m&eacute;fiez du secteur.</strong> Vous avez raison :
+            <a href="{{ values_url }}">nos valeurs</a> listent ce que nous refusons d'&eacute;crire et
+            pourquoi &mdash; c'est la page la plus facile &agrave; nous opposer.
+          {%- else -%}
+            <strong>You are sceptical of this industry.</strong> You are right to be:
+            <a href="{{ values_url }}">our values</a> list what we refuse to write and why &mdash; it is the
+            page that is easiest to hold against us.
+          {%- endif -%}
+        </li>
+      </ul>
     </div>
   </div>
 </section>
@@ -261,7 +387,105 @@
   </div>
 </section>
 
-{% render 'learn-product-cta' %}
+{% render 'learn-product-cta',
+   handles: 'antared-desk-red-light-therapy-panel,mask,antared-pano-ultra',
+   heading_fr: 'Lire, c&#39;est bien. Tenir trois s&eacute;ances par semaine, c&#39;est ce qui compte.',
+   heading_en: 'Reading is good. Keeping three sessions a week is what counts.',
+   text_fr: 'Tout ce que vous venez de lire suppose un appareil que vous utilisez vraiment. Le bon format est celui qui couvre votre zone et qui s&#39;ins&egrave;re dans votre semaine &mdash; pas celui qui affiche le plus de LED.',
+   text_en: 'Everything you have just read assumes a device you actually use. The right format is the one that covers your area and fits into your week &mdash; not the one listing the most LEDs.'
+%}
+
+{%- comment -%}
+  Donnees structurees de l'index.
+
+  CollectionPage plutot qu'Article : cette page ne developpe aucun sujet, elle
+  distribue vers huit destinations. L'ItemList les nomme dans l'ordre affiche,
+  ce qui donne a un moteur la carte de l'espace sans qu'il ait a deviner la
+  hierarchie depuis le HTML. Une carte ajoutee plus haut s'ajoute ici, sinon
+  les deux listes divergent.
+
+  Aucun type medical, ici comme ailleurs.
+{%- endcomment -%}
+{%- liquid
+  if is_fr
+    assign sd_name = 'Apprendre la luminotherapie rouge : science, bienfaits, dose et longueurs d onde'
+    assign sd_desc = 'L espace editorial Antared : la recherche avec ses DOI, ce que les essais ont mesure, le mecanisme, la dose, les longueurs d onde, le mode d emploi et nos regles de selection.'
+    assign sd_home = 'Accueil'
+    assign sd_learn = 'Apprendre'
+    assign sd_i1 = 'Science'
+    assign sd_i2 = 'Les bienfaits'
+    assign sd_i3 = 'Comment ca marche'
+    assign sd_i4 = 'Longueurs d onde'
+    assign sd_i5 = 'Mode d emploi'
+    assign sd_i6 = 'Nos valeurs'
+    assign sd_i7 = 'FAQ'
+    assign sd_i8 = 'Le journal'
+  else
+    assign sd_name = 'Learn red light therapy: science, benefits, dose and wavelengths'
+    assign sd_desc = 'The Antared editorial space: the research with its DOIs, what the trials measured, the mechanism, the dose, the wavelengths, how to use a device and our selection rules.'
+    assign sd_home = 'Home'
+    assign sd_learn = 'Learn'
+    assign sd_i1 = 'Science'
+    assign sd_i2 = 'Benefits'
+    assign sd_i3 = 'How it works'
+    assign sd_i4 = 'Wavelengths'
+    assign sd_i5 = 'How to use'
+    assign sd_i6 = 'Our values'
+    assign sd_i7 = 'FAQ'
+    assign sd_i8 = 'The journal'
+  endif
+
+  assign sd_home_url = request.origin | append: routes.root_url
+  assign sd_u1 = request.origin | append: science_url
+  assign sd_u2 = request.origin | append: benefits_url
+  assign sd_u3 = request.origin | append: how_url
+  assign sd_u4 = request.origin | append: wl_url
+  assign sd_u5 = request.origin | append: howto_url
+  assign sd_u6 = request.origin | append: values_url
+  assign sd_u7 = request.origin | append: faq_url
+  assign sd_u8 = request.origin | append: blog_url
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": {{ canonical_url | append: '#page' | json }},
+      "url": {{ canonical_url | json }},
+      "name": {{ sd_name | json }},
+      "description": {{ sd_desc | json }},
+      "inLanguage": {{ request.locale.iso_code | json }},
+      "dateModified": {{ page_updated | json }},
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": {{ sd_i1 | json }}, "url": {{ sd_u1 | json }} },
+          { "@type": "ListItem", "position": 2, "name": {{ sd_i2 | json }}, "url": {{ sd_u2 | json }} },
+          { "@type": "ListItem", "position": 3, "name": {{ sd_i3 | json }}, "url": {{ sd_u3 | json }} },
+          { "@type": "ListItem", "position": 4, "name": {{ sd_i4 | json }}, "url": {{ sd_u4 | json }} },
+          { "@type": "ListItem", "position": 5, "name": {{ sd_i5 | json }}, "url": {{ sd_u5 | json }} },
+          { "@type": "ListItem", "position": 6, "name": {{ sd_i6 | json }}, "url": {{ sd_u6 | json }} },
+          { "@type": "ListItem", "position": 7, "name": {{ sd_i7 | json }}, "url": {{ sd_u7 | json }} },
+          { "@type": "ListItem", "position": 8, "name": {{ sd_i8 | json }}, "url": {{ sd_u8 | json }} }
+        ]
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ sd_home | json }}, "item": {{ sd_home_url | json }} },
+        { "@type": "ListItem", "position": 2, "name": {{ sd_learn | json }}, "item": {{ canonical_url | json }} }
+      ]
+    }
+  ]
+}
+</script>
 
 {% schema %}
 {

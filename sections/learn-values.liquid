@@ -36,6 +36,27 @@
   if blog_url == blank
     assign blog_url = locale_root | append: '/blogs/news'
   endif
+
+  assign learn_url = pages['academy'].url
+  if learn_url == blank
+    assign learn_url = locale_root | append: '/pages/academy'
+  endif
+
+  assign wave_url = pages['wavelengths'].url
+  if wave_url == blank
+    assign wave_url = locale_root | append: '/pages/wavelengths'
+  endif
+
+  assign faq_url = pages['faq'].url
+  if faq_url == blank
+    assign faq_url = locale_root | append: '/pages/faq'
+  endif
+
+  comment
+    Date de derniere revision de fond : mention visible du resume et
+    dateModified du JSON-LD, un seul endroit a changer.
+  endcomment
+  assign page_updated = '2026-09-09'
 -%}
 
 <section class="ln-hero">
@@ -84,6 +105,104 @@
         <strong>0</strong>
         <span>{% if is_fr %}avis, note ou compteur &eacute;crit &agrave; la main sur ce site{% else %}reviews, ratings or counters hand-written on this site{% endif %}</span>
       </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Resume de tete. Six faits autoportants, tous verifiables ailleurs sur ce
+  site : c'est la condition pour qu'un engagement soit autre chose qu'une
+  declaration d'intention. Aucun chiffre nouveau -- essai et garantie suivent
+  les valeurs de main-cart.liquid et des fiches produit, qui font foi.
+{%- endcomment -%}
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">{% if is_fr %}En r&eacute;sum&eacute;{% else %}In short{% endif %}</h2>
+      <p class="ln-copy">
+        {%- if is_fr -%}
+          Antared s&eacute;lectionne et distribue des appareils de luminoth&eacute;rapie rouge. Nous ne
+          sommes pas un laboratoire, nous ne conduisons aucun essai clinique, et nous ne promettons aucun
+          effet sur une maladie. Ce que nous pouvons faire, c'est publier les param&egrave;tres, citer les
+          sources et signaler les limites &mdash; y compris celles qui nous d&eacute;servent.
+        {%- else -%}
+          Antared selects and distributes red light therapy devices. We are not a laboratory, we run no
+          clinical trials, and we promise no effect on any disease. What we can do is publish the
+          parameters, cite the sources and flag the limits &mdash; including the ones that work against us.
+        {%- endif -%}
+      </p>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            <strong>Chaque &eacute;tude cit&eacute;e porte son DOI</strong>, l'identifiant permanent qui
+            ouvre la publication d'origine. Jamais un billet qui r&eacute;sume une d&eacute;p&ecirc;che qui
+            r&eacute;sume un communiqu&eacute;.
+          {%- else -%}
+            <strong>Every study we cite carries its DOI</strong>, the permanent identifier that opens the
+            original paper. Never a post summarising a newswire summarising a press release.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>L'irradiance est toujours donn&eacute;e avec sa distance de mesure</strong>
+            (mW/cm&sup2; &agrave; X cm). Sans distance, le chiffre ne veut rien dire &mdash; et c'est
+            pourtant ainsi qu'il est affich&eacute; presque partout.
+          {%- else -%}
+            <strong>Irradiance is always given with its measurement distance</strong> (mW/cm&sup2; at
+            X cm). Without a distance the number means nothing &mdash; and yet that is how it is displayed
+            almost everywhere.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucune note, aucun avis, aucun compteur &eacute;crit &agrave; la main.</strong> Tant
+            qu'il n'y a pas d'avis client v&eacute;rifi&eacute;, il n'y a pas d'&eacute;toiles. Publier une
+            note fictive est trompeur au sens des articles L.121-2 et L.121-4 du Code de la consommation.
+          {%- else -%}
+            <strong>No rating, no review, no counter written by hand.</strong> Until there are verified
+            customer reviews, there are no stars. Publishing a fictitious rating is a misleading commercial
+            practice under French consumer law.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucun avant / apr&egrave;s retouch&eacute;</strong>, aucun changement d'&eacute;clairage
+            entre deux photos, aucune image g&eacute;n&eacute;r&eacute;e. En l'absence de photo
+            honn&ecirc;te, nous pr&eacute;f&eacute;rons ne rien montrer.
+          {%- else -%}
+            <strong>No retouched before / after</strong>, no lighting change between two shots, no generated
+            image. Absent an honest photo, we would rather show nothing.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>14 jours pour essayer chez vous</strong> et renvoyer si l'appareil ne s'int&egrave;gre
+            pas &agrave; votre semaine, <strong>2 ans de garantie</strong> sur chaque appareil de la gamme.
+          {%- else -%}
+            <strong>14 days to try it at home</strong> and send it back if the device does not fit your
+            week, <strong>2 years of warranty</strong> on every device in the range.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucune promesse th&eacute;rapeutique</strong>, sur aucune page. Nos appareils sont des
+            produits de bien-&ecirc;tre : ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune
+            maladie.
+          {%- else -%}
+            <strong>No therapeutic promise</strong>, on any page. Our devices are wellness products: they do
+            not diagnose, treat or cure any disease.
+          {%- endif -%}
+        </li>
+      </ul>
+      <p class="ln-study__ref">
+        {%- if is_fr -%}
+          Page revue le {{ page_updated | date: '%d/%m/%Y' }}. Une ligne prise en d&eacute;faut est un bug :
+          &eacute;crivez-nous et nous la corrigeons.
+        {%- else -%}
+          Page reviewed on {{ page_updated | date: '%d/%m/%Y' }}. A line that does not hold is a bug: write
+          to us and we will fix it.
+        {%- endif -%}
+      </p>
     </div>
   </div>
 </section>
@@ -280,14 +399,14 @@
       <a class="ln-hub__card ln-reveal" href="{{ science_url }}">
         <span class="ln-hub__num">01</span>
         <h3 class="ln-hub__title">{% if is_fr %}La recherche, sources comprises{% else %}The research, sources included{% endif %}</h3>
-        <p class="ln-hub__text">{% if is_fr %}Cent vingt ans de photobiomodulation, quinze jalons, chaque publication liant vers son DOI &mdash; et un bloc sur ce que ces travaux ne prouvent pas.{% else %}One hundred and twenty years of photobiomodulation, fifteen milestones, every paper linking to its DOI &mdash; and a block on what this work does not prove.{% endif %}</p>
+        <p class="ln-hub__text">{% if is_fr %}Cent vingt-trois ans de photobiomodulation, seize jalons, onze publications liant chacune vers son DOI &mdash; et un bloc sur ce que ces travaux ne prouvent pas.{% else %}One hundred and twenty-three years of photobiomodulation, sixteen milestones, eleven papers each linking to its DOI &mdash; and a block on what this work does not prove.{% endif %}</p>
         <span class="ln-link">{% if is_fr %}Voir la frise{% else %}See the timeline{% endif %} <span aria-hidden="true">&rarr;</span></span>
       </a>
 
       <a class="ln-hub__card ln-reveal" href="{{ how_url }}">
         <span class="ln-hub__num">02</span>
         <h3 class="ln-hub__title">{% if is_fr %}Le m&eacute;canisme et la dose{% else %}The mechanism and the dose{% endif %}</h3>
-        <p class="ln-hub__text">{% if is_fr %}Du photon &agrave; l'ATP, les sept longueurs d'onde et leur r&ocirc;le, et pourquoi &laquo; plus puissant &raquo; n'est pas un argument de vente.{% else %}From photon to ATP, the seven wavelengths and their roles, and why &ldquo;more powerful&rdquo; is not a selling point.{% endif %}</p>
+        <p class="ln-hub__text">{% if is_fr %}Du photon &agrave; l'ATP, la fen&ecirc;tre optique 600&ndash;950 nm, la r&eacute;ponse biphasique &agrave; la dose &mdash; et pourquoi &laquo; plus puissant &raquo; n'est pas un argument de vente.{% else %}From photon to ATP, the 600&ndash;950 nm optical window, the biphasic dose response &mdash; and why &ldquo;more powerful&rdquo; is not a selling point.{% endif %}</p>
         <span class="ln-link">{% if is_fr %}Comprendre{% else %}Understand it{% endif %} <span aria-hidden="true">&rarr;</span></span>
       </a>
 
@@ -301,13 +420,159 @@
   </div>
 </section>
 
+{%- comment -%}
+  FAQ. Source unique : ecrite une fois ici, rendue en <details> puis en JSON-LD
+  FAQPage en bas de fichier. « | » separe les items, « ~ » separe la question
+  de la reponse.
+
+  Ce sont les objections reelles d'une page « nos valeurs » : pourquoi si peu
+  de produits, pourquoi aucune etoile, que vaut la promesse si vous vendez.
+  Aucune reponse ne doit annoncer un tarif, une remise ou une condition qui
+  n'existe pas encore (principe III). Essai et garantie suivent les valeurs de
+  main-cart.liquid et des fiches produit, qui font foi.
+
+  Accents en UTF-8 brut : une entite HTML n'est pas decodee dans un
+  <script type="application/ld+json">.
+{%- endcomment -%}
+{%- if is_fr -%}
+  {%- capture faq_raw -%}
+Antared fabrique-t-il ses appareils ?~Non. Antared sélectionne et distribue des appareils de luminothérapie rouge : nous ne sommes ni un fabricant ni un laboratoire, et nous ne conduisons aucun essai clinique. Ce que nous contrôlons, c'est ce qui entre dans la gamme, les paramètres que nous publions et ce que nous nous autorisons à écrire.
+|Pourquoi si peu de produits au catalogue ?~Parce qu'un format n'entre dans la gamme que s'il répond à un usage que les autres ne couvrent pas, et que son fabricant publie l'irradiance à une distance donnée. Un appareil de plus qui fait la même chose qu'un autre en moins bien n'aide personne à choisir : il allonge la page et rien d'autre.
+|Pourquoi n'y a-t-il aucune étoile ni aucun avis sur ce site ?~Parce que les notes affichées ici proviennent uniquement d'avis clients vérifiés, et que tant qu'il n'y en a pas, il n'y a pas d'étoiles. Écrire une note à la main serait une pratique commerciale trompeuse au sens des articles L.121-2 et L.121-4 du Code de la consommation. Nous préférons une page vide à une note inventée.
+|Que se passe-t-il si l'appareil ne me convient pas ?~Vous disposez de 14 jours pour l'essayer chez vous et le renvoyer s'il ne s'intègre pas à votre semaine. C'est la seule chose qui compte vraiment : un appareil que vous n'utilisez pas a une efficacité de zéro, quels que soient ses nanomètres. Chaque appareil de la gamme est garanti 2 ans.
+|Pourquoi ne promettez-vous aucun résultat ?~Parce que nous n'avons pas les données pour le faire. Aucune des études que nous citons n'a été menée sur un appareil Antared, et affirmer qu'un produit de bien-être agit sur une maladie serait une allégation thérapeutique interdite. Nous préférons publier nos paramètres et vous laisser les comparer à ceux des essais.
+|Comment vérifier ce que vous affirmez ?~En suivant les liens. Chaque étude citée porte son DOI, qui ouvre la publication d'origine ; chaque irradiance est donnée avec sa distance de mesure ; chaque page indique ce qu'elle ne dit pas. Si vous trouvez une de ces règles prise en défaut, écrivez-nous : c'est un bug, pas une stratégie.
+|Comment choisissez-vous les longueurs d'onde d'un appareil ?~Sur les paramètres publiés dans la littérature, pas sur ce qui se vend le mieux. Le détail des spectres et de leur rôle est sur <a href="{{ wave_url }}">les longueurs d'onde</a>, et les repères de dose sur <a href="{{ how_url }}">comment ça marche</a> : ce sont ces deux pages qui font foi, y compris pour nos propres fiches produit.
+  {%- endcapture -%}
+{%- else -%}
+  {%- capture faq_raw -%}
+Does Antared manufacture its devices?~No. Antared selects and distributes red light therapy devices: we are neither a manufacturer nor a laboratory, and we run no clinical trials. What we control is what joins the range, the parameters we publish, and what we allow ourselves to write.
+|Why are there so few products in the catalogue?~Because a format only joins the range if it answers a use the others do not cover, and if its manufacturer publishes irradiance at a stated distance. One more device doing what another already does, only worse, helps nobody choose: it lengthens the page and nothing else.
+|Why are there no stars or reviews on this site?~Because the ratings shown here come only from verified customer reviews, and until there are any, there are no stars. Writing a rating by hand would be a misleading commercial practice under French consumer law. We would rather have an empty section than an invented score.
+|What happens if the device does not suit me?~You have 14 days to try it at home and send it back if it does not fit your week. That is the only thing that really matters: a device you do not use has an efficacy of zero, whatever its nanometres. Every device in the range carries a 2-year warranty.
+|Why do you promise no result?~Because we do not have the data to. None of the studies we cite was run on an Antared device, and claiming that a wellness product acts on a disease would be a prohibited therapeutic claim. We would rather publish our parameters and let you compare them against the trials.
+|How can I check what you claim?~By following the links. Every study we cite carries its DOI, which opens the original paper; every irradiance is given with its measurement distance; every page states what it does not say. If you find one of those rules broken, write to us: that is a bug, not a strategy.
+|How do you choose a device's wavelengths?~On the parameters published in the literature, not on what sells best. The detail of each spectrum and its role is on <a href="{{ wave_url }}">wavelengths</a>, and the dose figures on <a href="{{ how_url }}">how it works</a>: those two pages are authoritative, including for our own product pages.
+  {%- endcapture -%}
+{%- endif -%}
+{%- assign faq_items = faq_raw | strip | split: '|' -%}
+
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Les questions qu'on nous pose{% else %}The questions we get asked{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Sept questions, y compris les d&eacute;sagr&eacute;ables.{%- else -%}Seven questions, including the awkward ones.{%- endif -%}
+        </h2>
+      </div>
+    </div>
+
+    <div class="ln-faq ln-reveal">
+      {%- for faq_item in faq_items -%}
+        {%- assign faq_parts = faq_item | split: '~' -%}
+        <details class="ln-faq__item">
+          <summary class="ln-faq__q">{{ faq_parts[0] | strip }}</summary>
+          <p class="ln-faq__a">{{ faq_parts[1] | strip }}</p>
+        </details>
+      {%- endfor -%}
+    </div>
+
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Les questions d'essai, de garantie, de livraison et de certification sont d&eacute;taill&eacute;es
+        sur la <a href="{{ faq_url }}">FAQ g&eacute;n&eacute;rale</a>.
+      {%- else -%}
+        Questions about the trial, warranty, delivery and certification are detailed on the
+        <a href="{{ faq_url }}">general FAQ</a>.
+      {%- endif -%}
+    </p>
+  </div>
+</section>
+
 {% render 'learn-product-cta',
    handles: 'antared-desk-red-light-therapy-panel,antared-sauna-dome-infrared-red-light-pemf,antared-pano-ultra',
-   heading_fr: 'Sept appareils. Chacun a d&#251; justifier sa place.',
-   heading_en: 'Seven devices. Each one had to earn its place.',
-   text_fr: 'Si vous h&eacute;sitez entre deux formats, la question utile n&#39;est pas lequel est le plus puissant, mais lequel vous utiliserez encore dans trois mois.',
-   text_en: 'If you are hesitating between two formats, the useful question is not which is more powerful, but which one you will still be using in three months.'
+   heading_fr: 'Chaque appareil de la gamme a d&#251; justifier sa place.',
+   heading_en: 'Every device in the range had to earn its place.',
+   text_fr: 'Si vous h&eacute;sitez entre deux formats, la question utile n&#39;est pas lequel est le plus puissant, mais lequel vous utiliserez encore dans trois mois. 14 jours pour le v&eacute;rifier chez vous, 2 ans de garantie.',
+   text_en: 'If you are hesitating between two formats, the useful question is not which is more powerful, but which one you will still be using in three months. 14 days to check that at home, 2 years of warranty.'
 %}
+
+{%- comment -%}
+  Donnees structurees : Article + BreadcrumbList + FAQPage, ce dernier
+  construit sur faq_items -- la meme source que les <details> visibles.
+
+  Aucun type medical, et aucune citation en propre : cette page ne cite aucune
+  publication, les references vivent sur learn-science.
+{%- endcomment -%}
+{%- liquid
+  if is_fr
+    assign sd_headline = 'Nos valeurs : comment nous selectionnons un appareil, et ce que nous refusons d ecrire'
+    assign sd_desc = 'DOI sur chaque etude citee, irradiance publiee avec sa distance, aucune note ecrite a la main, aucune promesse therapeutique. Les regles que nous nous imposons, verifiables page par page.'
+    assign sd_home = 'Accueil'
+    assign sd_learn = 'Apprendre'
+    assign sd_page = 'Nos valeurs'
+  else
+    assign sd_headline = 'Our values: how we select a device, and what we refuse to write'
+    assign sd_desc = 'A DOI on every study cited, irradiance published with its distance, no hand-written ratings, no therapeutic promise. The rules we hold ourselves to, checkable page by page.'
+    assign sd_home = 'Home'
+    assign sd_learn = 'Learn'
+    assign sd_page = 'Our values'
+  endif
+
+  assign sd_home_url = request.origin | append: routes.root_url
+  assign sd_learn_url = request.origin | append: learn_url
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": {{ canonical_url | append: '#article' | json }},
+      "url": {{ canonical_url | json }},
+      "mainEntityOfPage": {{ canonical_url | json }},
+      "headline": {{ sd_headline | json }},
+      "description": {{ sd_desc | json }},
+      "inLanguage": {{ request.locale.iso_code | json }},
+      "dateModified": {{ page_updated | json }},
+      "author": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ sd_home | json }}, "item": {{ sd_home_url | json }} },
+        { "@type": "ListItem", "position": 2, "name": {{ sd_learn | json }}, "item": {{ sd_learn_url | json }} },
+        { "@type": "ListItem", "position": 3, "name": {{ sd_page | json }}, "item": {{ canonical_url | json }} }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq_item in faq_items -%}
+          {%- assign faq_parts = faq_item | split: '~' -%}
+          {%- assign faq_q = faq_parts[0] | strip | strip_html | strip_newlines -%}
+          {%- assign faq_a = faq_parts[1] | strip | strip_html | strip_newlines -%}
+          {
+            "@type": "Question",
+            "name": {{ faq_q | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  ]
+}
+</script>
 
 {% schema %}
 {
