@@ -167,6 +167,11 @@
 .cy-range__aside { width: min(390px, 100%); padding-bottom: 8px; }
 .cy-range__aside { flex: 0 0 min(390px, 100%); }
 .cy-range__aside p { margin: 0 0 22px; color: var(--cy-muted); font-size: 16px; line-height: 1.7; }
+/* Catalogue head: the title sits on its own line, with the blurb and CTA
+   stacked below it -- not the side-by-side layout `.cy-range__head` shares
+   with `.cy-compare__top` above. */
+.cy-range__head { flex-direction: column; align-items: flex-start; gap: 24px; }
+.cy-range__head > div:first-child, .cy-range__head .cy-range__aside { flex: 1 1 auto; width: 100%; }
 /* Science explainer: a real two-column read (article + features on the
    left, a large infographic video on the right), not the short-blurb
    layout above -- so it gets its own grid instead of reusing
@@ -711,6 +716,9 @@
 .cy-range .cy-kicker { color: #ff3f58; }
 .cy-range .cy-range__aside p { color: rgba(255,255,255,.72); }
 .cy-range .cy-link { color: #fff; }
+/* Smaller and wider than the default .cy-heading so "Start with the result
+   you want to feel." reads on a single line at desktop widths. */
+.cy-use .cy-heading { max-width: 900px; font-size: clamp(28px, 3.6vw, 50px); }
 .cy-products { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 56px; }
 .cy-product {
   position: relative; display: block; min-height: 460px; overflow: hidden;
