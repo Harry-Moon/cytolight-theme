@@ -339,10 +339,11 @@
         </span>
       {%- endif -%}
       {%- comment -%}
-        &laquo; Nous contacter &raquo; : libelle entier quand la rangee d'onglets s'est
-        retiree, icone telephone seule quand elle est depliee — c'est-a-dire
-        l'etat par defaut, celui du haut de page (voir .is-nav-hidden, pose par
-        theme.js sur #shopify-section-header).
+        &laquo; Nous contacter &raquo; : libelle entier tant que la rangee d'onglets est
+        depliee — l'etat par defaut, celui du haut de page — et icone telephone
+        seule une fois la rangee retiree au defilement, quand la barre se
+        resserre (voir .is-nav-hidden, pose par theme.js sur
+        #shopify-section-header).
 
         Le libelle reste dans le DOM dans les deux etats : c'est lui qui donne
         son nom accessible au lien, et la commande vocale &laquo; cliquer sur Nous

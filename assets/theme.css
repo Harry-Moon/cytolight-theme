@@ -307,7 +307,9 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
  *      position de tout ce qui se cale dessous (colonne galerie de la fiche
  *      produit, recapitulatif du panier). scale() ne touche pas au flux : les
  *      utilitaires de part et d'autre ne bougent pas d'un pixel.
- *   2. &laquo; Nous contacter &raquo; se reduit a son icone telephone.
+ *   2. &laquo; Nous contacter &raquo; s'ecrit en toutes lettres, et se reduit a sa
+ *      seule icone telephone une fois la rangee retiree — la barre se
+ *      resserre, le lien avec elle.
  *
  * Les deux ne valent qu'au-dessus de 1300px, la ou la rangee d'onglets existe
  * (en dessous elle est en display:none, et les liens utilitaires en toutes
@@ -342,24 +344,25 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
   }
   .site-header__contact-icon svg { flex: none; }
 
-  /* Deplie : icone seule. */
-  .site-header__contact-label { max-width: 0; opacity: 0; transform: scale(.94); }
-  .site-header__contact-icon { max-width: 22px; opacity: 1; transform: scale(1); }
+  /* Deplie : le libelle entier. */
+  .site-header__contact-label { max-width: 16em; opacity: 1; transform: scale(1); }
+  .site-header__contact-icon { max-width: 0; opacity: 0; transform: scale(.94); }
 
-  /* Compact : le libelle entier, la rangee d'onglets ayant libere la place. */
+  /* Compact : icone seule, la barre s'etant resserree avec la rangee. */
   #shopify-section-header.is-nav-hidden .site-header__contact-label {
-    max-width: 16em; opacity: 1; transform: scale(1);
+    max-width: 0; opacity: 0; transform: scale(.94);
   }
   #shopify-section-header.is-nav-hidden .site-header__contact-icon {
-    max-width: 0; opacity: 0; transform: scale(.94);
+    max-width: 22px; opacity: 1; transform: scale(1);
   }
 }
 /*
  * Sous mouvement reduit, theme.js ne pose jamais .is-nav-hidden : la rangee
  * reste depliee en permanence. Le logo garde donc sa taille nominale plutot
  * qu'un agrandissement fige et sans objet, et rien ne transitionne. Le lien
- * de contact, lui, garde son etat deplie — l'icone seule — puisque c'est le
- * seul etat que la page connaitra.
+ * de contact, lui, garde son etat deplie — le libelle en toutes lettres —
+ * puisque c'est le seul etat que la page connaitra, et c'est le bon sens du
+ * repli : un mot lisible plutot qu'une icone a deviner.
  */
 @media (prefers-reduced-motion: reduce) {
   .site-header__logo img { transform: none; transition: none; }

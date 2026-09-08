@@ -596,8 +596,9 @@ les liens utilitaires en toutes lettres sont déjà masqués au profit du tiroir
 1. **Le logo est agrandi de 6 %, en `transform` seule.** Une hauteur animée changerait la hauteur de
    la barre, donc `--header-h`, donc la position de tout ce qui se cale dessous — colonne galerie de
    la fiche produit, récapitulatif du panier. `scale()` ne touche pas au flux.
-2. **« Nous contacter » se réduit à son icône téléphone** (`{% render 'icon', name: 'phone' %}`), et
-   revient en toutes lettres dans l'état compact, la rangée d'onglets ayant libéré la place. Le
+2. **« Nous contacter » s'écrit en toutes lettres**, et se réduit à sa seule icône téléphone
+   (`{% render 'icon', name: 'phone' %}`) une fois la rangée retirée au défilement : la barre se
+   resserre, le lien avec elle. Le
    libellé reste dans le DOM dans les deux états : c'est lui qui donne son nom accessible au lien,
    et la commande vocale « cliquer sur Nous contacter » continue de trouver la cible une fois le
    texte replié (WCAG 2.5.3). Le remplacer par un `aria-label` ferait doublon ; le masquer en
@@ -605,7 +606,8 @@ les liens utilitaires en toutes lettres sont déjà masqués au profit du tiroir
 
 Sous `prefers-reduced-motion: reduce`, `theme.js` ne pose jamais `.is-nav-hidden` : la barre reste
 dépliée en permanence. Le logo garde donc sa taille nominale plutôt qu'un agrandissement figé et
-sans objet, et rien ne transitionne.
+sans objet, et rien ne transitionne. Le lien de contact, lui, garde son état déplié — le libellé en
+toutes lettres — et c'est le bon sens du repli : un mot lisible plutôt qu'une icône à deviner.
 
 ### Sélecteur de langue
 
