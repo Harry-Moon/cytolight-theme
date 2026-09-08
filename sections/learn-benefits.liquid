@@ -41,6 +41,27 @@
   if values_url == blank
     assign values_url = locale_root | append: '/pages/nos-valeurs'
   endif
+
+  assign learn_url = pages['academy'].url
+  if learn_url == blank
+    assign learn_url = locale_root | append: '/pages/academy'
+  endif
+
+  assign wave_url = pages['wavelengths'].url
+  if wave_url == blank
+    assign wave_url = locale_root | append: '/pages/wavelengths'
+  endif
+
+  assign protocols_url = pages['protocols'].url
+  if protocols_url == blank
+    assign protocols_url = locale_root | append: '/pages/protocols'
+  endif
+
+  comment
+    Date de derniere revision de fond : mention visible du resume et
+    dateModified du JSON-LD, un seul endroit a changer.
+  endcomment
+  assign page_updated = '2026-09-09'
 -%}
 
 <section class="ln-hero">
@@ -86,10 +107,110 @@
         <strong>20</strong>
         <span>{% if is_fr %}athl&egrave;tes dans la plus petite &mdash; nous le signalons aussi{% else %}athletes in the smallest &mdash; we flag that too{% endif %}</span>
       </div>
-      <div class="ln-hero__fact">
-        <strong>0</strong>
-        <span>{% if is_fr %}de ces &eacute;tudes n'a &eacute;t&eacute; men&eacute;e sur un appareil Antared{% else %}of these studies were run on a Antared device{% endif %}</span>
-      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Resume de tete. Six faits autoportants, tous repris des neuf fiches d'etudes
+  qui suivent : aucun chiffre n'est ecrit ici en premier. Si une fiche change
+  plus bas, ce bloc change avec elle.
+
+  C'est la page ou la tentation de surpromettre est la plus forte : le resume
+  ouvre donc sur le domaine le mieux etabli et se termine sur le plus faible,
+  pas l'inverse.
+{%- endcomment -%}
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">{% if is_fr %}En r&eacute;sum&eacute;{% else %}In short{% endif %}</h2>
+      <p class="ln-copy">
+        {%- if is_fr -%}
+          Le niveau de preuve n'est pas le m&ecirc;me d'un domaine &agrave; l'autre, et c'est la seule
+          chose que la plupart des pages &laquo; bienfaits &raquo; oublient de dire. Il est le plus solide
+          sur la douleur et la r&eacute;cup&eacute;ration musculaire, o&ugrave; des m&eacute;ta-analyses
+          agr&egrave;gent des dizaines d'essais. Il est le plus mince sur le sommeil, o&ugrave; l'essai
+          cit&eacute; porte sur vingt personnes.
+        {%- else -%}
+          The level of evidence is not the same from one domain to the next, and that is the one thing most
+          benefit pages forget to say. It is strongest for pain and muscle recovery, where meta-analyses
+          aggregate dozens of trials. It is thinnest for sleep, where the trial cited covers twenty people.
+        {%- endif -%}
+      </p>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            <strong>Douleur &mdash; le mieux &eacute;tabli.</strong> 16 essais randomis&eacute;s,
+            <strong>820 patients</strong> souffrant de cervicalgies, m&eacute;ta-analyse publi&eacute;e par
+            <cite>The Lancet</cite> en 2009. Effets ind&eacute;sirables non diff&eacute;rents du placebo.
+          {%- else -%}
+            <strong>Pain &mdash; the best established.</strong> 16 randomised trials,
+            <strong>820 patients</strong> with neck pain, meta-analysis published by <cite>The Lancet</cite>
+            in 2009. Adverse effects no different from placebo.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Performance.</strong> 13 essais randomis&eacute;s, gain moyen de
+            <strong>5,5 r&eacute;p&eacute;titions</strong> et 4,1 secondes avant &eacute;puisement &mdash;
+            obtenu surtout quand la lumi&egrave;re vient <em>avant</em> l'effort, pas apr&egrave;s.
+          {%- else -%}
+            <strong>Performance.</strong> 13 randomised trials, average gain of
+            <strong>5.5 repetitions</strong> and 4.1 seconds to exhaustion &mdash; obtained mainly when the
+            light comes <em>before</em> the effort, not after.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Peau.</strong> <strong>136 volontaires</strong>, 30 s&eacute;ances : densit&eacute; de
+            collag&egrave;ne en hausse, rugosit&eacute; en baisse, photos &eacute;valu&eacute;es en
+            aveugle.
+          {%- else -%}
+            <strong>Skin.</strong> <strong>136 volunteers</strong>, 30 sessions: collagen density up,
+            roughness down, photographs assessed blind.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Cheveux.</strong> <strong>42 femmes</strong>, 655 nm, 16 semaines, une s&eacute;ance un
+            jour sur deux : <strong>+37 % de cheveux compt&eacute;s</strong> sur zone tatou&eacute;e, lu en
+            aveugle. Aucun effet ind&eacute;sirable rapport&eacute; dans cet essai.
+          {%- else -%}
+            <strong>Hair.</strong> <strong>42 women</strong>, 655 nm, 16 weeks, one session every other
+            day: <strong>+37 % counted hairs</strong> on a tattooed area, read blind. No adverse events
+            reported in that trial.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Sommeil &mdash; le plus mince.</strong> <strong>20 athl&egrave;tes</strong>, 14 jours.
+            Nous le citons parce qu'il existe, et nous l'&eacute;tiquetons comme un signal, pas comme une
+            preuve.
+          {%- else -%}
+            <strong>Sleep &mdash; the thinnest.</strong> <strong>20 athletes</strong>, 14 days. We cite it
+            because it exists, and we label it a signal, not a proof.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucune de ces &eacute;tudes n'a &eacute;t&eacute; men&eacute;e sur un appareil
+            Antared.</strong> Nous ne conduisons aucun essai clinique : nous r&eacute;glons nos appareils
+            sur les param&egrave;tres publi&eacute;s dans cette litt&eacute;rature, et nous les affichons.
+          {%- else -%}
+            <strong>None of these studies was run on an Antared device.</strong> We run no clinical trials:
+            we set our devices to the parameters published in this literature, and we display them.
+          {%- endif -%}
+        </li>
+      </ul>
+      <p class="ln-study__ref">
+        {%- if is_fr -%}
+          Page revue le {{ page_updated | date: '%d/%m/%Y' }}. Les appareils Antared sont des produits de
+          bien-&ecirc;tre : ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie.
+        {%- else -%}
+          Page reviewed on {{ page_updated | date: '%d/%m/%Y' }}. Antared devices are wellness products:
+          they do not diagnose, treat or cure any disease.
+        {%- endif -%}
+      </p>
     </div>
   </div>
 </section>
@@ -359,7 +480,7 @@
             Antared.</strong> Elles portent sur la photobiomodulation en g&eacute;n&eacute;ral, avec des
             dispositifs, des doses et des protocoles propres &agrave; chaque essai.
           {%- else -%}
-            <strong>None of these studies was run on a Antared device.</strong> They concern
+            <strong>None of these studies was run on an Antared device.</strong> They concern
             photobiomodulation in general, with devices, doses and protocols specific to each trial.
           {%- endif -%}
         </li>
@@ -380,13 +501,180 @@
   </div>
 </section>
 
+{%- comment -%}
+  FAQ. Source unique : ecrite une fois ici, rendue en <details> puis en JSON-LD
+  FAQPage en bas de fichier. « | » separe les items, « ~ » separe la question
+  de la reponse.
+
+  Aucune reponse n'ajoute un chiffre absent des neuf fiches ci-dessus, et
+  aucune ne generalise un resultat d'essai a un appareil domestique. Les
+  accents sont en UTF-8 brut : une entite HTML n'est pas decodee dans un
+  <script type="application/ld+json"> et apparaitrait telle quelle dans le
+  resultat indexe.
+{%- endcomment -%}
+{%- if is_fr -%}
+  {%- capture faq_raw -%}
+La luminothérapie rouge fonctionne-t-elle vraiment ?~Cela dépend du domaine, et la réponse honnête est qu'elle n'est pas la même partout. Le niveau de preuve est le plus solide sur la douleur, avec 16 essais randomisés et 820 patients réunis par une méta-analyse du Lancet, et sur la récupération musculaire. Il est le plus mince sur le sommeil, où l'essai cité porte sur vingt personnes.
+|Quel est le résultat le mieux établi à ce jour ?~La réduction de la douleur cervicale. Seize essais randomisés, 820 patients, une méta-analyse publiée par The Lancet en 2009, et des effets indésirables non différents du placebo. C'est la preuve la plus large citée sur ce site, et c'est celle sur laquelle nous nous appuyons quand on nous demande si « ça marche ».
+|Combien de temps avant de constater quelque chose ?~Selon ce qui est mesuré. Sur la performance, les essais mesurent dès la séance qui suit, à condition que la lumière précède l'effort. Sur la peau, l'essai de référence mesure après 30 séances ; sur les cheveux, après 16 semaines à raison d'une séance un jour sur deux. Aucun résultat cité ici n'est obtenu en une semaine.
+|La lumière rouge agit-elle sur la testostérone ou la longévité ?~Nous ne l'affirmons pas. Ces allégations circulent beaucoup dans le secteur, mais nous n'avons pas de preuve d'un niveau suffisant pour les reprendre, et affirmer qu'un appareil de bien-être agit sur une maladie serait une allégation thérapeutique que nous n'avons ni le droit ni les données de formuler.
+|Ces études rapportent-elles des effets indésirables ?~La méta-analyse sur la douleur cervicale rapporte des effets indésirables non différents de ceux du placebo, et l'essai en double aveugle sur la repousse des cheveux n'en rapporte aucun. Ces constats portent sur ces essais précis, pas sur l'usage en général. Les précautions d'emploi sont détaillées sur <a href="{{ how_url }}">comment ça marche</a>.
+|Ces essais utilisent-ils un laser ou des LED ?~Les deux, selon les publications, et la distinction compte : une bonne part de la littérature historique est du laser, alors que les appareils vendus sont des LED. La source lumineuse est précisée sur <a href="{{ science_url }}">la page Science</a> chaque fois qu'elle change la lecture d'un résultat.
+|Ces résultats valent-ils pour un appareil domestique ?~Pas mécaniquement. Un protocole hospitalier, sur une zone délimitée et à une dose contrôlée, ne se convertit pas directement en minutes devant un panneau à la maison. C'est pourquoi nous publions longueur d'onde, irradiance et distance pour chaque appareil : c'est ce qui permet de comparer nos réglages à ceux des essais, plutôt que de nous croire.
+  {%- endcapture -%}
+{%- else -%}
+  {%- capture faq_raw -%}
+Does red light therapy actually work?~It depends on the domain, and the honest answer is that it is not the same everywhere. The evidence is strongest for pain, with 16 randomised trials and 820 patients gathered by a Lancet meta-analysis, and for muscle recovery. It is thinnest for sleep, where the trial cited covers twenty people.
+|What is the best-established result so far?~The reduction of neck pain. Sixteen randomised trials, 820 patients, a meta-analysis published by The Lancet in 2009, and adverse effects no different from placebo. It is the broadest evidence cited on this site, and it is what we lean on when someone asks whether this works.
+|How long before anything can be observed?~It depends what is measured. For performance, trials measure from the very next session, provided the light comes before the effort. For skin, the reference trial measures after 30 sessions; for hair, after 16 weeks at one session every other day. No result cited here is obtained in a week.
+|Does red light affect testosterone or longevity?~We do not claim so. Those claims circulate widely in this industry, but we have no evidence of a sufficient standard to repeat them, and claiming that a wellness device acts on a disease would be a therapeutic claim we have neither the right nor the data to make.
+|Do these studies report adverse effects?~The neck pain meta-analysis reports adverse effects no different from placebo, and the double-blind hair regrowth trial reports none at all. Those findings concern those specific trials, not general use. The precautions for use are detailed on <a href="{{ how_url }}">how it works</a>.
+|Do these trials use a laser or LEDs?~Both, depending on the paper, and the distinction matters: a large share of the historical literature is laser, while the devices sold are LED. The light source is stated on <a href="{{ science_url }}">the Science page</a> every time it changes how a result should be read.
+|Do these results hold for a home device?~Not mechanically. A hospital protocol, on a delimited area and at a controlled dose, does not convert directly into minutes in front of a panel at home. That is why we publish wavelength, irradiance and distance for every device: it is what lets you compare our settings against the trials, rather than take our word for it.
+  {%- endcapture -%}
+{%- endif -%}
+{%- assign faq_items = faq_raw | strip | split: '|' -%}
+
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Les questions qui reviennent{% else %}The questions that keep coming up{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Sept questions, et les chiffres qui vont avec.{%- else -%}Seven questions, and the figures that go with them.{%- endif -%}
+        </h2>
+      </div>
+    </div>
+
+    <div class="ln-faq ln-reveal">
+      {%- for faq_item in faq_items -%}
+        {%- assign faq_parts = faq_item | split: '~' -%}
+        <details class="ln-faq__item">
+          <summary class="ln-faq__q">{{ faq_parts[0] | strip }}</summary>
+          <p class="ln-faq__a">{{ faq_parts[1] | strip }}</p>
+        </details>
+      {%- endfor -%}
+    </div>
+
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Les neuf publications sont d&eacute;taill&eacute;es, dat&eacute;es et li&eacute;es &agrave; leur DOI
+        sur <a href="{{ science_url }}">la page Science</a>. Les longueurs d'onde employ&eacute;es dans ces
+        essais sont expliqu&eacute;es sur <a href="{{ wave_url }}">les longueurs d'onde</a>, et les
+        <a href="{{ protocols_url }}">protocoles</a> traduisent tout cela en s&eacute;ances
+        chiffr&eacute;es.
+      {%- else -%}
+        The nine papers are detailed, dated and linked to their DOI on
+        <a href="{{ science_url }}">the Science page</a>. The wavelengths used in those trials are explained
+        on <a href="{{ wave_url }}">wavelengths</a>, and the
+        <a href="{{ protocols_url }}">protocols</a> turn all of it into sessions with numbers.
+      {%- endif -%}
+    </p>
+  </div>
+</section>
+
 {% render 'learn-product-cta',
-   handles: 'antared-desk-red-light-therapy-panel,antared-pano-ultra,mask',
-   heading_fr: 'Le bon appareil est celui qui couvre la zone que vous visez.',
-   heading_en: 'The right device is the one that covers the area you are aiming at.',
-   text_fr: 'Une genouill&egrave;re pour un genou, un masque pour le visage, un panneau pour le corps. La zone d&#39;abord, la fiche technique ensuite.',
-   text_en: 'A knee wrap for a knee, a mask for the face, a panel for the body. The area first, the spec sheet second.'
+   handles: 'antared-desk-red-light-therapy-panel,mask,antared-pano-ultra',
+   heading_fr: 'Un r&eacute;sultat mesur&eacute; suppose une zone, une dose et un rythme.',
+   heading_en: 'A measured result assumes an area, a dose and a rhythm.',
+   text_fr: 'Les essais cit&eacute;s ici &eacute;clairent une zone pr&eacute;cise, pendant une dur&eacute;e pr&eacute;cise, plusieurs fois par semaine. Choisissez l&#39;appareil qui couvre votre zone et qui vous laisse tenir ce rythme &mdash; les param&egrave;tres sont sur chaque fiche.',
+   text_en: 'The trials cited here light one specific area, for a specific duration, several times a week. Pick the device that covers your area and lets you keep that rhythm &mdash; the parameters are on every product page.'
 %}
+
+{%- comment -%}
+  Donnees structurees : Article + BreadcrumbList + FAQPage, ce dernier
+  construit sur faq_items -- la meme source que les <details> visibles.
+
+  Aucun type medical (MedicalWebPage, MedicalTherapy, MedicalCondition, Drug) :
+  le principe II l'interdit et les appareils vendus sont des produits de
+  bien-etre. citation[] liste les neuf publications des fiches ci-dessus, avec
+  leur DOI. Une fiche ajoutee plus haut s'ajoute ici, sinon les deux listes
+  divergent.
+{%- endcomment -%}
+{%- liquid
+  if is_fr
+    assign sd_headline = 'Bienfaits de la luminotherapie rouge : neuf resultats, et leur niveau de preuve'
+    assign sd_desc = 'Ce que les essais ont mesure, domaine par domaine : douleur, recuperation, peau, cheveux, performance, sommeil. Chaque resultat avec sa taille d echantillon et son DOI.'
+    assign sd_home = 'Accueil'
+    assign sd_learn = 'Apprendre'
+    assign sd_page = 'Les bienfaits'
+  else
+    assign sd_headline = 'Red light therapy benefits: nine results, and their level of evidence'
+    assign sd_desc = 'What the trials measured, domain by domain: pain, recovery, skin, hair, performance, sleep. Every result with its sample size and its DOI.'
+    assign sd_home = 'Home'
+    assign sd_learn = 'Learn'
+    assign sd_page = 'Benefits'
+  endif
+
+  assign sd_home_url = request.origin | append: routes.root_url
+  assign sd_learn_url = request.origin | append: learn_url
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": {{ canonical_url | append: '#article' | json }},
+      "url": {{ canonical_url | json }},
+      "mainEntityOfPage": {{ canonical_url | json }},
+      "headline": {{ sd_headline | json }},
+      "description": {{ sd_desc | json }},
+      "inLanguage": {{ request.locale.iso_code | json }},
+      "dateModified": {{ page_updated | json }},
+      "author": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "about": [
+        { "@type": "Thing", "name": "Photobiomodulation" },
+        { "@type": "Thing", "name": {% if is_fr %}"Luminotherapie rouge"{% else %}"Red light therapy"{% endif %} },
+        { "@type": "Thing", "name": {% if is_fr %}"Recuperation musculaire"{% else %}"Muscle recovery"{% endif %} }
+      ],
+      "citation": [
+        { "@type": "ScholarlyArticle", "name": "Lanzafame RJ et al. Lasers Surg Med 2014;46(8):601-607", "identifier": "https://doi.org/10.1002/lsm.22277" },
+        { "@type": "ScholarlyArticle", "name": "Boyer D et al. Retina 2024;44(3):487-497", "identifier": "https://doi.org/10.1097/IAE.0000000000003980" },
+        { "@type": "ScholarlyArticle", "name": "Wunsch A, Matuschka K. Photomed Laser Surg 2014;32(2):93-100", "identifier": "https://doi.org/10.1089/pho.2013.3616" },
+        { "@type": "ScholarlyArticle", "name": "Chow RT et al. The Lancet 2009;374(9705):1897-1908", "identifier": "https://doi.org/10.1016/S0140-6736(09)61522-1" },
+        { "@type": "ScholarlyArticle", "name": "Zhao J et al. J Athl Train 2012;47(6):673-678", "identifier": "https://doi.org/10.4085/1062-6050-47.6.08" },
+        { "@type": "ScholarlyArticle", "name": "Leal-Junior ECP et al. Lasers Med Sci 2015;30(2):925-939", "identifier": "https://doi.org/10.1007/s10103-013-1465-4" },
+        { "@type": "ScholarlyArticle", "name": "Machado AF et al. Clin J Sport Med 2020;30(3):267-274", "identifier": "https://doi.org/10.1097/JSM.0000000000000606" },
+        { "@type": "ScholarlyArticle", "name": "Ahmad MA et al. Physiotherapy 2021;114:85-95", "identifier": "https://doi.org/10.1016/j.physio.2021.03.011" },
+        { "@type": "ScholarlyArticle", "name": "de Freitas LF, Hamblin MR. IEEE J Sel Top Quantum Electron 2016;22(3)", "identifier": "https://doi.org/10.1109/JSTQE.2016.2561201" }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ sd_home | json }}, "item": {{ sd_home_url | json }} },
+        { "@type": "ListItem", "position": 2, "name": {{ sd_learn | json }}, "item": {{ sd_learn_url | json }} },
+        { "@type": "ListItem", "position": 3, "name": {{ sd_page | json }}, "item": {{ canonical_url | json }} }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq_item in faq_items -%}
+          {%- assign faq_parts = faq_item | split: '~' -%}
+          {%- assign faq_q = faq_parts[0] | strip | strip_html | strip_newlines -%}
+          {%- assign faq_a = faq_parts[1] | strip | strip_html | strip_newlines -%}
+          {
+            "@type": "Question",
+            "name": {{ faq_q | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  ]
+}
+</script>
 
 {% schema %}
 {
