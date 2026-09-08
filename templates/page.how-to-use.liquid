@@ -1,12 +1,20 @@
 {%- comment -%}
-  Gabarit Learn > How to use.
+  Gabarit Learn > Mode d'emploi.
 
   A assigner dans l'admin Shopify a la page de handle `how-to-use`
   (Content > Pages > ... > Theme template : page.how-to-use).
 
-  Le contenu reste celui saisi dans l'admin : ce gabarit ne fait que le poser
-  dans la coquille Learn, avec la sous-navigation et le rappel produit, pour
-  que la page ne soit pas la seule de l'espace a rompre la continuite.
+  Le contenu est ecrit ici, bilingue, comme celui de page.faq.liquid et pour
+  la meme raison : le corps saisi dans l'admin etait identique en FR et en EN
+  (audit du 2026-08-21), ce qui servait au visiteur anglophone une page
+  francaise dans une coquille anglaise. `page.content` n'est donc plus rendu.
+  S'il reste du texte dans l'editeur, le vider en meme temps qu'on assigne le
+  gabarit.
+
+  Aucun chiffre de dose n'est ecrit ici en premier. Duree, frequence et
+  distance viennent de learn-how-it-works, qui fait foi pour tout le site ; les
+  longueurs d'onde de learn-wavelengths. Une valeur changee ici sans l'etre
+  la-bas cree une contradiction qu'aucun script ne voit.
 {%- endcomment -%}
 
 {%- liquid
@@ -14,6 +22,42 @@
   if request.locale.iso_code contains 'fr'
     assign is_fr = true
   endif
+
+  assign locale_root = routes.root_url
+  if locale_root == '/'
+    assign locale_root = ''
+  endif
+
+  assign url_how = pages['comment-ca-marche'].url
+  if url_how == blank
+    assign url_how = locale_root | append: '/pages/comment-ca-marche'
+  endif
+
+  assign url_wavelengths = pages['wavelengths'].url
+  if url_wavelengths == blank
+    assign url_wavelengths = locale_root | append: '/pages/wavelengths'
+  endif
+
+  assign url_protocols = pages['protocols'].url
+  if url_protocols == blank
+    assign url_protocols = locale_root | append: '/pages/protocols'
+  endif
+
+  assign url_faq = pages['faq'].url
+  if url_faq == blank
+    assign url_faq = locale_root | append: '/pages/faq'
+  endif
+
+  assign url_learn = pages['academy'].url
+  if url_learn == blank
+    assign url_learn = locale_root | append: '/pages/academy'
+  endif
+
+  comment
+    Date de derniere revision de fond : mention visible et dateModified du
+    JSON-LD, un seul endroit a changer.
+  endcomment
+  assign page_updated = '2026-09-09'
 -%}
 
 {{ 'learn.css' | asset_url | stylesheet_tag }}
@@ -22,22 +66,490 @@
 <div class="ln-page" data-learn>
 
   <section class="ln-hero">
-    <div class="ln-shell ln-shell--narrow">
+    <div class="ln-shell">
       <p class="ln-crumbs">
         <a href="{{ routes.root_url }}">{% if is_fr %}Accueil{% else %}Home{% endif %}</a>
         <span aria-hidden="true">/</span>
         {% if is_fr %}Apprendre{% else %}Learn{% endif %}
+        <span aria-hidden="true">/</span>
+        {% if is_fr %}Mode d'emploi{% else %}How to use{% endif %}
       </p>
-      <p class="ln-kicker">{% if is_fr %}Mode d'emploi{% else %}How to use{% endif %}</p>
-      <h1 class="ln-title">{% if is_fr %}Des s&eacute;ances courtes, confortables, et surtout r&eacute;p&eacute;tables.{% else %}Short, comfortable sessions &mdash; and above all repeatable ones.{% endif %}</h1>
+      <p class="ln-kicker">{% if is_fr %}La s&eacute;ance, en pratique{% else %}The session, in practice{% endif %}</p>
+      <h1 class="ln-title">
+        {%- if is_fr -%}
+          Des s&eacute;ances courtes, confortables, et surtout r&eacute;p&eacute;tables.
+        {%- else -%}
+          Short, comfortable sessions &mdash; and above all repeatable ones.
+        {%- endif -%}
+      </h1>
+      <p class="ln-copy">
+        {%- if is_fr -%}
+          Il n'y a pas de technique &agrave; ma&icirc;triser. Il y a une dur&eacute;e, une distance, une
+          fr&eacute;quence, et une seule difficult&eacute; r&eacute;elle : tenir le rythme quand la
+          nouveaut&eacute; est pass&eacute;e.
+        {%- else -%}
+          There is no technique to master. There is a duration, a distance, a frequency &mdash; and one
+          real difficulty: keeping the rhythm once the novelty has worn off.
+        {%- endif -%}
+      </p>
+
+      <div class="ln-hero__facts" aria-label="{% if is_fr %}Rep&egrave;res{% else %}Key figures{% endif %}">
+        <div class="ln-hero__fact">
+          <strong>10&ndash;20</strong>
+          <span>{% if is_fr %}minutes par zone, la dur&eacute;e sur laquelle les protocoles convergent{% else %}minutes per area, the duration protocols converge on{% endif %}</span>
+        </div>
+        <div class="ln-hero__fact">
+          <strong>3&ndash;5</strong>
+          <span>{% if is_fr %}s&eacute;ances par semaine, tenues sur plusieurs semaines{% else %}sessions a week, sustained over several weeks{% endif %}</span>
+        </div>
+        <div class="ln-hero__fact">
+          <strong>15&ndash;50</strong>
+          <span>{% if is_fr %}cm d'un panneau, selon son irradiance annonc&eacute;e{% else %}cm from a panel, depending on its stated irradiance{% endif %}</span>
+        </div>
+        <div class="ln-hero__fact">
+          <strong>0</strong>
+          <span>{% if is_fr %}pr&eacute;paration : peau nue, appareil allum&eacute;, c'est tout{% else %}preparation: bare skin, device on, that is all{% endif %}</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="ln-section">
+  {%- comment -%}
+    Resume de tete. Six faits autoportants, tous repris de learn-how-it-works
+    et learn-wavelengths, qui font foi. Si un chiffre change la-bas, il change
+    ici.
+  {%- endcomment -%}
+  <section class="ln-section ln-section--tight">
     <div class="ln-shell ln-shell--narrow">
-      <div class="ln-prose">{{ page.content }}</div>
+      <div class="ln-note ln-reveal">
+        <h2 class="ln-note__title">{% if is_fr %}En r&eacute;sum&eacute;{% else %}In short{% endif %}</h2>
+        <p class="ln-copy">
+          {%- if is_fr -%}
+            Peau nue, appareil &agrave; la bonne distance, minuteur lanc&eacute;, dix &agrave; vingt
+            minutes. R&eacute;p&eacute;t&eacute; trois &agrave; cinq fois par semaine, &agrave; un moment
+            que vous tiendrez. Tout le reste &mdash; l'heure de la journ&eacute;e, la marque du minuteur,
+            l'ordre des zones &mdash; est secondaire.
+          {%- else -%}
+            Bare skin, device at the right distance, timer running, ten to twenty minutes. Repeated three
+            to five times a week, at a moment you will actually keep. Everything else &mdash; the time of
+            day, the timer you use, the order of areas &mdash; is secondary.
+          {%- endif -%}
+        </p>
+        <ul>
+          <li>
+            {%- if is_fr -%}
+              <strong>Sur peau nue.</strong> La plupart des tissus absorbent ou dispersent une partie de la
+              lumi&egrave;re : la dose re&ccedil;ue devient impossible &agrave; estimer, ce qui est
+              pr&eacute;cis&eacute;ment ce qu'on cherche &agrave; contr&ocirc;ler.
+            {%- else -%}
+              <strong>On bare skin.</strong> Most fabrics absorb or scatter part of the light: the dose you
+              receive becomes impossible to estimate, which is precisely what you are trying to control.
+            {%- endif -%}
+          </li>
+          <li>
+            {%- if is_fr -%}
+              <strong>10 &agrave; 20 minutes par zone</strong>, pas davantage. La r&eacute;ponse &agrave; la
+              dose est biphasique : doubler la s&eacute;ance ne double pas le r&eacute;sultat et peut le
+              r&eacute;duire.
+            {%- else -%}
+              <strong>10 to 20 minutes per area</strong>, no more. The dose response is biphasic: doubling
+              the session does not double the result and may reduce it.
+            {%- endif -%}
+          </li>
+          <li>
+            {%- if is_fr -%}
+              <strong>3 &agrave; 5 fois par semaine</strong>, sur plusieurs semaines. Les essais sur la peau
+              mesurent apr&egrave;s trente s&eacute;ances, ceux sur les cheveux &agrave; seize semaines.
+            {%- else -%}
+              <strong>3 to 5 times a week</strong>, over several weeks. Skin trials measure after thirty
+              sessions, hair trials at sixteen weeks.
+            {%- endif -%}
+          </li>
+          <li>
+            {%- if is_fr -%}
+              <strong>15 &agrave; 50 cm d'un panneau</strong>, selon l'irradiance qu'il annonce &mdash; et
+              cette irradiance doit &ecirc;tre donn&eacute;e &agrave; une distance pr&eacute;cis&eacute;e.
+              Un appareil port&eacute; supprime la question.
+            {%- else -%}
+              <strong>15 to 50 cm from a panel</strong>, depending on the irradiance it states &mdash; and
+              that irradiance must be given at a stated distance. A worn device removes the question.
+            {%- endif -%}
+          </li>
+          <li>
+            {%- if is_fr -%}
+              <strong>Ne fixez pas les LED.</strong> La lumi&egrave;re est &eacute;blouissante dans le rouge
+              visible et invisible dans le proche infrarouge : le r&eacute;flexe de clignement ne vous
+              prot&egrave;ge pas. Fermez les yeux, ou utilisez les lunettes fournies.
+            {%- else -%}
+              <strong>Do not stare into the LEDs.</strong> The light is dazzling in visible red and
+              invisible in the near-infrared: the blink reflex does not protect you. Close your eyes, or use
+              the goggles supplied.
+            {%- endif -%}
+          </li>
+          <li>
+            {%- if is_fr -%}
+              <strong>La r&eacute;gularit&eacute; d&eacute;cide de tout le reste.</strong> Un appareil que
+              vous n'utilisez pas a une efficacit&eacute; de z&eacute;ro, quels que soient ses
+              nanom&egrave;tres.
+            {%- else -%}
+              <strong>Consistency decides everything else.</strong> A device you do not use has an efficacy
+              of zero, whatever its nanometres.
+            {%- endif -%}
+          </li>
+        </ul>
+        <p class="ln-study__ref">
+          {%- if is_fr -%}
+            Page revue le {{ page_updated | date: '%d/%m/%Y' }}. Ces rep&egrave;res viennent de
+            <a href="{{ url_how }}">comment &ccedil;a marche</a>, qui fait foi. Les appareils Antared sont
+            des produits de bien-&ecirc;tre : ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent
+            aucune maladie.
+          {%- else -%}
+            Page reviewed on {{ page_updated | date: '%d/%m/%Y' }}. These figures come from
+            <a href="{{ url_how }}">how it works</a>, which is authoritative. Antared devices are wellness
+            products: they do not diagnose, treat or cure any disease.
+          {%- endif -%}
+        </p>
+      </div>
     </div>
   </section>
 
-  {% render 'learn-product-cta', handles: 'antared-desk-red-light-therapy-panel,mask,cap' %}
+  {%- comment -%} La seance, en cinq etapes. {%- endcomment -%}
+  <section class="ln-section">
+    <div class="ln-shell">
+      <div class="ln-head ln-reveal">
+        <div>
+          <p class="ln-kicker">{% if is_fr %}Une s&eacute;ance{% else %}One session{% endif %}</p>
+          <h2 class="ln-title ln-title--wide">
+            {%- if is_fr -%}Cinq &eacute;tapes, dont trois durent dix secondes.{%- else -%}Five steps, three of which take ten seconds.{%- endif -%}
+          </h2>
+        </div>
+        <div class="ln-head__aside">
+          <p>
+            {%- if is_fr -%}
+              La seule &eacute;tape qui demande une d&eacute;cision est la premi&egrave;re : choisir le
+              moment. C'est aussi la seule qui d&eacute;cide si vous serez encore l&agrave; dans six
+              semaines.
+            {%- else -%}
+              The only step that requires a decision is the first: choosing the moment. It is also the only
+              one that decides whether you will still be here in six weeks.
+            {%- endif -%}
+          </p>
+          <a class="ln-link" href="{{ url_protocols }}">
+            {% if is_fr %}Voir les sept protocoles{% else %}See the seven protocols{% endif %} <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="ln-steps">
+        <article class="ln-step ln-reveal">
+          <h3 class="ln-step__title">{% if is_fr %}1. Choisissez un moment fixe{% else %}1. Pick a fixed moment{% endif %}</h3>
+          <p class="ln-step__text">
+            {%- if is_fr -%}
+              Avant la douche, pendant le caf&eacute;, apr&egrave;s l'entra&icirc;nement. Un rendez-vous
+              accroch&eacute; &agrave; une habitude existante tient bien mieux qu'un rendez-vous
+              ajout&eacute; &agrave; la journ&eacute;e. C'est la seule d&eacute;cision qui compte vraiment.
+            {%- else -%}
+              Before the shower, with your coffee, after training. A slot attached to an existing habit
+              holds far better than one added to the day. It is the only decision that really matters.
+            {%- endif -%}
+          </p>
+        </article>
+
+        <article class="ln-step ln-reveal">
+          <h3 class="ln-step__title">{% if is_fr %}2. D&eacute;gagez la zone{% else %}2. Expose the area{% endif %}</h3>
+          <p class="ln-step__text">
+            {%- if is_fr -%}
+              Peau nue, propre et s&egrave;che. Ni cr&egrave;me &eacute;paisse, ni maquillage, ni
+              v&ecirc;tement entre la LED et la peau : tout ce qui s'interpose absorbe une partie de la
+              lumi&egrave;re et rend la dose incalculable.
+            {%- else -%}
+              Bare skin, clean and dry. No thick cream, no make-up, no clothing between the LED and the
+              skin: anything in between absorbs part of the light and makes the dose impossible to work out.
+            {%- endif -%}
+          </p>
+        </article>
+
+        <article class="ln-step ln-reveal">
+          <h3 class="ln-step__title">{% if is_fr %}3. R&eacute;glez la distance{% else %}3. Set the distance{% endif %}</h3>
+          <p class="ln-step__text">
+            {%- if is_fr -%}
+              Pour un panneau, 15 &agrave; 50 cm selon l'irradiance annonc&eacute;e par le fabricant. Plus
+              pr&egrave;s n'est pas mieux : c'est plus chaud, et cela r&eacute;duit la surface
+              &eacute;clair&eacute;e. Un appareil port&eacute; se pose simplement au contact.
+            {%- else -%}
+              For a panel, 15 to 50 cm depending on the irradiance the manufacturer states. Closer is not
+              better: it is warmer, and it shrinks the area lit. A worn device simply sits in contact.
+            {%- endif -%}
+          </p>
+        </article>
+
+        <article class="ln-step ln-reveal">
+          <h3 class="ln-step__title">{% if is_fr %}4. Lancez le minuteur{% else %}4. Start the timer{% endif %}</h3>
+          <p class="ln-step__text">
+            {%- if is_fr -%}
+              10 &agrave; 20 minutes par zone. Le minuteur n'est pas un d&eacute;tail de confort : sans lui,
+              une s&eacute;ance d&eacute;rive vers quarante minutes, et la dose sort de la fen&ecirc;tre
+              utile. Fermez les yeux ou mettez les lunettes.
+            {%- else -%}
+              10 to 20 minutes per area. The timer is not a comfort detail: without it, a session drifts to
+              forty minutes and the dose leaves the useful window. Close your eyes or put the goggles on.
+            {%- endif -%}
+          </p>
+        </article>
+
+        <article class="ln-step ln-reveal">
+          <h3 class="ln-step__title">{% if is_fr %}5. Recommencez{% else %}5. Do it again{% endif %}</h3>
+          <p class="ln-step__text">
+            {%- if is_fr -%}
+              Trois &agrave; cinq fois par semaine. Rien de ce qui a &eacute;t&eacute; mesur&eacute; en essai
+              ne s'obtient en une s&eacute;ance : les protocoles publi&eacute;s reposent tous sur des
+              s&eacute;ances r&eacute;p&eacute;t&eacute;es pendant plusieurs semaines.
+            {%- else -%}
+              Three to five times a week. Nothing measured in a trial is obtained in one session: the
+              published protocols all rely on repeated sessions over several weeks.
+            {%- endif -%}
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} Par format d'appareil. {%- endcomment -%}
+  <section class="ln-section ln-section--soft">
+    <div class="ln-shell">
+      <div class="ln-head ln-reveal">
+        <div>
+          <p class="ln-kicker">{% if is_fr %}Par format{% else %}By format{% endif %}</p>
+          <h2 class="ln-title ln-title--wide">
+            {%- if is_fr -%}Ce qui change d'un appareil &agrave; l'autre.{%- else -%}What changes from one device to the next.{%- endif -%}
+          </h2>
+        </div>
+        <div class="ln-head__aside">
+          <p>
+            {%- if is_fr -%}
+              La dur&eacute;e et la fr&eacute;quence ne changent pas. Ce qui change, c'est la distance, la
+              surface couverte, et ce que vous pouvez faire d'autre pendant la s&eacute;ance.
+            {%- else -%}
+              Duration and frequency do not change. What changes is the distance, the area covered, and what
+              else you can do during the session.
+            {%- endif -%}
+          </p>
+          <a class="ln-link" href="{{ url_wavelengths }}">
+            {% if is_fr %}Quelle longueur d'onde sur quel appareil{% else %}Which wavelength on which device{% endif %} <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="ln-steps">
+        <article class="ln-step ln-reveal">
+          <h3 class="ln-step__title">{% if is_fr %}Panneau pos&eacute; &mdash; DESK{% else %}Desktop panel &mdash; DESK{% endif %}</h3>
+          <p class="ln-step__text">
+            {%- if is_fr -%}
+              &Agrave; 15&ndash;50 cm, face &agrave; la zone. Il &eacute;claire une zone &agrave; la fois :
+              visage, nuque, avant-bras, genou. Ses sept canaux se pilotent s&eacute;par&eacute;ment, ce qui
+              en fait le format le plus souple pour tester une routine avant de l'&eacute;tendre.
+            {%- else -%}
+              At 15&ndash;50 cm, facing the area. It lights one area at a time: face, neck, forearm, knee.
+              Its seven channels are controlled separately, which makes it the most flexible format for
+              trying a routine before extending it.
+            {%- endif -%}
+          </p>
+        </article>
+
+        <article class="ln-step ln-reveal">
+          <h3 class="ln-step__title">{% if is_fr %}Grand panneau &mdash; PANO{% else %}Large panel &mdash; PANO{% endif %}</h3>
+          <p class="ln-step__text">
+            {%- if is_fr -%}
+              Debout ou allong&eacute;, &agrave; 30&ndash;50 cm. Il couvre une face du corps en une
+              s&eacute;ance : c'est le format qui &eacute;vite d'encha&icirc;ner quatre zones de dix minutes.
+              Retournez-vous &agrave; mi-parcours pour traiter l'autre face.
+            {%- else -%}
+              Standing or lying down, at 30&ndash;50 cm. It covers one side of the body in a single session:
+              the format that saves you chaining four ten-minute areas. Turn over halfway to treat the other
+              side.
+            {%- endif -%}
+          </p>
+        </article>
+
+        <article class="ln-step ln-reveal">
+          <h3 class="ln-step__title">{% if is_fr %}Appareil port&eacute; &mdash; masque, casquette{% else %}Worn device &mdash; mask, cap{% endif %}</h3>
+          <p class="ln-step__text">
+            {%- if is_fr -%}
+              Au contact de la peau : la distance dispara&icirc;t comme variable, et avec elle la principale
+              source d'erreur de dose. Les mains restent libres, ce qui est la vraie raison de choisir ce
+              format &mdash; une s&eacute;ance qu'on peut faire en marchant se tient plus longtemps.
+            {%- else -%}
+              In contact with the skin: distance disappears as a variable, and with it the main source of
+              dose error. Your hands stay free, which is the real reason to pick this format &mdash; a
+              session you can do while walking around gets kept for longer.
+            {%- endif -%}
+          </p>
+        </article>
+
+        <article class="ln-step ln-reveal">
+          <h3 class="ln-step__title">{% if is_fr %}D&ocirc;me &mdash; Sauna Dome{% else %}Dome &mdash; Sauna Dome{% endif %}</h3>
+          <p class="ln-step__text">
+            {%- if is_fr -%}
+              Allong&eacute;, l'appareil envelopp&eacute; autour du corps. C'est le seul format de la gamme
+              qui ajoute une chaleur infrarouge r&eacute;glable : elle est une fonction &agrave; part
+              enti&egrave;re, pas un effet secondaire, et elle demande de s'hydrater comme pour un sauna.
+            {%- else -%}
+              Lying down, the device wrapped around the body. It is the only format in the range that adds
+              adjustable infrared heat: that is a feature in its own right, not a side effect, and it calls
+              for drinking water as you would for a sauna.
+            {%- endif -%}
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%}
+    Les erreurs frequentes. C'est le bloc le plus utile de la page et le plus
+    rare dans le secteur : il coute une vente a court terme et en sauve une a
+    six mois, quand l'appareil est encore utilise.
+  {%- endcomment -%}
+  <section class="ln-section ln-section--tight">
+    <div class="ln-shell ln-shell--narrow">
+      <div class="ln-note ln-reveal">
+        <h2 class="ln-note__title">
+          {%- if is_fr -%}Les cinq erreurs qui reviennent{%- else -%}The five mistakes that keep coming back{%- endif -%}
+        </h2>
+        <ul>
+          <li>
+            {%- if is_fr -%}
+              <strong>Allonger la s&eacute;ance pour aller plus vite.</strong> C'est la plus commune, et
+              c'est celle qui va contre la physique : au-del&agrave; de la dose optimale, l'effet redescend.
+            {%- else -%}
+              <strong>Lengthening the session to speed things up.</strong> The most common one, and the one
+              that works against the physics: past the optimal dose, the effect declines.
+            {%- endif -%}
+          </li>
+          <li>
+            {%- if is_fr -%}
+              <strong>Coller l'appareil &agrave; la peau parce que &laquo; &ccedil;a chauffe, donc &ccedil;a
+              marche &raquo;.</strong> La chaleur vient des LED, pas de l'effet recherch&eacute;. Trop
+              pr&egrave;s, la surface &eacute;clair&eacute;e r&eacute;tr&eacute;cit.
+            {%- else -%}
+              <strong>Pressing the device against the skin because &ldquo;it is warm, so it is
+              working&rdquo;.</strong> The warmth comes from the LEDs, not from the effect you are after.
+              Too close, and the area lit shrinks.
+            {%- endif -%}
+          </li>
+          <li>
+            {%- if is_fr -%}
+              <strong>Juger apr&egrave;s une semaine.</strong> Aucun r&eacute;sultat mesur&eacute; en essai
+              n'appara&icirc;t en sept jours sur la peau ou les cheveux. Jugez sur plusieurs semaines, avec
+              le m&ecirc;me rendez-vous.
+            {%- else -%}
+              <strong>Judging after a week.</strong> No result measured in a trial appears within seven days
+              on skin or hair. Judge over several weeks, keeping the same slot.
+            {%- endif -%}
+          </li>
+          <li>
+            {%- if is_fr -%}
+              <strong>Changer de zone &agrave; chaque s&eacute;ance.</strong> Trois zones survol&eacute;es
+              valent moins qu'une zone tenue. Choisissez-en une, gardez-la plusieurs semaines, puis
+              ajoutez-en une autre.
+            {%- else -%}
+              <strong>Switching areas every session.</strong> Three areas skimmed are worth less than one
+              area kept. Pick one, hold it for several weeks, then add another.
+            {%- endif -%}
+          </li>
+          <li>
+            {%- if is_fr -%}
+              <strong>Regarder les LED.</strong> Elles sont &eacute;blouissantes dans le rouge et invisibles
+              dans le proche infrarouge : rien ne vous avertit. Yeux ferm&eacute;s, ou lunettes.
+            {%- else -%}
+              <strong>Looking into the LEDs.</strong> They are dazzling in the red and invisible in the
+              near-infrared: nothing warns you. Eyes closed, or goggles on.
+            {%- endif -%}
+          </li>
+        </ul>
+        <p class="ln-study__ref">
+          {%- if is_fr -%}
+            Les pr&eacute;cautions m&eacute;dicales &mdash; grossesse, traitement photosensibilisant,
+            &eacute;pilepsie photosensible, l&eacute;sion cutan&eacute;e non diagnostiqu&eacute;e &mdash;
+            sont d&eacute;taill&eacute;es sur <a href="{{ url_how }}">comment &ccedil;a marche</a>. Les
+            questions d'essai, de garantie et de certification sont sur la
+            <a href="{{ url_faq }}">FAQ</a>.
+          {%- else -%}
+            The medical precautions &mdash; pregnancy, photosensitising medication, photosensitive epilepsy,
+            an undiagnosed skin lesion &mdash; are detailed on <a href="{{ url_how }}">how it works</a>.
+            Questions about the trial, warranty and certification are on the <a href="{{ url_faq }}">FAQ</a>.
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {% render 'learn-product-cta',
+     handles: 'antared-desk-red-light-therapy-panel,mask,cap',
+     heading_fr: 'Le meilleur appareil est celui que vous allumerez encore en novembre.',
+     heading_en: 'The best device is the one you will still switch on in November.',
+     text_fr: 'Dix &agrave; vingt minutes, trois &agrave; cinq fois par semaine : la question n&#39;est pas la puissance, c&#39;est de savoir quel format s&#39;ins&egrave;re dans votre semaine sans que vous ayez &agrave; y penser.',
+     text_en: 'Ten to twenty minutes, three to five times a week: the question is not power, it is which format slots into your week without you having to think about it.'
+  %}
 </div>
+
+{%- comment -%}
+  Donnees structurees : Article + BreadcrumbList.
+
+  Pas de HowTo : le rich result correspondant a ete retire des resultats de
+  recherche Google en 2023, et le type appliquerait a une routine de
+  bien-etre un balisage de mode operatoire. Aucun type medical non plus
+  (MedicalWebPage, MedicalTherapy, Drug) : le principe II l'interdit.
+{%- endcomment -%}
+{%- liquid
+  if is_fr
+    assign sd_headline = 'Mode d emploi : comment utiliser un appareil de luminotherapie rouge'
+    assign sd_desc = 'La seance en cinq etapes, ce qui change d un format a l autre, et les cinq erreurs qui reviennent. Duree, distance et frequence, sur peau nue.'
+    assign sd_home = 'Accueil'
+    assign sd_learn = 'Apprendre'
+    assign sd_page = 'Mode d emploi'
+  else
+    assign sd_headline = 'How to use a red light therapy device'
+    assign sd_desc = 'The session in five steps, what changes from one format to the next, and the five mistakes that keep coming back. Duration, distance and frequency, on bare skin.'
+    assign sd_home = 'Home'
+    assign sd_learn = 'Learn'
+    assign sd_page = 'How to use'
+  endif
+
+  assign sd_home_url = request.origin | append: routes.root_url
+  assign sd_learn_url = request.origin | append: url_learn
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": {{ canonical_url | append: '#article' | json }},
+      "url": {{ canonical_url | json }},
+      "mainEntityOfPage": {{ canonical_url | json }},
+      "headline": {{ sd_headline | json }},
+      "description": {{ sd_desc | json }},
+      "inLanguage": {{ request.locale.iso_code | json }},
+      "dateModified": {{ page_updated | json }},
+      "author": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ sd_home | json }}, "item": {{ sd_home_url | json }} },
+        { "@type": "ListItem", "position": 2, "name": {{ sd_learn | json }}, "item": {{ sd_learn_url | json }} },
+        { "@type": "ListItem", "position": 3, "name": {{ sd_page | json }}, "item": {{ canonical_url | json }} }
+      ]
+    }
+  ]
+}
+</script>
