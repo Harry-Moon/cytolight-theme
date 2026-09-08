@@ -226,16 +226,15 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 .nav-collapse-ready .site-header__nav {
   transition: max-height .26s cubic-bezier(.2, .8, .2, 1), opacity .2s ease, border-color .26s ease;
 }
-.site-header__proof {
-  display: flex; align-items: center; justify-content: center; gap: 18px;
-  padding: 9px 16px; background: var(--color-foreground); color: #fff;
-  font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-}
-.site-header__proof span:not(:last-child) { position: relative; padding-right: 18px; }
-.site-header__proof span:not(:last-child)::after {
-  content: ''; position: absolute; top: 50%; right: 0; width: 3px; height: 3px;
-  border-radius: 50%; background: rgba(255,255,255,.5); transform: translateY(-50%);
-}
+/*
+ * Le bandeau de reassurance qui coiffait le header (.site-header__proof) a ete
+ * retire : plus de bande noire au-dessus de la barre logo, qui remonte donc en
+ * haut de page. Aucune hauteur n'etait compensee ailleurs — le header est
+ * `position: sticky; top: 0` sur son enveloppe de section, et theme.js mesure
+ * la barre pour publier --header-h. Les replis ecrits en dur (72px, 88px) ne
+ * servent que si le script ne tourne pas ; ils restent surdimensionnes, ce qui
+ * est le bon sens de l'erreur pour un decalage.
+ */
 .site-header {
   /* Repere de positionnement des panneaux de mega-menu, qui s'etendent sur
      toute la largeur plutot que sous leur seul onglet. */
@@ -292,6 +291,81 @@ h3 { font-size: clamp(1.25rem, 2vw, 1.6rem); }
 }
 .site-header__logo { justify-self: center; }
 .site-header__logo img { display: block; max-height: 52px; width: auto; object-fit: contain; }
+
+/*
+ * Etat &laquo; deplie &raquo; et etat compact.
+ *
+ * L'etat ou la rangee d'onglets est visible, c'est l'etat PAR DEFAUT de ce
+ * header : la rangee est entiere en haut de page et ne se retire qu'apres
+ * 64px de defilement vers le bas, quand theme.js pose .is-nav-hidden sur
+ * #shopify-section-header. Deplie se lit donc `:not(.is-nav-hidden)`, et non
+ * l'inverse — le nommage du code dit ce qui est masque, pas ce qui est ouvert.
+ *
+ * Deux choses basculent avec lui, et une seule fois chacune :
+ *   1. le logo est legerement agrandi, en transform seule. Une hauteur
+ *      animee changerait la hauteur de la barre, donc --header-h, donc la
+ *      position de tout ce qui se cale dessous (colonne galerie de la fiche
+ *      produit, recapitulatif du panier). scale() ne touche pas au flux : les
+ *      utilitaires de part et d'autre ne bougent pas d'un pixel.
+ *   2. &laquo; Nous contacter &raquo; se reduit a son icone telephone.
+ *
+ * Les deux ne valent qu'au-dessus de 1300px, la ou la rangee d'onglets existe
+ * (en dessous elle est en display:none, et les liens utilitaires en toutes
+ * lettres sont deja masques au profit du tiroir). Sous ce seuil, il n'y a pas
+ * d'etat deplie a signaler.
+ */
+@media (min-width: 1301px) {
+  .site-header__logo img {
+    transform: scale(1.06);
+    transform-origin: center center;
+    transition: transform .22s ease-out;
+  }
+  #shopify-section-header.is-nav-hidden .site-header__logo img {
+    transform: scale(1);
+  }
+
+  /*
+   * Le libelle et l'icone se remplacent l'un l'autre dans le meme lien : l'un
+   * se replie pendant que l'autre s'ouvre. max-width plutot que width parce
+   * que le texte doit garder sa largeur naturelle une fois deploye, et
+   * overflow: hidden pour que le repli le rogne au lieu de le faire deborder.
+   * Le libelle reste dans l'arbre d'accessibilite — c'est le nom du lien.
+   */
+  .site-header__contact { display: inline-flex; align-items: center; }
+  .site-header__contact-label,
+  .site-header__contact-icon {
+    display: inline-flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: max-width .22s ease-out, opacity .18s ease-out, transform .22s ease-out;
+  }
+  .site-header__contact-icon svg { flex: none; }
+
+  /* Deplie : icone seule. */
+  .site-header__contact-label { max-width: 0; opacity: 0; transform: scale(.94); }
+  .site-header__contact-icon { max-width: 22px; opacity: 1; transform: scale(1); }
+
+  /* Compact : le libelle entier, la rangee d'onglets ayant libere la place. */
+  #shopify-section-header.is-nav-hidden .site-header__contact-label {
+    max-width: 16em; opacity: 1; transform: scale(1);
+  }
+  #shopify-section-header.is-nav-hidden .site-header__contact-icon {
+    max-width: 0; opacity: 0; transform: scale(.94);
+  }
+}
+/*
+ * Sous mouvement reduit, theme.js ne pose jamais .is-nav-hidden : la rangee
+ * reste depliee en permanence. Le logo garde donc sa taille nominale plutot
+ * qu'un agrandissement fige et sans objet, et rien ne transitionne. Le lien
+ * de contact, lui, garde son etat deplie — l'icone seule — puisque c'est le
+ * seul etat que la page connaitra.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .site-header__logo img { transform: none; transition: none; }
+  .site-header__contact-label,
+  .site-header__contact-icon { transition: none; }
+}
 
 /*
  * Seule cette rangee se retire au defilement vers le bas et revient des

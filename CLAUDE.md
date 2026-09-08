@@ -326,8 +326,8 @@ Le symptôme est silencieux : la règle est bien appliquée, elle ne produit sim
 
 `theme.js` mesure le header et publie sa hauteur dans `--header-h`, dont se servent la colonne galerie
 de la fiche produit et le récapitulatif du panier. Le même script pose `.is-hidden` sur la rangée de
-menu — `.site-header__nav`, et elle seule : le bandeau de réassurance et la barre logo restent en
-place. Toujours garder une valeur de repli : sans le script, rien ne doit bouger.
+menu — `.site-header__nav`, et elle seule : la barre logo reste en place. Toujours garder une
+valeur de repli : sans le script, rien ne doit bouger.
 
 L'état est **binaire**, jamais intermédiaire : la rangée est entière ou masquée, et il faut franchir un
 seuil pour basculer (64 px cumulés vers le bas pour masquer, 24 px vers le haut pour revenir, chaque
@@ -581,9 +581,31 @@ Trois réglages tiennent ensemble et se cassent facilement l'un l'autre :
 - **Le padding horizontal se réécrit, il ne se supprime pas.** `.container` en pose 20 ; la règle
   mobile posait `padding: 11px 0`, ce qui les annulait et collait le burger et le panier aux bords
   de l'écran. Elle pose désormais `11px 16px`.
-- **Le bandeau de réassurance disparaît sous 800 px.** Il n'y tenait pas sur une ligne : il devenait
-  une bande noire à défilement horizontal dont le second argument restait hors champ. Les mêmes
-  engagements sont repris dans le tiroir, sur la fiche produit et dans le panier.
+- **Le bandeau de réassurance a été retiré.** La bande noire « Essai 14 j / Garantie 2 ans »
+  (`.site-header__proof`) qui coiffait le header n'existe plus : la barre logo est en haut de page.
+  Rien ne compensait sa hauteur en CSS — `--header-h` est mesurée par `theme.js` et suit d'elle-même.
+  Les mêmes engagements restent repris dans le tiroir, sur la fiche produit et dans le panier.
+
+**Les deux états de la barre.** L'état où la rangée d'onglets est visible est l'état **par défaut**,
+celui du haut de page : elle ne se retire qu'après 64 px de défilement vers le bas, quand `theme.js`
+pose `.is-nav-hidden` sur `#shopify-section-header`. « Déplié » se lit donc `:not(.is-nav-hidden)`,
+et non l'inverse — le nommage du code dit ce qui est masqué, pas ce qui est ouvert. Deux choses
+basculent avec lui, au-dessus de 1300 px seulement (en dessous la rangée est en `display: none` et
+les liens utilitaires en toutes lettres sont déjà masqués au profit du tiroir) :
+
+1. **Le logo est agrandi de 6 %, en `transform` seule.** Une hauteur animée changerait la hauteur de
+   la barre, donc `--header-h`, donc la position de tout ce qui se cale dessous — colonne galerie de
+   la fiche produit, récapitulatif du panier. `scale()` ne touche pas au flux.
+2. **« Nous contacter » se réduit à son icône téléphone** (`{% render 'icon', name: 'phone' %}`), et
+   revient en toutes lettres dans l'état compact, la rangée d'onglets ayant libéré la place. Le
+   libellé reste dans le DOM dans les deux états : c'est lui qui donne son nom accessible au lien,
+   et la commande vocale « cliquer sur Nous contacter » continue de trouver la cible une fois le
+   texte replié (WCAG 2.5.3). Le remplacer par un `aria-label` ferait doublon ; le masquer en
+   `display: none` le retirerait de l'arbre. La destination ne change pas d'un état à l'autre.
+
+Sous `prefers-reduced-motion: reduce`, `theme.js` ne pose jamais `.is-nav-hidden` : la barre reste
+dépliée en permanence. Le logo garde donc sa taille nominale plutôt qu'un agrandissement figé et
+sans objet, et rien ne transitionne.
 
 ### Sélecteur de langue
 
