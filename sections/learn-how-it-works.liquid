@@ -39,6 +39,28 @@
   if faq_url == blank
     assign faq_url = locale_root | append: '/pages/faq'
   endif
+
+  assign learn_url = pages['academy'].url
+  if learn_url == blank
+    assign learn_url = locale_root | append: '/pages/academy'
+  endif
+
+  assign benefits_url = pages['benefits'].url
+  if benefits_url == blank
+    assign benefits_url = locale_root | append: '/pages/benefits'
+  endif
+
+  assign protocols_url = pages['protocols'].url
+  if protocols_url == blank
+    assign protocols_url = locale_root | append: '/pages/protocols'
+  endif
+
+  comment
+    Date de derniere revision de fond, comme sur learn-science : elle alimente
+    a la fois la mention visible du resume et le dateModified du JSON-LD. La
+    changer quand le contenu change, pas a chaque commit.
+  endcomment
+  assign page_updated = '2026-09-09'
 -%}
 
 <section class="ln-hero">
@@ -87,6 +109,109 @@
         <strong>10&ndash;20</strong>
         <span>{% if is_fr %}minutes par zone, la dur&eacute;e sur laquelle les protocoles convergent{% else %}minutes per area, the duration protocols converge on{% endif %}</span>
       </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Resume de tete. Meme role que sur learn-science : repondre a la question du
+  titre en une phrase, puis en six faits autoportants -- chacun doit rester
+  vrai et comprehensible sorti de la page, parce que c'est sous cette forme
+  qu'un moteur de reponse le citera.
+
+  Aucun fait nouveau ici : ce bloc resume la page. Si un chiffre change plus
+  bas, il change ici. Et comme cette page fait foi sur la dose pour tout le
+  site, un chiffre change ici doit etre repercute sur les pages Protocoles et
+  Par objectif, qui le citent sans jamais l'ecrire en premier.
+{%- endcomment -%}
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">{% if is_fr %}En r&eacute;sum&eacute;{% else %}In short{% endif %}</h2>
+      <p class="ln-copy">
+        {%- if is_fr -%}
+          La luminoth&eacute;rapie rouge n'est ni de la chaleur ni des ultraviolets. Entre 600 et
+          950&nbsp;nm, la lumi&egrave;re traverse le tissu vivant, et une enzyme mitochondriale &mdash; la
+          cytochrome c oxydase &mdash; l'absorbe. Tout le reste en d&eacute;coule. La dose compte plus que
+          la puissance, et la r&eacute;gularit&eacute; compte plus que les deux.
+        {%- else -%}
+          Red light therapy is neither heat nor ultraviolet. Between 600 and 950&nbsp;nm, light passes
+          through living tissue and a mitochondrial enzyme &mdash; cytochrome c oxidase &mdash; absorbs it.
+          Everything else follows from that. Dose matters more than power, and consistency matters more
+          than either.
+        {%- endif -%}
+      </p>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            La fen&ecirc;tre utile va de <strong>600 &agrave; 950&nbsp;nm</strong>. En dessous,
+            l'h&eacute;moglobine absorbe tout ; au-dessus, l'eau prend le relais. Ce n'est pas un choix
+            commercial, c'est une contrainte physique.
+          {%- else -%}
+            The usable window runs from <strong>600 to 950&nbsp;nm</strong>. Below it, haemoglobin absorbs
+            everything; above it, water takes over. That is not a commercial choice, it is a physical
+            constraint.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Le photor&eacute;cepteur identifi&eacute; est la <strong>cytochrome c oxydase</strong>, dernier
+            maillon de la cha&icirc;ne respiratoire dans la mitochondrie.
+          {%- else -%}
+            The identified photoacceptor is <strong>cytochrome c oxidase</strong>, the last link of the
+            respiratory chain inside the mitochondrion.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucun ultraviolet</strong> dans le spectre employ&eacute; : il commence &agrave;
+            590&nbsp;nm, les UV s'arr&ecirc;tent &agrave; 400&nbsp;nm. Ni bronzage, ni risque
+            photo-carcinog&egrave;ne li&eacute; aux UV.
+          {%- else -%}
+            <strong>No ultraviolet</strong> in the spectrum used: it starts at 590&nbsp;nm, and UV stops at
+            400&nbsp;nm. No tanning, and no UV-related photocarcinogenic risk.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            La r&eacute;ponse &agrave; la dose est <strong>biphasique</strong> : trop peu d'&eacute;nergie
+            ne produit rien, trop d'&eacute;nergie r&eacute;duit l'effet au lieu de l'amplifier. Plus fort
+            n'est pas mieux.
+          {%- else -%}
+            The dose response is <strong>biphasic</strong>: too little energy does nothing, too much
+            reduces the effect instead of amplifying it. Stronger is not better.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            Les protocoles convergent sur <strong>10 &agrave; 20 minutes par zone</strong>,
+            <strong>3 &agrave; 5 fois par semaine</strong>, tenues plusieurs semaines. Les essais sur la
+            peau et les cheveux mesurent &agrave; seize semaines.
+          {%- else -%}
+            Protocols converge on <strong>10 to 20 minutes per area</strong>, <strong>3 to 5 times a
+            week</strong>, sustained over weeks. Skin and hair trials measure at sixteen weeks.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            La variable la plus d&eacute;terminante n'est pas dans la fiche technique : c'est la
+            <strong>r&eacute;gularit&eacute;</strong>. Un appareil que vous n'utilisez pas a une
+            efficacit&eacute; de z&eacute;ro, quels que soient ses nanom&egrave;tres.
+          {%- else -%}
+            The most decisive variable is not on the spec sheet: it is <strong>consistency</strong>. A
+            device you do not use has an efficacy of zero, whatever its nanometres.
+          {%- endif -%}
+        </li>
+      </ul>
+      <p class="ln-study__ref">
+        {%- if is_fr -%}
+          Page revue le {{ page_updated | date: '%d/%m/%Y' }}. Les appareils Antared sont des produits de
+          bien-&ecirc;tre : ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie.
+        {%- else -%}
+          Page reviewed on {{ page_updated | date: '%d/%m/%Y' }}. Antared devices are wellness products:
+          they do not diagnose, treat or cure any disease.
+        {%- endif -%}
+      </p>
     </div>
   </div>
 </section>
@@ -271,77 +396,256 @@
   </div>
 </section>
 
-{%- comment -%} Securite et FAQ. {%- endcomment -%}
+{%- comment -%}
+  Ce que le mecanisme ne prouve pas.
+
+  Bloc obligatoire, au meme titre que celui de learn-science. Une chaine
+  biochimique plausible n'est pas un resultat clinique : sans ce cadrage, la
+  section « mecanisme » ci-dessus se lit comme une promesse d'effet, et la
+  page bascule du cote de l'allegation de sante (principe II, article L.121-2
+  du Code de la consommation). Ne pas le retirer.
+{%- endcomment -%}
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">
+        {%- if is_fr -%}Ce que ce m&eacute;canisme ne prouve pas{%- else -%}What this mechanism does not prove{%- endif -%}
+      </h2>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            <strong>Une cha&icirc;ne plausible n'est pas un r&eacute;sultat clinique.</strong> Que la
+            lumi&egrave;re soit absorb&eacute;e par une enzyme n'implique aucun b&eacute;n&eacute;fice
+            ressenti. Ce sont les essais qui mesurent, et ils sont sur
+            <a href="{{ science_url }}">{% if is_fr %}la page Science{% else %}the Science page{% endif %}</a>.
+          {%- else -%}
+            <strong>A plausible chain is not a clinical result.</strong> That light is absorbed by an enzyme
+            implies no felt benefit. Trials are what measure that, and they live on
+            <a href="{{ science_url }}">the Science page</a>.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>La cytochrome c oxydase reste l'hypoth&egrave;se dominante</strong>, pas un fait clos.
+            D'autres photor&eacute;cepteurs candidats sont discut&eacute;s dans la litt&eacute;rature, et
+            la part de chacun n'est pas tranch&eacute;e.
+          {%- else -%}
+            <strong>Cytochrome c oxidase remains the leading hypothesis</strong>, not a settled fact. Other
+            candidate photoacceptors are discussed in the literature, and their respective share is not
+            resolved.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Les doses des essais ne se transposent pas telles quelles.</strong> Un protocole
+            hospitalier au laser, sur une zone d&eacute;limit&eacute;e, ne se convertit pas
+            m&eacute;caniquement en minutes devant un panneau LED &agrave; la maison. Les rep&egrave;res
+            de cette page sont des ordres de grandeur.
+          {%- else -%}
+            <strong>Trial doses do not transfer as they are.</strong> A hospital laser protocol on a
+            delimited area does not convert mechanically into minutes in front of an LED panel at home. The
+            figures on this page are orders of magnitude.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucun effet sur une maladie n'est promis ici</strong>, ni sur cette page ni ailleurs
+            sur ce site. Nos appareils sont des produits de bien-&ecirc;tre. En cas de sympt&ocirc;me, de
+            traitement en cours ou de grossesse, l'avis d'un professionnel de sant&eacute; pr&eacute;vaut.
+          {%- else -%}
+            <strong>No effect on any disease is promised here</strong>, on this page or anywhere on this
+            site. Our devices are wellness products. If you have symptoms, an ongoing treatment or are
+            pregnant, a healthcare professional's advice takes precedence.
+          {%- endif -%}
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Securite et questions frequentes.
+
+  Source unique, comme sur learn-science : les questions sont ecrites une seule
+  fois dans faq_raw, puis rendues deux fois -- en <details> visibles et en
+  JSON-LD FAQPage en bas de fichier. Les ecrire deux fois garantirait qu'elles
+  divergent, et Google refuse un balisage qui ne correspond pas au texte
+  visible.
+
+  Convention du depot : « | » separe les items, « ~ » separe la question de la
+  reponse. Aucun texte ne doit contenir l'un ou l'autre.
+
+  Accents en UTF-8 brut dans ce bloc, et non en entites HTML comme dans le
+  reste du fichier : le contenu d'un <script type="application/ld+json"> n'est
+  pas decode, « &eacute; » y apparaitrait litteralement dans le resultat
+  indexe. Ne pas « corriger » ces accents en entites.
+
+  Cette FAQ traite le mecanisme, la dose et la securite. L'essai, la garantie
+  et les certifications restent sur /pages/faq, qui fait foi sur ces points.
+{%- endcomment -%}
+{%- if is_fr -%}
+  {%- capture faq_raw -%}
+Y a-t-il des UV dans la luminothérapie rouge ?~Non. Le spectre utilisé commence à 590 nm, très au-dessus des ultraviolets, qui s'arrêtent à 400 nm. Il n'y a ni bronzage ni risque photo-carcinogène lié aux UV. La chaleur ressentie pendant une séance vient des LED elles-mêmes, pas d'un effet infrarouge lointain.
+|Combien de temps doit durer une séance de luminothérapie rouge ?~Les protocoles convergent sur 10 à 20 minutes par zone, 3 à 5 fois par semaine. Doubler la durée ne double pas le résultat et peut le réduire, parce que la réponse à la dose est biphasique. Mieux vaut trois séances courtes tenues chaque semaine qu'une séance longue tous les quinze jours.
+|Faut-il protéger ses yeux pendant une séance ?~Ne fixez pas les LED. La lumière n'est pas dangereuse aux irradiances domestiques, mais elle est éblouissante dans le rouge visible et invisible dans le proche infrarouge : le réflexe de clignement ne vous protège donc pas. Fermez les yeux, ou utilisez les lunettes fournies avec l'appareil.
+|Qui doit demander un avis médical avant d'utiliser un appareil ?~Toute personne enceinte, sous traitement photosensibilisant (certains antibiotiques, rétinoïdes, millepertuis), présentant une lésion cutanée non diagnostiquée, une pathologie oculaire, une épilepsie photosensible — les modes pulsés sont alors à éviter — ou suivant un traitement oncologique. Nos appareils sont des produits de bien-être : ils ne remplacent aucun avis médical.
+|Au bout de combien de temps voit-on quelque chose ?~Cela dépend de ce que vous mesurez. Sur la récupération musculaire, les essais observent un effet dès la première séance. Sur la peau et les cheveux, les études de référence mesurent à seize semaines de séances régulières. Méfiez-vous de toute marque qui promet un résultat visible en une semaine.
+|Un appareil plus puissant est-il meilleur ?~Pas au-delà d'un certain seuil. La réponse biphasique signifie qu'au-delà de la dose optimale l'effet redescend. Une irradiance élevée sert surtout à raccourcir la séance : elle ne remplace pas la régularité, et elle rend le respect des durées plus important, pas moins.
+|À quelle distance se placer d'un panneau ?~Entre 15 et 50 cm selon l'irradiance annoncée par le fabricant, et cette irradiance doit être donnée à une distance précisée. Un appareil porté — masque, casquette — supprime purement et simplement cette variable, ce qui est la raison principale de choisir ce format.
+|Comment comparer deux appareils honnêtement ?~Regardez trois chiffres, et trois seulement : l'irradiance en mW/cm² à une distance annoncée, les longueurs d'onde exactes en nanomètres, et la surface réellement éclairée. Un nombre de LED seul ne dit rien. Nos paramètres figurent sur chaque fiche produit, et notre méthode de sélection sur <a href="{{ values_url }}">nos valeurs</a>.
+  {%- endcapture -%}
+{%- else -%}
+  {%- capture faq_raw -%}
+Is there any UV in red light therapy?~No. The spectrum used starts at 590 nm, well above ultraviolet, which stops at 400 nm. There is no tanning and no UV-related photocarcinogenic risk. Any warmth you feel during a session comes from the LEDs themselves, not from far-infrared heating.
+|How long should a red light therapy session last?~Protocols converge on 10 to 20 minutes per area, 3 to 5 times a week. Doubling the duration does not double the result and may reduce it, because the dose response is biphasic. Three short sessions you keep every week beat one long session every fortnight.
+|Do I need eye protection during a session?~Do not stare into the LEDs. The light is not dangerous at home irradiances, but it is dazzling in visible red and invisible in the near-infrared: the blink reflex does not protect you. Close your eyes, or use the goggles supplied with the device.
+|Who should ask a doctor before using a device?~Anyone pregnant, on photosensitising medication (some antibiotics, retinoids, St John's wort), with an undiagnosed skin lesion, an eye condition, photosensitive epilepsy — avoid pulsed modes in that case — or undergoing cancer treatment. Our devices are wellness products: they replace no medical advice.
+|How long before anything shows?~It depends what you are measuring. For muscle recovery, trials see an effect from the first session. For skin and hair, the reference studies measure at sixteen weeks of regular sessions. Be sceptical of any brand promising a visible result in a week.
+|Is a more powerful device better?~Not beyond a certain point. The biphasic response means that past the optimal dose the effect declines. High irradiance mainly shortens the session: it does not replace consistency, and it makes respecting durations more important, not less.
+|How far should I sit from a panel?~Between 15 and 50 cm depending on the irradiance the manufacturer states, and that irradiance must be given at a stated distance. A worn device — mask, cap — removes the variable altogether, which is the main reason to choose that format.
+|How do I compare two devices honestly?~Look at three numbers, and only three: irradiance in mW/cm² at a stated distance, the exact wavelengths in nanometres, and the area actually lit. An LED count on its own tells you nothing. Our parameters are on every product page, and our selection method on <a href="{{ values_url }}">our values</a>.
+  {%- endcapture -%}
+{%- endif -%}
+{%- assign faq_items = faq_raw | strip | split: '|' -%}
+
 <section class="ln-section">
   <div class="ln-shell ln-shell--narrow">
-    <p class="ln-kicker">{% if is_fr %}S&eacute;curit&eacute;{% else %}Safety{% endif %}</p>
+    <p class="ln-kicker">{% if is_fr %}S&eacute;curit&eacute; et dose{% else %}Safety and dose{% endif %}</p>
     <h2 class="ln-title">
       {%- if is_fr -%}Ce qu'il faut savoir avant la premi&egrave;re s&eacute;ance.{%- else -%}What to know before your first session.{%- endif -%}
     </h2>
 
-    <div class="ln-faq">
-      <details class="ln-faq__item">
-        <summary class="ln-faq__q">{% if is_fr %}Y a-t-il des UV&nbsp;?{% else %}Is there any UV?{% endif %}</summary>
-        <p class="ln-faq__a">
-          {% if is_fr %}Non. Le spectre utilis&eacute; commence &agrave; 590 nm, tr&egrave;s au-dessus des ultraviolets qui s'arr&ecirc;tent &agrave; 400 nm. Il n'y a ni bronzage, ni risque photo-carcinog&egrave;ne li&eacute; aux UV. La chaleur ressentie vient des LED elles-m&ecirc;mes, pas d'un effet infrarouge lointain.{% else %}No. The spectrum used starts at 590 nm, well above ultraviolet, which stops at 400 nm. There is no tanning and no UV-related photocarcinogenic risk. Any warmth you feel comes from the LEDs themselves, not from far-infrared heating.{% endif %}
-        </p>
-      </details>
-
-      <details class="ln-faq__item">
-        <summary class="ln-faq__q">{% if is_fr %}Faut-il prot&eacute;ger les yeux&nbsp;?{% else %}Do I need eye protection?{% endif %}</summary>
-        <p class="ln-faq__a">
-          {% if is_fr %}Ne fixez pas les LED. La lumi&egrave;re n'est pas dangereuse aux irradiances domestiques, mais elle est &eacute;blouissante dans le rouge visible et invisible dans le proche infrarouge &mdash; le r&eacute;flexe de clignement ne vous prot&egrave;ge donc pas. Fermez les yeux ou utilisez les lunettes fournies avec l'appareil.{% else %}Do not stare into the LEDs. The light is not dangerous at home irradiances, but it is dazzling in visible red and invisible in the near-infrared &mdash; so the blink reflex does not protect you. Close your eyes or use the goggles supplied with the device.{% endif %}
-        </p>
-      </details>
-
-      <details class="ln-faq__item">
-        <summary class="ln-faq__q">{% if is_fr %}Qui doit demander un avis m&eacute;dical d'abord&nbsp;?{% else %}Who should ask a doctor first?{% endif %}</summary>
-        <p class="ln-faq__a">
-          {% if is_fr %}Toute personne enceinte, sous traitement photosensibilisant (certains antibiotiques, r&eacute;tino&iuml;des, millepertuis), pr&eacute;sentant une l&eacute;sion cutan&eacute;e non diagnostiqu&eacute;e, une pathologie oculaire, une &eacute;pilepsie photosensible &mdash; les modes puls&eacute;s sont alors &agrave; &eacute;viter &mdash; ou suivant un traitement oncologique. Nos appareils sont des produits de bien-&ecirc;tre&nbsp;: ils ne remplacent aucun avis m&eacute;dical.{% else %}Anyone pregnant, on photosensitising medication (some antibiotics, retinoids, St John's wort), with an undiagnosed skin lesion, an eye condition, photosensitive epilepsy &mdash; avoid pulsed modes in that case &mdash; or undergoing cancer treatment. Our devices are wellness products: they replace no medical advice.{% endif %}
-        </p>
-      </details>
-
-      <details class="ln-faq__item">
-        <summary class="ln-faq__q">{% if is_fr %}Au bout de combien de temps voit-on quelque chose&nbsp;?{% else %}How long before anything shows?{% endif %}</summary>
-        <p class="ln-faq__a">
-          {% if is_fr %}Cela d&eacute;pend de ce que vous mesurez. Sur la r&eacute;cup&eacute;ration musculaire, les essais observent un effet d&egrave;s la premi&egrave;re s&eacute;ance. Sur la peau et les cheveux, les &eacute;tudes de r&eacute;f&eacute;rence mesurent &agrave; seize semaines de s&eacute;ances r&eacute;guli&egrave;res. M&eacute;fiez-vous de toute marque qui promet un r&eacute;sultat visible en une semaine.{% else %}It depends what you are measuring. For muscle recovery, trials see an effect from the first session. For skin and hair, the reference studies measure at sixteen weeks of regular sessions. Be sceptical of any brand promising a visible result in a week.{% endif %}
-        </p>
-      </details>
-
-      <details class="ln-faq__item">
-        <summary class="ln-faq__q">{% if is_fr %}Un appareil plus puissant est-il meilleur&nbsp;?{% else %}Is a more powerful device better?{% endif %}</summary>
-        <p class="ln-faq__a">
-          {% if is_fr %}Pas au-del&agrave; d'un certain seuil. La r&eacute;ponse biphasique signifie qu'au-del&agrave; de la dose optimale, l'effet redescend. Une irradiance &eacute;lev&eacute;e permet surtout de raccourcir la s&eacute;ance &mdash; elle ne remplace pas la r&eacute;gularit&eacute;, et elle rend le respect des dur&eacute;es plus important, pas moins.{% else %}Not beyond a certain point. The biphasic response means that past the optimal dose, the effect declines. High irradiance mainly lets you shorten the session &mdash; it does not replace consistency, and it makes respecting durations more important, not less.{% endif %}
-        </p>
-      </details>
-
-      <details class="ln-faq__item">
-        <summary class="ln-faq__q">{% if is_fr %}Comment comparer deux appareils honn&ecirc;tement&nbsp;?{% else %}How do I compare two devices honestly?{% endif %}</summary>
-        <p class="ln-faq__a">
-          {% if is_fr %}Regardez l'irradiance en mW/cm&sup2; <em>&agrave; une distance annonc&eacute;e</em>, les longueurs d'onde exactes en nanom&egrave;tres, et la surface r&eacute;ellement couverte. Un nombre de LED seul ne dit rien. Nos param&egrave;tres figurent sur chaque <a href="{{ routes.all_products_collection_url }}">{% if is_fr %}fiche produit{% else %}product page{% endif %}</a>, et notre m&eacute;thode de s&eacute;lection est d&eacute;taill&eacute;e dans <a href="{{ values_url }}">nos valeurs</a>.{% else %}Look at irradiance in mW/cm&sup2; <em>at a stated distance</em>, the exact wavelengths in nanometres, and the area actually covered. An LED count on its own tells you nothing. Our parameters are on every <a href="{{ routes.all_products_collection_url }}">product page</a>, and our selection method is set out in <a href="{{ values_url }}">our values</a>.{% endif %}
-        </p>
-      </details>
+    <div class="ln-faq ln-reveal">
+      {%- for faq_item in faq_items -%}
+        {%- assign faq_parts = faq_item | split: '~' -%}
+        <details class="ln-faq__item">
+          <summary class="ln-faq__q">{{ faq_parts[0] | strip }}</summary>
+          <p class="ln-faq__a">{{ faq_parts[1] | strip }}</p>
+        </details>
+      {%- endfor -%}
     </div>
 
     <p class="ln-copy">
       {%- if is_fr -%}
         Les questions d'essai, de garantie et de certification sont regroup&eacute;es sur la
-        <a href="{{ faq_url }}">FAQ g&eacute;n&eacute;rale</a>.
+        <a href="{{ faq_url }}">FAQ g&eacute;n&eacute;rale</a>. Pour appliquer ces rep&egrave;res &agrave;
+        un moment pr&eacute;cis de la semaine, les <a href="{{ protocols_url }}">protocoles</a> donnent
+        sept s&eacute;ances chiffr&eacute;es, et <a href="{{ benefits_url }}">les bienfaits</a> listent ce
+        qui a &eacute;t&eacute; mesur&eacute;, domaine par domaine.
       {%- else -%}
         Questions about the trial, warranty and certification are gathered on the
-        <a href="{{ faq_url }}">general FAQ</a>.
+        <a href="{{ faq_url }}">general FAQ</a>. To apply these figures to a specific moment of your week,
+        the <a href="{{ protocols_url }}">protocols</a> give seven sessions with numbers, and
+        <a href="{{ benefits_url }}">the benefits page</a> lists what has been measured, domain by domain.
       {%- endif -%}
     </p>
   </div>
 </section>
 
 {% render 'learn-product-cta',
-   handles: 'antared-desk-red-light-therapy-panel,antared-pano-ultra,cap',
-   heading_fr: 'Choisissez la longueur d&#39;onde en fonction de la zone, pas de la fiche technique.',
-   heading_en: 'Pick the wavelength for the area, not for the spec sheet.',
-   text_fr: 'Un masque ne remplace pas une genouill&egrave;re, et un panneau ne remplace ni l&#39;un ni l&#39;autre. Chaque format existe pour une raison physique.',
-   text_en: 'A mask does not replace a knee wrap, and a panel replaces neither. Each format exists for a physical reason.'
+   handles: 'antared-desk-red-light-therapy-panel,cap,antared-pano-ultra',
+   heading_fr: 'Vous connaissez la dose. Reste &agrave; choisir la zone.',
+   heading_en: 'You know the dose. The area is what is left to choose.',
+   text_fr: "10 &agrave; 20 minutes par zone, 3 &agrave; 5 fois par semaine : la seule question qui reste est de savoir quelle zone vous &eacute;clairez, et si l'appareil vous laisse tenir ce rythme. Chaque fiche affiche longueur d'onde, irradiance et distance.",
+   text_en: '10 to 20 minutes per area, 3 to 5 times a week: the only question left is which area you light, and whether the device lets you keep that rhythm. Every product page states wavelength, irradiance and distance.'
 %}
+
+{%- comment -%}
+  Donnees structurees.
+
+  Trois types, et trois seulement : Article (page editoriale datee),
+  BreadcrumbList (le meme fil d'Ariane que le hero) et FAQPage (construit a
+  partir de faq_items, la meme source que les <details> visibles).
+
+  Ne JAMAIS passer a MedicalWebPage, MedicalTherapy, MedicalCondition ou Drug.
+  Ces types declarent a Google que la page porte une information medicale sur
+  un traitement -- ce que le principe II interdit et ce que les appareils
+  vendus ne sont pas. Le gain de rich result serait nul, le risque
+  reglementaire reel.
+
+  citation[] ne porte que les deux revues de mecanisme, celles qui decrivent
+  la chaine expliquee ici. Les essais cliniques restent cites sur
+  learn-science, qui fait foi sur l'etat des preuves.
+
+  Accents en UTF-8 brut : voir la note du bloc FAQ.
+{%- endcomment -%}
+{%- liquid
+  if is_fr
+    assign sd_headline = 'Comment marche la luminotherapie rouge : mecanisme, dose et securite'
+    assign sd_desc = 'La chaine complete du photon a la mitochondrie, la fenetre optique 600-950 nm, la reponse biphasique a la dose et les reperes de duree, de frequence et de distance.'
+    assign sd_home = 'Accueil'
+    assign sd_learn = 'Apprendre'
+    assign sd_page = 'Comment ca marche'
+  else
+    assign sd_headline = 'How red light therapy works: mechanism, dose and safety'
+    assign sd_desc = 'The full chain from photon to mitochondrion, the 600-950 nm optical window, the biphasic dose response, and the figures for duration, frequency and distance.'
+    assign sd_home = 'Home'
+    assign sd_learn = 'Learn'
+    assign sd_page = 'How it works'
+  endif
+
+  assign sd_home_url = request.origin | append: routes.root_url
+  assign sd_learn_url = request.origin | append: learn_url
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": {{ canonical_url | append: '#article' | json }},
+      "url": {{ canonical_url | json }},
+      "mainEntityOfPage": {{ canonical_url | json }},
+      "headline": {{ sd_headline | json }},
+      "description": {{ sd_desc | json }},
+      "inLanguage": {{ request.locale.iso_code | json }},
+      "dateModified": {{ page_updated | json }},
+      "author": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "about": [
+        { "@type": "Thing", "name": "Photobiomodulation" },
+        { "@type": "Thing", "name": "Cytochrome c oxidase" },
+        { "@type": "Thing", "name": {% if is_fr %}"Luminotherapie rouge"{% else %}"Red light therapy"{% endif %} }
+      ],
+      "citation": [
+        { "@type": "ScholarlyArticle", "name": "de Freitas LF, Hamblin MR. IEEE J Sel Top Quantum Electron 2016;22(3)", "identifier": "https://doi.org/10.1109/JSTQE.2016.2561201" },
+        { "@type": "ScholarlyArticle", "name": "Hamblin MR. Photochem Photobiol 2018;94(2):199-212", "identifier": "https://doi.org/10.1111/php.12864" }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ sd_home | json }}, "item": {{ sd_home_url | json }} },
+        { "@type": "ListItem", "position": 2, "name": {{ sd_learn | json }}, "item": {{ sd_learn_url | json }} },
+        { "@type": "ListItem", "position": 3, "name": {{ sd_page | json }}, "item": {{ canonical_url | json }} }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq_item in faq_items -%}
+          {%- assign faq_parts = faq_item | split: '~' -%}
+          {%- assign faq_q = faq_parts[0] | strip | strip_html | strip_newlines -%}
+          {%- assign faq_a = faq_parts[1] | strip | strip_html | strip_newlines -%}
+          {
+            "@type": "Question",
+            "name": {{ faq_q | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  ]
+}
+</script>
 
 {% schema %}
 {

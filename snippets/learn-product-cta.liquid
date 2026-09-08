@@ -23,6 +23,22 @@
   endif
 
   assign handle_list = handles | default: 'antared-desk-red-light-therapy-panel,mask,antared-pano-ultra' | split: ','
+
+  comment
+    Le second bouton menait a l'accueil : depuis une page Apprendre, c'est une
+    sortie de parcours -- le lecteur remonte d'un cran au lieu d'avancer d'un
+    pas. Il mene desormais au questionnaire, qui repond a la seule question
+    qu'il reste au bas d'une page Apprendre : lequel, pour moi. Derive ici, une
+    fois, plutot que dans chaque section appelante.
+  endcomment
+  assign cta_locale_root = routes.root_url
+  if cta_locale_root == '/'
+    assign cta_locale_root = ''
+  endif
+  assign cta_quiz_url = pages['find-your-cytolight'].url
+  if cta_quiz_url == blank
+    assign cta_quiz_url = cta_locale_root | append: '/pages/find-your-cytolight'
+  endif
 -%}
 
 <section class="ln-cta"{% if id %} id="{{ id }}"{% endif %}>
@@ -75,6 +91,16 @@
                 assign pick_type_en = 'Foot &middot; Wraparound'
                 assign pick_text_fr = "Botte souple qui enveloppe pied, talon et cheville pour une routine calme apr&egrave;s l'effort."
                 assign pick_text_en = 'Soft boot wrapping the foot, heel, and ankle for a calm routine after training or long days.'
+              when 'antared-sauna-dome-infrared-red-light-pemf'
+                assign pick_type_fr = 'Corps entier &middot; Allong&eacute;'
+                assign pick_type_en = 'Full body &middot; Lying down'
+                assign pick_text_fr = 'D&ocirc;me qui enveloppe le corps allong&eacute;, rouge et proche infrarouge, pour une s&eacute;ance o&ugrave; l&#39;on n&#39;a rien &agrave; tenir.'
+                assign pick_text_en = 'Dome that wraps the body lying down, red and near-infrared, for a session where you hold nothing.'
+              when 'pano-plus'
+                assign pick_type_fr = 'Corps entier &middot; Interm&eacute;diaire'
+                assign pick_type_en = 'Full body &middot; Mid-size'
+                assign pick_text_fr = 'Panneau interm&eacute;diaire, entre le format bureau et le grand format : une zone enti&egrave;re &agrave; la fois.'
+                assign pick_text_en = 'Mid-size panel, between desktop and large format: one full area at a time.'
               when 'antared-pano-ultra'
                 assign pick_type_fr = 'Corps entier &middot; Grand format'
                 assign pick_type_en = 'Full body &middot; Large format'
@@ -111,8 +137,8 @@
       <a class="ln-button" href="{{ routes.all_products_collection_url }}">
         {% if is_fr %}Voir toute la gamme{% else %}See the full range{% endif %}
       </a>
-      <a class="ln-button ln-button--line" href="{{ routes.root_url }}">
-        {% if is_fr %}Retour &agrave; l'accueil{% else %}Back to the homepage{% endif %}
+      <a class="ln-button ln-button--line" href="{{ cta_quiz_url }}">
+        {% if is_fr %}Trouver mon appareil en 6 questions{% else %}Find my device in 6 questions{% endif %}
       </a>
     </div>
   </div>
