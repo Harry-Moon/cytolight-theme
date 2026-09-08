@@ -32,6 +32,27 @@
   if how_url == blank
     assign how_url = locale_root | append: '/pages/comment-ca-marche'
   endif
+
+  assign learn_url = pages['academy'].url
+  if learn_url == blank
+    assign learn_url = locale_root | append: '/pages/academy'
+  endif
+
+  assign benefits_url = pages['benefits'].url
+  if benefits_url == blank
+    assign benefits_url = locale_root | append: '/pages/benefits'
+  endif
+
+  assign protocols_url = pages['protocols'].url
+  if protocols_url == blank
+    assign protocols_url = locale_root | append: '/pages/protocols'
+  endif
+
+  comment
+    Date de derniere revision de fond : mention visible du resume et
+    dateModified du JSON-LD, un seul endroit a changer.
+  endcomment
+  assign page_updated = '2026-09-09'
 -%}
 
 <section class="ln-hero">
@@ -60,6 +81,129 @@
         the range, what each one does, and which device carries it.
       {%- endif -%}
     </p>
+
+    <div class="ln-hero__facts" aria-label="{% if is_fr %}Rep&egrave;res{% else %}Key figures{% endif %}">
+      <div class="ln-hero__fact">
+        <strong>590&ndash;940</strong>
+        <span>{% if is_fr %}nm, l'&eacute;tendue des spectres pr&eacute;sents dans la gamme{% else %}nm, the span of spectra present across the range{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>7</strong>
+        <span>{% if is_fr %}canaux pilotables ind&eacute;pendamment sur le DESK, un par longueur d'onde{% else %}independently controlled channels on DESK, one per wavelength{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>2&ndash;3</strong>
+        <span>{% if is_fr %}longueurs d'onde par appareil hors DESK, choisies pour une zone{% else %}wavelengths per device other than DESK, chosen for one area{% endif %}</span>
+      </div>
+      <div class="ln-hero__fact">
+        <strong>0 UV</strong>
+        <span>{% if is_fr %}aucune longueur d'onde sous 400 nm dans aucun appareil{% else %}no wavelength below 400 nm in any device{% endif %}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  Resume de tete. Six faits autoportants : chacun doit rester vrai sorti de la
+  page, parce que c'est sous cette forme qu'un moteur de reponse le citera.
+  Aucun fait nouveau -- ce bloc resume le spectre et le tableau qui suivent.
+{%- endcomment -%}
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">{% if is_fr %}En r&eacute;sum&eacute;{% else %}In short{% endif %}</h2>
+      <p class="ln-copy">
+        {%- if is_fr -%}
+          La longueur d'onde d&eacute;cide de deux choses, et de deux choses seulement : jusqu'o&ugrave; la
+          lumi&egrave;re descend dans le tissu, et quelle mol&eacute;cule l'absorbe. C'est pour cela qu'un
+          appareil de surface et un appareil d'articulation ne portent pas les m&ecirc;mes
+          nanom&egrave;tres &mdash; et pourquoi en empiler sept n'a de sens que si on peut les allumer
+          s&eacute;par&eacute;ment.
+        {%- else -%}
+          Wavelength decides two things, and only two: how deep the light travels into tissue, and which
+          molecule absorbs it. That is why a surface device and a joint device do not carry the same
+          nanometres &mdash; and why stacking seven of them only makes sense if you can switch them on
+          separately.
+        {%- endif -%}
+      </p>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            <strong>590&nbsp;nm (ambre)</strong> est absorb&eacute; d&egrave;s l'&eacute;piderme.
+            <strong>630&nbsp;nm (rouge)</strong> atteint le derme superficiel. Ce sont les spectres de
+            surface : ils ne servent pas &agrave; atteindre un muscle.
+          {%- else -%}
+            <strong>590&nbsp;nm (amber)</strong> is absorbed within the epidermis. <strong>630&nbsp;nm
+            (red)</strong> reaches the upper dermis. These are the surface spectra: they are not there to
+            reach a muscle.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>660&nbsp;nm</strong> descend dans le derme, <strong>810 et 850&nbsp;nm</strong> vont
+            plus loin encore &mdash; sous-cutan&eacute;, muscle, articulation. C'est le proche infrarouge
+            qui porte les usages de r&eacute;cup&eacute;ration.
+          {%- else -%}
+            <strong>660&nbsp;nm</strong> goes into the dermis; <strong>810 and 850&nbsp;nm</strong> go
+            further still &mdash; subcutaneous tissue, muscle, joint. Near-infrared is what carries the
+            recovery uses.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Au-del&agrave; de 940&nbsp;nm, l'eau reprend la main</strong> : la profondeur cesse
+            d'augmenter avec la longueur d'onde. La courbe n'est pas une droite.
+          {%- else -%}
+            <strong>Past 940&nbsp;nm, water takes over</strong>: depth stops increasing with wavelength.
+            The curve is not a straight line.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Les profondeurs sont des ordres de grandeur relatifs</strong>, jamais des
+            millim&egrave;tres. Elles d&eacute;pendent du tissu, de la pigmentation et de l'irradiance, et
+            l'&eacute;nergie d&eacute;cro&icirc;t de fa&ccedil;on exponentielle. Toute marque qui annonce
+            « 10&nbsp;cm » invente.
+          {%- else -%}
+            <strong>Depths are relative orders of magnitude</strong>, never millimetres. They depend on
+            tissue, pigmentation and irradiance, and energy falls off exponentially. Any brand quoting
+            &ldquo;10&nbsp;cm&rdquo; is making it up.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Le nombre de spectres n'est pas un score.</strong> Deux longueurs d'onde bien choisies
+            pour une zone valent mieux que sept empil&eacute;es sans raison. Sept canaux n'ont d'utilit&eacute;
+            que s'ils s'allument s&eacute;par&eacute;ment, ce qui est le cas du DESK.
+          {%- else -%}
+            <strong>The number of spectra is not a score.</strong> Two wavelengths well chosen for one area
+            beat seven stacked for no reason. Seven channels are only useful if they switch on separately,
+            which is the case on DESK.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucun appareil de la gamme n'&eacute;met sous 400&nbsp;nm</strong> : il n'y a pas
+            d'ultraviolet, donc ni bronzage ni risque photo-carcinog&egrave;ne li&eacute; aux UV.
+          {%- else -%}
+            <strong>No device in the range emits below 400&nbsp;nm</strong>: there is no ultraviolet, so no
+            tanning and no UV-related photocarcinogenic risk.
+          {%- endif -%}
+        </li>
+      </ul>
+      <p class="ln-study__ref">
+        {%- if is_fr -%}
+          Page revue le {{ page_updated | date: '%d/%m/%Y' }}. Les rep&egrave;res de dur&eacute;e, de
+          fr&eacute;quence et de distance font foi sur
+          <a href="{{ how_url }}">comment &ccedil;a marche</a>. Les appareils Antared sont des produits de
+          bien-&ecirc;tre : ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie.
+        {%- else -%}
+          Page reviewed on {{ page_updated | date: '%d/%m/%Y' }}. The figures for duration, frequency and
+          distance are authoritative on <a href="{{ how_url }}">how it works</a>. Antared devices are
+          wellness products: they do not diagnose, treat or cure any disease.
+        {%- endif -%}
+      </p>
+    </div>
   </div>
 </section>
 
@@ -270,7 +414,7 @@
       </div>
       <div class="ln-depth__row">
         <p class="ln-depth__label">660 nm <small>{% if is_fr %}Rouge profond{% else %}Deep red{% endif %}</small></p>
-        <p class="ln-depth__label" style="font-weight: 400;">Antared Knee, Foot, Cap, Sauna Dome, DESK</p>
+        <p class="ln-depth__label" style="font-weight: 400;">Antared Cap, Sauna Dome, DESK</p>
       </div>
       <div class="ln-depth__row">
         <p class="ln-depth__label">810&ndash;850 nm <small>{% if is_fr %}Proche infrarouge{% else %}Near-infrared{% endif %}</small></p>
@@ -296,13 +440,231 @@
   </div>
 </section>
 
+{%- comment -%}
+  Ce que cette page ne dit pas.
+
+  Bloc obligatoire, comme sur Science et Comment ca marche. Une liste de
+  nanometres se lit tres vite comme un catalogue d'indications : sans ce
+  cadrage, « 850 nm - muscle, articulation » devient une promesse d'effet sur
+  une articulation douloureuse, ce que le principe II interdit. Ne pas le
+  retirer.
+{%- endcomment -%}
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-note ln-reveal">
+      <h2 class="ln-note__title">
+        {%- if is_fr -%}Ce que cette page ne dit pas{%- else -%}What this page does not say{%- endif -%}
+      </h2>
+      <ul>
+        <li>
+          {%- if is_fr -%}
+            <strong>Une zone atteinte n'est pas une indication.</strong> Dire qu'&agrave; 850&nbsp;nm la
+            lumi&egrave;re atteint le plan musculaire d&eacute;crit un trajet optique, pas un effet promis
+            sur une douleur ou une pathologie.
+          {%- else -%}
+            <strong>An area reached is not an indication.</strong> Saying that at 850&nbsp;nm light reaches
+            the muscle plane describes an optical path, not a promised effect on a pain or a condition.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Aucune profondeur en millim&egrave;tres n'est donn&eacute;e ici</strong>, et aucune ne
+            devrait l'&ecirc;tre ailleurs. Les barres de cette page sont proportionnelles entre elles,
+            cal&eacute;es sur aucune &eacute;chelle absolue.
+          {%- else -%}
+            <strong>No depth in millimetres is given here</strong>, and none should be given anywhere else.
+            The bars on this page are proportional to each other, pinned to no absolute scale.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Le nanom&egrave;tre ne suffit pas.</strong> &Agrave; longueur d'onde &eacute;gale, deux
+            appareils diff&egrave;rent par l'irradiance, la surface &eacute;clair&eacute;e et la distance
+            d'usage &mdash; c'est la <a href="{{ how_url }}">dose</a> qui d&eacute;cide, pas la couleur.
+          {%- else -%}
+            <strong>Nanometres are not enough.</strong> At equal wavelength, two devices differ in
+            irradiance, lit area and working distance &mdash; it is the <a href="{{ how_url }}">dose</a>
+            that decides, not the colour.
+          {%- endif -%}
+        </li>
+        <li>
+          {%- if is_fr -%}
+            <strong>Les appareils Antared sont des produits de bien-&ecirc;tre.</strong> Ils ne
+            diagnostiquent, ne traitent et ne gu&eacute;rissent aucune maladie. En cas de sympt&ocirc;me,
+            de traitement en cours ou de grossesse, l'avis d'un professionnel de sant&eacute;
+            pr&eacute;vaut.
+          {%- else -%}
+            <strong>Antared devices are wellness products.</strong> They do not diagnose, treat or cure any
+            disease. If you have symptoms, an ongoing treatment or are pregnant, a healthcare
+            professional's advice takes precedence.
+          {%- endif -%}
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  FAQ. Source unique : ecrite une fois ici, rendue en <details> puis en JSON-LD
+  FAQPage en bas de fichier. « | » separe les items, « ~ » separe la question
+  de la reponse.
+
+  Accents en UTF-8 brut : le contenu d'un <script type="application/ld+json">
+  n'est pas decode, une entite y apparaitrait litteralement dans le resultat
+  indexe. Ne pas les « corriger ».
+{%- endcomment -%}
+{%- if is_fr -%}
+  {%- capture faq_raw -%}
+Quelle longueur d'onde choisir pour la peau ?~Les spectres de surface : 590 nm, absorbé dès l'épiderme, et 630 nm, qui atteint le derme superficiel. Le 660 nm descend un cran plus bas. Au-delà, en proche infrarouge, la lumière traverse la peau sans y déposer l'essentiel de son énergie : ces longueurs d'onde servent d'autres zones.
+|Quelle différence entre 660 nm et 850 nm ?~La profondeur atteinte, et la molécule qui absorbe. Le 660 nm est un rouge visible qui travaille dans le derme ; le 850 nm est un proche infrarouge invisible qui atteint le plan sous-cutané, musculaire et articulaire. La plupart des appareils portés combinent les deux pour couvrir la surface et la profondeur d'une même zone.
+|Faut-il un appareil à sept longueurs d'onde ?~Seulement si les canaux s'allument séparément, ce qui est le cas du DESK. Sept spectres allumés en même temps ne font pas sept fois mieux : ils partagent la même dose. Deux longueurs d'onde bien choisies pour la zone que vous visez suffisent, et c'est le principe des appareils portés de la gamme.
+|Jusqu'à quelle profondeur la lumière descend-elle ?~Personne ne peut répondre en millimètres, et une marque qui le fait invente. La pénétration dépend du tissu, de la pigmentation et de l'irradiance, et l'énergie décroît de façon exponentielle avec la profondeur. Les barres de cette page sont des ordres de grandeur proportionnels entre eux, pas une échelle absolue.
+|Pourquoi certaines longueurs d'onde sont-elles invisibles ?~Parce que l'œil humain ne voit rien au-delà d'environ 700 nm. Un appareil en 810 ou 850 nm fonctionne alors qu'il paraît éteint, ou n'émet qu'une faible lueur rouge parasite. C'est aussi pourquoi le réflexe de clignement ne protège pas de ces longueurs d'onde : il ne faut pas regarder les LED.
+|Y a-t-il des ultraviolets dans ces appareils ?~Non. Le spectre le plus court de la gamme est un bleu à 460 nm, et les ultraviolets s'arrêtent à 400 nm. Aucun appareil Antared n'émet sous 400 nm : il n'y a ni bronzage ni risque photo-carcinogène lié aux UV.
+|À quoi sert le bleu à 460 nm ?~Il reste en surface, sur l'épiderme, et il est employé dans les routines peau du quotidien du masque. Il ne pénètre pas et ne participe pas aux usages de récupération, qui reposent sur le rouge profond et le proche infrarouge. Ce n'est pas une lumière de profondeur.
+  {%- endcapture -%}
+{%- else -%}
+  {%- capture faq_raw -%}
+Which wavelength should I choose for skin?~The surface spectra: 590 nm, absorbed within the epidermis, and 630 nm, which reaches the upper dermis. 660 nm goes one step deeper. Beyond that, in the near-infrared, light crosses the skin without leaving most of its energy there: those wavelengths serve other areas.
+|What is the difference between 660 nm and 850 nm?~The depth reached, and the molecule that absorbs. 660 nm is a visible red working in the dermis; 850 nm is an invisible near-infrared reaching the subcutaneous, muscle and joint plane. Most worn devices combine the two to cover both the surface and the depth of one area.
+|Do I need a device with seven wavelengths?~Only if the channels switch on separately, which is the case on DESK. Seven spectra lit at once do not work seven times better: they share the same dose. Two wavelengths well chosen for the area you are targeting are enough, and that is the principle behind the worn devices in the range.
+|How deep does the light actually go?~Nobody can answer in millimetres, and a brand that does is making it up. Penetration depends on tissue, pigmentation and irradiance, and energy falls off exponentially with depth. The bars on this page are orders of magnitude proportional to each other, not an absolute scale.
+|Why are some wavelengths invisible?~Because the human eye sees nothing beyond roughly 700 nm. A device at 810 or 850 nm runs while appearing to be off, or shows only a faint stray red glow. This is also why the blink reflex offers no protection at those wavelengths: do not look into the LEDs.
+|Is there any ultraviolet in these devices?~No. The shortest spectrum in the range is a 460 nm blue, and ultraviolet stops at 400 nm. No Antared device emits below 400 nm: there is no tanning and no UV-related photocarcinogenic risk.
+|What is 460 nm blue for?~It stays at the surface, on the epidermis, and it is used in the everyday skin routines of the mask. It does not penetrate and plays no part in recovery uses, which rely on deep red and near-infrared. It is not a depth wavelength.
+  {%- endcapture -%}
+{%- endif -%}
+{%- assign faq_items = faq_raw | strip | split: '|' -%}
+
+<section class="ln-section ln-section--tight">
+  <div class="ln-shell ln-shell--narrow">
+    <div class="ln-head ln-reveal">
+      <div>
+        <p class="ln-kicker">{% if is_fr %}Les questions qui reviennent{% else %}The questions that keep coming up{% endif %}</p>
+        <h2 class="ln-title ln-title--wide">
+          {%- if is_fr -%}Sept questions sur les nanom&egrave;tres.{%- else -%}Seven questions about nanometres.{%- endif -%}
+        </h2>
+      </div>
+    </div>
+
+    <div class="ln-faq ln-reveal">
+      {%- for faq_item in faq_items -%}
+        {%- assign faq_parts = faq_item | split: '~' -%}
+        <details class="ln-faq__item">
+          <summary class="ln-faq__q">{{ faq_parts[0] | strip }}</summary>
+          <p class="ln-faq__a">{{ faq_parts[1] | strip }}</p>
+        </details>
+      {%- endfor -%}
+    </div>
+
+    <p class="ln-copy">
+      {%- if is_fr -%}
+        Pour la dur&eacute;e, la fr&eacute;quence et la distance, voir
+        <a href="{{ how_url }}">comment &ccedil;a marche</a>. Pour ce que les essais ont
+        r&eacute;ellement mesur&eacute; domaine par domaine, voir
+        <a href="{{ benefits_url }}">les bienfaits</a>. Pour appliquer tout cela &agrave; un moment
+        pr&eacute;cis de la semaine, les <a href="{{ protocols_url }}">protocoles</a> donnent sept
+        s&eacute;ances chiffr&eacute;es.
+      {%- else -%}
+        For duration, frequency and distance, see <a href="{{ how_url }}">how it works</a>. For what the
+        trials actually measured, domain by domain, see <a href="{{ benefits_url }}">the benefits page</a>.
+        To apply all of it to a specific moment of your week, the
+        <a href="{{ protocols_url }}">protocols</a> give seven sessions with numbers.
+      {%- endif -%}
+    </p>
+  </div>
+</section>
+
 {% render 'learn-product-cta',
    handles: 'antared-desk-red-light-therapy-panel,mask,cap',
-   heading_fr: 'Sept canaux sur le DESK. Deux ou trois, bien plac&eacute;s, ailleurs.',
-   heading_en: 'Seven channels on DESK. Two or three, well placed, everywhere else.',
-   text_fr: 'Le bon appareil est celui dont les spectres correspondent &agrave; la zone que vous voulez traiter, pas celui qui en affiche le plus.',
-   text_en: 'The right device is the one whose spectra match the area you want to treat, not the one listing the most.'
+   heading_fr: 'La bonne longueur d&#39;onde est celle qui atteint votre zone.',
+   heading_en: 'The right wavelength is the one that reaches your area.',
+   text_fr: 'Le visage n&#39;a pas besoin des m&ecirc;mes nanom&egrave;tres qu&#39;un quadriceps. Chaque fiche produit indique les longueurs d&#39;onde exactes, l&#39;irradiance et la distance d&#39;usage &mdash; de quoi comparer sans nous croire sur parole.',
+   text_en: 'A face does not need the same nanometres as a quadriceps. Every product page states the exact wavelengths, the irradiance and the working distance &mdash; enough to compare without taking our word for it.'
 %}
+
+{%- comment -%}
+  Donnees structurees : Article + BreadcrumbList + FAQPage, construit sur
+  faq_items -- la meme source que les <details> visibles.
+
+  Aucun type medical (MedicalWebPage, MedicalTherapy, MedicalCondition, Drug) :
+  le principe II l'interdit, et les appareils vendus sont des produits de
+  bien-etre. Aucune citation ici : cette page ne cite aucune publication en
+  propre, les references vivent sur learn-science qui fait foi.
+{%- endcomment -%}
+{%- liquid
+  if is_fr
+    assign sd_headline = 'Longueurs d onde de la luminotherapie rouge : 590 a 940 nm, spectre par spectre'
+    assign sd_desc = 'Ce que fait chaque longueur d onde, de l ambre 590 nm au proche infrarouge 940 nm, la profondeur relative atteinte et sur quel appareil de la gamme on la trouve.'
+    assign sd_home = 'Accueil'
+    assign sd_learn = 'Apprendre'
+    assign sd_page = 'Longueurs d onde'
+  else
+    assign sd_headline = 'Red light therapy wavelengths: 590 to 940 nm, spectrum by spectrum'
+    assign sd_desc = 'What each wavelength does, from 590 nm amber to 940 nm near-infrared, the relative depth it reaches, and which device in the range carries it.'
+    assign sd_home = 'Home'
+    assign sd_learn = 'Learn'
+    assign sd_page = 'Wavelengths'
+  endif
+
+  assign sd_home_url = request.origin | append: routes.root_url
+  assign sd_learn_url = request.origin | append: learn_url
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": {{ canonical_url | append: '#article' | json }},
+      "url": {{ canonical_url | json }},
+      "mainEntityOfPage": {{ canonical_url | json }},
+      "headline": {{ sd_headline | json }},
+      "description": {{ sd_desc | json }},
+      "inLanguage": {{ request.locale.iso_code | json }},
+      "dateModified": {{ page_updated | json }},
+      "author": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }},
+        "url": {{ request.origin | json }}
+      },
+      "about": [
+        { "@type": "Thing", "name": "Photobiomodulation" },
+        { "@type": "Thing", "name": {% if is_fr %}"Lumiere proche infrarouge"{% else %}"Near-infrared light"{% endif %} },
+        { "@type": "Thing", "name": {% if is_fr %}"Longueur d onde"{% else %}"Wavelength"{% endif %} }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": {{ sd_home | json }}, "item": {{ sd_home_url | json }} },
+        { "@type": "ListItem", "position": 2, "name": {{ sd_learn | json }}, "item": {{ sd_learn_url | json }} },
+        { "@type": "ListItem", "position": 3, "name": {{ sd_page | json }}, "item": {{ canonical_url | json }} }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {%- for faq_item in faq_items -%}
+          {%- assign faq_parts = faq_item | split: '~' -%}
+          {%- assign faq_q = faq_parts[0] | strip | strip_html | strip_newlines -%}
+          {%- assign faq_a = faq_parts[1] | strip | strip_html | strip_newlines -%}
+          {
+            "@type": "Question",
+            "name": {{ faq_q | json }},
+            "acceptedAnswer": { "@type": "Answer", "text": {{ faq_a | json }} }
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  ]
+}
+</script>
 
 {% schema %}
 {
