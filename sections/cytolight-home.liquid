@@ -216,54 +216,6 @@
     </div>
   </section>
 
-  <section class="cy-wl-section cy-reveal">
-    <canvas id="cy-wl-shader-bg" class="cy-wl-shader-canvas" aria-hidden="true"></canvas>
-    <div class="cy-shell cy-wl-inner">
-      <div class="cy-wl-copy">
-        <p class="cy-wl-eyebrow">{% if is_fr %}De la science, pas du hasard{% else %}Science, not guesswork{% endif %}</p>
-        <h2 class="cy-wl-title">{% if is_fr %}7 longueurs d&apos;onde, ma&icirc;tris&eacute;es une par une.{% else %}7 wavelengths, individually mastered.{% endif %}</h2>
-        <p class="cy-wl-body">{% if is_fr %}Les panneaux g&eacute;n&eacute;riques utilisent souvent une approche unique. Antared propose <strong>sept longueurs d&apos;onde calibr&eacute;es</strong>, chacune avec un r&ocirc;le diff&eacute;rent et un contr&ocirc;le ind&eacute;pendant via l&apos;&eacute;cran tactile ou l&apos;application.{% else %}Generic panels flood you with a single wavelength at full power. Antared gives you <strong>seven precisely calibrated wavelengths</strong> &#8212; each targeting a different biological mechanism, each independently controllable via touch screen or app.{% endif %}</p>
-      </div>
-      <div class="cy-wl-cards">
-        <div class="cy-wl-card">
-          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#c07800 0%,#1a0d00 100%);"></div>
-          <div class="cy-wl-card__nm">590nm</div>
-          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Ambre{% else %}Amber{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Activation mitochondriale, fonction cognitive{% else %}Mitochondrial activation, cognitive function{% endif %}</span></div>
-        </div>
-        <div class="cy-wl-card">
-          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#b81020 0%,#1a0004 100%);"></div>
-          <div class="cy-wl-card__nm">630nm</div>
-          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Rouge{% else %}Red{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Surface de la peau, collag&egrave;ne, cicatrisation{% else %}Surface skin, collagen, wound healing{% endif %}</span></div>
-        </div>
-        <div class="cy-wl-card">
-          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#960c22 0%,#160006 100%);"></div>
-          <div class="cy-wl-card__nm">660nm</div>
-          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Rouge profond{% else %}Deep Red{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Couches profondes de la peau, stimulation des fibroblastes{% else %}Deep skin layers, fibroblast stimulation{% endif %}</span></div>
-        </div>
-        <div class="cy-wl-card">
-          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#5b3080 0%,#0e0018 100%);"></div>
-          <div class="cy-wl-card__nm">810nm</div>
-          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}R&eacute;cup&eacute;ration musculaire, confort articulaire{% else %}Muscle recovery, joint inflammation{% endif %}</span></div>
-        </div>
-        <div class="cy-wl-card">
-          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#4e2872 0%,#0c0014 100%);"></div>
-          <div class="cy-wl-card__nm">830nm</div>
-          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Soutien nerveux, circulation{% else %}Nerve regeneration, circulation{% endif %}</span></div>
-        </div>
-        <div class="cy-wl-card">
-          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#3e1e64 0%,#090010 100%);"></div>
-          <div class="cy-wl-card__nm">850nm</div>
-          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Proche infrarouge{% else %}Near Infrared{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}Tissus profonds, r&eacute;cup&eacute;ration, rythme du sommeil{% else %}Deep tissue, bone health, sleep regulation{% endif %}</span></div>
-        </div>
-        <div class="cy-wl-card">
-          <div class="cy-wl-card__bg" style="background:linear-gradient(100deg,#2a1250 0%,#05000c 100%);"></div>
-          <div class="cy-wl-card__nm">940nm</div>
-          <div class="cy-wl-card__info"><span class="cy-wl-card__name">{% if is_fr %}Infrarouge profond{% else %}Deep Infrared{% endif %}</span><span class="cy-wl-card__desc">{% if is_fr %}P&eacute;n&eacute;tration la plus profonde, soutien global{% else %}Deepest penetration, systemic benefits{% endif %}</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="cy-redlight-science cy-reveal">
     <div class="cy-shell">
       <p class="cy-kicker">{% if is_fr %}La science de la lumi&egrave;re rouge{% else %}The science of red light{% endif %}</p>
@@ -402,7 +354,7 @@
     <div class="cy-shell">
       <div class="cy-use__head cy-reveal">
         <p class="cy-kicker">{% if is_fr %}Acheter selon votre objectif{% else %}Shop by goal{% endif %}</p>
-        <h2 class="cy-heading">{% if is_fr %}Commencez par le r&eacute;sultat que vous voulez ressentir.{% else %}Start with the result you want to feel.{% endif %}</h2>
+        <h2 class="cy-heading">{% if is_fr %}Quel r&eacute;sultat voulez-vous obtenir&nbsp;?{% else %}Start with the result you want to feel.{% endif %}</h2>
       </div>
       <div class="cy-use__grid">
         {%- assign goal_blocks = section.blocks | where: 'type', 'goal' -%}
@@ -440,7 +392,7 @@
           {%- endfor -%}
         {%- else -%}
           <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="https://cdn.shopify.com/s/files/1/1050/6738/1078/files/antared-pano-ultra-athlete.jpg?v=1788765371" alt="{% if is_fr %}Routine de r&eacute;cup&eacute;ration Antared{% else %}Antared recovery routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><h3>{% if is_fr %}R&eacute;cup&eacute;ration{% else %}Recovery{% endif %}</h3><p>{% if is_fr %}Pour les muscles, articulations et routines apr&egrave;s effort.{% else %}For muscles, joints, and post-effort routines.{% endif %}</p></span></a>
-          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-skin-red-halo.jpg' | file_url }}" alt="{% if is_fr %}Routine peau Antared{% else %}Antared skin routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><h3>{% if is_fr %}Peau{% else %}Skin{% endif %}</h3><p>{% if is_fr %}Pour une routine r&eacute;guli&egrave;re orient&eacute;e teint, texture et &eacute;clat.{% else %}For a consistent routine focused on tone, texture, and radiance.{% endif %}</p></span></a>
+          <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-goal-skin-red-halo.jpg' | file_url }}" alt="{% if is_fr %}Routine peau Antared{% else %}Antared skin routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><h3>{% if is_fr %}Soin de la Peau{% else %}Skincare{% endif %}</h3><p>{% if is_fr %}Pour une routine r&eacute;guli&egrave;re orient&eacute;e teint, texture et &eacute;clat.{% else %}For a consistent routine focused on tone, texture, and radiance.{% endif %}</p></span></a>
           <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="{{ 'cytolight-desk-luxury.jpg' | file_url }}" alt="{% if is_fr %}Rituel de concentration Antared{% else %}Antared focus ritual{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><h3>{% if is_fr %}Focus{% else %}Focus{% endif %}</h3><p>{% if is_fr %}Pour installer un rituel lumineux autour du travail profond.{% else %}For building a short light ritual around deep work.{% endif %}</p></span></a>
           <a class="cy-use__item cy-reveal" href="{{ desk_url }}"><span class="cy-use__media"><img src="https://cdn.shopify.com/s/files/1/1050/6738/1078/files/antared-goal-sleep-pano-bedroom_0fadc7e4-edd1-4ea3-b378-a3b69f992690.jpg?v=1788767592" alt="{% if is_fr %}Routine du soir Antared{% else %}Antared evening routine{% endif %}" width="900" height="720" loading="lazy"></span><span class="cy-use__content"><h3>{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</h3><p>{% if is_fr %}Pour cr&eacute;er un signal calme et r&eacute;p&eacute;table en fin de journ&eacute;e.{% else %}For creating a repeatable calm signal at the end of the day.{% endif %}</p></span></a>
         {%- endif -%}
@@ -609,7 +561,7 @@
         { "type": "technical_fact", "settings": { "value": "1-40 Hz", "label_en": "configurable pulsing", "label_fr": "pulsations configurables" } },
         { "type": "technical_fact", "settings": { "value": "14 days", "label_en": "to try it at home", "label_fr": "pour l'essayer chez vous" } },
         { "type": "goal", "settings": { "title_en": "Recovery", "title_fr": "R&eacute;cup&eacute;ration" } },
-        { "type": "goal", "settings": { "title_en": "Skin", "title_fr": "Peau", "text_en": "For tone, texture, and visible radiance.", "text_fr": "Pour le teint, la texture et l'&eacute;clat visible." } },
+        { "type": "goal", "settings": { "title_en": "Skincare", "title_fr": "Soin de la Peau", "text_en": "For tone, texture, and visible radiance.", "text_fr": "Pour le teint, la texture et l'&eacute;clat visible." } },
         { "type": "goal", "settings": { "title_en": "Focus", "title_fr": "Focus", "text_en": "For a short ritual around deep work.", "text_fr": "Pour un rituel court autour du travail profond." } },
         { "type": "goal", "settings": { "title_en": "Sleep", "title_fr": "Sommeil", "text_en": "For a calm signal at the end of the day.", "text_fr": "Pour un signal calme en fin de journ&eacute;e." } }
       ]
