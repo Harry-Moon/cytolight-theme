@@ -735,37 +735,77 @@
   <div class='cl-product-wrap' id='cl-buy-area'>
 
     <div class='cl-col-left'>
+      {%- comment -%}
+        Filtre de galerie par langue, pour Desk uniquement : une image dont le
+        texte alternatif commence par [FR] ou [EN] n'apparait que dans cette
+        langue ; sans prefixe, elle reste commune aux deux (comportement
+        inchange pour les sept autres fiches, qui ne posent jamais ce
+        prefixe). Le prefixe est retire avant affichage — il ne sert qu'au tri.
+
+        `showSlot()` plus bas indexe slots/thumbs par POSITION dans le DOM
+        rendu (`slots[idx]`), pas par la valeur de l'attribut `data-slot` :
+        les deux boucles doivent donc renumeroter les items retenus a partir
+        de 0, sans jamais reutiliser `forloop.index0` (qui, lui, compte les
+        images ecartees et laisserait des trous).
+      {%- endcomment -%}
+      {%- assign gallery_visible_count = 0 -%}
       <div class='cl-gallery' id='cl-gallery'>
         {%- if product.media.size > 0 -%}
           {%- for media in product.media limit: 10 -%}
-            <div class='cl-media-slot {% if forloop.first %}is-active{% endif %}' data-slot='{{ forloop.index0 }}'>
-              {%- case media.media_type -%}
-                {%- when 'image' -%}
-                  <img src='{{ media | image_url: width: 1400 }}' alt='{{ media.alt | escape }}' loading='{% if forloop.first %}eager{% else %}lazy{% endif %}' width='{{ media.preview_image.width }}' height='{{ media.preview_image.height }}'>
-                {%- when 'video' -%}
-                  {{ media | video_tag: autoplay: false, loop: false, controls: true, muted: false }}
-                {%- when 'external_video' -%}
-                  {{ media | external_video_tag }}
-                {%- when 'model' -%}
-                  {{ media | model_viewer_tag: reveal: 'interaction', toggleable: true }}
-                {%- else -%}
-                  <img src='{{ media.preview_image | image_url: width: 1400 }}' alt='{{ media.alt | escape }}' loading='lazy' width='{{ media.preview_image.width }}' height='{{ media.preview_image.height }}'>
-              {%- endcase -%}
-            </div>
+            {%- assign media_skip = false -%}
+            {%- if is_desk -%}
+              {%- if media.alt contains '[FR]' and is_fr == false -%}
+                {%- assign media_skip = true -%}
+              {%- elsif media.alt contains '[EN]' and is_fr -%}
+                {%- assign media_skip = true -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- unless media_skip -%}
+              {%- assign media_alt_clean = media.alt | remove_first: '[FR]' | remove_first: '[EN]' | strip -%}
+              <div class='cl-media-slot {% if gallery_visible_count == 0 %}is-active{% endif %}' data-slot='{{ gallery_visible_count }}'>
+                {%- case media.media_type -%}
+                  {%- when 'image' -%}
+                    <img src='{{ media | image_url: width: 1400 }}' alt='{{ media_alt_clean | escape }}' loading='{% if gallery_visible_count == 0 %}eager{% else %}lazy{% endif %}' width='{{ media.preview_image.width }}' height='{{ media.preview_image.height }}'>
+                  {%- when 'video' -%}
+                    {{ media | video_tag: autoplay: false, loop: false, controls: true, muted: false }}
+                  {%- when 'external_video' -%}
+                    {{ media | external_video_tag }}
+                  {%- when 'model' -%}
+                    {{ media | model_viewer_tag: reveal: 'interaction', toggleable: true }}
+                  {%- else -%}
+                    <img src='{{ media.preview_image | image_url: width: 1400 }}' alt='{{ media_alt_clean | escape }}' loading='lazy' width='{{ media.preview_image.width }}' height='{{ media.preview_image.height }}'>
+                {%- endcase -%}
+              </div>
+              {%- assign gallery_visible_count = gallery_visible_count | plus: 1 -%}
+            {%- endunless -%}
           {%- endfor -%}
-        {%- else -%}
+        {%- endif -%}
+        {%- if gallery_visible_count == 0 -%}
           <div class='cl-media-slot is-active'>{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
         {%- endif -%}
       </div>
-      {%- if product.media.size > 0 -%}
+      {%- if gallery_visible_count > 0 -%}
         <div class='cl-thumbstrip' id='cl-thumbstrip'>
+          {%- assign thumb_visible_count = 0 -%}
           {%- for media in product.media limit: 10 -%}
-            <div class='cl-thumbitem {% if forloop.first %}is-active{% endif %}' data-slot='{{ forloop.index0 }}'>
-              <img src='{{ media.preview_image | image_url: width: 200 }}' alt='{{ media.alt | escape }}' loading='lazy' width='{{ media.preview_image.width }}' height='{{ media.preview_image.height }}'>
-              {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
-                <span class='cl-thumbitem__play'>&#9654;</span>
+            {%- assign media_skip = false -%}
+            {%- if is_desk -%}
+              {%- if media.alt contains '[FR]' and is_fr == false -%}
+                {%- assign media_skip = true -%}
+              {%- elsif media.alt contains '[EN]' and is_fr -%}
+                {%- assign media_skip = true -%}
               {%- endif -%}
-            </div>
+            {%- endif -%}
+            {%- unless media_skip -%}
+              {%- assign media_alt_clean = media.alt | remove_first: '[FR]' | remove_first: '[EN]' | strip -%}
+              <div class='cl-thumbitem {% if thumb_visible_count == 0 %}is-active{% endif %}' data-slot='{{ thumb_visible_count }}'>
+                <img src='{{ media.preview_image | image_url: width: 200 }}' alt='{{ media_alt_clean | escape }}' loading='lazy' width='{{ media.preview_image.width }}' height='{{ media.preview_image.height }}'>
+                {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+                  <span class='cl-thumbitem__play'>&#9654;</span>
+                {%- endif -%}
+              </div>
+              {%- assign thumb_visible_count = thumb_visible_count | plus: 1 -%}
+            {%- endunless -%}
           {%- endfor -%}
         </div>
       {%- endif -%}
