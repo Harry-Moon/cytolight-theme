@@ -1,3 +1,6 @@
+// touch: force a fresh GitHub->Shopify sync of this asset (the live theme
+// was serving an 11-day-old build with the pre-rebrand "knee" product and
+// no result CTA -- see PR fixing sections/find-your-cytolight.liquid).
 (function () {
   'use strict';
 
