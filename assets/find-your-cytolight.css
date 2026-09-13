@@ -13,8 +13,14 @@
   /* Sizes to its content instead of forcing 100svh + vertical centering:
      that combination left a large empty band above and below the card
      on every step shorter than the viewport (the welcome/question steps
-     especially), instead of the section just wrapping its content. */
-  padding: calc(var(--header-h, 72px) + 32px) 20px 40px;
+     especially), instead of the section just wrapping its content.
+
+     No --header-h offset here: on this page the site header is a normal
+     in-flow element (position: relative), not fixed/overlaying, so it
+     already pushes this section down on its own -- adding --header-h on
+     top of that stacked a second, redundant header's worth of space
+     above the card. */
+  padding: 40px 20px 40px;
   display: flex;
   justify-content: center;
   color: var(--fyc-text);
