@@ -9,10 +9,12 @@
   background:
     radial-gradient(circle at 50% -10%, rgba(210, 13, 47, .28), transparent 55%),
     var(--fyc-bg);
-  padding: calc(var(--header-h, 72px) + 40px) 20px 64px;
-  min-height: 100svh;
+  /* Sizes to its content instead of forcing 100svh + vertical centering:
+     that combination left a large empty band above and below the card
+     on every step shorter than the viewport (the welcome/question steps
+     especially), instead of the section just wrapping its content. */
+  padding: calc(var(--header-h, 72px) + 32px) 20px 40px;
   display: flex;
-  align-items: center;
   justify-content: center;
   color: var(--fyc-text);
 }
@@ -359,19 +361,26 @@
 
 .fyc-retake {
   appearance: none;
-  border: 1px solid var(--fyc-line);
-  background: transparent;
+  border: 1px solid rgba(210, 13, 47, .55);
+  background: rgba(210, 13, 47, .08);
   color: var(--fyc-text);
   border-radius: 999px;
   font-size: .88rem;
   font-weight: 500;
   padding: 11px 20px;
   cursor: pointer;
-  transition: border-color .15s ease;
+  box-shadow: 0 0 22px -6px rgba(210, 13, 47, .75);
+  transition: border-color .2s ease, background .2s ease, box-shadow .25s ease, transform .15s ease;
 }
 @media (hover: hover) and (pointer: fine) {
-  .fyc-retake:hover { border-color: rgba(255, 255, 255, .4); }
+  .fyc-retake:hover {
+    border-color: var(--color-accent, #d20d2f);
+    background: rgba(210, 13, 47, .16);
+    box-shadow: 0 0 32px -4px rgba(210, 13, 47, .95);
+    transform: translateY(-1px);
+  }
 }
+.fyc-retake:active { box-shadow: 0 0 14px -6px rgba(210, 13, 47, .6); transform: translateY(0); }
 
 .fyc-dots {
   margin-top: 36px;
