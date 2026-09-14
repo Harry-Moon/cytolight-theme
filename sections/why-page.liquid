@@ -43,6 +43,18 @@
   endif
 
   assign handle = page.handle
+
+  assign media_antares_file = ''
+  assign media_antares_w = 1600
+  assign media_antares_h = 1200
+
+  assign media_founder_tuan_file = ''
+  assign media_founder_tuan_w = 1200
+  assign media_founder_tuan_h = 1500
+
+  assign media_founder_harry_file = ''
+  assign media_founder_harry_w = 1200
+  assign media_founder_harry_h = 1500
 -%}
 
 <section class="ln-hero">
@@ -171,6 +183,84 @@
       </div>
     </div>
   </section>
+
+  {%- if handle == 'our-story' -%}
+
+    <section class="ln-section ln-section--soft">
+      <div class="ln-shell">
+        <div class="ln-split">
+          <div class="ln-split__text ln-reveal">
+            <p class="ln-kicker">{% if is_fr %}D&apos;o&ugrave; vient le nom{% else %}Where the name comes from{% endif %}</p>
+            <h2 class="ln-subtitle">{% if is_fr %}Antar&egrave;s, l&apos;&eacute;toile qui a donn&eacute; son nom &agrave; la marque{% else %}Antares, the star behind the name{% endif %}</h2>
+            <p class="ln-copy">
+              {%- if is_fr -%}
+                Antar&egrave;s est une superg&eacute;ante rouge&nbsp;: l&apos;une des &eacute;toiles les plus brillantes visibles &agrave; l&apos;&oelig;il nu, dans la constellation du Scorpion. Les astronomes grecs l&apos;avaient surnomm&eacute;e &laquo;&nbsp;anti-Ar&egrave;s&nbsp;&raquo; &mdash; la rivale de Mars &mdash; pour la teinte rouge intense qui la distingue du reste du ciel nocturne.
+              {%- else -%}
+                Antares is a red supergiant &mdash; one of the brightest stars visible to the naked eye, sitting in the constellation Scorpio. Ancient Greek astronomers named it &laquo;&nbsp;anti-Ares&nbsp;&raquo; &mdash; the rival of Mars &mdash; for the deep red hue that sets it apart from the rest of the night sky.
+              {%- endif -%}
+            </p>
+            <p class="ln-copy">
+              {%- if is_fr -%}
+                C&apos;est ce rouge-l&agrave; que nous avons repris pour nommer la marque&nbsp;: une couleur qui se voit de loin, associ&eacute;e depuis toujours &agrave; l&apos;intensit&eacute; plut&ocirc;t qu&apos;&agrave; la douceur &mdash; &agrave; l&apos;image de la lumi&egrave;re rouge et proche infrarouge au c&oelig;ur de chaque appareil.
+              {%- else -%}
+                That same red is what we borrowed for the brand name: a colour that reads from a distance, long associated with intensity rather than softness &mdash; much like the red and near-infrared light at the core of every device.
+              {%- endif -%}
+            </p>
+          </div>
+
+          <div class="ln-split__media ln-reveal">
+            {% render 'media-slot',
+               file: media_antares_file, w: media_antares_w, h: media_antares_h,
+               ratio: '4 / 3',
+               alt_fr: 'Antar&egrave;s, la superg&eacute;ante rouge de la constellation du Scorpion, sur un fond de ciel &eacute;toil&eacute;.',
+               alt_en: 'Antares, the red supergiant star in the constellation Scorpio, against a starfield.',
+               brief_fr: 'Antar&egrave;s, superg&eacute;ante rouge &mdash; photo ou illustration astronomique du ciel nocturne.',
+               brief_en: 'Antares, red supergiant &mdash; an astronomy photo or illustration of the night sky.' %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ln-section">
+      <div class="ln-shell ln-shell--narrow">
+        <div class="ln-reveal">
+          <p class="ln-kicker">{% if is_fr %}L&apos;&eacute;quipe{% else %}The team{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}Les deux personnes derri&egrave;re Antared{% else %}The two people behind Antared{% endif %}</h2>
+        </div>
+
+        <div class="ln-founders ln-reveal">
+          {% render 'founder-portrait',
+             file: media_founder_tuan_file, w: media_founder_tuan_w, h: media_founder_tuan_h,
+             name: 'Tuan',
+             role_fr: 'Coach et biohacker, France',
+             role_en: 'Coach and biohacker, France',
+             alt_fr: 'Portrait de Tuan, cofondateur d&apos;Antared, coach et biohacker.',
+             alt_en: 'Portrait of Tuan, Antared co-founder, coach and biohacker.',
+             brief_fr: 'Portrait de Tuan &mdash; cadrage buste, fond neutre.',
+             brief_en: 'Portrait of Tuan &mdash; head-and-shoulders, neutral background.' %}
+
+          {% render 'founder-portrait',
+             file: media_founder_harry_file, w: media_founder_harry_w, h: media_founder_harry_h,
+             name: 'Harry',
+             role_fr: 'Passionn&eacute; de tech et de sant&eacute;',
+             role_en: 'Tech and health enthusiast',
+             alt_fr: 'Portrait de Harry, cofondateur d&apos;Antared, passionn&eacute; de tech et de sant&eacute;.',
+             alt_en: 'Portrait of Harry, Antared co-founder, tech and health enthusiast.',
+             brief_fr: 'Portrait de Harry &mdash; cadrage buste, fond neutre.',
+             brief_en: 'Portrait of Harry &mdash; head-and-shoulders, neutral background.' %}
+        </div>
+
+        <p class="ln-copy ln-reveal">
+          {%- if is_fr -%}
+            Tuan teste et affine des protocoles de luminoth&eacute;rapie sur le terrain depuis des ann&eacute;es aupr&egrave;s de ses athl&egrave;tes&nbsp;; Harry a voulu appliquer au secteur de la sant&eacute; la m&ecirc;me rigueur d&apos;ing&eacute;nierie que celle connue en technologie. Antared est n&eacute;e de cette rencontre.
+          {%- else -%}
+            Tuan has spent years testing and refining light therapy protocols in the field with his athletes; Harry set out to bring the same engineering rigour he&apos;d seen in tech to the health space. Antared grew out of that meeting of minds.
+          {%- endif -%}
+        </p>
+      </div>
+    </section>
+
+  {%- endif -%}
 
   {% render 'learn-product-cta', handles: 'antared-desk-red-light-therapy-panel,cap,antared-pano-ultra' %}
 

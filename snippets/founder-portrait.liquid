@@ -1,0 +1,55 @@
+{%- comment -%}
+  Portrait fondateur — image de Content > Files, ou emplacement reserve.
+
+  Meme logique a deux etats que media-slot.liquid (aucun trou tant que le
+  fichier n'existe pas), avec en plus le traitement propre a cette page :
+  noir et blanc au repos, teinte rouge de la marque au survol.
+
+  Parametres :
+    file          nom du fichier dans Content > Files. Vide = encart reserve.
+    w / h         dimensions reelles du fichier, en pixels.
+    name          prenom affiche sous le portrait.
+    role_fr/_en   fonction affichee sous le prenom.
+    alt_fr/_en    texte alternatif de l'image.
+    brief_fr/_en  ce que le visuel doit montrer — affiche dans l'encart reserve.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_fr = false
+  if request.locale.iso_code contains 'fr'
+    assign is_fr = true
+  endif
+
+  assign portrait_alt = alt_en
+  assign portrait_brief = brief_en
+  assign portrait_role = role_en
+  if is_fr
+    assign portrait_alt = alt_fr | default: alt_en
+    assign portrait_brief = brief_fr | default: brief_en
+    assign portrait_role = role_fr | default: role_en
+  endif
+-%}
+
+<figure class="ln-founder">
+  <div class="ln-founder__frame">
+    {%- if file != blank -%}
+      <img class="ln-founder__img"
+           src="{{ file | file_url }}"
+           alt="{{ portrait_alt | strip_html | escape }}"
+           width="{{ w | default: 1200 }}"
+           height="{{ h | default: 1500 }}"
+           loading="lazy"
+           decoding="async">
+    {%- else -%}
+      <div class="ln-media__ph">
+        <p class="ln-media__tag">{% if is_fr %}Visuel{% else %}Visual{% endif %}</p>
+        <p class="ln-media__brief">{{ portrait_brief }}</p>
+        <p class="ln-media__spec">4&frasl;5 &middot; Content &rarr; Files</p>
+      </div>
+    {%- endif -%}
+  </div>
+  <figcaption class="ln-founder__caption">
+    <p class="ln-founder__name">{{ name }}</p>
+    <p class="ln-founder__role">{{ portrait_role }}</p>
+  </figcaption>
+</figure>
