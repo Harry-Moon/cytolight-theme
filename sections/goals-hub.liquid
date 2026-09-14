@@ -3,8 +3,8 @@
 
   L'onglet « Par objectif » du header pointe ici. La page ne decrit aucun
   objectif elle-meme : elle explique le decoupage, puis redistribue vers les
-  cinq pages qui le portent (recovery, performance, skin-amp-glow, longevity,
-  work-amp-focus — gabarit `page.<handle>`, section « Par objectif — page »).
+  six pages qui le portent (recovery, performance, skin-amp-glow, longevity,
+  work-amp-focus, sleep — gabarit `page.<handle>`, section « Par objectif — page »).
   Ce ne sont pas des collections : la seule collection reelle du catalogue est
   `panels`. C'est l'axe d'entree dans la gamme — on entre par un resultat de
   recherche, pas par un appareil.
@@ -51,6 +51,10 @@
   if url_focus == blank
     assign url_focus = locale_root | append: '/pages/work-amp-focus'
   endif
+  assign url_sleep = pages['sleep'].url
+  if url_sleep == blank
+    assign url_sleep = locale_root | append: '/pages/sleep'
+  endif
 
   assign url_quiz = pages['find-your-cytolight'].url
   if url_quiz == blank
@@ -90,12 +94,12 @@
     </h1>
     <p class="ln-copy">
       {%- if is_fr -%}
-        Cinq entr&eacute;es dans la gamme, class&eacute;es par zone du corps et par moment d'usage. Elles
+        Six entr&eacute;es dans la gamme, class&eacute;es par zone du corps et par moment d'usage. Elles
         ne d&eacute;crivent pas un r&eacute;sultat garanti&nbsp;: elles d&eacute;crivent la routine &agrave; laquelle
         chaque appareil est destin&eacute;, et ce qu'il faut pouvoir tenir pour qu'elle serve &agrave;
         quelque chose.
       {%- else -%}
-        Five ways into the range, sorted by area of the body and by moment of use. They do not
+        Six ways into the range, sorted by area of the body and by moment of use. They do not
         describe a guaranteed outcome: they describe the routine each device is built around,
         and what you need to be able to keep up for it to be worth anything.
       {%- endif -%}
@@ -116,7 +120,7 @@
   <div class="ln-shell">
     <div class="ln-head ln-reveal">
       <div>
-        <p class="ln-kicker">{% if is_fr %}Cinq objectifs{% else %}Five goals{% endif %}</p>
+        <p class="ln-kicker">{% if is_fr %}Six objectifs{% else %}Six goals{% endif %}</p>
         <h2 class="ln-title ln-title--wide">
           {%- if is_fr -%}Qu'est-ce que vous cherchez &agrave; installer dans votre semaine&nbsp;?{%- else -%}What are you trying to fit into your week?{%- endif -%}
         </h2>
@@ -140,7 +144,7 @@
         assign goal_cta_en = 'Open this goal'
       -%}
 
-      {%- for i in (1..5) -%}
+      {%- for i in (1..6) -%}
         {%- case i -%}
           {%- when 1 -%}
             {%- assign goal_url = url_recovery -%}
@@ -165,7 +169,7 @@
             {%- assign goal_text_en = 'Face and scalp, in visible red. The mask and the cap exist because an evening routine only survives if it takes ten minutes and no effort.' -%}
           {%- when 4 -%}
             {%- assign goal_url = url_longevity -%}
-            {%- assign goal_image = 'cytolight-goal-sleep-pano-bedroom.jpg' -%}
+            {%- assign goal_image = 'cytolight-pano-ultra-luxury.jpg' -%}
             {%- assign goal_title_fr = 'Long&eacute;vit&eacute;' -%}
             {%- assign goal_title_en = 'Longevity' -%}
             {%- assign goal_text_fr = 'Pour qui lit les publications avant d&#39;acheter&nbsp;: les appareils dont les param&egrave;tres sont pilotables un par un &mdash; longueur d&#39;onde, intensit&eacute;, pulsation &mdash; plut&ocirc;t qu&#39;un bouton unique.' -%}
@@ -177,6 +181,13 @@
             {%- assign goal_title_en = 'Work &amp; Focus' -%}
             {%- assign goal_text_fr = 'Le moment du bureau. Le DESK est con&ccedil;u pour &ecirc;tre pos&eacute; en face de soi pendant qu&#39;on travaille, ce qui r&eacute;sout le seul vrai probl&egrave;me&nbsp;: trouver le temps.' -%}
             {%- assign goal_text_en = 'The desk moment. The DESK is built to sit in front of you while you work, which solves the only real problem: finding the time.' -%}
+          {%- when 6 -%}
+            {%- assign goal_url = url_sleep -%}
+            {%- assign goal_image = 'cytolight-goal-sleep-pano-bedroom.jpg' -%}
+            {%- assign goal_title_fr = 'Sommeil' -%}
+            {%- assign goal_title_en = 'Sleep' -%}
+            {%- assign goal_text_fr = 'Un rituel du soir, &agrave; heure fixe&nbsp;: un panneau dans la chambre, une lumi&egrave;re chaude, dix minutes avant que l&#39;&eacute;cran ne s&#39;&eacute;teigne pour de bon.' -%}
+            {%- assign goal_text_en = 'An evening ritual, at a fixed time: a panel in the bedroom, warm light, ten minutes before the screen goes dark for good.' -%}
         {%- endcase -%}
 
         {%- assign goal_title = goal_title_en -%}
@@ -277,10 +288,10 @@
         </li>
         <li>
           {%- if is_fr -%}
-            Les cinq objectifs ci-dessus d&eacute;crivent des zones et des moments d'usage. Ils ne
+            Les six objectifs ci-dessus d&eacute;crivent des zones et des moments d'usage. Ils ne
             promettent aucun r&eacute;sultat individuel.
           {%- else -%}
-            The five goals above describe areas and moments of use. They promise no individual
+            The six goals above describe areas and moments of use. They promise no individual
             outcome.
           {%- endif -%}
         </li>
@@ -324,7 +335,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Page d'atterrissage de l'onglet « Par objectif » du header. A assigner a une page de handle `goals`. Les cinq cartes pointent vers les pages recovery, performance, skin-amp-glow, longevity et work-amp-focus (gabarit `page.<handle>`, section « Par objectif — page ») : renommer une de ces pages dans l'admin casse le lien correspondant."
+      "content": "Page d'atterrissage de l'onglet « Par objectif » du header. A assigner a une page de handle `goals`. Les six cartes pointent vers les pages recovery, performance, skin-amp-glow, longevity, work-amp-focus et sleep (gabarit `page.<handle>`, section « Par objectif — page ») : renommer une de ces pages dans l'admin casse le lien correspondant."
     }
   ]
 }

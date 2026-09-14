@@ -86,7 +86,7 @@
 
   # `panels` est la seule collection reelle du catalogue (plusieurs produits) ;
   # `collections['panels'].url` porte le prefixe de langue, avec repli tant
-  # qu'elle n'existe pas. Les cinq objectifs, eux, sont des PAGES — voir
+  # qu'elle n'existe pas. Les six objectifs, eux, sont des PAGES — voir
   # CLAUDE.md, « Sous-pages Par objectif » — d'ou `pages[handle].url` pour
   # chacune, avec repli sur `/pages/<handle>`.
   assign col_panels = collections['panels'].url
@@ -112,6 +112,10 @@
   assign url_focus = pages['work-amp-focus'].url
   if url_focus == blank
     assign url_focus = locale_root | append: '/pages/work-amp-focus'
+  endif
+  assign url_sleep = pages['sleep'].url
+  if url_sleep == blank
+    assign url_sleep = locale_root | append: '/pages/sleep'
   endif
 
   assign url_goals_media = url_skin
@@ -191,6 +195,7 @@
                 <a href="{{ url_skin }}">{% if is_fr %}Peau &amp; &Eacute;clat{% else %}Skin &amp; Glow{% endif %}</a>
                 <a href="{{ url_longevity }}">{% if is_fr %}Long&eacute;vit&eacute;{% else %}Longevity{% endif %}</a>
                 <a href="{{ url_focus }}">{% if is_fr %}Travail &amp; Concentration{% else %}Work &amp; Focus{% endif %}</a>
+                <a href="{{ url_sleep }}">{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</a>
               </div>
             </details>
 
@@ -430,6 +435,7 @@
                 <p class="site-header__panel-heading">{% if is_fr %}Quotidien{% else %}Everyday{% endif %}</p>
                 <a href="{{ url_skin }}">{% if is_fr %}Peau &amp; &Eacute;clat{% else %}Skin &amp; Glow{% endif %}</a>
                 <a href="{{ url_focus }}">{% if is_fr %}Travail &amp; Concentration{% else %}Work &amp; Focus{% endif %}</a>
+                <a href="{{ url_sleep }}">{% if is_fr %}Sommeil{% else %}Sleep{% endif %}</a>
               </div>
             </div>
           </div>
