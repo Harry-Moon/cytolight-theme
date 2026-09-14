@@ -1280,7 +1280,11 @@
   justify-content: center;
   margin-top: clamp(28px, 4vw, 44px);
 }
-.ln-antares-logo img { display: block; width: 96px; height: 96px; }
+.ln-antares-logo img {
+  display: block;
+  width: clamp(96px, 12vw, 176px);
+  height: clamp(96px, 12vw, 176px);
+}
 
 /* ---------- portraits fondateurs (snippets/founder-portrait.liquid) ---------- */
 
