@@ -123,7 +123,7 @@
   .cy-hero__content { position: absolute; inset: 0; padding: 22px 0 40px; display: flex; flex-direction: column; justify-content: flex-end; }
   .cy-hero__logo {
     position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
-    width: 96px; margin: 0;
+    width: 148px; margin: 0;
   }
 }
 .cy-hero h1 { max-width: 930px; margin: 0; font-family: "Instrument Serif", Georgia, serif; font-size: clamp(54px, 8vw, 116px); line-height: .94; font-weight: 400; letter-spacing: -.02em; }
