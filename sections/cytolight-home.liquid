@@ -118,6 +118,38 @@
     </div>
   </section>
 
+  <section class="cy-cinema" data-cy-cinema id="cy-mask-ritual">
+    <div class="cy-cinema__stage">
+      <div class="cy-cinema__world">
+        <img src="{{ '05_CytoLight_Mask_Spa.png' | file_url }}" alt="{% if is_fr %}Antared Mask en routine visage{% else %}Antared Mask face routine{% endif %}" width="1600" height="900" loading="lazy">
+        <span class="cy-cinema__beam" aria-hidden="true"><span></span></span>
+        <span class="cy-cinema__glow" aria-hidden="true"></span>
+      </div>
+      <div class="cy-cinema__panel">
+        <p class="cy-kicker">{% if is_fr %}Visage &middot; Beaut&eacute;{% else %}Face &middot; Beauty{% endif %}</p>
+        <h2>{% if is_fr %}Bleu, rouge, proche infrarouge. Un seul masque.{% else %}Blue, red, near-infrared. One single mask.{% endif %}</h2>
+        <p>{% if is_fr %}Un masque LED souple en silicone, avec 288 LED r&eacute;parties sur 4 canaux : bleu 460nm, rouge 630nm et proche infrarouge 850nm, pour une routine visage courte, sans fil et facile &agrave; r&eacute;p&eacute;ter.{% else %}A flexible silicone LED mask with 288 LEDs across 4 channels &#8212; 460nm blue, 630nm red, and 850nm near-infrared &#8212; for a short, cordless face routine that is easy to repeat.{% endif %}</p>
+        <div class="cy-cap-points cy-reveal" aria-label="{% if is_fr %}Points forts Antared Mask{% else %}Antared Mask highlights{% endif %}">
+          <span>
+            <svg class="cy-cap-points__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="6" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="18" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="6" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="6" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="18" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>
+            {% if is_fr %}288 LED sur 4 canaux{% else %}288 LEDs across 4 channels{% endif %}
+          </span>
+          <span>
+            <svg class="cy-cap-points__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 12c1.6-4.5 3.2-4.5 4.8 0s3.2 4.5 4.8 0 3.2-4.5 4.8 0 3.2 4.5 4.8 0"/></svg>
+            460-850nm
+          </span>
+          <span>
+            <svg class="cy-cap-points__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+            {% if is_fr %}3 modes, intensit&eacute; variable{% else %}3 modes, adjustable intensity{% endif %}
+          </span>
+        </div>
+        <div class="cy-actions">
+          <a class="cy-button cy-button--light" href="{{ mask_url }}">{% if is_fr %}D&eacute;couvrir Antared Mask{% else %}Discover Antared Mask{% endif %}</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="cy-cinema" data-cy-cinema id="cy-science">
     <div class="cy-cinema__stage">
       <div class="cy-cinema__world">
