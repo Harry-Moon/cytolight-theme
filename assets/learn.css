@@ -1241,6 +1241,78 @@
 .ln-media__caption { margin: 12px 0 0; color: var(--ln-muted); font-size: 13.5px; line-height: 1.6; }
 .ln-section--dark .ln-media__caption { color: rgba(255, 255, 255, .6); }
 
+/* ---------- visuel Antar&egrave;s (sections/why-page.liquid, page our-story) ---------- */
+
+.ln-antares-hero { padding-bottom: clamp(48px, 6vw, 72px); }
+
+.ln-antares-visual {
+  position: relative;
+  border-radius: var(--ln-radius-lg);
+  overflow: hidden;
+}
+.ln-antares-visual__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, .8) 100%);
+  pointer-events: none;
+}
+
+/*
+ * ANTARES -> ANTARED ne differe que d'une lettre : la marque a repris le nom
+ * de l'etoile en changeant seulement le S final en D. Le mot est donc ecrit
+ * une fois ("ANTARE"), suivi d'une seule lettre qui bascule — pas d'un mot
+ * entier recompose.
+ */
+.ln-antares-word {
+  position: absolute;
+  left: clamp(20px, 4vw, 48px);
+  right: clamp(20px, 4vw, 48px);
+  bottom: clamp(20px, 4vw, 40px);
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  perspective: 600px;
+  font-family: "Instrument Serif", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(34px, 7vw, 92px);
+  line-height: 1;
+  letter-spacing: .01em;
+  color: #fff;
+  pointer-events: none;
+}
+.ln-antares-word__flip {
+  position: relative;
+  display: inline-block;
+  width: .62em;
+  height: 1em;
+  transform-style: preserve-3d;
+  /* Etat par defaut (sans script, ou mouvement reduit) : ANTARED, jamais
+     ANTARES a l'arret — voir la note sur .is-armed dans le bloc reveal. */
+  transform: rotateX(180deg);
+}
+.ln-antares-word__s,
+.ln-antares-word__d {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+.ln-antares-word__d { color: var(--ln-red); transform: rotateX(180deg); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .ln-antares-visual.is-armed:not(.is-visible) .ln-antares-word__flip {
+    transform: rotateX(0deg);
+    transition: none;
+  }
+  .ln-antares-visual.is-visible .ln-antares-word__flip {
+    transition: transform .9s var(--ln-ease) .35s;
+  }
+}
+
+@media (max-width: 640px) {
+  .ln-antares-word { position: static; margin-top: 16px; }
+  .ln-antares-visual__scrim { display: none; }
+}
+
 /* ---------- portraits fondateurs (snippets/founder-portrait.liquid) ---------- */
 
 .ln-founders {
