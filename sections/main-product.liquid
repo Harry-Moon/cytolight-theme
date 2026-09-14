@@ -736,11 +736,11 @@
 
     <div class='cl-col-left'>
       {%- comment -%}
-        Filtre de galerie par langue, pour Desk uniquement : une image dont le
-        texte alternatif commence par [FR] ou [EN] n'apparait que dans cette
-        langue ; sans prefixe, elle reste commune aux deux (comportement
-        inchange pour les sept autres fiches, qui ne posent jamais ce
-        prefixe). Le prefixe est retire avant affichage — il ne sert qu'au tri.
+        Filtre de galerie par langue, pour Desk et Mask uniquement : une image
+        dont le texte alternatif commence par [FR] ou [EN] n'apparait que dans
+        cette langue ; sans prefixe, elle reste commune aux deux (comportement
+        inchange pour les autres fiches, qui ne posent jamais ce prefixe). Le
+        prefixe est retire avant affichage — il ne sert qu'au tri.
 
         `showSlot()` plus bas indexe slots/thumbs par POSITION dans le DOM
         rendu (`slots[idx]`), pas par la valeur de l'attribut `data-slot` :
@@ -753,7 +753,7 @@
         {%- if product.media.size > 0 -%}
           {%- for media in product.media limit: 10 -%}
             {%- assign media_skip = false -%}
-            {%- if is_desk -%}
+            {%- if is_desk or is_mask -%}
               {%- if media.alt contains '[FR]' and is_fr == false -%}
                 {%- assign media_skip = true -%}
               {%- elsif media.alt contains '[EN]' and is_fr -%}
@@ -789,7 +789,7 @@
           {%- assign thumb_visible_count = 0 -%}
           {%- for media in product.media limit: 10 -%}
             {%- assign media_skip = false -%}
-            {%- if is_desk -%}
+            {%- if is_desk or is_mask -%}
               {%- if media.alt contains '[FR]' and is_fr == false -%}
                 {%- assign media_skip = true -%}
               {%- elsif media.alt contains '[EN]' and is_fr -%}
