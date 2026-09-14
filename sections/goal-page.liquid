@@ -1,9 +1,9 @@
 {%- comment -%}
-  Les cinq sous-pages de « Par objectif », servies par une seule section.
+  Les six sous-pages de « Par objectif », servies par une seule section.
 
   Meme mecanique que `sections/protocol-page.liquid` et `sections/pro-page.liquid` :
   la section derive le sujet depuis le handle de la PAGE, puis rend une ossature
-  commune, hero compris. Cinq destinations, une seule mise en page a maintenir.
+  commune, hero compris. Six destinations, une seule mise en page a maintenir.
 
   | Handle page     | Objectif                | Bloc signature          |
   |------------------|-------------------------|--------------------------|
@@ -12,13 +12,14 @@
   | skin-amp-glow    | Peau & Eclat             | trio de surface          |
   | longevity        | Longevite                | horizon des mesures      |
   | work-amp-focus   | Travail & Concentration | trois questions          |
+  | sleep            | Sommeil                  | quatre reperes du rituel |
 
-  Ces cinq pages ne sont PAS des collections : la seule collection reelle de la
+  Ces six pages ne sont PAS des collections : la seule collection reelle de la
   boutique est `panels`. Chaque objectif se termine par une selection de trois
   produits pertinents, rendue par `snippets/learn-product-cta.liquid` — un lien
   direct vers la fiche produit, pas une grille filtree.
 
-  Le bloc signature est ce qui empeche les cinq pages de se ressembler. Elles
+  Le bloc signature est ce qui empeche les six pages de se ressembler. Elles
   partaient toutes du meme hero, de la meme accroche et des memes trois
   arguments : le decoupage par objectif ne se voyait nulle part une fois clique.
   Chaque objectif rend donc un composant different d'`assets/learn.css` — aucune
@@ -26,7 +27,7 @@
 
   CONTRAT EDITORIAL — il ne se contourne pas :
 
-  1. Le bloc « ce que cet objectif ne dit pas » figure sur les cinq pages. C'est
+  1. Le bloc « ce que cet objectif ne dit pas » figure sur les six pages. C'est
      lui qui tient la page du bon cote du principe II de la constitution :
      nommer un objectif d'usage est autorise, laisser entendre une indication ne
      l'est pas. Le retirer transforme la page en allegation.
@@ -35,8 +36,9 @@
      et profondeurs de `sections/learn-wavelengths.liquid`. Ces deux pages font
      foi. Une valeur changee ici sans l'etre la-bas cree une contradiction
      qu'aucun script ne voit — elle ne se verra qu'en clientele.
-  3. Les cinq objectifs decrivent des zones du corps et des moments d'usage.
-     Aucun ne nomme une pathologie, meme par sous-entendu.
+  3. Les six objectifs decrivent des zones du corps et des moments d'usage.
+     Aucun ne nomme une pathologie, meme par sous-entendu — le sommeil inclus :
+     cette page ne pretend traiter aucun trouble du sommeil.
 
   Faute de tableaux d'objets en Liquid, les listes repetees passent par une
   chaine a deux separateurs : `|` separe les elements, `~` separe le titre du
@@ -66,6 +68,8 @@
       assign objectif = 'longevity'
     when 'work-amp-focus'
       assign objectif = 'focus'
+    when 'sleep'
+      assign objectif = 'sleep'
   endcase
 -%}
 
@@ -323,6 +327,52 @@
 
         assign limites_fr = 'Ce n&apos;est pas une lampe de luminoth&eacute;rapie saisonni&egrave;re~Les lampes de jour visent le rythme circadien avec un autre spectre et une autre intensit&eacute;. Ce n&apos;est ni le m&ecirc;me appareil ni le m&ecirc;me usage.|Elle ne traite ni la fatigue ni un trouble du sommeil~Une fatigue persistante rel&egrave;ve d&apos;un m&eacute;decin. C&apos;est un produit de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical.|Elle ne remplace pas une pause~Ni une bonne hauteur d&apos;&eacute;cran, ni une chaise correcte, ni le fait de se lever.|Elle ne promet aucun gain de concentration~Nous ne connaissons pas d&apos;essai qui mesurerait cela sur un appareil comme les n&ocirc;tres, et nous n&apos;en inventons pas.'
         assign limites_en = 'This is not a seasonal light-therapy lamp~Daylight lamps target the circadian rhythm with a different spectrum and a different intensity. Neither the same device nor the same use.|It treats neither fatigue nor a sleep disorder~Persistent fatigue goes to a doctor. This is a wellness product, without medical-device CE marking.|It does not replace a break~Nor a correct screen height, nor a decent chair, nor standing up.|It promises no gain in concentration~We know of no trial measuring that on a device like ours, and we do not invent one.'
+
+      when 'sleep'
+        assign crumb_fr = 'Sommeil'
+        assign crumb_en = 'Sleep'
+        assign hero_kicker_fr = 'Objectif &mdash; sommeil'
+        assign hero_kicker_en = 'Goal &mdash; sleep'
+        assign hero_titre_fr = 'Un signal calme, r&eacute;p&eacute;t&eacute; chaque soir.'
+        assign hero_titre_en = 'A calm signal, repeated every evening.'
+        assign hero_accroche_fr = 'Cet objectif ne cherche pas la puissance mais la r&eacute;p&eacute;tition&nbsp;: la m&ecirc;me lumi&egrave;re chaude, au m&ecirc;me moment, avant que la pi&egrave;ce ne s&apos;&eacute;teigne pour de bon. Les appareils rassembl&eacute;s ici couvrent un panneau pos&eacute; dans la chambre comme un rituel court au bureau, en fin de journ&eacute;e.'
+        assign hero_accroche_en = 'This goal is not chasing power but repetition: the same warm light, at the same moment, before the room goes dark for the night. The devices gathered here cover a panel set up in the bedroom as much as a short ritual at your desk, at the end of the day.'
+        assign f1_val = '10&ndash;15 min'
+        assign f1_fr = 'la dur&eacute;e du rituel, pas plus'
+        assign f1_en = 'the length of the ritual, no more'
+        assign f2_val = '30&ndash;60 min'
+        assign f2_val_en = '30&ndash;60 min'
+        assign f2_fr = 'avant l&apos;heure du coucher'
+        assign f2_en = 'before your bedtime'
+        assign f3_val = '630 &middot; 660 nm'
+        assign f3_fr = 'le rouge visible, sans composante bleue'
+        assign f3_en = 'visible red, with no blue component'
+
+        assign produits = 'antared-pano-ultra,antared-desk-red-light-therapy-panel,mask'
+        assign protocole_a = 'daily-recovery'
+        assign protocole_b = 'skin-routine'
+        assign protocole_a_fr = 'R&eacute;cup&eacute;ration quotidienne'
+        assign protocole_a_en = 'Daily recovery'
+        assign protocole_b_fr = 'Routine peau'
+        assign protocole_b_en = 'Skin routine'
+
+        assign kicker_fr = 'Un rituel, pas une promesse'
+        assign kicker_en = 'A ritual, not a promise'
+        assign titre_fr = 'La lumi&egrave;re ne vous endort pas. Elle marque le moment o&ugrave; la journ&eacute;e s&apos;arr&ecirc;te.'
+        assign titre_en = 'The light does not put you to sleep. It marks the moment the day stops.'
+        assign intro_fr = 'Cet objectif ne repose pas sur un effet mesur&eacute; du rouge sur l&apos;endormissement &mdash; nous n&apos;en connaissons pas sur nos appareils, et nous n&apos;en all&eacute;guons aucun. Ce qu&apos;il propose est plus simple&nbsp;: un geste r&eacute;p&eacute;t&eacute; chaque soir, &agrave; heure fixe, qui remplace le d&eacute;filement d&apos;un &eacute;cran par dix minutes de lumi&egrave;re chaude et de calme.'
+        assign intro_en = 'This goal does not rest on a measured effect of red light on falling asleep &mdash; we know of none on our own devices, and we allege none. What it offers is simpler: a gesture repeated every evening, at a fixed time, that replaces scrolling a screen with ten minutes of warm light and quiet.'
+        assign pour_qui_fr = 'Pour qui termine ses journ&eacute;es sur un &eacute;cran et cherche un geste r&eacute;p&eacute;table pour marquer la coupure, sans application ni minuteur &agrave; surveiller.'
+        assign pour_qui_en = 'For anyone ending their day on a screen, looking for a repeatable gesture to mark the cut-off, with no app or timer to watch.'
+
+        assign etapes_fr = 'Le m&ecirc;me horaire chaque soir~Trente &agrave; soixante minutes avant le coucher. Un horaire qui change chaque jour est un horaire qu&apos;on finit par sauter.|Lumi&egrave;re tamis&eacute;e autour de vous~&Eacute;teignez ou baissez l&apos;&eacute;clairage principal de la pi&egrave;ce pendant la s&eacute;ance&nbsp;: c&apos;est le contraste qui installe le rep&egrave;re, pas l&apos;appareil seul.|Dix &agrave; quinze minutes, pas plus~Au-del&agrave; de ce que le protocole d&eacute;crit, la s&eacute;ance devient un pr&eacute;texte pour rester devant un &eacute;cran &agrave; proximit&eacute;.|&Eacute;teignez les autres &eacute;crans pendant la s&eacute;ance~Le rituel perd son sens s&apos;il se fait t&eacute;l&eacute;phone en main.'
+        assign etapes_en = 'The same time every evening~Thirty to sixty minutes before bed. A time that shifts daily is a time you end up skipping.|Dim the light around you~Turn off or lower the room&apos;s main light during the session: it is the contrast that sets the cue, not the device alone.|Ten to fifteen minutes, no more~Beyond what the protocol describes, the session becomes an excuse to stay near a screen.|Turn other screens off during the session~The ritual loses its point if it is done phone in hand.'
+
+        assign erreurs_fr = 'Faire la s&eacute;ance en scrollant un t&eacute;l&eacute;phone. Cela annule exactement ce que le rituel cherche &agrave; remplacer.|Changer d&apos;horaire chaque soir selon la fatigue. C&apos;est la r&eacute;gularit&eacute; de l&apos;horaire qui installe le rep&egrave;re, pas la dur&eacute;e d&apos;un seul soir.|Attendre un effet sur l&apos;endormissement d&egrave;s la premi&egrave;re semaine. Aucun essai men&eacute; sur un appareil Antared ne mesure ce d&eacute;lai, et nous n&apos;en promettons aucun.|Confondre cette page avec un traitement de l&apos;insomnie. Une difficult&eacute; d&apos;endormissement qui dure se montre &agrave; un m&eacute;decin, pas &agrave; une lampe.'
+        assign erreurs_en = 'Running the session while scrolling a phone. That cancels out exactly what the ritual is meant to replace.|Shifting the time every evening depending on tiredness. It is the regularity of the time that sets the cue, not any single evening&apos;s duration.|Expecting an effect on falling asleep within the first week. No trial run on an Antared device measures that timeline, and we promise none.|Mistaking this page for insomnia treatment. Trouble falling asleep that persists goes to a doctor, not a lamp.'
+
+        assign limites_fr = 'Ce n&apos;est pas un traitement du sommeil~Les appareils Antared sont des produits de bien-&ecirc;tre, sans marquage CE de dispositif m&eacute;dical. Ils ne diagnostiquent, ne traitent et ne gu&eacute;rissent aucun trouble du sommeil.|Une insomnie qui dure rel&egrave;ve d&apos;un m&eacute;decin~Une difficult&eacute; d&apos;endormissement r&eacute;p&eacute;t&eacute;e ou un sommeil qui ne repose plus se montrent &agrave; un professionnel de sant&eacute;, pas &agrave; une lampe.|Elle ne remplace ni l&apos;hygi&egrave;ne de sommeil ni un avis m&eacute;dical~Horaires r&eacute;guliers, cha&icirc;ne fraiche, &eacute;cart avec les &eacute;crans&nbsp;: ce sont les leviers document&eacute;s. Une s&eacute;ance de lumi&egrave;re n&apos;en tient lieu d&apos;aucun.|Elle ne promet aucun r&eacute;sultat individuel sur l&apos;endormissement~Nous ne connaissons aucune &eacute;tude publi&eacute;e sur un appareil Antared portant sur ce point, et nous n&apos;en all&eacute;guons aucune.'
+        assign limites_en = 'This is not a sleep treatment~Antared devices are wellness products, without medical-device CE marking. They do not diagnose, treat, or cure any sleep disorder.|Persistent insomnia is a doctor&apos;s business~Repeated trouble falling asleep, or sleep that no longer feels restful, goes to a health professional, not to a lamp.|It replaces neither sleep hygiene nor medical advice~Regular hours, a cool room, distance from screens: those are the documented levers. A light session stands in for none of them.|It promises no individual result on falling asleep~We know of no published study on an Antared device covering this point, and we allege none.'
     endcase
 
     assign f2_affiche = f2_val
@@ -384,7 +434,7 @@
             {%- endif -%}
           </a>
           <a class="ln-button ln-button--line" href="{{ url_goals }}">
-            {% if is_fr %}Les cinq objectifs{% else %}All five goals{% endif %}
+            {% if is_fr %}Les six objectifs{% else %}All six goals{% endif %}
           </a>
         </div>
       </div>
@@ -689,6 +739,62 @@
         </div>
       </section>
 
+    {%- elsif objectif == 'sleep' -%}
+
+      <section class="ln-section ln-section--dark">
+        <div class="ln-shell">
+          <p class="ln-kicker">{% if is_fr %}Le rituel{% else %}The ritual{% endif %}</p>
+          <h2 class="ln-subtitle">{% if is_fr %}Quatre rep&egrave;res pour l&apos;installer{% else %}Four markers to set it up{% endif %}</h2>
+
+          <div class="ln-values">
+            <article class="ln-value ln-reveal">
+              <span class="ln-value__index">01</span>
+              <h3 class="ln-value__title">{% if is_fr %}Le m&ecirc;me horaire{% else %}The same time{% endif %}</h3>
+              <p class="ln-value__text">
+                {%- if is_fr -%}
+                  Trente &agrave; soixante minutes avant le coucher, chaque soir. C&apos;est la r&eacute;gularit&eacute; de l&apos;horaire qui installe le rep&egrave;re, pas la puissance de l&apos;appareil.
+                {%- else -%}
+                  Thirty to sixty minutes before bed, every evening. It is the regularity of the time that sets the cue, not the power of the device.
+                {%- endif -%}
+              </p>
+            </article>
+            <article class="ln-value ln-reveal">
+              <span class="ln-value__index">02</span>
+              <h3 class="ln-value__title">{% if is_fr %}Une pi&egrave;ce tamis&eacute;e{% else %}A dimmed room{% endif %}</h3>
+              <p class="ln-value__text">
+                {%- if is_fr -%}
+                  L&apos;&eacute;clairage principal baisse ou s&apos;&eacute;teint pendant la s&eacute;ance. C&apos;est le contraste avec le reste de la journ&eacute;e qui marque la coupure.
+                {%- else -%}
+                  The main light dims or switches off during the session. It is the contrast with the rest of the day that marks the cut-off.
+                {%- endif -%}
+              </p>
+            </article>
+            <article class="ln-value ln-reveal">
+              <span class="ln-value__index">03</span>
+              <h3 class="ln-value__title">{% if is_fr %}Dix &agrave; quinze minutes{% else %}Ten to fifteen minutes{% endif %}</h3>
+              <p class="ln-value__text">
+                {%- if is_fr -%}
+                  Pas plus. Au-del&agrave;, la s&eacute;ance devient un pr&eacute;texte pour rester &eacute;veill&eacute; pr&egrave;s d&apos;un appareil plut&ocirc;t qu&apos;un rep&egrave;re court et r&eacute;p&eacute;table.
+                {%- else -%}
+                  No more. Beyond that, the session becomes an excuse to stay up near a device rather than a short, repeatable cue.
+                {%- endif -%}
+              </p>
+            </article>
+            <article class="ln-value ln-reveal">
+              <span class="ln-value__index">04</span>
+              <h3 class="ln-value__title">{% if is_fr %}Les &eacute;crans coup&eacute;s{% else %}Screens off{% endif %}</h3>
+              <p class="ln-value__text">
+                {%- if is_fr -%}
+                  Le t&eacute;l&eacute;phone reste pos&eacute;. Le rituel remplace le d&eacute;filement du soir&nbsp;; fait t&eacute;l&eacute;phone en main, il n&apos;en remplace plus rien.
+                {%- else -%}
+                  The phone stays down. The ritual replaces the evening scroll; done phone in hand, it replaces nothing.
+                {%- endif -%}
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
     {%- endif -%}
 
     {%- comment -%} ---------- ossature commune ---------- {%- endcomment -%}
@@ -795,7 +901,7 @@
     </section>
 
     {%- comment -%}
-      Les quatre autres objectifs. Les intitules sont ceux de `goals-hub.liquid` ;
+      Les cinq autres objectifs. Les intitules sont ceux de `goals-hub.liquid` ;
       l'URL passe par `pages[handle].url`, qui porte le prefixe de langue, avec
       repli sur le chemin ecrit en dur.
     {%- endcomment -%}
@@ -804,7 +910,7 @@
         <div class="ln-head ln-reveal">
           <div>
             <p class="ln-kicker">{% if is_fr %}Changer d&apos;angle{% else %}Another angle{% endif %}</p>
-            <h2 class="ln-subtitle">{% if is_fr %}Les quatre autres objectifs{% else %}The other four goals{% endif %}</h2>
+            <h2 class="ln-subtitle">{% if is_fr %}Les cinq autres objectifs{% else %}The other five goals{% endif %}</h2>
           </div>
           <div class="ln-head__aside">
             <p>
@@ -818,12 +924,12 @@
         </div>
 
         <div class="ln-hub">
-          {%- assign autres_handles = 'recovery,performance,skin-amp-glow,longevity,work-amp-focus' | split: ',' -%}
-          {%- assign autres_num = '01,02,03,04,05' | split: ',' -%}
-          {%- assign autres_titres_fr = 'R&eacute;cup&eacute;ration|Performance|Peau &amp; &Eacute;clat|Long&eacute;vit&eacute;|Travail &amp; Concentration' | split: '|' -%}
-          {%- assign autres_titres_en = 'Recovery|Performance|Skin &amp; Glow|Longevity|Work &amp; Focus' | split: '|' -%}
-          {%- assign autres_textes_fr = 'Apr&egrave;s l&apos;effort, sur les zones qui ont travaill&eacute;. La zone d&eacute;cide du format.|Autour de l&apos;entra&icirc;nement&nbsp;: la surface couverte en une pose compte plus que la puissance.|Visage et cuir chevelu, en rouge visible, jug&eacute;s &agrave; seize semaines.|La fiche technique lue param&egrave;tre par param&egrave;tre, et l&apos;horizon annonc&eacute; avant de commencer.|Le cr&eacute;neau que vous ne prenez sur rien&nbsp;: la s&eacute;ance tourne pendant que vous travaillez.' | split: '|' -%}
-          {%- assign autres_textes_en = 'After training, on the areas that did the work. The area decides the format.|Around training: the area covered in one pass counts for more than raw power.|Face and scalp, in visible red, judged at sixteen weeks.|The spec sheet read parameter by parameter, and the horizon stated before you start.|The slot you take from nothing: the session runs while you work.' | split: '|' -%}
+          {%- assign autres_handles = 'recovery,performance,skin-amp-glow,longevity,work-amp-focus,sleep' | split: ',' -%}
+          {%- assign autres_num = '01,02,03,04,05,06' | split: ',' -%}
+          {%- assign autres_titres_fr = 'R&eacute;cup&eacute;ration|Performance|Peau &amp; &Eacute;clat|Long&eacute;vit&eacute;|Travail &amp; Concentration|Sommeil' | split: '|' -%}
+          {%- assign autres_titres_en = 'Recovery|Performance|Skin &amp; Glow|Longevity|Work &amp; Focus|Sleep' | split: '|' -%}
+          {%- assign autres_textes_fr = 'Apr&egrave;s l&apos;effort, sur les zones qui ont travaill&eacute;. La zone d&eacute;cide du format.|Autour de l&apos;entra&icirc;nement&nbsp;: la surface couverte en une pose compte plus que la puissance.|Visage et cuir chevelu, en rouge visible, jug&eacute;s &agrave; seize semaines.|La fiche technique lue param&egrave;tre par param&egrave;tre, et l&apos;horizon annonc&eacute; avant de commencer.|Le cr&eacute;neau que vous ne prenez sur rien&nbsp;: la s&eacute;ance tourne pendant que vous travaillez.|Un signal calme, r&eacute;p&eacute;t&eacute; chaque soir avant le coucher.' | split: '|' -%}
+          {%- assign autres_textes_en = 'After training, on the areas that did the work. The area decides the format.|Around training: the area covered in one pass counts for more than raw power.|Face and scalp, in visible red, judged at sixteen weeks.|The spec sheet read parameter by parameter, and the horizon stated before you start.|The slot you take from nothing: the session runs while you work.|A calm signal, repeated every evening before bed.' | split: '|' -%}
 
           {%- for h in autres_handles -%}
             {%- unless h == page.handle -%}
@@ -873,7 +979,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Section unique des cinq pages « Par objectif ». Le sujet est derive du handle de la PAGE (pas d'une collection) : recovery, performance, skin-amp-glow, longevity, work-amp-focus. Toute autre page ne rend rien. Chiffres de dose : learn-how-it-works. Longueurs d'onde : learn-wavelengths. Le bloc « ce que cet objectif ne dit pas » est obligatoire. La selection produit finale vient de learn-product-cta, pas d'une collection."
+      "content": "Section unique des six pages « Par objectif ». Le sujet est derive du handle de la PAGE (pas d'une collection) : recovery, performance, skin-amp-glow, longevity, work-amp-focus, sleep. Toute autre page ne rend rien. Chiffres de dose : learn-how-it-works. Longueurs d'onde : learn-wavelengths. Le bloc « ce que cet objectif ne dit pas » est obligatoire. La selection produit finale vient de learn-product-cta, pas d'une collection."
     }
   ]
 }
