@@ -47,6 +47,7 @@
   assign media_antares_file = 'antares-red-giant.jpg'
   assign media_antares_w = 2752
   assign media_antares_h = 1536
+  assign media_antares_ratio = media_antares_w | append: ' / ' | append: media_antares_h
 
   assign media_founder_tuan_file = ''
   assign media_founder_tuan_w = 1200
@@ -191,19 +192,20 @@
         <div class="ln-antares-visual ln-reveal">
           {% render 'media-slot',
              file: media_antares_file, w: media_antares_w, h: media_antares_h,
-             ratio: '16 / 9', priority: 'high',
+             ratio: media_antares_ratio, priority: 'high',
              alt_fr: 'Antar&egrave;s, la superg&eacute;ante rouge de la constellation du Scorpion.',
              alt_en: 'Antares, the red supergiant star in the constellation Scorpio.',
              brief_fr: 'Antar&egrave;s, superg&eacute;ante rouge &mdash; rendu ou photo astronomique en gros plan, dominante rouge.',
              brief_en: 'Antares, red supergiant &mdash; a close astronomy render or photo, red-dominant.' %}
-
-          {%- if media_antares_file != blank -%}
-            <div class="ln-antares-visual__scrim" aria-hidden="true"></div>
-            <p class="ln-antares-word" aria-hidden="true">
-              <span class="ln-antares-word__prefix">ANTA</span><span class="ln-antares-word__red">RE</span><span class="ln-antares-word__flip"><span class="ln-antares-word__s">S</span><span class="ln-antares-word__d">D</span></span>
-            </p>
-          {%- endif -%}
         </div>
+
+        {%- if media_antares_file != blank -%}
+          <div class="ln-antares-logo ln-reveal">
+            <img src="{{ 'LOGO_ANTARED_transparent.png' | file_url }}"
+                 width="96" height="96"
+                 alt="Antared" loading="lazy">
+          </div>
+        {%- endif -%}
       </div>
     </section>
 

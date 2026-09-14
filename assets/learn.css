@@ -1250,12 +1250,15 @@
   border-radius: var(--ln-radius-lg);
   overflow: hidden;
 }
-.ln-antares-visual__scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, .8) 100%);
-  pointer-events: none;
-}
+/*
+ * Le ratio de l'encart est calcule depuis les dimensions reelles du fichier
+ * (media_antares_ratio, en tete de sections/why-page.liquid) : la boite
+ * epouse exactement le ratio de l'image, donc object-fit: cover ne rogne
+ * rien — l'image se montre en entier. Pas de bordure non plus (contrairement
+ * a .ln-media__frame ailleurs) : c'est la scene qui doit se lire comme une
+ * photo pleine largeur, pas comme un encart encadre.
+ */
+.ln-antares-visual .ln-media__frame { border: none; }
 
 /*
  * La montee de l'image est propre a ce bloc, pas le 26px generique de
@@ -1272,80 +1275,12 @@
   }
 }
 
-/*
- * ANTARES -> ANTARED ne differe que d'une lettre : la marque a repris le nom
- * de l'etoile en changeant seulement le S final en D. Le mot est donc ecrit
- * en trois morceaux — "ANTA" fixe, "RE" et la lettre finale qui passent tous
- * les deux du blanc au rouge de la marque ensemble, pour que "RED" se lise
- * entierement rouge une fois l'animation jouee, pas seulement son dernier
- * caractere.
- */
-.ln-antares-word {
-  position: absolute;
-  left: clamp(20px, 4vw, 48px);
-  right: clamp(20px, 4vw, 48px);
-  bottom: clamp(20px, 4vw, 40px);
-  margin: 0;
+.ln-antares-logo {
   display: flex;
-  align-items: baseline;
-  font-family: "Instrument Serif", Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(34px, 7vw, 92px);
-  line-height: 1;
-  letter-spacing: .01em;
-  color: #fff;
-  pointer-events: none;
+  justify-content: center;
+  margin-top: clamp(28px, 4vw, 44px);
 }
-.ln-antares-word__red {
-  /* Etat par defaut (sans script, ou mouvement reduit) : deja rouge. */
-  color: var(--ln-red);
-}
-.ln-antares-word__flip {
-  position: relative;
-  display: inline-block;
-  width: .62em;
-  height: 1em;
-}
-.ln-antares-word__s,
-.ln-antares-word__d {
-  position: absolute;
-  inset: 0;
-}
-.ln-antares-word__s { opacity: 0; }
-.ln-antares-word__d { opacity: 1; color: var(--ln-red); }
-
-@media (prefers-reduced-motion: no-preference) {
-  .ln-antares-visual.is-armed:not(.is-visible) .ln-antares-word__red {
-    color: #fff;
-    transition: none;
-  }
-  .ln-antares-visual.is-armed:not(.is-visible) .ln-antares-word__s {
-    opacity: 1;
-    transform: translateY(0);
-    transition: none;
-  }
-  .ln-antares-visual.is-armed:not(.is-visible) .ln-antares-word__d {
-    opacity: 0;
-    transform: translateY(.14em);
-    transition: none;
-  }
-  .ln-antares-visual.is-visible .ln-antares-word__red {
-    transition: color .6s var(--ln-ease) .3s;
-  }
-  .ln-antares-visual.is-visible .ln-antares-word__s {
-    transform: translateY(-.14em);
-    transition: opacity .5s var(--ln-ease) .3s, transform .5s var(--ln-ease) .3s;
-  }
-  .ln-antares-visual.is-visible .ln-antares-word__d {
-    transform: translateY(0);
-    transition: opacity .5s var(--ln-ease) .4s, transform .5s var(--ln-ease) .4s;
-  }
-}
-
-@media (max-width: 640px) {
-  .ln-antares-word { position: static; margin-top: 16px; }
-  .ln-antares-visual__scrim { display: none; }
-}
+.ln-antares-logo img { display: block; width: 96px; height: 96px; }
 
 /* ---------- portraits fondateurs (snippets/founder-portrait.liquid) ---------- */
 
