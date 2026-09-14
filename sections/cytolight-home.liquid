@@ -118,17 +118,12 @@
     </div>
   </section>
 
-  <section class="cy-cinema" data-cy-cinema id="cy-mask-ritual">
-    <div class="cy-cinema__stage">
-      <div class="cy-cinema__world">
-        <img src="{{ '05_CytoLight_Mask_Spa.png' | file_url }}" alt="{% if is_fr %}Antared Mask en routine visage{% else %}Antared Mask face routine{% endif %}" width="1600" height="900" loading="lazy">
-        <span class="cy-cinema__beam" aria-hidden="true"><span></span></span>
-        <span class="cy-cinema__glow" aria-hidden="true"></span>
-      </div>
-      <div class="cy-cinema__panel">
+  <section class="cy-mask-feature" id="cy-mask-ritual">
+    <div class="cy-shell cy-mask-feature__layout">
+      <div class="cy-mask-feature__content cy-reveal">
         <p class="cy-kicker">{% if is_fr %}Visage &middot; Beaut&eacute;{% else %}Face &middot; Beauty{% endif %}</p>
-        <h2>{% if is_fr %}Bleu, rouge, proche infrarouge. Un seul masque.{% else %}Blue, red, near-infrared. One single mask.{% endif %}</h2>
-        <p>{% if is_fr %}Un masque LED souple en silicone, avec 288 LED r&eacute;parties sur 4 canaux : bleu 460nm, rouge 630nm et proche infrarouge 850nm, pour une routine visage courte, sans fil et facile &agrave; r&eacute;p&eacute;ter.{% else %}A flexible silicone LED mask with 288 LEDs across 4 channels &#8212; 460nm blue, 630nm red, and 850nm near-infrared &#8212; for a short, cordless face routine that is easy to repeat.{% endif %}</p>
+        <h2 class="cy-mask-feature__heading">{% if is_fr %}Bleu, rouge, proche infrarouge. Un seul masque.{% else %}Blue, red, near-infrared. One single mask.{% endif %}</h2>
+        <p class="cy-mask-feature__text">{% if is_fr %}Un masque LED souple en silicone, avec 288 LED r&eacute;parties sur 4 canaux : bleu 460nm, rouge 630nm et proche infrarouge 850nm, pour une routine visage courte, sans fil et facile &agrave; r&eacute;p&eacute;ter.{% else %}A flexible silicone LED mask with 288 LEDs across 4 channels &#8212; 460nm blue, 630nm red, and 850nm near-infrared &#8212; for a short, cordless face routine that is easy to repeat.{% endif %}</p>
         <div class="cy-cap-points cy-reveal" aria-label="{% if is_fr %}Points forts Antared Mask{% else %}Antared Mask highlights{% endif %}">
           <span>
             <svg class="cy-cap-points__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="6" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="18" cy="6" r="1.3" fill="currentColor" stroke="none"/><circle cx="6" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="18" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="6" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="18" r="1.3" fill="currentColor" stroke="none"/><circle cx="18" cy="18" r="1.3" fill="currentColor" stroke="none"/></svg>
@@ -146,6 +141,9 @@
         <div class="cy-actions">
           <a class="cy-button cy-button--light" href="{{ mask_url }}">{% if is_fr %}D&eacute;couvrir Antared Mask{% else %}Discover Antared Mask{% endif %}</a>
         </div>
+      </div>
+      <div class="cy-mask-feature__media cy-reveal" aria-hidden="true">
+        <video src="https://cdn.shopify.com/videos/c/o/v/54cb7d45f86246d0b285d0e6f12a3fe0.mp4" autoplay loop muted playsinline></video>
       </div>
     </div>
   </section>
