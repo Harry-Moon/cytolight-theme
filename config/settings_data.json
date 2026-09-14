@@ -22,26 +22,32 @@
     "font_body": "Instrument Sans",
     "font_display": "Instrument Serif",
     "social_instagram_url": "https://www.instagram.com/antared.therapy/",
+    "social_facebook_url": "https://www.facebook.com/people/Antared/61593995133458/",
+    "social_tiktok_url": "https://www.tiktok.com/@antared4",
     "social_youtube_url": "https://www.youtube.com/@Antared.therapy",
     "social_whatsapp_url": "https://wa.me/33745986333",
-    "social_tiktok_url": "https://www.tiktok.com/@antared4",
-    "social_facebook_url": "https://www.facebook.com/people/Antared/61593995133458/",
     "sections": {
       "cytolight-home": {
         "type": "cytolight-home",
         "settings": {
-          "featured_product": "shopify://products/antared-desk-red-light-therapy-panel",
+          "featured_product": "shopify://products/cytolight-desk",
           "hero_video_url": "",
           "hero_heading_en": "Light that transforms your everyday.",
-          "hero_heading_fr": "La lumi&egrave;re qui transforme votre quotidien.",
+          "hero_heading_fr": "",
           "hero_text_en": "Red light therapy systems designed for recovery, skin, sleep, and energy.",
-          "hero_text_fr": "Des syst&egrave;mes de luminoth&eacute;rapie rouge con&ccedil;us pour la r&eacute;cup&eacute;ration, la peau, le sommeil et l'&eacute;nergie.",
+          "hero_text_fr": "",
           "primary_cta_en": "Discover Antared DESK",
           "primary_cta_fr": "D&eacute;couvrir Antared DESK",
           "primary_cta_url": "",
           "secondary_cta_en": "Explore the range",
           "secondary_cta_fr": "Voir la gamme",
           "secondary_cta_url": ""
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "main-menu"
         }
       }
     },
